@@ -1,0 +1,61 @@
+security:
+    # https://symfony.com/doc/current/security/named_encoders.html
+    encoders:
+        App\Security\SecurityUser:
+            algorithm: auto
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        in_memory: { memory: ~ }
+        chain_provider:
+            chain:
+                providers: [security_user_provider, api_key_user_provider]
+        security_user_provider:
+            id: App\Security\Provider\SecurityUserFactory
+        api_key_user_provider:
+            id: App\Security\Provider\ApiKeyUserProvider
+
+    # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        login:
+            pattern: ^/api/auth/getToken$
+            stateless: true
+            anonymous: true
+            json_login:
+                provider: security_user_provider
+                check_path: /api/auth/getToken
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        root:
+            pattern: ^/($|command-scheduler)
+            stateless: true
+            anonymous: true
+        api:
+            pattern: ^/api
+            stateless: true
+            anonymous: true
+            guard:
+                provider: security_user_provider
+                authenticators:
+                    - App\Security\Authenticator\ApiKeyAuthenticator
+                    - lexik_jwt_authentication.jwt_token_authenticator
+                entry_point: lexik_jwt_authentication.jwt_token_authenticator
+
+    role_hierarchy:
+        ROLE_API:   [ROLE_LOGGED]
+        ROLE_USER:  [ROLE_LOGGED]
+        ROLE_ADMIN: [ROLE_USER]
+        ROLE_ROOT:  [ROLE_ADMIN]
+
+    access_decision_manager:
+        strategy: unanimous
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/command-scheduler, roles: ROLE_ADMIN }

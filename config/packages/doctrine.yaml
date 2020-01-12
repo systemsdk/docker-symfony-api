@@ -1,0 +1,28 @@
+doctrine:
+    dbal:
+        # configure these for your database server
+        driver: 'pdo_mysql'
+        server_version: '8.0'
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+
+        url: '%env(resolve:DATABASE_URL)%'
+        mapping_types:
+            enum: string
+        types:
+            datetime: App\Doctrine\DBAL\Types\UTCDateTimeType
+            datetimetz: App\Doctrine\DBAL\Types\UTCDateTimeType
+            EnumLogLogin: App\Doctrine\DBAL\Types\EnumLogLoginType
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App

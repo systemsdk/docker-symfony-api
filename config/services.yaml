@@ -1,0 +1,64 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    app.uuid_regex: '^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-1[0-9a-fA-F]{3}\-[89ab][0-9a-f]{3}\-[0-9a-fA-F]{12}$'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+        bind:
+            $projectDir: '%kernel.project_dir%'
+            $environment: '%kernel.environment%'
+    _instanceof:
+        App\Rest\Interfaces\ControllerInterface:
+            tags: [ 'app.rest.controller' ]
+        App\Rest\Interfaces\RestResourceInterface:
+            tags: [ 'app.rest.resource' ]
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,EventListener,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/*'
+        tags: ['controller.service_arguments']
+
+    App\DataFixtures\:
+        resource: '../src/DataFixtures/*'
+        tags: [ 'doctrine.fixture.orm' ]
+
+    App\ArgumentResolver\EntityValueResolver:
+        tags:
+            - { name: controller.argument_value_resolver, priority: 150 }
+
+    App\Resource\ResourceCollection:
+        arguments: [ !tagged app.rest.resource ]
+
+    App\Rest\ControllerCollection:
+        arguments: [ !tagged app.rest.controller ]
+
+    App\Security\RolesService:
+        arguments: [ '%security.role_hierarchy.roles%' ]
+
+    App\EventSubscriber\BlameableDecorator:
+        class: App\EventSubscriber\BlameableDecorator
+        decorates: stof_doctrine_extensions.listener.blameable
+        calls:
+            - method: setUserResource
+              arguments:
+                  - '@App\Resource\UserResource'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones

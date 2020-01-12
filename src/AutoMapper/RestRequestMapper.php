@@ -1,0 +1,135 @@
+<?php
+declare(strict_types = 1);
+/**
+ * /src/AutoMapper/RestRequestMapper.php
+ */
+
+namespace App\AutoMapper;
+
+use AutoMapperPlus\MapperInterface;
+use App\DTO\Interfaces\RestDtoInterface;
+use InvalidArgumentException;
+use LengthException;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * Class RestRequestMapper
+ *
+ * @package App\AutoMapper
+ */
+abstract class RestRequestMapper implements MapperInterface
+{
+    /**
+     * Properties to map to destination object.
+     *
+     * @var array<int, string>
+     */
+    protected static array $properties = [];
+
+
+    /**
+     * @inheritdoc
+     *
+     * @param array|object $source
+     * @param string       $targetClass
+     * @param array        $context
+     *
+     * @return RestDtoInterface
+     */
+    public function map($source, string $targetClass, array $context = []): RestDtoInterface
+    {
+        $destination = new $targetClass();
+
+        return $this->mapToObject($source, $destination, $context);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param array|object $source
+     * @param object       $destination
+     * @param array        $context
+     *
+     * @throws InvalidArgumentException|LengthException
+     *
+     * @return RestDtoInterface
+     */
+    public function mapToObject($source, $destination, array $context = []): RestDtoInterface
+    {
+        if (!is_object($source)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'RestRequestMapper expects that $source is Request object, "%s" provided',
+                    gettype($source)
+                )
+            );
+        }
+
+        if (!$source instanceof Request) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'RestRequestMapper expects that $source is Request object, "%s" provided',
+                    get_class($source)
+                )
+            );
+        }
+
+        if (!$destination instanceof RestDtoInterface) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'RestRequestMapper expects that $destination is instance of RestDtoInterface object, "%s" provided',
+                    get_class($destination)
+                )
+            );
+        }
+
+        if (count(static::$properties) === 0) {
+            throw new LengthException(
+                sprintf(
+                    'RestRequestMapper expects that mapper "%s::$properties" contains properties to convert',
+                    static::class
+                )
+            );
+        }
+
+        return $this->getObject($source, $destination);
+    }
+
+    /**
+     * @param Request          $request
+     * @param RestDtoInterface $restDto
+     *
+     * @return RestDtoInterface
+     */
+    private function getObject(Request $request, RestDtoInterface $restDto): RestDtoInterface
+    {
+        foreach ($this->getValidProperties($request) as $property) {
+            $setter = 'set' . ucfirst($property);
+            $transformer = 'transform' . ucfirst($property);
+
+            /** @var int|string|array|null $value */
+            $value = $request->request->get($property);
+
+            if (method_exists($this, $transformer)) {
+                /** @var int|string|object|array|null $value */
+                $value = $this->{$transformer}($value);
+            }
+
+            $restDto->{$setter}($value);
+        }
+
+        return $restDto;
+    }
+
+    /**
+     * Get valid properties
+     *
+     * @param Request $request
+     *
+     * @return array<int, string>
+     */
+    private function getValidProperties(Request $request): array
+    {
+        return array_filter(static::$properties, fn ($property) => $request->request->has($property));
+    }
+}

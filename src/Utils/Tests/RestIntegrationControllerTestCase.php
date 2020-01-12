@@ -1,0 +1,83 @@
+<?php
+declare(strict_types = 1);
+/**
+ * /src/Utils/Tests/RestIntegrationControllerTestCase.php
+ */
+
+namespace App\Utils\Tests;
+
+use App\Rest\Controller;
+use ReflectionClass;
+use ReflectionException;
+
+/**
+ * Class RestIntegrationControllerTestCase
+ *
+ * @package App\Utils\Tests
+ */
+abstract class RestIntegrationControllerTestCase extends ContainerTestCase
+{
+    /**
+     * @var Controller
+     */
+    protected $controller;
+
+    /**
+     * @var string
+     * @psalm-var class-string
+     */
+    protected $controllerClass;
+
+    /**
+     * @var string
+     * @psalm-var class-string
+     */
+    protected $resourceClass;
+
+    /**
+     * @inheritdoc
+     */
+    protected function setUp(): void
+    {
+        gc_enable();
+        parent::setUp();
+        /** @var Controller $controller */
+        $controller = $this->getContainer()->get($this->controllerClass);
+        $this->controller = $controller;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        unset($this->controller);
+        gc_collect_cycles();
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testThatGivenControllerIsCorrect(): void
+    {
+        $expected = mb_substr((new ReflectionClass($this))->getShortName(), 0, -4);
+        $message = sprintf(
+            'Your REST controller integration test \'%s\' uses likely wrong controller class \'%s\'',
+            static::class,
+            $this->controllerClass
+        );
+
+        static::assertSame($expected, (new ReflectionClass($this->controller))->getShortName(), $message);
+    }
+
+    /**
+     * This test is to make sure that controller has set the expected resource. There is multiple resources and each
+     * controller needs to use specified one.
+     */
+    public function testThatGetResourceReturnsExpected(): void
+    {
+        /** @noinspection UnnecessaryAssertionInspection */
+        static::assertInstanceOf($this->resourceClass, $this->controller->getResource());
+    }
+}

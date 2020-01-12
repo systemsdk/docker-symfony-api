@@ -1,0 +1,81 @@
+<?php
+declare(strict_types = 1);
+/**
+ * /src/Command/ApiKey/RemoveApiKeyCommand.php
+ */
+
+namespace App\Command\ApiKey;
+
+use Symfony\Component\Console\Command\Command;
+use App\Command\Traits\StyleSymfony;
+use App\Resource\ApiKeyResource;
+use App\Entity\ApiKey as ApiKeyEntity;
+use Throwable;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+/**
+ * Class RemoveApiKeyCommand
+ *
+ * @package App\Command\ApiKey
+ */
+class RemoveApiKeyCommand extends Command
+{
+    // Traits
+    use StyleSymfony;
+
+    private ApiKeyResource $apiKeyResource;
+    private ApiKeyHelper $apiKeyHelper;
+
+
+    /**
+     * Constructor
+     *
+     * @param ApiKeyResource $apiKeyResource
+     * @param ApiKeyHelper   $apiKeyHelper
+     *
+     * @throws \Symfony\Component\Console\Exception\LogicException
+     */
+    public function __construct(ApiKeyResource $apiKeyResource, ApiKeyHelper $apiKeyHelper)
+    {
+        parent::__construct('api-key:remove');
+
+        $this->apiKeyResource = $apiKeyResource;
+        $this->apiKeyHelper = $apiKeyHelper;
+
+        $this->setDescription('Console command to remove existing API key');
+    }
+
+    /** @noinspection PhpMissingParentCallCommonInspection */
+    /**
+     * Executes the current command.
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @throws Throwable
+     *
+     * @return int 0 if everything went fine, or an exit code
+     */
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        $io = $this->getSymfonyStyle($input, $output);
+        // Get API key entity
+        $apiKey = $this->apiKeyHelper->getApiKey($io, 'Which API key you want to remove?');
+        $message = null;
+
+        if ($apiKey instanceof ApiKeyEntity) {
+            // Delete API key
+            $this->apiKeyResource->delete($apiKey->getId());
+
+            $message = $this->apiKeyHelper->getApiKeyMessage('API key deleted - have a nice day', $apiKey);
+        }
+
+        if ($input->isInteractive()) {
+            $message ??= 'Nothing changed - have a nice day';
+            $io->success($message);
+        }
+
+        return 0;
+    }
+}
