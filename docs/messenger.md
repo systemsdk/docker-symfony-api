@@ -1,4 +1,4 @@
-#Messenger
+# Messenger
 This document describing how you can use [messenger](https://symfony.com/doc/current/messenger.html) within this environment.
 
 ## Using messenger

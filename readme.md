@@ -165,7 +165,7 @@ Note: For prod environment need to be used next make commands: `make start-prod`
 * [PhpMetrics](https://github.com/phpmetrics/PhpMetrics)
 
 ## External links / resources
-* [Symfony REST API example](https://github.com/tarlepp/symfony-flex-backend.git): code in "src/" folder forked from REST API example.
+* [Symfony Flex REST API](https://github.com/tarlepp/symfony-flex-backend.git): code in "src/" folder forked from Symfony Flex REST API.
 
 ## Guidelines
 * [Commands](docs/commands.md)
