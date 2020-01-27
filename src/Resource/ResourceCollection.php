@@ -14,6 +14,7 @@ use Countable;
 use InvalidArgumentException;
 use IteratorAggregate;
 use IteratorIterator;
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 /**
@@ -35,10 +36,12 @@ class ResourceCollection implements Countable
      * Constructor
      *
      * @param IteratorAggregate|IteratorAggregate<int, RestResourceInterface> $resources
+     * @param LoggerInterface                                                 $logger
      */
-    public function __construct(IteratorAggregate $resources)
+    public function __construct(IteratorAggregate $resources, LoggerInterface $logger)
     {
         $this->items = $resources;
+        $this->logger = $logger;
     }
 
     /**

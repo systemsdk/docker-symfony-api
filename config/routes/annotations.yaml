@@ -2,6 +2,8 @@ api-controller:
     resource: ../../src/Controller/Api/
     type: annotation
     prefix: /api
+    defaults:
+        _format: json
 web-controller:
     resource: ../../src/Controller/Web/
     type: annotation

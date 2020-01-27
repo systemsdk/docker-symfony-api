@@ -6,7 +6,7 @@ declare(strict_types = 1);
 
 namespace App\Service;
 
-use App\Utils\Traits\LoggerAware;
+use Psr\Log\LoggerInterface;
 use App\Utils\JSON;
 use Exception;
 use stdClass;
@@ -20,22 +20,22 @@ use Symfony\Contracts\Cache\ItemInterface;
  */
 class VersionService
 {
-    // Traits
-    use LoggerAware;
-
     private string $projectDir;
     private CacheInterface $cache;
+    private LoggerInterface $logger;
 
     /**
      * Constructor
      *
-     * @param string         $projectDir
-     * @param CacheInterface $appVersionCache
+     * @param string          $projectDir
+     * @param CacheInterface  $appVersionCache
+     * @param LoggerInterface $logger
      */
-    public function __construct(string $projectDir, CacheInterface $appVersionCache)
+    public function __construct(string $projectDir, CacheInterface $appVersionCache, LoggerInterface $logger)
     {
         $this->projectDir = $projectDir;
         $this->cache = $appVersionCache;
+        $this->logger = $logger;
     }
 
     /** @noinspection PhpDocMissingThrowsInspection */
@@ -44,8 +44,6 @@ class VersionService
      * composer.json file.
      *
      * @return string
-     *
-     * @psalm-suppress InvalidThrow
      */
     public function get(): string
     {

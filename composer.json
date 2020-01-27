@@ -1,8 +1,7 @@
 {
     "name": "dimadeush/docker-symfony-api",
-    "description": "JSON REST API",
-    "version": "1.0.0",
     "type": "project",
+    "description": "JSON REST API",
     "keywords": [
         "Docker",
         "Nginx",
@@ -14,6 +13,7 @@
         "RabbitMQ"
     ],
     "homepage": "https://github.com/dimadeush/docker-symfony-api",
+    "version": "1.0.0",
     "license": "proprietary",
     "authors": [
         {

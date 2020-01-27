@@ -11,6 +11,9 @@ use Symfony\Component\Stopwatch\Stopwatch;
 /**
  * Trait StopwatchAware
  *
+ * NOTE: Do not use this in your services, just inject `Stopwatch` to service where you need it.
+ *       This trait is just for quick debug purposes and nothing else.
+ *
  * @package App\Utils\Traits
  */
 trait StopwatchAware

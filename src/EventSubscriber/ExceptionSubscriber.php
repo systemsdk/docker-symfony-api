@@ -7,7 +7,7 @@ declare(strict_types = 1);
 namespace App\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use App\Utils\Traits\LoggerAware;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -30,21 +30,21 @@ use JsonException;
  */
 class ExceptionSubscriber implements EventSubscriberInterface
 {
-    // Traits
-    use LoggerAware;
-
     private TokenStorageInterface $tokenStorage;
+    private LoggerInterface $logger;
     private string $environment;
 
     /**
      * Constructor
      *
      * @param TokenStorageInterface $tokenStorage
+     * @param LoggerInterface       $logger
      * @param string                $environment
      */
-    public function __construct(TokenStorageInterface $tokenStorage, string $environment)
+    public function __construct(TokenStorageInterface $tokenStorage, LoggerInterface $logger, string $environment)
     {
         $this->tokenStorage = $tokenStorage;
+        $this->logger = $logger;
         $this->environment = $environment;
     }
 

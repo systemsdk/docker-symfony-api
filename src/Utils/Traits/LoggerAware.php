@@ -11,6 +11,9 @@ use Psr\Log\LoggerInterface;
 /**
  * Trait LoggerAware
  *
+ * NOTE: Do not use this in your services, just inject `LoggerInterface` to service where you need it.
+ *       This trait is just for quick debug purposes and nothing else.
+ *
  * @package App\Utils\Traits
  */
 trait LoggerAware

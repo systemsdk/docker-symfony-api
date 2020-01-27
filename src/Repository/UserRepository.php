@@ -10,7 +10,7 @@ use App\Entity\User as Entity;
 use App\Rest\UuidHelper;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\ORMException;
+use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 
 /**
  * Class UserRepository
@@ -88,31 +88,42 @@ class UserRepository extends BaseRepository
      *       #managing-roles-in-the-database
      *
      * @param string $username The username
+     * @param bool   $uuid     Is username parameter UUID or not
      *
-     * @throws ORMException
+     * @throws NonUniqueResultException
      *
      * @return Entity|null
      */
-    public function loadUserByUsername($username): ?Entity
+    public function loadUserByUsername(string $username, bool $uuid): ?Entity
     {
         /** @var array<string, Entity|null> $cache */
         static $cache = [];
 
         if (!array_key_exists($username, $cache) || $this->environment === 'test') {
             // Build query
-            $query = $this
+            $queryBuilder = $this
                 ->createQueryBuilder('u')
                 ->select('u, g, r')
                 ->leftJoin('u.userGroups', 'g')
-                ->leftJoin('g.role', 'r')
-                ->where('u.id = :uuid OR u.username = :username OR u.email = :email')
-                ->setParameter('uuid', $username, UuidHelper::getType($username))
-                ->setParameter('username', $username)
-                ->setParameter('email', $username)
-                ->getQuery();
+                ->leftJoin('g.role', 'r');
+
+            if ($uuid) {
+                $queryBuilder
+                    ->where('u.id = :uuid')
+                    ->setParameter('uuid', $username, UuidBinaryOrderedTimeType::NAME);
+            } else {
+                $queryBuilder
+                    ->where('u.username = :username OR u.email = :email')
+                    ->setParameter('username', $username)
+                    ->setParameter('email', $username);
+            }
+
+            $query = $queryBuilder->getQuery();
+
             // phpcs:disable
             /** @var Entity|null $result */
             $result = $query->getOneOrNullResult();
+
             $cache[$username] = $result;
             // phpcs:enable
         }

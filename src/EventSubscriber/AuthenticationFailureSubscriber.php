@@ -80,7 +80,7 @@ class AuthenticationFailureSubscriber implements EventSubscriberInterface
         if ($token !== null && is_string($token->getUser())) {
             /** @var string $username */
             $username = $token->getUser();
-            $this->loginLoggerService->setUser($this->userRepository->loadUserByUsername($username));
+            $this->loginLoggerService->setUser($this->userRepository->loadUserByUsername($username, false));
         }
 
         $this->loginLoggerService->process(EnumLogLoginType::TYPE_FAILURE);

@@ -73,7 +73,7 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
     public function onAuthenticationSuccess(AuthenticationSuccessEvent $event): void
     {
         $this->loginLoggerService
-            ->setUser($this->userRepository->loadUserByUsername($event->getUser()->getUsername()))
+            ->setUser($this->userRepository->loadUserByUsername($event->getUser()->getUsername(), true))
             ->process(EnumLogLoginType::TYPE_SUCCESS);
     }
 }

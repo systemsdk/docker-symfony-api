@@ -6,7 +6,7 @@ declare(strict_types = 1);
 
 namespace App\Collection\Traits;
 
-use App\Utils\Traits\LoggerAware;
+use Psr\Log\LoggerInterface;
 use CallbackFilterIterator;
 use Closure;
 use InvalidArgumentException;
@@ -21,10 +21,8 @@ use Throwable;
  */
 trait Collection
 {
-    // Traits
-    use LoggerAware;
-
     private IteratorAggregate $items;
+    private LoggerInterface $logger;
 
     /**
      * @param string $className

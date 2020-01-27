@@ -25,17 +25,20 @@ class SecurityUserFactory implements UserProviderInterface
 {
     private UserRepository $userRepository;
     private RolesService $rolesService;
+    private string $uuidRegex;
 
     /**
      * Constructor
      *
      * @param UserRepository $userRepository
      * @param RolesService   $rolesService
+     * @param string         $uuidRegex
      */
-    public function __construct(UserRepository $userRepository, RolesService $rolesService)
+    public function __construct(UserRepository $userRepository, RolesService $rolesService, string $uuidRegex)
     {
         $this->userRepository = $userRepository;
         $this->rolesService = $rolesService;
+        $this->uuidRegex = $uuidRegex;
     }
 
     /**
@@ -51,7 +54,10 @@ class SecurityUserFactory implements UserProviderInterface
      */
     public function loadUserByUsername($username): UserInterface
     {
-        $user = $this->userRepository->loadUserByUsername($username);
+        $user = $this->userRepository->loadUserByUsername(
+            $username,
+            (bool)preg_match('#' . $this->uuidRegex . '#', $username)
+        );
 
         if (!($user instanceof User)) {
             throw new UsernameNotFoundException(sprintf('User not found for UUID: "%s".', $username));

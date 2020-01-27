@@ -7,7 +7,7 @@ declare(strict_types = 1);
 namespace App\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use App\Utils\Traits\LoggerAware;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
@@ -21,19 +21,19 @@ use DateTimeZone;
  */
 class JWTCreatedSubscriber implements EventSubscriberInterface
 {
-    // Traits
-    use LoggerAware;
-
     private RequestStack $requestStack;
+    private LoggerInterface $logger;
 
     /**
      * Constructor
      *
-     * @param RequestStack $requestStack
+     * @param RequestStack    $requestStack
+     * @param LoggerInterface $logger
      */
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack, LoggerInterface $logger)
     {
         $this->requestStack = $requestStack;
+        $this->logger = $logger;
     }
 
     /**

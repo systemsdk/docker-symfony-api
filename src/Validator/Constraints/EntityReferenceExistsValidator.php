@@ -7,7 +7,7 @@ declare(strict_types = 1);
 namespace App\Validator\Constraints;
 
 use App\Entity\Interfaces\EntityInterface;
-use App\Utils\Traits\LoggerAware;
+use Psr\Log\LoggerInterface;
 use Closure;
 use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Component\Validator\Constraint;
@@ -22,8 +22,17 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
  */
 class EntityReferenceExistsValidator extends ConstraintValidator
 {
-    // Traits
-    use LoggerAware;
+    private LoggerInterface $logger;
+
+    /**
+     * Constructor.
+     *
+     * @param LoggerInterface $logger
+     */
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
 
     /**
      * Checks if the passed value is valid.
@@ -34,7 +43,7 @@ class EntityReferenceExistsValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof EntityReferenceExists) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\EntityReferenceExists');
+            throw new UnexpectedTypeException($constraint, EntityReferenceExists::class);
         }
 
         /** @var array<int, EntityInterface> $values */
@@ -97,11 +106,10 @@ class EntityReferenceExistsValidator extends ConstraintValidator
      */
     private function getInvalidValues(array $entities): array
     {
-        $iterator = static function (EntityInterface $entity): string {
-            return $entity->getId();
-        };
-
-        return array_map($iterator, array_filter($entities, $this->getFilterClosure()));
+        return array_map(
+            fn (EntityInterface $entity): string => $entity->getId(),
+            array_filter($entities, $this->getFilterClosure())
+        );
     }
 
     /**

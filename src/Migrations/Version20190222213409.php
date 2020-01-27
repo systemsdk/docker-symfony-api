@@ -30,7 +30,7 @@ CREATE TABLE scheduled_command (
     id INT AUTO_INCREMENT NOT NULL,
     name VARCHAR(100) NOT NULL,
     command VARCHAR(100) NOT NULL,
-    arguments VARCHAR(250) DEFAULT NULL,
+    arguments LONGTEXT DEFAULT NULL,
     cron_expression VARCHAR(100) DEFAULT NULL,
     last_execution DATETIME NOT NULL,
     last_return_code INT DEFAULT NULL,
