@@ -55,6 +55,7 @@ Isolate 3rd party dependencies into Service classes for simple refactoring/exten
 
 ## IDE
 Short list of most popular IDE for PHP development:
+
 * [PhpStorm](https://www.jetbrains.com/phpstorm/)
 * [Zend Studio](https://www.zend.com/products/zend-studio)
 * [Eclipse PDT](https://www.eclipse.org/pdt/)
@@ -84,6 +85,7 @@ In order to migrate changes to your database please use next command in symfony 
 Note: Also you can use make command (`make migrate`) in your local shell and it will make necessary changes to main database and test database.
 
 Please use next workflow for migrations:
+
 1. Make changes (create/edit/delete) to entities in `/src/Entity/` folder
 2. Run `diff` command to create new migration file
 3. Run `migrate` command to make actual changes to your database

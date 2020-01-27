@@ -6,7 +6,6 @@ declare(strict_types = 1);
 
 namespace App\Controller\Api;
 
-use App\Resource\ApiKeyResource;
 use App\Rest\ResponseHandler;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -39,7 +38,7 @@ use Nelmio\ApiDocBundle\Annotation\Model;
  *
  * @package App\Controller\Api
  *
- * @method ApiKeyResource getResource()
+ * @method RoleResource getResource()
  * @method ResponseHandler getResponseHandler()
  */
 class RoleController extends Controller

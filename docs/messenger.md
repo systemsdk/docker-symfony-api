@@ -12,5 +12,6 @@ You can use your browser in order to manage/view messages. Just open next url in
 Once your messages have been routed, it will be consumed. In case any issue just make sure that program:messenger is working in supervisord. You can use make command "make logs-supervisord" for this needs.
 ### Message and Handler
 Before you can send a message, you must create it first. In order to do something when your message is dispatched, you need to create a message handler. Please follow docs in order to implement it:
+
 * [Message](https://symfony.com/doc/current/messenger.html#message)
 * [Handler](https://symfony.com/doc/current/messenger.html#registering-handlers)

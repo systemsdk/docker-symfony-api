@@ -73,6 +73,7 @@ class LogLoginFailure implements EntityInterface
      *          name="user_id",
      *          referencedColumnName="id",
      *          nullable=false,
+     *          onDelete="CASCADE",
      *      ),
      *  })
      */

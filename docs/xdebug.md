@@ -5,18 +5,24 @@ This document describing how you can use [Xdebug](https://xdebug.org/) and [PhpS
 Please follow [PhpStorm](phpstorm.md) documentation before actions described bellow.
 
 ### PhpStorm basic configuration
-1) Check /docker/dev/xdebug.ini (optional)
-    - In case you need debug only requests with IDE KEY: PHPSTORM from frontend in your browser:
-        ```
-        xdebug.remote_autostart = 0
-        ```
-    - In case you need debug any request to an api (by default):
-        ```
-        xdebug.remote_autostart = 1
-        ```
-2) Go to `Settings -> Languages & Frameworks -> Php -> Debug` and set Xdebug port `10000`
-3) Check your `Run/Debug Configurations` as on image bellow
-4) Install needed browser extensions (optional, see step 1). For example for Firefox install extension "Xdebug helper" and set in extension settings IDE KEY: PHPSTORM
+1.Check /docker/dev/xdebug.ini (optional)
+
+- In case you need debug only requests with IDE KEY: PHPSTORM from frontend in your browser:
+```bash
+xdebug.remote_autostart = 0
+```
+Install locally in Firefox extension "Xdebug helper" and set in settings IDE KEY: PHPSTORM
+
+- In case you need debug any request to an api (by default):
+```bash
+xdebug.remote_autostart = 1
+```
+
+2.Go to `Settings -> Languages & Frameworks -> Php -> Debug` and set Xdebug port `10000`
+
+3.Check your `Run/Debug Configurations` as on image bellow
+
+4.Install needed browser extensions (optional, see step 1). For example for Firefox install extension "Xdebug helper" and set in extension settings IDE KEY: PHPSTORM
 
 ![Basic configuration](images/xdebug_01.png)
 
@@ -24,10 +30,11 @@ Please follow [PhpStorm](phpstorm.md) documentation before actions described bel
 
 ### Using Xdebug
 After actions above you can start to listen incoming PHP debug connections:
-1) Add breakpoint to your code
-2) Enable Xdebug in your browser (optional, required only when xdebug.remote_autostart = 0)
-3) Click `Debug` button in PhpStorm
-4) Reload browser page
+
+1. Add breakpoint to your code
+2. Enable Xdebug in your browser (optional, required only when xdebug.remote_autostart = 0)
+3. Click `Debug` button in PhpStorm
+4. Reload browser page
 
 If everything configured properly you will get something like next:
 

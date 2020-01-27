@@ -3,6 +3,7 @@ This document describing how you can run tests within this environment.
 
 ### General
 This environment contains next types of tests:
+
 * Functional (TODO: Implement it)
 * Unit tests (TODO: Implement it)
 
@@ -13,15 +14,16 @@ Please note that this environment does not use simple phpunit as does Symfony by
 ### Commands to run tests
 You can run tests using following local shell command(s):
 ```bash
-make phpunit                # Run all tests
+make phpunit    # Run all tests
 ```
 
 If you want to run single test or all tests in specified directory you can use next steps:
-1. Use next local shell command in order to enter into symfony container shell:
+
+1.Use next local shell command in order to enter into symfony container shell:
 ```bash
 make ssh    # Enter symfony container shell
 ```
-2. Use next symfony container shell command(s) in order to run test(s):
+2.Use next symfony container shell command(s) in order to run test(s):
 ```bash
 ./vendor/bin/phpunit ./tests/Functional/Controller/ApiKeyControllerTest.php  # Just this single test class
 ./vendor/bin/phpunit ./tests/Functional/Controller/                          # All tests in this directory

@@ -1,12 +1,12 @@
 security:
-    # https://symfony.com/doc/current/security/named_encoders.html
+    # http://symfony.com/doc/current/cookbook/security/named_encoders.html
     encoders:
         App\Security\SecurityUser:
             algorithm: auto
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        in_memory: { memory: null }
         chain_provider:
             chain:
                 providers: [security_user_provider, api_key_user_provider]

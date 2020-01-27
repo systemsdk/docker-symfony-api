@@ -6,7 +6,6 @@ declare(strict_types = 1);
 
 namespace App\Controller\Api;
 
-use App\Resource\ApiKeyResource;
 use App\Rest\ResponseHandler;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -44,7 +43,7 @@ use Throwable;
  *
  * @package App\Controller\Api
  *
- * @method ApiKeyResource getResource()
+ * @method UserResource getResource()
  * @method ResponseHandler getResponseHandler()
  */
 class UserController extends Controller

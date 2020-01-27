@@ -74,31 +74,32 @@ After above command you will be inside symfony container and for display list of
 ./bin/console
 ```
 #### Custom commands in symfony container shell
-1. Help with user management:
-    ```bash
-    ./bin/console user:management     # Manage your users/user groups
-    ./bin/console user:create         # Create user
-    ./bin/console user:create-group   # Create user group
-    ./bin/console user:create-roles   # Initialize user group roles
-    ./bin/console user:edit           # Edit user
-    ./bin/console user:edit-group     # Edit user group
-    ./bin/console user:list           # List current users
-    ./bin/console user:list-groups    # List current user groups
-    ./bin/console user:remove         # Remove user
-    ./bin/console user:remove-group   # Remove user group
-    ```
-2. Help with api-key management:
-    ```bash
-    ./bin/console api-key:management      # Manage your API keys
-    ./bin/console api-key:change-token    # Change API key token
-    ./bin/console api-key:create          # Create API key
-    ./bin/console api-key:edit            # Edit API key
-    ./bin/console api-key:list            # List API keys
-    ./bin/console api-key:remove          # Remove API key
-    ```
-3. Help with other things:
-    ```bash
-    ./bin/console check-dependencies                    # Check which vendor dependencies has updates
-    ./bin/console db:wait                               # Waits for database availability (2 mins max)
-    ./bin/console utils:create-date-dimension-entities  # Create 'DateDimension' entities
-    ```
+1.Help with user management:
+```bash
+./bin/console user:management           # Manage your users/user groups
+./bin/console user:create               # Create user
+./bin/console user:create-group         # Create user group
+./bin/console user:create-roles         # Initialize user group roles
+./bin/console user:create-roles-groups  # Initialize user groups and roles
+./bin/console user:edit                 # Edit user
+./bin/console user:edit-group           # Edit user group
+./bin/console user:list                 # List current users
+./bin/console user:list-groups          # List current user groups
+./bin/console user:remove               # Remove user
+./bin/console user:remove-group         # Remove user group
+```
+2.Help with api-key management:
+```bash
+./bin/console api-key:management      # Manage your API keys
+./bin/console api-key:change-token    # Change API key token
+./bin/console api-key:create          # Create API key
+./bin/console api-key:edit            # Edit API key
+./bin/console api-key:list            # List API keys
+./bin/console api-key:remove          # Remove API key
+```
+3.Help with other things:
+```bash
+./bin/console check-dependencies                    # Check which vendor dependencies has updates
+./bin/console db:wait                               # Waits for database availability (2 mins max)
+./bin/console utils:create-date-dimension-entities  # Create 'DateDimension' entities
+```

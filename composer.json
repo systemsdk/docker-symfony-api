@@ -58,6 +58,7 @@
         "symfony/framework-bundle": "4.4.*",
         "symfony/http-client": "4.4.*",
         "symfony/intl": "4.4.*",
+        "symfony/mailer": "4.4.*",
         "symfony/messenger": "4.4.*",
         "symfony/monolog-bundle": "^3.5",
         "symfony/orm-pack": "*",
@@ -65,7 +66,6 @@
         "symfony/routing": "4.4.*",
         "symfony/security-bundle": "4.4.*",
         "symfony/serializer-pack": "*",
-        "symfony/swiftmailer-bundle": "^3.1",
         "symfony/translation": "4.4.*",
         "symfony/twig-bundle": "4.4.*",
         "symfony/validator": "4.4.*",
@@ -104,6 +104,7 @@
         "paragonie/random_compat": "2.*",
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*",
         "symfony/polyfill-php71": "*",
         "symfony/polyfill-php70": "*",
         "symfony/polyfill-php56": "*"
@@ -131,7 +132,7 @@
             "target-directory": "tools"
         },
         "symfony": {
-            "allow-contrib": "true",
+            "allow-contrib": true,
             "require": "4.4.*"
         }
     }
