@@ -7,8 +7,11 @@ declare(strict_types = 1);
 namespace App\Rest\Interfaces;
 
 use App\Entity\Interfaces\EntityInterface;
-use Doctrine\Common\Proxy\Proxy;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\ORMInvalidArgumentException;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
 
@@ -34,13 +37,13 @@ interface RepositoryInterface
      *
      * @param string $id
      *
-     * @throws \Doctrine\ORM\ORMException
+     * @throws ORMException
      *
-     * @return Proxy|null
+     * @return object|null
      *
      * @psalm-suppress DeprecatedClass
      */
-    public function getReference(string $id): ?Proxy;
+    public function getReference(string $id);
 
     /**
      * Gets all association mappings of the class.
@@ -66,9 +69,9 @@ interface RepositoryInterface
      *
      * @param EntityInterface $entity
      *
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Doctrine\ORM\ORMInvalidArgumentException
-     * @throws \Doctrine\ORM\ORMException
+     * @throws OptimisticLockException
+     * @throws ORMInvalidArgumentException
+     * @throws ORMException
      *
      * @return RepositoryInterface
      */
@@ -79,9 +82,9 @@ interface RepositoryInterface
      *
      * @param EntityInterface $entity
      *
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Doctrine\ORM\ORMInvalidArgumentException
-     * @throws \Doctrine\ORM\ORMException
+     * @throws OptimisticLockException
+     * @throws ORMInvalidArgumentException
+     * @throws ORMException
      *
      * @return RepositoryInterface
      */
@@ -94,7 +97,7 @@ interface RepositoryInterface
      * @param array|null $search
      *
      * @throws InvalidArgumentException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      *
      * @return int
      */

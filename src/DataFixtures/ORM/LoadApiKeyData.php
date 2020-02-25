@@ -23,8 +23,19 @@ use Throwable;
  */
 final class LoadApiKeyData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private ContainerInterface $container;
+
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private ObjectManager $manager;
+
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private RolesServiceInterface $roles;
 
 

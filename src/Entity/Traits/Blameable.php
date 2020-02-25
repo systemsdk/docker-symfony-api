@@ -24,6 +24,7 @@ trait Blameable
      * @Gedmo\Blameable(on="create")
      *
      * @Groups({
+     *     "ApiKey.createdBy",
      *     "Role.createdBy",
      *     "User.createdBy",
      *     "UserGroup.createdBy",
@@ -37,7 +38,7 @@ trait Blameable
      *     onDelete="SET NULL",
      *  )
      */
-    protected $createdBy;
+    protected ?User $createdBy = null;
 
     /**
      * @var User|null
@@ -45,6 +46,7 @@ trait Blameable
      * @Gedmo\Blameable(on="update")
      *
      * @Groups({
+     *     "ApiKey.updatedBy",
      *     "Role.updatedBy",
      *     "User.updatedBy",
      *     "UserGroup.updatedBy",
@@ -58,7 +60,7 @@ trait Blameable
      *      onDelete="SET NULL",
      *  )
      */
-    protected $updatedBy;
+    protected ?User $updatedBy = null;
 
 
     /**

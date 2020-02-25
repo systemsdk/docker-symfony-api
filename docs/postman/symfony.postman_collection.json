@@ -138,7 +138,7 @@
 			"name": "Tools",
 			"item": [
 				{
-					"name": "healthz",
+					"name": "health",
 					"request": {
 						"method": "GET",
 						"header": [],

@@ -9,7 +9,6 @@ namespace App\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 use DateTime;
 use DateTimeZone;
@@ -57,7 +56,7 @@ class JWTCreatedSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            Events::JWT_CREATED => 'onJWTCreated',
+            JWTCreatedEvent::class => 'onJWTCreated',
         ];
     }
 

@@ -55,6 +55,9 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      * @Groups({
      *      "User",
      *      "User.id",
+     *      "LogLogin.user",
+     *      "LogLoginFailure.user",
+     *      "LogRequest.user",
      *      "UserGroup.users",
      *  })
      *
@@ -68,7 +71,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *
      * @SWG\Property(type="string", format="uuid")
      */
-    private $id;
+    private UuidInterface $id;
 
     /**
      * @var string
@@ -89,7 +92,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      nullable=false,
      *  )
      */
-    private $username = '';
+    private string $username = '';
 
     /**
      * @var string
@@ -110,7 +113,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      nullable=false,
      *  )
      */
-    private $firstName = '';
+    private string $firstName = '';
 
     /**
      * @var string
@@ -131,7 +134,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      nullable=false,
      *  )
      */
-    private $lastName = '';
+    private string $lastName = '';
 
     /**
      * @var string
@@ -152,7 +155,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      nullable=false
      *  )
      */
-    private $email = '';
+    private string $email = '';
 
     /**
      * @var string
@@ -164,14 +167,14 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      nullable=false
      *  )
      */
-    private $password = '';
+    private string $password = '';
 
     /**
      * Plain password. Used for model validation. Must not be persisted.
      *
      * @var  string
      */
-    private $plainPassword = '';
+    private string $plainPassword = '';
 
 
     /**
@@ -181,7 +184,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      */
     public function __construct()
     {
-        $this->id = $this->getUuid();
+        $this->id = $this->createUuid();
         $this->userGroups = new ArrayCollection();
         $this->logsRequest = new ArrayCollection();
         $this->logsLogin = new ArrayCollection();

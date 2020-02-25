@@ -10,6 +10,7 @@ use App\DTO\Interfaces\RestDtoInterface;
 use App\Entity\Interfaces\EntityInterface;
 use App\Repository\Interfaces\BaseRepositoryInterface;
 use App\Utils\JSON;
+use JsonException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -412,7 +413,7 @@ trait RestResourceBaseMethods
 
         // Oh noes, we have some errors
         if ($errors !== null && $errors->count() > 0) {
-            $this->createValidatorException($errors);
+            $this->createValidatorException($errors, get_class($dto));
         }
     }
 
@@ -430,7 +431,7 @@ trait RestResourceBaseMethods
 
         // Oh noes, we have some errors
         if ($errors !== null && $errors->count() > 0) {
-            $this->createValidatorException($errors);
+            $this->createValidatorException($errors, get_class($entity));
         }
     }
 
@@ -441,6 +442,7 @@ trait RestResourceBaseMethods
      */
     private function createEntity(): EntityInterface
     {
+        /** @var class-string $entityClass */
         $entityClass = $this->getRepository()->getEntityName();
 
         return new $entityClass();
@@ -448,10 +450,11 @@ trait RestResourceBaseMethods
 
     /**
      * @param ConstraintViolationListInterface $errors
+     * @param string                           $target
      *
-     * @throws Throwable
+     * @throws JsonException
      */
-    private function createValidatorException(ConstraintViolationListInterface $errors): void
+    private function createValidatorException(ConstraintViolationListInterface $errors, string $target): void
     {
         $output = [];
 
@@ -460,6 +463,7 @@ trait RestResourceBaseMethods
             $output[] = [
                 'message' => $error->getMessage(),
                 'propertyPath' => $error->getPropertyPath(),
+                'target' => str_replace('\\', '.', $target),
                 'code' => $error->getCode(),
             ];
         }

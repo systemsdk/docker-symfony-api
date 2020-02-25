@@ -39,7 +39,7 @@ trait LogEntity
      *      nullable=false,
      *  )
      */
-    protected $time;
+    protected DateTimeImmutable $time;
 
     /**
      * @var DateTimeImmutable
@@ -57,7 +57,7 @@ trait LogEntity
      *      nullable=false,
      *  )
      */
-    protected $date;
+    protected DateTimeImmutable $date;
 
     /**
      * @var string
@@ -75,7 +75,7 @@ trait LogEntity
      *      nullable=false,
      *  )
      */
-    protected $agent;
+    protected string $agent = '';
 
     /**
      * @var string
@@ -94,7 +94,7 @@ trait LogEntity
      *      nullable=false,
      *  )
      */
-    protected $httpHost;
+    protected string $httpHost = '';
 
     /**
      * @var string
@@ -113,7 +113,7 @@ trait LogEntity
      *      nullable=false,
      *  )
      */
-    private $clientIp;
+    private string $clientIp = '';
 
 
     /**
@@ -130,14 +130,6 @@ trait LogEntity
     public function getDate(): DateTimeImmutable
     {
         return $this->date;
-    }
-
-    /**
-     * @return User|null
-     */
-    public function getUser(): ?User
-    {
-        return $this->user;
     }
 
     /**

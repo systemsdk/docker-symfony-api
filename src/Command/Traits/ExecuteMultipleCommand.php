@@ -23,6 +23,9 @@ trait ExecuteMultipleCommand
     use GetApplication;
 
     private array $choices = [];
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private SymfonyStyle $io;
 
     /**

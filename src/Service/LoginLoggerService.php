@@ -23,24 +23,9 @@ use Throwable;
  */
 class LoginLoggerService implements LoginLoggerServiceInterface
 {
-    /**
-     * @var LogLoginResource
-     */
     private LogLoginResource $logLoginResource;
-
-    /**
-     * @var RequestStack
-     */
     private RequestStack $requestStack;
-
-    /**
-     * @var User|null
-     */
-    private ?User $user;
-
-    /**
-     * @var DeviceDetector
-     */
+    private ?User $user = null;
     private DeviceDetector $deviceDetector;
 
     /**
@@ -54,6 +39,7 @@ class LoginLoggerService implements LoginLoggerServiceInterface
         // Store used services
         $this->logLoginResource = $logLoginFailureResource;
         $this->requestStack = $requestStack;
+        $this->deviceDetector = new DeviceDetector();
     }
 
     /**

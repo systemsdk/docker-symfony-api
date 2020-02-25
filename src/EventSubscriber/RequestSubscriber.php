@@ -10,7 +10,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use App\Service\RequestLoggerService;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use App\Entity\User as ApplicationUser;
-use Symfony\Component\HttpKernel\KernelEvents;
 use App\Repository\UserRepository;
 use App\Security\SecurityUser;
 use Psr\Log\LoggerInterface;
@@ -73,7 +72,7 @@ class RequestSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::RESPONSE => [
+            ResponseEvent::class => [
                 'onKernelResponse',
                 15,
             ],
@@ -92,11 +91,12 @@ class RequestSubscriber implements EventSubscriberInterface
         $request = $event->getRequest();
         $path = $request->getPathInfo();
 
-        // We don't want to log /health , /version, /_profiler* and OPTIONS requests
-        if ($path === '/health'
-            || $path === '/version'
-            || strpos($path, '/_profiler') !== false
-            || $request->getRealMethod() === 'OPTIONS'
+        static $ignorePaths = ['', '/', '/api', '/api/', '/api/health', '/api/version'];
+
+        // We don't want to log ignored paths, /_profiler* -path and OPTIONS requests
+        if (in_array($path, $ignorePaths, true)
+            || (strpos($path, '/_profiler') !== false)
+            || ($request->getRealMethod() === 'OPTIONS')
         ) {
             return;
         }

@@ -28,7 +28,7 @@ abstract class RestRequestMapper implements MapperInterface
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @param array|object $source
      * @param string       $targetClass
@@ -38,13 +38,14 @@ abstract class RestRequestMapper implements MapperInterface
      */
     public function map($source, string $targetClass, array $context = []): RestDtoInterface
     {
+        /** @var class-string $targetClass */
         $destination = new $targetClass();
 
         return $this->mapToObject($source, $destination, $context);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @param array|object $source
      * @param object       $destination

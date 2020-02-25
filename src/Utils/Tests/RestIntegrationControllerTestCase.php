@@ -17,25 +17,16 @@ use ReflectionException;
  */
 abstract class RestIntegrationControllerTestCase extends ContainerTestCase
 {
-    /**
-     * @var Controller
-     */
-    protected $controller;
+    protected Controller $controller;
+    protected string $controllerClass;
 
     /**
-     * @var string
      * @psalm-var class-string
      */
-    protected $controllerClass;
+    protected string $resourceClass;
 
     /**
-     * @var string
-     * @psalm-var class-string
-     */
-    protected $resourceClass;
-
-    /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function setUp(): void
     {
@@ -47,7 +38,7 @@ abstract class RestIntegrationControllerTestCase extends ContainerTestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function tearDown(): void
     {

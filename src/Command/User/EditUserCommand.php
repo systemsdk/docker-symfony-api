@@ -13,7 +13,7 @@ use App\Resource\UserResource;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\Entity\User as UserEntity;
-use App\DTO\User\UserPatch as UserDto;
+use App\DTO\User\UserUpdate as UserDto;
 use App\Form\Type\Console\UserType;
 use Matthias\SymfonyConsoleForm\Console\Helper\FormHelper;
 use Throwable;
@@ -99,8 +99,8 @@ class EditUserCommand extends Command
         $helper = $this->getHelper('form');
         /** @var UserDto $dtoEdit */
         $dtoEdit = $helper->interactUsingForm(UserType::class, $input, $output, ['data' => $dtoLoaded]);
-        // Update user
-        $this->userResource->update($user->getId(), $dtoEdit);
+        // Patch user
+        $this->userResource->patch($user->getId(), $dtoEdit);
 
         return 'User updated - have a nice day';
     }

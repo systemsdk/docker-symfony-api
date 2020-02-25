@@ -7,6 +7,7 @@ declare(strict_types = 1);
 namespace App\Command\User;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\LogicException;
 use App\Command\Traits\StyleSymfony;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\RoleRepository;
@@ -38,7 +39,7 @@ class CreateRolesCommand extends Command
      * @param RoleRepository         $roleRepository
      * @param RolesService           $rolesService
      *
-     * @throws \Symfony\Component\Console\Exception\LogicException
+     * @throws LogicException
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -66,14 +67,12 @@ class CreateRolesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);
-        /**
-         * @param string $role
-         * @return int
-         */
-        $iterator = function (string $role): int {
-            return $this->createRole($role);
-        };
-        $created = array_sum(array_map($iterator, $this->rolesService->getRoles()));
+        $created = array_sum(
+            array_map(
+                fn (string $role): int => $this->createRole($role),
+                $this->rolesService->getRoles()
+            )
+        );
         $this->entityManager->flush();
         $removed = $this->clearRoles($this->rolesService->getRoles());
 

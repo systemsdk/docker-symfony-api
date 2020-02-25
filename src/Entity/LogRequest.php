@@ -44,6 +44,28 @@ class LogRequest implements EntityInterface
     use Uuid;
 
     /**
+     * @var UuidInterface
+     *
+     * @Groups({
+     *     "LogRequest",
+     *     "LogRequest.id",
+     *     "ApiKey.logsRequest",
+     *     "User.logRequest",
+     *  })
+     *
+     * @ORM\Column(
+     *     name="id",
+     *     type="uuid_binary_ordered_time",
+     *     unique=true,
+     *     nullable=false,
+     *  )
+     * @ORM\Id()
+     *
+     * @SWG\Property(type="string", format="uuid")
+     */
+    private UuidInterface $id;
+
+    /**
      * @var User|null
      *
      * @Groups({
@@ -63,28 +85,7 @@ class LogRequest implements EntityInterface
      *      ),
      *  })
      */
-    protected $user;
-
-    /**
-     * @var UuidInterface
-     *
-     * @Groups({
-     *      "LogRequest",
-     *      "LogRequest.id",
-     *      "User.logRequest",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="id",
-     *      type="uuid_binary_ordered_time",
-     *      unique=true,
-     *      nullable=false,
-     *  )
-     * @ORM\Id()
-     *
-     * @SWG\Property(type="string", format="uuid")
-     */
-    private $id;
+    private ?User $user = null;
 
     /**
      * @var ApiKey|null
@@ -106,7 +107,7 @@ class LogRequest implements EntityInterface
      *      ),
      *  })
      */
-    private $apiKey;
+    private ?ApiKey $apiKey = null;
 
     /**
      * @var int
@@ -122,7 +123,7 @@ class LogRequest implements EntityInterface
      *      nullable=false,
      *  )
      */
-    private $statusCode;
+    private int $statusCode = 0;
 
     /**
      * @var int
@@ -138,7 +139,7 @@ class LogRequest implements EntityInterface
      *      nullable=false,
      *  )
      */
-    private $responseContentLength;
+    private int $responseContentLength = 0;
 
     /**
      * @var bool
@@ -154,12 +155,14 @@ class LogRequest implements EntityInterface
      *      nullable=false,
      *  )
      */
-    private $masterRequest;
+    private bool $masterRequest;
 
+    private array $sensitiveProperties;
 
     /**
      * Constructor
      *
+     * @param array         $sensitiveProperties
      * @param Request|null  $request
      * @param Response|null $response
      * @param User|null     $user
@@ -169,13 +172,15 @@ class LogRequest implements EntityInterface
      * @throws Throwable
      */
     public function __construct(
+        array $sensitiveProperties,
         ?Request $request = null,
         ?Response $response = null,
         ?User $user = null,
         ?ApiKey $apiKey = null,
         ?bool $masterRequest = null
     ) {
-        $this->id = $this->getUuid();
+        $this->sensitiveProperties = $sensitiveProperties;
+        $this->id = $this->createUuid();
         $this->user = $user;
         $this->apiKey = $apiKey;
         $this->masterRequest = $masterRequest ?? true;
@@ -197,6 +202,14 @@ class LogRequest implements EntityInterface
     public function getId(): string
     {
         return $this->id->toString();
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
     }
 
     /**
@@ -229,6 +242,14 @@ class LogRequest implements EntityInterface
     public function isMasterRequest(): bool
     {
         return $this->masterRequest;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSensitiveProperties(): array
+    {
+        return $this->sensitiveProperties;
     }
 
     /**

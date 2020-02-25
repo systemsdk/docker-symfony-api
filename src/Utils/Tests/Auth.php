@@ -21,10 +21,7 @@ use JsonException;
  */
 class Auth
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $testContainer;
+    private ContainerInterface $testContainer;
 
     /**
      * Constructor
@@ -44,7 +41,7 @@ class Auth
      *
      * @throws Throwable
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getAuthorizationHeadersForUser(string $username, string $password): array
     {
@@ -57,7 +54,7 @@ class Auth
      *
      * @param string $role
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getAuthorizationHeadersForApiKey(string $role): array
     {
@@ -74,7 +71,7 @@ class Auth
      *
      * @param string $token
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getAuthorizationHeaders(string $token): array
     {
@@ -87,7 +84,7 @@ class Auth
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     public function getJwtHeaders(): array
     {
@@ -128,7 +125,6 @@ class Auth
         // User + password doesn't exists on cache - so we need to make real login
         if (!array_key_exists($hash, $cache)) {
             // Get client
-            /** @noinspection MissingService */
             /** @var KernelBrowser $client */
             $client = $this->testContainer->get('test.client');
             // Create request to make login using given credentials
@@ -172,7 +168,7 @@ class Auth
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     private function getContentTypeHeader(): array
     {

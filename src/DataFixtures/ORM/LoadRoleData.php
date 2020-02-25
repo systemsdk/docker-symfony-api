@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Security\Interfaces\RolesServiceInterface;
 use App\Entity\Role;
-use BadMethodCallException;
+use Throwable;
 
 /**
  * Class LoadRoleData
@@ -22,8 +22,19 @@ use BadMethodCallException;
  */
 final class LoadRoleData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private ContainerInterface $container;
+
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private ObjectManager $manager;
+
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private RolesServiceInterface $roles;
 
 
@@ -50,11 +61,8 @@ final class LoadRoleData extends Fixture implements OrderedFixtureInterface, Con
         $rolesService = $this->container->get('test.app.security.roles_service');
         $this->roles = $rolesService;
         $this->manager = $manager;
-        $iterator = function (string $role): void {
-            $this->createRole($role);
-        };
         // Create entities
-        array_map($iterator, $this->roles->getRoles());
+        array_map(fn (string $role): bool => $this->createRole($role), $this->roles->getRoles());
         // Flush database changes
         $this->manager->flush();
     }
@@ -74,16 +82,22 @@ final class LoadRoleData extends Fixture implements OrderedFixtureInterface, Con
      *
      * @param string $role
      *
-     * @throws BadMethodCallException
+     * @throws Throwable
+     *
+     * @return bool
      */
-    private function createRole(string $role): void
+    private function createRole(string $role): bool
     {
         // Create new Role entity
         $entity = new Role($role);
         $entity->setDescription('Description - ' . $role);
+
         // Persist entity
         $this->manager->persist($entity);
+
         // Create reference for later usage
         $this->addReference('Role-' . $this->roles->getShort($role), $entity);
+
+        return true;
     }
 }

@@ -25,8 +25,9 @@ interface RequestLoggerServiceInterface
      *
      * @param LogRequestResource $resource
      * @param LoggerInterface    $logger
+     * @param array              $sensitiveProperties
      */
-    public function __construct(LogRequestResource $resource, LoggerInterface $logger);
+    public function __construct(LogRequestResource $resource, LoggerInterface $logger, array $sensitiveProperties);
 
     /**
      * Setter for response object.

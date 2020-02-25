@@ -9,7 +9,6 @@ namespace App\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use App\Repository\UserRepository;
 use App\Resource\LogLoginFailureResource;
-use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use App\Entity\LogLoginFailure;
 use App\Entity\User;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
@@ -63,11 +62,11 @@ class LockedUserSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            Events::AUTHENTICATION_SUCCESS => [
+            AuthenticationSuccessEvent::class => [
                 'onAuthenticationSuccess',
                 128,
             ],
-            Events::AUTHENTICATION_FAILURE => 'onAuthenticationFailure',
+            AuthenticationFailureEvent::class => 'onAuthenticationFailure',
         ];
     }
 

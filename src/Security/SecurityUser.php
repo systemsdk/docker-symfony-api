@@ -45,7 +45,7 @@ class SecurityUser implements SecurityUserInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      *
      * @return array
      */

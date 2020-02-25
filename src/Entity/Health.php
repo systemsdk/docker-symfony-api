@@ -49,7 +49,7 @@ class Health implements EntityInterface
      *
      * @SWG\Property(type="string", format="uuid")
      */
-    private $id;
+    private UuidInterface $id;
 
     /**
      * @var DateTimeImmutable
@@ -65,7 +65,7 @@ class Health implements EntityInterface
      *      nullable=false,
      *  )
      */
-    private $timestamp;
+    private DateTimeImmutable $timestamp;
 
 
     /**
@@ -75,7 +75,7 @@ class Health implements EntityInterface
      */
     public function __construct()
     {
-        $this->id = $this->getUuid();
+        $this->id = $this->createUuid();
         $this->setTimestamp(new DateTimeImmutable('NOW', new DateTimeZone('UTC')));
     }
 

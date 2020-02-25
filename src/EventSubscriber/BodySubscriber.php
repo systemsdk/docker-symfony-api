@@ -10,7 +10,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use JsonException;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\KernelEvents;
 use App\Utils\JSON;
 
 /**
@@ -41,7 +40,7 @@ class BodySubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::REQUEST => [
+            RequestEvent::class => [
                 'onKernelRequest',
                 10,
             ],

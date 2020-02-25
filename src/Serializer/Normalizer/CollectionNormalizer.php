@@ -9,6 +9,7 @@ namespace App\Serializer\Normalizer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 /**
@@ -35,7 +36,7 @@ class CollectionNormalizer implements NormalizerInterface
      * @param string|null                      $format
      * @param array<array-key, mixed>          $context
      *
-     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
+     * @throws ExceptionInterface
      *
      * @return array
      */
@@ -51,7 +52,7 @@ class CollectionNormalizer implements NormalizerInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function supportsNormalization($data, $format = null): bool
     {

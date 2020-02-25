@@ -23,6 +23,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 
 /**
@@ -105,8 +107,8 @@ class RoleController extends Controller
      *
      * @throws LogicException
      * @throws Throwable
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
-     * @throws \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
+     * @throws HttpException
+     * @throws MethodNotAllowedHttpException
      *
      * @return Response
      */

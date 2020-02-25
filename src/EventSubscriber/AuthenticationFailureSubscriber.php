@@ -9,7 +9,6 @@ namespace App\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use App\Service\LoginLoggerService;
 use App\Repository\UserRepository;
-use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use App\Doctrine\DBAL\Types\EnumLogLoginType;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
 use Doctrine\ORM\ORMException;
@@ -58,7 +57,7 @@ class AuthenticationFailureSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            Events::AUTHENTICATION_FAILURE => 'onAuthenticationFailure',
+            AuthenticationFailureEvent::class => 'onAuthenticationFailure',
         ];
     }
 

@@ -55,7 +55,7 @@ class DateDimension implements EntityInterface
      *
      * @SWG\Property(type="string", format="uuid")
      */
-    private $id;
+    private UuidInterface $id;
 
     /**
      * @var DateTime
@@ -71,7 +71,7 @@ class DateDimension implements EntityInterface
      *      nullable=false,
      *  )
      */
-    private $date;
+    private DateTime $date;
 
     /**
      * @var int
@@ -90,7 +90,7 @@ class DateDimension implements EntityInterface
      *      },
      *  )
      */
-    private $year;
+    private int $year;
 
     /**
      * @var int
@@ -109,7 +109,7 @@ class DateDimension implements EntityInterface
      *      },
      *  )
      */
-    private $month;
+    private int $month;
 
     /**
      * @var int
@@ -128,7 +128,7 @@ class DateDimension implements EntityInterface
      *      },
      *  )
      */
-    private $day;
+    private int $day;
 
     /**
      * @var int
@@ -147,7 +147,7 @@ class DateDimension implements EntityInterface
      *      },
      *  )
      */
-    private $quarter;
+    private int $quarter;
 
     /**
      * @var int
@@ -166,7 +166,7 @@ class DateDimension implements EntityInterface
      *      },
      *  )
      */
-    private $weekNumber;
+    private int $weekNumber;
 
     /**
      * @var int
@@ -185,7 +185,7 @@ class DateDimension implements EntityInterface
      *      },
      *  )
      */
-    private $dayNumberOfWeek;
+    private int $dayNumberOfWeek;
 
     /**
      * @var int
@@ -204,7 +204,7 @@ class DateDimension implements EntityInterface
      *      },
      *  )
      */
-    private $dayNumberOfYear;
+    private int $dayNumberOfYear;
 
     /**
      * @var bool
@@ -223,7 +223,7 @@ class DateDimension implements EntityInterface
      *      },
      *  )
      */
-    private $leapYear;
+    private bool $leapYear;
 
     /**
      * @var int
@@ -242,7 +242,7 @@ class DateDimension implements EntityInterface
      *      },
      *  )
      */
-    private $weekNumberingYear;
+    private int $weekNumberingYear;
 
     /**
      * @var int
@@ -262,7 +262,7 @@ class DateDimension implements EntityInterface
      *      },
      *  )
      */
-    private $unixTime;
+    private int $unixTime;
 
 
     /**
@@ -270,25 +270,23 @@ class DateDimension implements EntityInterface
      *
      * @throws Throwable
      *
-     * @param DateTime|null $dateTime
+     * @param DateTime $dateTime
      */
-    public function __construct(?DateTime $dateTime = null)
+    public function __construct(DateTime $dateTime)
     {
-        $this->id = $this->getUuid();
+        $this->id = $this->createUuid();
 
-        if ($dateTime !== null) {
-            $this->date = $dateTime;
-            $this->year = (int)$dateTime->format('Y');
-            $this->month = (int)$dateTime->format('n');
-            $this->day = (int)$dateTime->format('j');
-            $this->quarter = (int)floor(((int)$dateTime->format('n') - 1) / 3) + 1;
-            $this->weekNumber = (int)$dateTime->format('W');
-            $this->dayNumberOfWeek = (int)$dateTime->format('N');
-            $this->dayNumberOfYear = (int)$dateTime->format('z');
-            $this->leapYear = (bool)$dateTime->format('L');
-            $this->weekNumberingYear = (int)$dateTime->format('o');
-            $this->unixTime = (int)$dateTime->format('U');
-        }
+        $this->date = $dateTime;
+        $this->year = (int)$dateTime->format('Y');
+        $this->month = (int)$dateTime->format('n');
+        $this->day = (int)$dateTime->format('j');
+        $this->quarter = (int)floor(((int)$dateTime->format('n') - 1) / 3) + 1;
+        $this->weekNumber = (int)$dateTime->format('W');
+        $this->dayNumberOfWeek = (int)$dateTime->format('N');
+        $this->dayNumberOfYear = (int)$dateTime->format('z');
+        $this->leapYear = (bool)$dateTime->format('L');
+        $this->weekNumberingYear = (int)$dateTime->format('o');
+        $this->unixTime = (int)$dateTime->format('U');
     }
 
     /**
@@ -300,9 +298,9 @@ class DateDimension implements EntityInterface
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getDate(): DateTime
+    public function getDate(): ?DateTime
     {
         return $this->date;
     }

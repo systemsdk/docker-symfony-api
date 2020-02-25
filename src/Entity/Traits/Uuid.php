@@ -19,10 +19,18 @@ trait Uuid
 {
     /**
      * @return UuidInterface
+     */
+    public function getUuid(): UuidInterface
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return UuidInterface
      *
      * @throws Throwable
      */
-    protected function getUuid(): UuidInterface
+    protected function createUuid(): UuidInterface
     {
         return UuidHelper::getFactory()->uuid1();
     }

@@ -32,23 +32,22 @@ class CheckDependencies extends Command
     // Traits
     use StyleSymfony;
 
-    private string $projectDir;
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private SymfonyStyle $io;
-
+    private string $projectDir;
 
     /**
      * Constructor
      *
      * @param string $projectDir
-     *
-     * @throws \Symfony\Component\Console\Exception\LogicException
      */
     public function __construct(string $projectDir)
     {
         parent::__construct('check-dependencies');
 
         $this->setDescription('Console command to check which vendor dependencies has updates');
-
         $this->projectDir = $projectDir;
     }
 
@@ -58,13 +57,6 @@ class CheckDependencies extends Command
      *
      * @param InputInterface $input
      * @param OutputInterface $output
-     *
-     * @throws InvalidArgumentException
-     * @throws LogicException
-     * @throws RuntimeException
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
-     * @throws \Symfony\Component\Process\Exception\RuntimeException
-     * @throws \Symfony\Component\Process\Exception\LogicException
      *
      * @return int 0 if everything went fine, or an error code
      */
@@ -112,9 +104,7 @@ class CheckDependencies extends Command
          *
          * @return string
          */
-        $closure = static function (SplFileInfo $fileInfo): string {
-            return $fileInfo->getPath();
-        };
+        $closure = fn (SplFileInfo $fileInfo): string => $fileInfo->getPath();
         /** @var Traversable $iterator */
         $iterator = $finder->getIterator();
         // Determine namespace directories
@@ -128,10 +118,6 @@ class CheckDependencies extends Command
      * Method to determine table rows.
      *
      * @param array $directories
-     *
-     * @throws RuntimeException
-     * @throws \Symfony\Component\Process\Exception\RuntimeException
-     * @throws \Symfony\Component\Process\Exception\LogicException
      *
      * @return array
      */
@@ -185,11 +171,7 @@ class CheckDependencies extends Command
      *
      * @param string $path
      *
-     * @throws RuntimeException
-     * @throws \Symfony\Component\Process\Exception\LogicException
-     * @throws \Symfony\Component\Process\Exception\RuntimeException
-     *
-     * @return array|stdClass[]
+     * @return stdClass[]
      */
     private function processNamespacePath(string $path): array
     {
@@ -215,7 +197,7 @@ class CheckDependencies extends Command
         }
 
         /** @var stdClass $decoded */
-        $decoded = json_decode($process->getOutput(), false);
+        $decoded = json_decode($process->getOutput(), false, 512, JSON_THROW_ON_ERROR);
         /** @var array<int, stdClass>|string|null $installed */
         $installed = $decoded->installed;
 

@@ -49,6 +49,9 @@ class CreateApiKeyCommand extends Command
     private UserGroupResource $userGroupResource;
     private RolesService $rolesService;
     private RoleRepository $roleRepository;
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private SymfonyStyle $io;
 
 

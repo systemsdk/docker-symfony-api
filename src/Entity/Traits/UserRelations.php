@@ -12,8 +12,6 @@ use App\Entity\LogRequest;
 use App\Entity\User;
 use App\Entity\UserGroup;
 use App\Entity\Interfaces\UserGroupAwareInterface;
-use App\Security\RolesService;
-use App\Security\Interfaces\RolesServiceInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -33,14 +31,14 @@ trait UserRelations
      *  })
      *
      * @ORM\ManyToMany(
-     *      targetEntity="UserGroup",
+     *      targetEntity="App\Entity\UserGroup",
      *      inversedBy="users",
      *  )
      * @ORM\JoinTable(
      *      name="user_has_user_group"
      *  )
      */
-    protected $userGroups;
+    protected Collection $userGroups;
 
     /**
      * @var Collection<int, LogRequest>|ArrayCollection<int, LogRequest>
@@ -54,7 +52,7 @@ trait UserRelations
      *      mappedBy="user",
      *  )
      */
-    protected $logsRequest;
+    protected Collection $logsRequest;
 
     /**
      * @var Collection<int, LogLogin>|ArrayCollection<int, LogLogin>
@@ -68,7 +66,7 @@ trait UserRelations
      *      mappedBy="user",
      *  )
      */
-    protected $logsLogin;
+    protected Collection $logsLogin;
 
     /**
      * @var Collection<int, LogLoginFailure>|ArrayCollection<int, LogLoginFailure>
@@ -82,29 +80,16 @@ trait UserRelations
      *      mappedBy="user",
      *  )
      */
-    protected $logsLoginFailure;
-
-    /**
-     * @var RolesServiceInterface
-     */
-    private $rolesService;
-
-
-    /**
-     * @param RolesServiceInterface $rolesService
-     *
-     * @return User
-     */
-    public function setRolesService(RolesServiceInterface $rolesService): User
-    {
-        $this->rolesService = $rolesService;
-
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this;
-    }
+    protected Collection $logsLoginFailure;
 
     /**
      * Getter for roles.
+     *
+     * Note that this will only return _direct_ roles that user has and
+     * not the inherited ones!
+     *
+     * If you want to get user inherited roles you need to implement that
+     * logic by yourself OR use eg. `/user/{uuid}/roles` API endpoint.
      *
      * @psalm-return array<int, string>
      *
@@ -116,19 +101,7 @@ trait UserRelations
      */
     public function getRoles(): array
     {
-        $iterator = static function (UserGroup $userGroup): string {
-            return $userGroup->getRole()->getId();
-        };
-
-        /** @var array<int, string> $output */
-        $output = $this->userGroups->map($iterator)->toArray();
-
-        // And if we have roles service present we can fetch all inherited roles
-        if ($this->rolesService instanceof RolesService) {
-            $output = $this->rolesService->getInheritedRoles($output);
-        }
-
-        return array_values(array_map('\strval', array_unique($output)));
+        return $this->userGroups->map(fn (UserGroup $userGroup): string => $userGroup->getRole()->getId())->toArray();
     }
 
     /**
@@ -182,6 +155,7 @@ trait UserRelations
     {
         if (!$this->userGroups->contains($userGroup)) {
             $this->userGroups->add($userGroup);
+
             /** @noinspection PhpParamsInspection */
             $userGroup->addUser($this);
         }

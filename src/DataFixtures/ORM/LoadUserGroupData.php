@@ -23,8 +23,19 @@ use Throwable;
  */
 final class LoadUserGroupData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private ContainerInterface $container;
+
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private ObjectManager $manager;
+
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     private RolesServiceInterface $roles;
 
 
@@ -53,12 +64,8 @@ final class LoadUserGroupData extends Fixture implements OrderedFixtureInterface
         $rolesService = $this->container->get('test.app.security.roles_service');
         $this->roles = $rolesService;
         $this->manager = $manager;
-        $iterator = function (string $role): void {
-            $this->createUserGroup($role);
-        };
-
         // Create entities
-        array_map($iterator, $this->roles->getRoles());
+        array_map(fn (string $role): bool => $this->createUserGroup($role), $this->roles->getRoles());
         // Flush database changes
         $this->manager->flush();
     }
@@ -79,8 +86,10 @@ final class LoadUserGroupData extends Fixture implements OrderedFixtureInterface
      * @param string $role
      *
      * @throws Throwable
+     *
+     * @return bool
      */
-    private function createUserGroup(string $role): void
+    private function createUserGroup(string $role): bool
     {
         /** @var Role $roleReference */
         $roleReference = $this->getReference('Role-' . $this->roles->getShort($role));
@@ -95,5 +104,7 @@ final class LoadUserGroupData extends Fixture implements OrderedFixtureInterface
 
         // Create reference for later usage
         $this->addReference('UserGroup-' . $this->roles->getShort($role), $entity);
+
+        return true;
     }
 }

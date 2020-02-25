@@ -21,15 +21,15 @@ class BlameableDecorator extends BlameableListener
     private UserResource $userResource;
 
     /**
-     * @param UserResource $userResource
+     * Constructor
      *
-     * @return BlameableDecorator
+     * @param UserResource $userResource
      */
-    public function setUserResource(UserResource $userResource): self
+    public function __construct(UserResource $userResource)
     {
-        $this->userResource = $userResource;
+        parent::__construct();
 
-        return $this;
+        $this->userResource = $userResource;
     }
 
     /**

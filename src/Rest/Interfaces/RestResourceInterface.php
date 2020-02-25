@@ -9,7 +9,6 @@ namespace App\Rest\Interfaces;
 use App\DTO\Interfaces\RestDtoInterface;
 use App\Entity\Interfaces\EntityInterface;
 use App\Repository\Interfaces\BaseRepositoryInterface;
-use Doctrine\Common\Proxy\Proxy;
 use Doctrine\ORM\ORMException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Throwable;
@@ -22,6 +21,13 @@ use UnexpectedValueException;
  */
 interface RestResourceInterface
 {
+    /**
+     * Getter method for serializer context.
+     *
+     * @return array
+     */
+    public function getSerializerContext(): array;
+
     /**
      * Getter method for entity repository.
      *
@@ -87,7 +93,7 @@ interface RestResourceInterface
      *
      * @throws ORMException
      *
-     * @return Proxy|object|null
+     * @return object|null
      */
     public function getReference(string $id);
 

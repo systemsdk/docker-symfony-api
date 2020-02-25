@@ -51,7 +51,7 @@ class Role implements EntityInterface
      *  )
      * @ORM\Id()
      */
-    private $id;
+    private string $id;
 
     /**
      * @var string
@@ -67,7 +67,7 @@ class Role implements EntityInterface
      *      nullable=false
      *  )
      */
-    private $description = '';
+    private string $description = '';
 
     /**
      * User groups that belongs to this role.
@@ -83,19 +83,18 @@ class Role implements EntityInterface
      *      mappedBy="role",
      *  )
      */
-    private $userGroups;
+    private Collection $userGroups;
 
 
     /**
      * Constructor
      *
-     * @param string|null $role The role name
+     * @param string $role The role name
      *
      * @throws Throwable
      */
-    public function __construct(?string $role = null)
+    public function __construct(string $role)
     {
-        $role ??= '';
         $this->id = $role;
         $this->userGroups = new ArrayCollection();
     }
