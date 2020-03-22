@@ -25,6 +25,8 @@ trait Collection
     private LoggerInterface $logger;
 
     /**
+     * Method to filter current collection.
+     *
      * @param string $className
      *
      * @return Closure
@@ -32,6 +34,8 @@ trait Collection
     abstract public function filter(string $className): Closure;
 
     /**
+     * Method to process error message for current collection.
+     *
      * @param string $className
      *
      * @throws InvalidArgumentException
@@ -39,7 +43,7 @@ trait Collection
     abstract public function error(string $className): void;
 
     /**
-     * Getter method for RestResource class.
+     * Getter method for given class for current collection.
      *
      * @param string $className
      *
@@ -59,6 +63,8 @@ trait Collection
     }
 
     /**
+     * Method to get all items from current collection.
+     *
      * @return IteratorAggregate
      */
     public function getAll(): IteratorAggregate
@@ -67,7 +73,7 @@ trait Collection
     }
 
     /**
-     * Method to check if specified resource exists or not in this Collection.
+     * Method to check if specified class exists or not in current collection.
      *
      * @param string|null $className
      *

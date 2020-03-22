@@ -91,13 +91,13 @@ wait-for-db:
 	@make exec cmd="php bin/console db:wait"
 
 composer-install-prod:
-	@make exec cmd="composer install --optimize-autoloader --no-dev"
+	@make exec-bash cmd="COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-dev"
 
 composer-install:
-	@make exec cmd="composer install --optimize-autoloader"
+	@make exec-bash cmd="COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader"
 
 composer-update:
-	@make exec cmd="composer update"
+	@make exec-bash cmd="COMPOSER_MEMORY_LIMIT=-1 composer update"
 
 info:
 	@make exec cmd="bin/console --version"
@@ -124,14 +124,20 @@ drop-migrate:
 	@make migrate
 
 migrate-prod:
-	@make exec cmd="php bin/console doctrine:migrations:migrate --no-interaction"
+	@make exec cmd="php bin/console doctrine:migrations:migrate --no-interaction --all-or-nothing"
 
 migrate:
-	@make exec cmd="php bin/console doctrine:migrations:migrate --no-interaction"
-	@make exec cmd="php bin/console doctrine:migrations:migrate --no-interaction --env=test"
+	@make exec cmd="php bin/console doctrine:migrations:migrate --no-interaction --all-or-nothing"
+	@make exec cmd="php bin/console doctrine:migrations:migrate --no-interaction --all-or-nothing --env=test"
 
 fixtures:
 	@make exec cmd="php bin/console doctrine:fixtures:load --env=test"
+
+create-roles-groups:
+	@make exec cmd="php bin/console user:create-roles-groups"
+
+messenger-setup-transports:
+	@make exec cmd="php bin/console messenger:setup-transports"
 
 phpunit:
 	@make exec-bash cmd="rm -rf ./var/cache/test* && bin/console cache:warmup --env=test && ./vendor/bin/phpunit -c phpunit.xml.dist --coverage-html reports/coverage --coverage-clover reports/clover.xml --log-junit reports/junit.xml"

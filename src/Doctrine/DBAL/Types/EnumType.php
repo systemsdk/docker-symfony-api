@@ -20,6 +20,13 @@ abstract class EnumType extends Type
     protected static string $name;
     protected static array $values = [];
 
+    /**
+     * @return array
+     */
+    public static function getValues(): array
+    {
+        return static::$values;
+    }
 
     /**
      * Gets the SQL declaration snippet for a field of this type.
@@ -33,9 +40,9 @@ abstract class EnumType extends Type
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
-        $iterator = fn (string $value): string => "'" . $value . "'";
+        $iterator = static fn (string $value): string => "'" . $value . "'";
 
-        return 'ENUM(' . implode(', ', array_map($iterator, static::$values)) . ')';
+        return 'ENUM(' . implode(', ', array_map($iterator, self::getValues())) . ')';
     }
 
     /**

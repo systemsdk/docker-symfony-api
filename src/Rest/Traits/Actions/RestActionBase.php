@@ -11,7 +11,6 @@ use LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Throwable;
-use UnexpectedValueException;
 
 /**
  * Trait MethodHelper
@@ -21,9 +20,7 @@ use UnexpectedValueException;
 trait RestActionBase
 {
     /**
-     * @return RestResourceInterface
-     *
-     * @throws UnexpectedValueException
+     * {@inheritdoc}
      */
     abstract public function getResource(): RestResourceInterface;
 

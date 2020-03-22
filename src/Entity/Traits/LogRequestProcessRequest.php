@@ -494,7 +494,7 @@ trait LogRequestProcessRequest
                 /** @var array<string, mixed> $output */
                 $output = JSON::decode($rawContent, true);
             } catch (JsonException $error) {
-                (fn (Throwable $error): Throwable => $error)($error);
+                (static fn (Throwable $error): Throwable => $error)($error);
 
                 // Oh noes content isn't JSON so just parse it
                 $output = [];

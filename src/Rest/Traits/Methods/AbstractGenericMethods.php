@@ -9,9 +9,7 @@ namespace App\Rest\Traits\Methods;
 use App\Rest\Interfaces\ResponseHandlerInterface;
 use App\Rest\Interfaces\RestResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
-use UnexpectedValueException;
 
 /**
  * Trait AbstractGenericMethods
@@ -31,28 +29,17 @@ trait AbstractGenericMethods
     abstract public function getResourceForMethod(Request $request, array $allowedHttpMethods): RestResourceInterface;
 
     /**
-     * @throws UnexpectedValueException
-     *
-     * @return ResponseHandlerInterface
+     * {@inheritdoc}
      */
     abstract public function getResponseHandler(): ResponseHandlerInterface;
 
     /**
-     * Method to process current criteria array.
-     *
-     * @param mixed[] $criteria
+     * {@inheritdoc}
      */
     abstract public function processCriteria(array &$criteria): void;
 
     /**
-     * Method to handle possible REST method trait exception.
-     *
-     * @param Throwable   $exception
-     * @param string|null $id
-     *
-     * @throws HttpException
-     *
-     * @return Throwable
+     * {@inheritdoc}
      */
     abstract public function handleRestMethodException(Throwable $exception, ?string $id = null): Throwable;
 }

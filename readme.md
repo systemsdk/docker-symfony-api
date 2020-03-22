@@ -58,9 +58,11 @@ make composer-install
 make generate-jwt-keys
 ```
 
-6.Make sure that you have installed migrations:
+6.Make sure that you have installed migrations / created roles and groups / messenger transports:
 ```bash
 make migrate
+make create-roles-groups
+make messenger-setup-transports
 ```
 
 7.In order to use this application, please open in your browser next url: [http://localhost/api/doc](http://localhost/api/doc).
@@ -133,6 +135,10 @@ make migrate-prod
 
 make fixtures
 
+make create-roles-groups
+
+make messenger-setup-transports
+
 make phpunit
 make report-code-coverage
 
@@ -159,6 +165,8 @@ Notes: Please see more commands in Makefile
 * [serializer-pack](https://packagist.org/packages/symfony/serializer-pack)
 * [amqp](https://packagist.org/packages/symfony/amqp-pack)
 * [composer-bin-plugin](https://github.com/bamarni/composer-bin-plugin)
+* [ergebnis/composer-normalize](https://github.com/ergebnis/composer-normalize)
+* [symfony/requirements-checker](https://github.com/symfony/requirements-checker)
 * [security-advisories](https://github.com/Roave/SecurityAdvisories)
 * [jwt-authentication-bundle](https://packagist.org/packages/lexik/jwt-authentication-bundle)
 * [automapper-plus-bundle](https://packagist.org/packages/mark-gerarts/automapper-plus-bundle)

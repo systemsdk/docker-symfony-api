@@ -60,6 +60,8 @@ interface RepositoryInterface
     public function getSearchColumns(): array;
 
     /**
+     * Getter method for Doctrine entity manager.
+     *
      * @return EntityManager
      */
     public function getEntityManager(): EntityManager;

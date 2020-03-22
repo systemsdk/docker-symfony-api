@@ -10,6 +10,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTDecodedEvent;
+use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -56,6 +57,7 @@ class JWTDecodedSubscriber implements EventSubscriberInterface
     {
         return [
             JWTDecodedEvent::class => 'onJWTDecoded',
+            Events::JWT_DECODED => 'onJWTDecoded',
         ];
     }
 

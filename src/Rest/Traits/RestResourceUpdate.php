@@ -6,7 +6,7 @@ declare(strict_types = 1);
 
 namespace App\Rest\Traits;
 
-use App\DTO\INterfaces\RestDtoInterface;
+use App\DTO\Interfaces\RestDtoInterface;
 use App\Entity\Interfaces\EntityInterface;
 
 /**

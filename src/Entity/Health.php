@@ -76,7 +76,7 @@ class Health implements EntityInterface
     public function __construct()
     {
         $this->id = $this->createUuid();
-        $this->setTimestamp(new DateTimeImmutable('NOW', new DateTimeZone('UTC')));
+        $this->setTimestamp(new DateTimeImmutable('now', new DateTimeZone('UTC')));
     }
 
     /**

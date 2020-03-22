@@ -7,7 +7,7 @@ declare(strict_types = 1);
 namespace App\Rest\Traits\Actions\Authenticated;
 
 use App\Annotation\RestApiDoc;
-use App\DTO\INterfaces\RestDtoInterface;
+use App\DTO\Interfaces\RestDtoInterface;
 use App\Rest\Traits\Methods\CreateMethod;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;

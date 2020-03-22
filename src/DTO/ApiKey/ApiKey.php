@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ApiKey extends RestDto
 {
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected static array $mappings = [
         'userGroups' => 'updateUserGroups',
@@ -47,7 +47,7 @@ class ApiKey extends RestDto
     protected string $token;
 
     /**
-     * @var array|UserGroupEntity[]
+     * @var UserGroupEntity[]|array<int, UserGroupEntity>
      *
      * @AppAssert\EntityReferenceExists(entityClass=UserGroupEntity::class)
      */

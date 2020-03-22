@@ -8,11 +8,10 @@ namespace App\ArgumentResolver;
 
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use App\Resource\UserResource;
+use App\Security\UserTypeIdentification;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use App\Entity\User;
-use App\Security\SecurityUser;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\MissingTokenException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Generator;
@@ -39,19 +38,19 @@ use Throwable;
 class LoggedInUserValueResolver implements ArgumentValueResolverInterface
 {
     private TokenStorageInterface $tokenStorage;
-    private UserResource $userResource;
+    private UserTypeIdentification $userService;
 
 
     /**
      * Constructor
      *
-     * @param TokenStorageInterface $tokenStorage
-     * @param UserResource          $userResource
+     * @param TokenStorageInterface  $tokenStorage
+     * @param UserTypeIdentification $userService
      */
-    public function __construct(TokenStorageInterface $tokenStorage, UserResource $userResource)
+    public function __construct(TokenStorageInterface $tokenStorage, UserTypeIdentification $userService)
     {
         $this->tokenStorage = $tokenStorage;
-        $this->userResource = $userResource;
+        $this->userService = $userService;
     }
 
     /**
@@ -72,11 +71,13 @@ class LoggedInUserValueResolver implements ArgumentValueResolverInterface
             && $argument->getName() === 'loggedInUser'
             && $argument->getType() === User::class
         ) {
-            if ($argument->isNullable() === false && !($token->getUser() instanceof SecurityUser)) {
+            $securityUser = $this->userService->getSecurityUser();
+
+            if ($securityUser === null && $argument->isNullable() === false) {
                 throw new MissingTokenException('JWT Token not found');
             }
 
-            $output = $token->getUser() instanceof SecurityUser;
+            $output = true;
         }
 
         return $output;
@@ -100,9 +101,6 @@ class LoggedInUserValueResolver implements ArgumentValueResolverInterface
             throw new MissingTokenException('JWT Token not found');
         }
 
-        /** @var SecurityUser $securityUser */
-        $securityUser = $token->getUser();
-
-        yield $this->userResource->findOne($securityUser->getUsername());
+        yield $this->userService->getUser();
     }
 }

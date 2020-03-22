@@ -6,9 +6,10 @@ declare(strict_types = 1);
 
 namespace App\EventSubscriber;
 
+use App\Exception\Interfaces\ClientErrorInterface;
+use App\Security\UserTypeIdentification;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use App\Utils\JSON;
 use Doctrine\DBAL\DBALException;
@@ -16,7 +17,6 @@ use Doctrine\ORM\ORMException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
-use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Throwable;
@@ -29,21 +29,22 @@ use JsonException;
  */
 class ExceptionSubscriber implements EventSubscriberInterface
 {
-    private TokenStorageInterface $tokenStorage;
+    private UserTypeIdentification $userService;
     private LoggerInterface $logger;
     private string $environment;
+    private static array $cache = [];
 
     /**
      * Constructor
      *
-     * @param TokenStorageInterface $tokenStorage
-     * @param LoggerInterface       $logger
-     * @param string                $environment
+     * @param LoggerInterface        $logger
+     * @param UserTypeIdentification $userService
+     * @param string                 $environment
      */
-    public function __construct(TokenStorageInterface $tokenStorage, LoggerInterface $logger, string $environment)
+    public function __construct(LoggerInterface $logger, UserTypeIdentification $userService, string $environment)
     {
-        $this->tokenStorage = $tokenStorage;
         $this->logger = $logger;
+        $this->userService = $userService;
         $this->environment = $environment;
     }
 
@@ -106,11 +107,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
      */
     private function getStatusCode(Throwable $exception): int
     {
-        // Get current token, and determine if request is made from logged in user or not
-        $token = $this->tokenStorage->getToken();
-        $isUser = !($token === null || $token instanceof AnonymousToken);
-
-        return $this->determineStatusCode($exception, $isUser);
+        return $this->determineStatusCode($exception, $this->userService->getSecurityUser() !== null);
     }
 
     /**
@@ -171,17 +168,26 @@ class ExceptionSubscriber implements EventSubscriberInterface
     {
         $message = $exception->getMessage();
 
-        // Within AccessDeniedHttpException we need to hide actual real message from users
-        if ($exception instanceof AccessDeniedHttpException || $exception instanceof AccessDeniedException) {
+        $accessDeniedClasses = [
+            AccessDeniedHttpException::class,
+            AccessDeniedException::class,
+            AuthenticationException::class,
+        ];
+
+        if (in_array(get_class($exception), $accessDeniedClasses, true)) {
             $message = 'Access denied.';
         } elseif ($exception instanceof DBALException || $exception instanceof ORMException) { // Database errors
             $message = 'Database error.';
+        } elseif (!$this->isClientExceptions($exception)) {
+            $message = 'Internal server error.';
         }
 
         return $message;
     }
 
     /**
+     * Method to determine status code for specified exception.
+     *
      * @param Throwable $exception
      * @param bool      $isUser
      *
@@ -199,8 +205,41 @@ class ExceptionSubscriber implements EventSubscriberInterface
             $statusCode = $isUser ? Response::HTTP_FORBIDDEN : Response::HTTP_UNAUTHORIZED;
         } elseif ($exception instanceof HttpExceptionInterface) {
             $statusCode = $exception->getStatusCode();
+        } elseif ($this->isClientExceptions($exception)) {
+            $statusCode = (int)$exception->getCode();
+
+            if (method_exists($exception, 'getStatusCode')) {
+                $statusCode = $exception->getStatusCode();
+            }
         }
 
-        return $statusCode;
+        return $statusCode === 0 ? Response::HTTP_INTERNAL_SERVER_ERROR : $statusCode;
+    }
+
+    /**
+     * Method to check if exception is ok to show to user (client) or not. Note
+     * that if this returns true exception message is shown as-is to user.
+     *
+     * @param Throwable $exception
+     *
+     * @return bool
+     */
+    private function isClientExceptions(Throwable $exception): bool
+    {
+        $cacheKey = spl_object_hash($exception);
+
+        if (!in_array($cacheKey, self::$cache, true)) {
+            self::$cache[$cacheKey] = count(
+                array_intersect(
+                    class_implements($exception),
+                    [
+                        HttpExceptionInterface::class,
+                        ClientErrorInterface::class,
+                    ]
+                )
+            ) !== 0;
+        }
+
+        return self::$cache[$cacheKey];
     }
 }

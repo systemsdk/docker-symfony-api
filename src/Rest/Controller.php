@@ -46,7 +46,9 @@ abstract class Controller implements ControllerInterface
     protected ?RestResourceInterface $resource = null;
     protected ?ResponseHandlerInterface $responseHandler = null;
 
-    /** @inheritDoc */
+    /**
+     * {@inheritdoc}
+     */
     public function setResource(RestResourceInterface $resource): self
     {
         $this->resource = $resource;
@@ -55,9 +57,7 @@ abstract class Controller implements ControllerInterface
     }
 
     /**
-     * @throws UnexpectedValueException
-     *
-     * @return RestResourceInterface
+     * {@inheritdoc}
      */
     public function getResource(): RestResourceInterface
     {
@@ -69,13 +69,7 @@ abstract class Controller implements ControllerInterface
     }
 
     /**
-     * @see https://symfony.com/doc/current/service_container/autowiring.html#autowiring-other-methods-e-g-setters
-     *
-     * @required
-     *
-     * @param ResponseHandler $responseHandler
-     *
-     * @return self
+     * {@inheritdoc}
      */
     public function setResponseHandler(ResponseHandler $responseHandler): self
     {
@@ -85,9 +79,7 @@ abstract class Controller implements ControllerInterface
     }
 
     /**
-     * @throws UnexpectedValueException
-     *
-     * @return ResponseHandlerInterface
+     * {@inheritdoc}
      */
     public function getResponseHandler(): ResponseHandlerInterface
     {

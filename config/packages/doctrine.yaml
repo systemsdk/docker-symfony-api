@@ -8,12 +8,17 @@ doctrine:
             charset: utf8mb4
             collate: utf8mb4_unicode_ci
 
+        # https://symfony.com/doc/current/messenger.html#doctrine-transport
+        schema_filter: '~^(?!messenger_messages)~'
+
         url: '%env(resolve:DATABASE_URL)%'
         mapping_types:
             enum: string
         types:
             datetime: App\Doctrine\DBAL\Types\UTCDateTimeType
             datetimetz: App\Doctrine\DBAL\Types\UTCDateTimeType
+            EnumLanguage: App\Doctrine\DBAL\Types\EnumLanguageType
+            EnumLocale: App\Doctrine\DBAL\Types\EnumLocaleType
             EnumLogLogin: App\Doctrine\DBAL\Types\EnumLogLoginType
     orm:
         auto_generate_proxy_classes: true

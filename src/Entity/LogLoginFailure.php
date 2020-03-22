@@ -107,7 +107,7 @@ class LogLoginFailure implements EntityInterface
     {
         $this->id = $this->createUuid();
         $this->user = $user;
-        $this->timestamp = new DateTimeImmutable('NOW', new DateTimeZone('UTC'));
+        $this->timestamp = new DateTimeImmutable('now', new DateTimeZone('UTC'));
     }
 
     /**

@@ -10,7 +10,6 @@ use App\Rest\Controller;
 use App\Rest\ResponseHandler;
 use LogicException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Throwable;
 use UnexpectedValueException;
@@ -23,6 +22,8 @@ use UnexpectedValueException;
 interface ControllerInterface
 {
     /**
+     * Setter method for `resource` service.
+     *
      * @param RestResourceInterface $resource
      *
      * @return ControllerInterface|Controller|self
@@ -30,6 +31,8 @@ interface ControllerInterface
     public function setResource(RestResourceInterface $resource);
 
     /**
+     * Getter method for `resource` service.
+     *
      * @throws UnexpectedValueException
      *
      * @return RestResourceInterface
@@ -37,6 +40,10 @@ interface ControllerInterface
     public function getResource(): RestResourceInterface;
 
     /**
+     * Setter method for `ResponseHandler` service, this is called by Symfony DI.
+     *
+     * @see https://symfony.com/doc/current/service_container/autowiring.html#autowiring-other-methods-e-g-setters
+     *
      * @required
      *
      * @param ResponseHandler $responseHandler
@@ -46,6 +53,8 @@ interface ControllerInterface
     public function setResponseHandler(ResponseHandler $responseHandler);
 
     /**
+     * Getter method for `ResponseHandler` service.
+     *
      * @throws UnexpectedValueException
      *
      * @return ResponseHandlerInterface
@@ -77,13 +86,14 @@ interface ControllerInterface
     /**
      * Method to handle possible REST method trait exception.
      *
-     * @param Throwable $exception
+     * @param Throwable   $exception
+     * @param string|null $id
      *
-     * @throws HttpException
+     * @throws Throwable
      *
      * @return Throwable
      */
-    public function handleRestMethodException(Throwable $exception): Throwable;
+    public function handleRestMethodException(Throwable $exception, ?string $id = null): Throwable;
 
     /**
      * Method to process current criteria array.

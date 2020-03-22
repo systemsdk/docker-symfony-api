@@ -42,7 +42,7 @@ trait RepositoryWrappers
         try {
             $referenceId = UuidHelper::fromString($id);
         } catch (InvalidUuidStringException $exception) {
-            (fn (Throwable $exception): bool => true)($exception);
+            (static fn (Throwable $exception): string => (string)$exception)($exception);
 
             $referenceId = $id;
         }
@@ -61,6 +61,8 @@ trait RepositoryWrappers
     }
 
     /**
+     * Returns the ORM metadata descriptor for a class.
+     *
      * @return ClassMetadataInfo
      */
     public function getClassMetaData(): ClassMetadataInfo

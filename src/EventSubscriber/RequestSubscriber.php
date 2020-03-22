@@ -8,16 +8,14 @@ namespace App\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use App\Service\RequestLoggerService;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use App\Entity\User as ApplicationUser;
 use App\Repository\UserRepository;
 use App\Security\SecurityUser;
+use App\Security\UserTypeIdentification;
 use Psr\Log\LoggerInterface;
 use App\Security\ApiKeyUser;
 use Exception;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
-use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class RequestSubscriber
@@ -28,27 +26,27 @@ class RequestSubscriber implements EventSubscriberInterface
 {
     private RequestLoggerService $requestLogger;
     private UserRepository $userRepository;
-    private TokenStorageInterface $tokenStorage;
     private LoggerInterface $logger;
+    private UserTypeIdentification $userService;
 
     /**
      * Constructor
      *
-     * @param RequestLoggerService  $requestLoggerService
-     * @param UserRepository        $userRepository
-     * @param TokenStorageInterface $tokenStorage
-     * @param LoggerInterface       $logger
+     * @param RequestLoggerService   $requestLoggerService
+     * @param UserRepository         $userRepository
+     * @param LoggerInterface        $logger
+     * @param UserTypeIdentification $userService
      */
     public function __construct(
         RequestLoggerService $requestLoggerService,
         UserRepository $userRepository,
-        TokenStorageInterface $tokenStorage,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        UserTypeIdentification $userService
     ) {
         $this->requestLogger = $requestLoggerService;
         $this->userRepository = $userRepository;
-        $this->tokenStorage = $tokenStorage;
         $this->logger = $logger;
+        $this->userService = $userService;
     }
 
     /**
@@ -117,37 +115,24 @@ class RequestSubscriber implements EventSubscriberInterface
         // Set needed data to logger and handle actual log
         $this->requestLogger->setRequest($request);
         $this->requestLogger->setResponse($event->getResponse());
-        /** @var SecurityUser|ApiKeyUser|null $user */
-        $user = $this->getUser();
+        $identify = $this->userService->getIdentity();
 
-        if ($user instanceof SecurityUser) {
-            $userEntity = $this->userRepository->getReference($user->getUsername());
+        if ($identify instanceof SecurityUser) {
+            $userEntity = $this->userRepository->getReference($identify->getUsername());
 
             if ($userEntity instanceof ApplicationUser) {
                 $this->requestLogger->setUser($userEntity);
             } else {
                 $this->logger->error(
-                    sprintf('User not found for UUID: "%s".', $user->getUsername()),
+                    sprintf('User not found for UUID: "%s".', $identify->getUsername()),
                     self::getSubscribedEvents()
                 );
             }
-        } elseif ($user instanceof ApiKeyUser) {
-            $this->requestLogger->setApiKey($user->getApiKey());
+        } elseif ($identify instanceof ApiKeyUser) {
+            $this->requestLogger->setApiKey($identify->getApiKey());
         }
 
         $this->requestLogger->setMasterRequest($event->isMasterRequest());
         $this->requestLogger->handle();
-    }
-
-    /**
-     * Method to get current user from token storage.
-     *
-     * @return string|mixed|UserInterface|ApplicationUser|ApiKeyUser|null
-     */
-    private function getUser()
-    {
-        $token = $this->tokenStorage->getToken();
-
-        return $token === null || $token instanceof AnonymousToken ? null : $token->getUser();
     }
 }

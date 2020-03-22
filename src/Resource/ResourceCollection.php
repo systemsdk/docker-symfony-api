@@ -45,6 +45,8 @@ class ResourceCollection implements Countable
     }
 
     /**
+     * Getter method for REST resource by entity class name.
+     *
      * @param string $className
      *
      * @return RestResourceInterface
@@ -66,6 +68,8 @@ class ResourceCollection implements Countable
     }
 
     /**
+     * Method to check if specified entity class REST resource exist or not in current collection.
+     *
      * @param string|null $className
      *
      * @return bool
@@ -76,9 +80,7 @@ class ResourceCollection implements Countable
     }
 
     /**
-     * @param string $className
-     *
-     * @return Closure
+     * {@inheritdoc}
      */
     public function filter(string $className): Closure
     {
@@ -86,14 +88,12 @@ class ResourceCollection implements Countable
     }
 
     /**
-     * @param string $className
-     *
-     * @throws InvalidArgumentException
+     * {@inheritdoc}
      */
     public function error(string $className): void
     {
         $message = sprintf(
-            'Resource \'%s\' does not exists',
+            'Resource \'%s\' does not exist',
             $className
         );
 
@@ -101,6 +101,8 @@ class ResourceCollection implements Countable
     }
 
     /**
+     * Getter method to get filtered item by given entity class.
+     *
      * @param string $entityName
      *
      * @return RestResourceInterface|null
@@ -115,7 +117,7 @@ class ResourceCollection implements Countable
             return null;
         }
 
-        $callback = fn (RestResourceInterface $restResource): bool => $restResource->getEntityName() === $entityName;
+        $callback = static fn (RestResourceInterface $resource): bool => $resource->getEntityName() === $entityName;
 
         $filteredIterator = new CallbackFilterIterator(new IteratorIterator($iterator), $callback);
         $filteredIterator->rewind();

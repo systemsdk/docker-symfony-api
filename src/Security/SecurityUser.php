@@ -18,6 +18,9 @@ class SecurityUser implements SecurityUserInterface
 {
     private string $username;
     private string $password;
+    private string $language;
+    private string $locale;
+    private string $timezone;
     /**
      * @var string[]
      */
@@ -32,6 +35,9 @@ class SecurityUser implements SecurityUserInterface
     {
         $this->username = $user->getId();
         $this->password = $user->getPassword();
+        $this->language = $user->getLanguage();
+        $this->locale = $user->getLocale();
+        $this->timezone = $user->getTimezone();
     }
 
     /**
@@ -99,6 +105,30 @@ class SecurityUser implements SecurityUserInterface
     public function getUsername(): string
     {
         return $this->username;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage(): string
+    {
+        return $this->language;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimezone(): string
+    {
+        return $this->timezone;
     }
 
     /**

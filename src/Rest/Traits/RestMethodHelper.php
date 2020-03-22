@@ -10,6 +10,7 @@ use App\DTO\Interfaces\RestDtoInterface;
 use App\Rest\Interfaces\ControllerInterface;
 use App\Rest\Interfaces\ResponseHandlerInterface;
 use App\Rest\Interfaces\RestResourceInterface;
+use App\Rest\Traits\Methods\RestMethodProcessCriteria;
 use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -32,6 +33,8 @@ use UnexpectedValueException;
  */
 trait RestMethodHelper
 {
+    use RestMethodProcessCriteria;
+
     /**
      * Method + DTO class names (key + value)
      *
@@ -40,12 +43,12 @@ trait RestMethodHelper
     protected static array $dtoClasses = [];
 
     /**
-     * @return RestResourceInterface
+     * {@inheritdoc}
      */
     abstract public function getResource(): RestResourceInterface;
 
     /**
-     * @return ResponseHandlerInterface
+     * {@inheritdoc}
      */
     abstract public function getResponseHandler(): ResponseHandlerInterface;
 
@@ -105,14 +108,7 @@ trait RestMethodHelper
     }
 
     /**
-     * Method to handle possible REST method trait exception.
-     *
-     * @param Throwable   $exception
-     * @param string|null $id
-     *
-     * @throws Throwable
-     *
-     * @return Throwable
+     * {@inheritdoc}
      */
     public function handleRestMethodException(Throwable $exception, ?string $id = null): Throwable
     {
@@ -124,24 +120,17 @@ trait RestMethodHelper
     }
 
     /**
-     * Method to process current criteria array.
+     * Getter method for exception code with fallback to `400` bad response.
      *
-     * @SuppressWarnings("unused")
-     *
-     * @param array $criteria
-     */
-    public function processCriteria(/** @scrutinizer ignore-unused */ array &$criteria): void
-    {
-    }
-
-    /**
      * @param Throwable $exception
      *
      * @return int
      */
     private function getExceptionCode(Throwable $exception): int
     {
-        return (int)$exception->getCode() !== 0 ? (int)$exception->getCode() : Response::HTTP_BAD_REQUEST;
+        $code = (int)$exception->getCode();
+
+        return $code !== 0 ? $code : Response::HTTP_BAD_REQUEST;
     }
 
     /**
@@ -175,7 +164,6 @@ trait RestMethodHelper
     private function determineOutputAndStatusCodeForRestMethodException($exception): Throwable
     {
         $code = $this->getExceptionCode($exception);
-        /** @var Exception $exception */
         $output = new HttpException($code, $exception->getMessage(), $exception, [], $code);
 
         if ($exception instanceof HttpException) {

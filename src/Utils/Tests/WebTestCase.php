@@ -17,6 +17,7 @@ use Throwable;
  */
 abstract class WebTestCase extends BaseWebTestCase
 {
+    public const API_URL_PREFIX = '/api';
     private Auth $authService;
 
     /**
@@ -74,7 +75,7 @@ abstract class WebTestCase extends BaseWebTestCase
             $username === null || $password === null
                 ? []
                 : $this->authService->getAuthorizationHeadersForUser($username, $password),
-            array_merge($this->getJsonHeaders(), $this->getFastestHeaders()),
+            $this->getJsonHeaders(),
             $this->authService->getJwtHeaders(),
             $server
         );
@@ -100,7 +101,7 @@ abstract class WebTestCase extends BaseWebTestCase
         // Merge authorization headers
         $server = array_merge(
             $role === null ? [] : $this->authService->getAuthorizationHeadersForApiKey($role),
-            array_merge($this->getJsonHeaders(), $this->getFastestHeaders()),
+            $this->getJsonHeaders(),
             $this->authService->getJwtHeaders(),
             $server
         );
@@ -119,23 +120,5 @@ abstract class WebTestCase extends BaseWebTestCase
             'CONTENT_TYPE' => 'application/json',
             'HTTP_X-Requested-With' => 'XMLHttpRequest',
         ];
-    }
-
-    /**
-     * @codeCoverageIgnore
-     *
-     * @return array<string, string>
-     */
-    public function getFastestHeaders(): array
-    {
-        $output = [];
-
-        if (getenv('ENV_TEST_CHANNEL_READABLE')) {
-            $output = [
-                'X-FASTEST-ENV-TEST-CHANNEL-READABLE' => (string)getenv('ENV_TEST_CHANNEL_READABLE'),
-            ];
-        }
-
-        return $output;
     }
 }

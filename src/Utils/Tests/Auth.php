@@ -130,7 +130,7 @@ class Auth
             // Create request to make login using given credentials
             $client->request(
                 'POST',
-                '/auth/getToken',
+                WebTestCase::API_URL_PREFIX . '/auth/getToken',
                 [],
                 [],
                 array_merge(

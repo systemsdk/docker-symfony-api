@@ -9,9 +9,7 @@ namespace App\Rest;
 use App\Rest\Interfaces\RestResourceInterface;
 use App\DTO\Interfaces\RestDtoInterface;
 use App\Repository\Interfaces\BaseRepositoryInterface;
-use Doctrine\ORM\ORMException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Throwable;
 use UnexpectedValueException;
 
 /**
@@ -29,9 +27,7 @@ abstract class RestResource implements RestResourceInterface
     private string $dtoClass = '';
 
     /**
-     * Getter method for serializer context.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getSerializerContext(): array
     {
@@ -39,9 +35,7 @@ abstract class RestResource implements RestResourceInterface
     }
 
     /**
-     * Getter method for entity repository.
-     *
-     * @return BaseRepositoryInterface
+     * {@inheritdoc}
      */
     public function getRepository(): BaseRepositoryInterface
     {
@@ -49,11 +43,7 @@ abstract class RestResource implements RestResourceInterface
     }
 
     /**
-     * Setter method for repository.
-     *
-     * @param BaseRepositoryInterface $repository
-     *
-     * @return RestResourceInterface
+     * {@inheritdoc}
      */
     public function setRepository(BaseRepositoryInterface $repository): RestResourceInterface
     {
@@ -63,9 +53,7 @@ abstract class RestResource implements RestResourceInterface
     }
 
     /**
-     * Getter for used validator.
-     *
-     * @return ValidatorInterface
+     * {@inheritdoc}
      */
     public function getValidator(): ValidatorInterface
     {
@@ -73,15 +61,7 @@ abstract class RestResource implements RestResourceInterface
     }
 
     /**
-     * Setter for used validator.
-     *
-     * @see https://symfony.com/doc/current/service_container/autowiring.html#autowiring-other-methods-e-g-setters
-     *
-     * @required
-     *
-     * @param ValidatorInterface $validator
-     *
-     * @return RestResourceInterface
+     * {@inheritdoc}
      */
     public function setValidator(ValidatorInterface $validator): RestResourceInterface
     {
@@ -91,11 +71,7 @@ abstract class RestResource implements RestResourceInterface
     }
 
     /**
-     * Getter method for used DTO class for this REST service.
-     *
-     * @throws UnexpectedValueException
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getDtoClass(): string
     {
@@ -112,11 +88,7 @@ abstract class RestResource implements RestResourceInterface
     }
 
     /**
-     * Setter for used DTO class.
-     *
-     * @param string $dtoClass
-     *
-     * @return RestResourceInterface
+     * {@inheritdoc}
      */
     public function setDtoClass(string $dtoClass): RestResourceInterface
     {
@@ -126,9 +98,7 @@ abstract class RestResource implements RestResourceInterface
     }
 
     /**
-     * Getter method for current entity name.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getEntityName(): string
     {
@@ -136,14 +106,7 @@ abstract class RestResource implements RestResourceInterface
     }
 
     /**
-     * Gets a reference to the entity identified by the given type and identifier without actually loading it,
-     * if the entity is not yet loaded.
-     *
-     * @param string $id The entity identifier.
-     *
-     * @throws ORMException
-     *
-     * @return object|null
+     * {@inheritdoc}
      */
     public function getReference(string $id)
     {
@@ -151,9 +114,7 @@ abstract class RestResource implements RestResourceInterface
     }
 
     /**
-     * Getter method for all associations that current entity contains.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getAssociations(): array
     {
@@ -161,16 +122,7 @@ abstract class RestResource implements RestResourceInterface
     }
 
     /**
-     * Getter method DTO class with loaded entity data.
-     *
-     * @param string           $id
-     * @param string           $dtoClass
-     * @param RestDtoInterface $dto
-     * @param bool|null        $patch
-     *
-     * @throws Throwable
-     *
-     * @return RestDtoInterface
+     * {@inheritdoc}
      */
     public function getDtoForEntity(
         string $id,
