@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "750d5f44417f693609613b11fa18e3a6",
+    "content-hash": "183708a67e35ff3c01117c86ec26f0c5",
     "packages": [
         {
             "name": "antishov/doctrine-extensions-bundle",
@@ -3392,34 +3392,6 @@
             ],
             "description": "A security checker for your composer.lock",
             "time": "2019-11-01T13:20:14+00:00"
-        },
-        {
-            "name": "symfony/amqp-pack",
-            "version": "v1.0.12",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/amqp-pack.git",
-                "reference": "2433282bd6e57a530d6149bd282442870712e871"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/amqp-pack/zipball/2433282bd6e57a530d6149bd282442870712e871",
-                "reference": "2433282bd6e57a530d6149bd282442870712e871",
-                "shasum": ""
-            },
-            "require": {
-                "ext-amqp": "*",
-                "php": "^7.1",
-                "symfony/messenger": "*",
-                "symfony/serializer-pack": "*"
-            },
-            "type": "symfony-pack",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A pack for using the AMQP transport with Symfony Messenger",
-            "time": "2018-12-10T12:12:31+00:00"
         },
         {
             "name": "symfony/asset",
@@ -9009,7 +8981,8 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*",
-        "ext-pdo_mysql": "*"
+        "ext-pdo_mysql": "*",
+        "ext-amqp": "*"
     },
     "platform-dev": [],
     "platform-overrides": {

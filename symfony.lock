@@ -320,9 +320,6 @@
     "swiftmailer/swiftmailer": {
         "version": "v6.2.3"
     },
-    "symfony/amqp-pack": {
-        "version": "v1.0.12"
-    },
     "symfony/asset": {
         "version": "v4.4.1"
     },
