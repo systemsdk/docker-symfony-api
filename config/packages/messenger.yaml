@@ -26,10 +26,28 @@ framework:
         failure_transport: failed
 
         transports:
+            async_priority_high:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: high
+                    queues:
+                        messages_high: ~
+            async_priority_low:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: low
+                    queues:
+                        messages_low: ~
+
             # Uncomment the following line to enable a transport named "amqp"
-            async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
             failed: 'doctrine://default?queue_name=failed'
 
         routing:
-            # async is whatever name you gave your transport above
-            '*': async
+            App\Message\Interfaces\MessageHighInterface: async_priority_high
+            App\Message\Interfaces\MessageLowInterface: async_priority_low
+
+            # Route your messages to the transports
+            # 'App\Message\YourMessage': async
