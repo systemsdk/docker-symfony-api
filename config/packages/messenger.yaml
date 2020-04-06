@@ -7,7 +7,7 @@ framework:
                     # is "pinged" and reconnected if it's closed. Useful
                     # if your workers run for a long time and the database
                     # connection is sometimes lost
-                    #- doctrine_ping_connection
+                    - doctrine_ping_connection
 
                     # After handling, the Doctrine connection is closed,
                     # which can free up database connections in a worker,
