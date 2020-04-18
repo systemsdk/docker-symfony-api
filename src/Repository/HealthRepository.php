@@ -81,7 +81,7 @@ class HealthRepository extends BaseRepository
     {
         // Determine date
         $date = new DateTime('NOW', new DateTimeZone('UTC'));
-        $date->sub(new DateInterval('P' . $_ENV['DATABASE_HEALTH_HISTORY_DAYS'] . 'D'));
+        $date->sub(new DateInterval('P' . (int)$_ENV['DATABASE_HEALTH_HISTORY_DAYS'] . 'D'));
         // Create query builder
         $queryBuilder = $this
             ->createQueryBuilder('h')

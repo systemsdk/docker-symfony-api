@@ -51,6 +51,7 @@ make logs-rabbitmq              # Display logs for rabbitmq container. Use ctrl+
 make drop-migrate               # Drop databases (main and for tests) and run all migrations
 make migrate                    # Run all migrations for databases (main and for tests)
 make migrate-prod               # Run all migrations for main database
+make migrate-cron-jobs          # Create cron job tasks (cleanup logs)
 
 make fixtures                   # Run all fixtures for test database without --append option (tables will be dropped and recreated)
 

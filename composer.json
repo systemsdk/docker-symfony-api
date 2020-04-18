@@ -33,6 +33,7 @@
         "ext-pdo_mysql": "*",
         "ext-amqp": "*",
         "antishov/doctrine-extensions-bundle": "^1.4",
+        "beberlei/doctrineextensions": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^2.1",
         "easycorp/easy-log-handler": "1.0.*",
         "jmose/command-scheduler-bundle": "^2.2",

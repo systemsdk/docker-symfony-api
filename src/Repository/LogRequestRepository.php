@@ -7,9 +7,6 @@ declare(strict_types = 1);
 namespace App\Repository;
 
 use App\Entity\LogRequest as Entity;
-use DateInterval;
-use DateTime;
-use DateTimeZone;
 use Exception;
 
 /**
@@ -33,7 +30,7 @@ class LogRequestRepository extends BaseRepository
     protected static string $entityName = Entity::class;
 
     /**
-     * Helper method to clean history data from request_log table.
+     * Helper method to clean history data from log_request table.
      *
      * @return int
      *
@@ -41,15 +38,12 @@ class LogRequestRepository extends BaseRepository
      */
     public function cleanHistory(): int
     {
-        // Determine date
-        $date = new DateTime('now', new DateTimeZone('UTC'));
-        $date->sub(new DateInterval('P3Y'));
         // Create query builder and define delete query
         $queryBuilder = $this
             ->createQueryBuilder('requestLog')
             ->delete()
-            ->where('requestLog.date < :date')
-            ->setParameter('date', $date->format('Y-m-d'));
+            ->where("requestLog.date < DATESUB(NOW(), :days, 'DAY')")
+            ->setParameter('days', (int)$_ENV['DATABASE_LOG_REQUEST_HISTORY_DAYS']);
 
         // Return deleted row count
         return (int)$queryBuilder->getQuery()->execute();

@@ -249,6 +249,32 @@ SQL;
 
         $this->addSql($sqlDateDimension);
 
+        $sqlFunctions = <<<SQL
+CREATE
+  FUNCTION ouuid_to_uuid(uuid BINARY(16))
+  RETURNS VARCHAR(36) CHARSET utf8mb4 COLLATE utf8mb4_general_ci
+  DETERMINISTIC
+  RETURN LOWER(CONCAT(
+  SUBSTR(HEX(uuid), 9, 8), '-',
+  SUBSTR(HEX(uuid), 5, 4), '-',
+  SUBSTR(HEX(uuid), 1, 4), '-',
+  SUBSTR(HEX(uuid), 17,4), '-',
+  SUBSTR(HEX(uuid), 21, 12 )
+));
+CREATE
+  FUNCTION uuid_to_ouuid(uuid BINARY(36))
+  RETURNS binary(16) DETERMINISTIC
+  RETURN UNHEX(CONCAT(
+  SUBSTR(uuid, 15, 4),
+  SUBSTR(uuid, 10, 4),
+  SUBSTR(uuid, 1, 8),
+  SUBSTR(uuid, 20, 4),
+  SUBSTR(uuid, 25, 12)
+));
+SQL;
+
+        $this->addSql($sqlFunctions);
+
         $this->addSql('ALTER TABLE user_group ADD CONSTRAINT FK_8F02BF9D57698A6A FOREIGN KEY (role) REFERENCES role (role) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE user_group ADD CONSTRAINT FK_8F02BF9DB03A8386 FOREIGN KEY (created_by_id) REFERENCES user (id) ON DELETE SET NULL');
         $this->addSql('ALTER TABLE user_group ADD CONSTRAINT FK_8F02BF9D896DBBDE FOREIGN KEY (updated_by_id) REFERENCES user (id) ON DELETE SET NULL');
@@ -309,5 +335,7 @@ SQL;
         $this->addSql('DROP TABLE role');
         $this->addSql('DROP TABLE log_request');
         $this->addSql('DROP TABLE log_login_failure');
+        $this->addSql('DROP FUNCTION ouuid_to_uuid');
+        $this->addSql('DROP FUNCTION uuid_to_ouuid');
     }
 }

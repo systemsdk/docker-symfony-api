@@ -7,6 +7,7 @@ declare(strict_types = 1);
 namespace App\Repository;
 
 use App\Entity\LogLogin as Entity;
+use Exception;
 
 /**
  * Class LogLoginRepository
@@ -27,4 +28,24 @@ use App\Entity\LogLogin as Entity;
 class LogLoginRepository extends BaseRepository
 {
     protected static string $entityName = Entity::class;
+
+    /**
+     * Method to clean history data from 'log_login' table.
+     *
+     * @throws Exception
+     *
+     * @return int
+     */
+    public function cleanHistory(): int
+    {
+        // Create query builder
+        $queryBuilder = $this
+            ->createQueryBuilder('ll')
+            ->delete()
+            ->where("ll.date < DATESUB(NOW(), :days, 'DAY')")
+            ->setParameter('days', (int)$_ENV['DATABASE_LOG_LOGIN_HISTORY_DAYS']);
+
+        // Return deleted row count
+        return (int)$queryBuilder->getQuery()->execute();
+    }
 }

@@ -130,6 +130,9 @@ migrate:
 	@make exec cmd="php bin/console doctrine:migrations:migrate --no-interaction --all-or-nothing"
 	@make exec cmd="php bin/console doctrine:migrations:migrate --no-interaction --all-or-nothing --env=test"
 
+migrate-cron-jobs:
+	@make exec cmd="php bin/console scheduler:cleanup-logs"
+
 fixtures:
 	@make exec cmd="php bin/console doctrine:fixtures:load --env=test"
 

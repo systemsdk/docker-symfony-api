@@ -132,6 +132,7 @@ make logs-rabbitmq
 make drop-migrate
 make migrate
 make migrate-prod
+make migrate-cron-jobs
 
 make fixtures
 
@@ -178,6 +179,7 @@ Notes: Please see more commands in Makefile
 * [php-coveralls](https://github.com/php-coveralls/php-coveralls)
 * [easy-coding-standard](https://github.com/Symplify/EasyCodingStandard)
 * [PhpMetrics](https://github.com/phpmetrics/PhpMetrics)
+* [beberlei/doctrineextensions](https://github.com/beberlei/DoctrineExtensions)
 
 ## External links / resources
 * [Symfony Flex REST API](https://github.com/tarlepp/symfony-flex-backend.git): code in "src/" folder forked from Symfony Flex REST API.

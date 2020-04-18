@@ -14,6 +14,9 @@
     "bamarni/composer-bin-plugin": {
         "version": "v1.3.0"
     },
+    "beberlei/doctrineextensions": {
+        "version": "v1.2.6"
+    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },

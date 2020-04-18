@@ -31,3 +31,10 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+        dql:
+            datetime_functions:
+                datesub: DoctrineExtensions\Query\Mysql\DateSub
+                now: DoctrineExtensions\Query\Mysql\Now
+            string_functions:
+                uuid_to_ouuid: App\DQL\UuidToOuuid
+                ouuid_to_uuid: App\DQL\OuuidToUuid
