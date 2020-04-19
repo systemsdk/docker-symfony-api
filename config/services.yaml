@@ -5,7 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    app.uuid_regex: '^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-1[0-9a-fA-F]{3}\-[89ab][0-9a-f]{3}\-[0-9a-fA-F]{12}$'
+    app.uuid_v1_regex: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-1[0-9a-fA-F]{3}-[89abAB][0-9a-f]{3}-[0-9a-fA-F]{12}$'
+    app.uuid_v4_regex: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-f]{3}-[0-9a-fA-F]{12}$'
 
 services:
     # default configuration for services in *this* file
@@ -18,7 +19,8 @@ services:
         bind:
             $projectDir: '%kernel.project_dir%'
             $environment: '%kernel.environment%'
-            $uuidRegex: '%app.uuid_regex%'
+            $uuidV1Regex: '%app.uuid_v1_regex%'
+            $uuidV4Regex: '%app.uuid_v4_regex%'
             $locale: '%locale%'
     _instanceof:
         App\Rest\Interfaces\ControllerInterface:

@@ -163,7 +163,7 @@ trait LogEntity
      */
     public function getCreatedAt(): ?DateTimeImmutable
     {
-        return $this->date;
+        return $this->getDate();
     }
 
     /**

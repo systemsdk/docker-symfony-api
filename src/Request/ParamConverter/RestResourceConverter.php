@@ -22,7 +22,7 @@ use Throwable;
  *   * @Route(
  *   *    "/{userEntity}",
  *   *    requirements={
- *   *        "userEntity" = "%app.uuid_regex%",
+ *   *        "userEntity" = "%app.uuid_v1_regex%",
  *   *    }
  *   * )
  *   *

@@ -99,6 +99,8 @@ interface ControllerInterface
      * Method to process current criteria array.
      *
      * @param array $criteria
+     * @param Request $request
+     * @param string  $method
      */
-    public function processCriteria(array &$criteria): void;
+    public function processCriteria(array &$criteria, Request $request, string $method): void;
 }

@@ -6,6 +6,8 @@ declare(strict_types = 1);
 
 namespace App\Rest\Traits\Methods;
 
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Trait RestMethodProcessCriteria
  *
@@ -16,7 +18,7 @@ trait RestMethodProcessCriteria
     /**
      * {@inheritdoc}
      */
-    public function processCriteria(/** @scrutinizer ignore-unused */ array &$criteria): void
+    public function processCriteria(array &$criteria, Request $request, string $method): void
     {
     }
 }

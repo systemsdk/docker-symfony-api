@@ -80,7 +80,7 @@ class UserGroupController extends Controller
      * @Route(
      *      "/{userGroup}/users",
      *      requirements={
-     *          "userGroup" = "%app.uuid_regex%",
+     *          "userGroup" = "%app.uuid_v1_regex%",
      *      },
      *      methods={"GET"},
      *  )
@@ -139,8 +139,8 @@ class UserGroupController extends Controller
      * @Route(
      *      "/{userGroup}/user/{user}",
      *      requirements={
-     *          "userGroup" = "%app.uuid_regex%",
-     *          "user" = "%app.uuid_regex%",
+     *          "userGroup" = "%app.uuid_v1_regex%",
+     *          "user" = "%app.uuid_v1_regex%",
      *      },
      *      methods={"POST"},
      *  )
@@ -233,8 +233,8 @@ class UserGroupController extends Controller
      * @Route(
      *      "/{userGroup}/user/{user}",
      *      requirements={
-     *          "userGroupId" = "%app.uuid_regex%",
-     *          "userId" = "%app.uuid_regex%",
+     *          "userGroupId" = "%app.uuid_v1_regex%",
+     *          "userId" = "%app.uuid_v1_regex%",
      *      },
      *      methods={"DELETE"},
      *  )

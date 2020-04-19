@@ -7,12 +7,12 @@ declare(strict_types = 1);
 namespace App\Command\Utils;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\RuntimeException;
 use App\Command\Traits\StyleSymfony;
 use LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use InvalidArgumentException;
-use RuntimeException;
 use SplFileInfo;
 use stdClass;
 use Symfony\Component\Console\Helper\ProgressBar;

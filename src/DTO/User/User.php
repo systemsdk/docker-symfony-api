@@ -328,9 +328,9 @@ class User extends RestDto
             $this->language = $entity->getLanguage();
             $this->locale = $entity->getLocale();
             $this->timezone = $entity->getTimezone();
-            /** @var array<int, UserGroupEntity> $userGroups */
-            $userGroups = $entity->getUserGroups()->toArray();
-            $this->userGroups = $userGroups;
+            /** @var array<int, UserGroupEntity> $groups */
+            $groups = $entity->getUserGroups()->toArray();
+            $this->userGroups = $groups;
         }
 
         return $this;

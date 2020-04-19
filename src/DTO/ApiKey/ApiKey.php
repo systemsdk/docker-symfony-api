@@ -130,9 +130,9 @@ class ApiKey extends RestDto
             $this->id = $entity->getId();
             $this->token = $entity->getToken();
             $this->description = $entity->getDescription();
-            /** @var array<int, UserGroupEntity> $userGroups */
-            $userGroups = $entity->getUserGroups()->toArray();
-            $this->userGroups = $userGroups;
+            /** @var array<int, UserGroupEntity> $groups */
+            $groups = $entity->getUserGroups()->toArray();
+            $this->userGroups = $groups;
         }
 
         return $this;
