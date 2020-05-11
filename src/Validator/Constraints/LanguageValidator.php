@@ -35,6 +35,10 @@ class LanguageValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (in_array($value, $this->localization->getLanguages(), true) !== true) {
+            if (!is_string($value)) {
+                $value = $value->getLanguage();
+            }
+
             $this->context
                 ->buildViolation(Language::MESSAGE)
                 ->setParameter('{{ language }}', $value)

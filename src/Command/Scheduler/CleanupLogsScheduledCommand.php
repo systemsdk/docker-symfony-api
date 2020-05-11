@@ -26,7 +26,9 @@ class CleanupLogsScheduledCommand extends Command
     // Traits
     use StyleSymfony;
 
-    /** @var EntityManagerInterface */
+    /**
+     * @var EntityManagerInterface
+     */
     private EntityManagerInterface $entityManager;
 
     /**

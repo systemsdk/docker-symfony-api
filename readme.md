@@ -20,13 +20,31 @@ Note: OS recommendation - Linux Ubuntu based.
 1. Nginx 1.17
 2. PHP 7.4 fpm
 3. MySQL 8
-4. Symfony 4.4
+4. Symfony 4 LTS
 5. RabbitMQ 3
+
+## Setting up STAGING environment
+1.Clone this repository from GitHub.
+
+2.Build, start and install the docker images from your terminal:
+```bash
+docker-compose -f docker-compose-staging.yml build
+make start-staging
+make generate-jwt-keys
+```
+
+3.Make sure that you have installed migrations / created roles and groups / messenger transports:
+```bash
+make migrate-no-test
+make create-roles-groups
+make migrate-cron-jobs
+make messenger-setup-transports
+```
 
 ## Setting up DEV environment
 1.Clone this repository from GitHub.
 
-2.Set another APP_SECRET for application in .env.prod file.
+2.Set another APP_SECRET for application in .env.prod and .env.staging files.
 
 Note 1: You can get unique secret key for example [here](http://nux.net/secret).
 
@@ -62,6 +80,7 @@ make generate-jwt-keys
 ```bash
 make migrate
 make create-roles-groups
+make migrate-cron-jobs
 make messenger-setup-transports
 ```
 
@@ -83,7 +102,9 @@ make stop
 docker-compose build
 make start
 ```
-Note: Please use next command if you need to build prod environment `docker-compose -f docker-compose-prod.yml build` instead `docker-compose build`.
+Note 1: Please use next command if you need to build staging environment `docker-compose -f docker-compose-staging.yml build` instead `docker-compose build`.
+
+Note 2: Please use next command if you need to build prod environment `docker-compose -f docker-compose-prod.yml build` instead `docker-compose build`.
 
 ## Start and stop environment
 Please use next make commands in order to start and stop environment:
@@ -91,22 +112,28 @@ Please use next make commands in order to start and stop environment:
 make start
 make stop
 ```
-Note: For prod environment need to be used next make commands: `make start-prod`, `make stop-prod`.
+Note 1: For staging environment need to be used next make commands: `make start-staging`, `make stop-staging`.
+
+Note 2: For prod environment need to be used next make commands: `make start-prod`, `make stop-prod`.
 
 ## Additional main command available
 ```bash
 make start
 make start-test
+make start-staging
 make start-prod
 
 make stop
 make stop-test
+make stop-staging
 make stop-prod
 
 make restart
 make restart-test
+make restart-staging
 make restart-prod
 
+make env-staging
 make env-prod
 
 make generate-jwt-keys
@@ -117,7 +144,7 @@ make ssh-supervisord
 make ssh-mysql
 make ssh-rabbitmq
 
-make composer-install-prod
+make composer-install-no-dev
 make composer-install
 make composer-update
 
@@ -131,7 +158,7 @@ make logs-rabbitmq
 
 make drop-migrate
 make migrate
-make migrate-prod
+make migrate-no-test
 make migrate-cron-jobs
 
 make fixtures
@@ -153,7 +180,7 @@ etc....
 Notes: Please see more commands in Makefile
 
 ## Architecture & packages
-* [Symfony 4.4](https://symfony.com)
+* [Symfony 4](https://symfony.com)
 * [doctrine-migrations-bundle](https://github.com/doctrine/DoctrineMigrationsBundle)
 * [doctrine-fixtures-bundle](https://github.com/doctrine/DoctrineFixturesBundle)
 * [command-scheduler-bundle](https://github.com/j-guyon/CommandSchedulerBundle)
