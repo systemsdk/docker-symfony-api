@@ -28,6 +28,8 @@ build:
     - docker ps -a
     - make wait-for-db
     - make drop-migrate
+    - make generate-jwt-keys
+    - make create-roles-groups
     - make messenger-setup-transports
     - *general_scripts
     - make phpunit
