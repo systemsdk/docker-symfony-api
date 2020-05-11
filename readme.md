@@ -23,8 +23,34 @@ Note: OS recommendation - Linux Ubuntu based.
 4. Symfony 4 LTS
 5. RabbitMQ 3
 
+## Setting up PROD environment
+1.Clone this repository from GitHub.
+
+2.Edit docker-compose-prod.yml and set necessary user/password for MySQL and RabbitMQ.
+
+Note: Delete var/mysql-data folder if it is exist.
+
+3.Edit env.prod and set necessary user/password for MySQL and RabbitMQ.
+
+4.Build, start and install the docker images from your terminal:
+```bash
+docker-compose -f docker-compose-prod.yml build
+make start-prod
+make generate-jwt-keys
+```
+
+5.Make sure that you have installed migrations / created roles and groups / messenger transports:
+```bash
+make migrate-no-test
+make create-roles-groups
+make migrate-cron-jobs
+make messenger-setup-transports
+```
+
 ## Setting up STAGING environment
 1.Clone this repository from GitHub.
+
+Note: Delete var/mysql-data folder if it is exist.
 
 2.Build, start and install the docker images from your terminal:
 ```bash
@@ -49,6 +75,8 @@ make messenger-setup-transports
 Note 1: You can get unique secret key for example [here](http://nux.net/secret).
 
 Note 2: Do not use .env.local.php on dev and test environment (delete it if exist).
+
+Note 3: Delete var/mysql-data folder if it is exist.
 
 3.Add domain to local 'hosts' file:
 ```bash
@@ -91,7 +119,7 @@ After application will start (`make start`) and in order to get shell access ins
 ```bash
 make ssh
 ```
-Note 1: Please use next make commands in order to enter in other containers: `make ssh-nginx`, `make ssh-supervisord`, `make ssh-mysql`.
+Note 1: Please use next make commands in order to enter in other containers: `make ssh-nginx`, `make ssh-supervisord`, `make ssh-mysql`, `make ssh-rabbitmq`.
 
 Note 2: Please use `exit` command in order to return from container's shell to local shell.
 
