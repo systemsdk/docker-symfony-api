@@ -11,6 +11,7 @@ use App\Service\LoginLoggerService;
 use App\Repository\UserRepository;
 use App\Doctrine\DBAL\Types\EnumLogLoginType;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
+use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Throwable;
 
 /**
@@ -56,7 +57,7 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            AuthenticationSuccessEvent::class => 'onAuthenticationSuccess',
+            Events::AUTHENTICATION_SUCCESS => 'onAuthenticationSuccess', //AuthenticationSuccessEvent::class
         ];
     }
 

@@ -112,4 +112,5 @@ After above command you will be inside symfony container and for display list of
 ./bin/console db:wait                               # Waits for database availability (1 mins max)
 ./bin/console utils:create-date-dimension-entities  # Create 'DateDimension' entities
 ./bin/console messenger:setup-transports            # Initialize transports for Messenger component
+./bin/console logs:cleanup                          # Command to cleanup logs(log_login, log_request) in the database
 ```

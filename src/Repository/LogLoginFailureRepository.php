@@ -8,6 +8,7 @@ namespace App\Repository;
 
 use App\Entity\LogLoginFailure as Entity;
 use App\Entity\User;
+use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 
 /**
  * Class LogLoginFailureRepository
@@ -43,7 +44,7 @@ class LogLoginFailureRepository extends BaseRepository
             ->createQueryBuilder('logLoginFailure')
             ->delete()
             ->where('logLoginFailure.user = :user')
-            ->setParameter('user', $user);
+            ->setParameter('user', $user->getId(), UuidBinaryOrderedTimeType::NAME);
 
         // Return deleted row count
         return (int)$queryBuilder->getQuery()->execute();

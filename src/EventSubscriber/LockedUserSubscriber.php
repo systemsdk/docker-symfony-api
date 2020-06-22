@@ -13,6 +13,7 @@ use App\Entity\LogLoginFailure;
 use App\Entity\User;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
+use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Symfony\Component\Security\Core\Exception\LockedException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Throwable;
@@ -62,7 +63,7 @@ class LockedUserSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            AuthenticationSuccessEvent::class => [
+            Events::AUTHENTICATION_SUCCESS => [ //AuthenticationSuccessEvent::class
                 'onAuthenticationSuccess',
                 128,
             ],

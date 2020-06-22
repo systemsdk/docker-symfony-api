@@ -18,8 +18,6 @@ use InvalidArgumentException;
 /**
  * Interface RepositoryInterface
  *
- * TODO: Deprecated, see App\Repository\Interfaces\BaseRepositoryInterface
- *
  * @package App\Rest\Interfaces
  */
 interface RepositoryInterface

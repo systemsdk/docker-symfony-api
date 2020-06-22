@@ -39,12 +39,12 @@ class ApiKey extends RestDto
      * @Assert\NotBlank()
      * @Assert\NotNull()
      */
-    protected string $description;
+    protected string $description = '';
 
     /**
      * @var string
      */
-    protected string $token;
+    protected string $token = '';
 
     /**
      * @var UserGroupEntity[]|array<int, UserGroupEntity>
