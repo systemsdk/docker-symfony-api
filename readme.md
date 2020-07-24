@@ -17,11 +17,13 @@ Docker environment (based on official php and mysql docker hub repositories) req
 Note: OS recommendation - Linux Ubuntu based.
 
 ## Components
-1. Nginx 1.17
+1. Nginx 1.19
 2. PHP 7.4 fpm
 3. MySQL 8
 4. Symfony 4 LTS
 5. RabbitMQ 3
+6. Elasticsearch 7
+7. Kibana 7
 
 ## Setting up PROD environment
 1.Clone this repository from GitHub.
@@ -32,19 +34,26 @@ Note: Delete var/mysql-data folder if it is exist.
 
 3.Edit env.prod and set necessary user/password for MySQL and RabbitMQ.
 
-4.Build, start and install the docker images from your terminal:
+4.Elasticsearch is pre-configured with the following privileged bootstrap user:
 ```bash
-docker-compose -f docker-compose-prod.yml build
+user: elastic
+password: ********
+```
+
+5.Build, start and install the docker images from your terminal:
+```bash
+make build-prod
 make start-prod
 make generate-jwt-keys
 ```
 
-5.Make sure that you have installed migrations / created roles and groups / messenger transports:
+6.Make sure that you have installed migrations / created roles and groups / messenger transports / elastic template:
 ```bash
 make migrate-no-test
 make create-roles-groups
 make migrate-cron-jobs
 make messenger-setup-transports
+make elastic-create-or-update-template
 ```
 
 ## Setting up STAGING environment
@@ -52,19 +61,26 @@ make messenger-setup-transports
 
 Note: Delete var/mysql-data folder if it is exist.
 
-2.Build, start and install the docker images from your terminal:
+2.Elasticsearch is pre-configured with the following privileged bootstrap user:
 ```bash
-docker-compose -f docker-compose-staging.yml build
+user: elastic
+password: ********
+```
+
+3.Build, start and install the docker images from your terminal:
+```bash
+make build-staging
 make start-staging
 make generate-jwt-keys
 ```
 
-3.Make sure that you have installed migrations / created roles and groups / messenger transports:
+4.Make sure that you have installed migrations / created roles and groups / messenger transports / elastic template:
 ```bash
 make migrate-no-test
 make create-roles-groups
 make migrate-cron-jobs
 make messenger-setup-transports
+make elastic-create-or-update-template
 ```
 
 ## Setting up DEV environment
@@ -96,23 +112,37 @@ Install locally in Firefox extension "Xdebug helper" and set in settings IDE KEY
 xdebug.remote_autostart = 1
 ```
 
-5.Build, start and install the docker images from your terminal:
+5.Elasticsearch is pre-configured with the following privileged bootstrap user(you can use it in order to enter in Kibana):
 ```bash
-docker-compose build
+user: elastic
+password: changeme
+```
+
+Note: For prod/staging environment another password should be used.
+
+6.Build, start and install the docker images from your terminal:
+```bash
+make build
 make start
 make composer-install
 make generate-jwt-keys
 ```
 
-6.Make sure that you have installed migrations / created roles and groups / messenger transports:
+7.Make sure that you have installed migrations / created roles and groups / messenger transports / elastic template:
 ```bash
 make migrate
 make create-roles-groups
 make migrate-cron-jobs
 make messenger-setup-transports
+make elastic-create-or-update-template
 ```
 
-7.In order to use this application, please open in your browser next url: [http://localhost/api/doc](http://localhost/api/doc).
+8.In order to use this application, please open in your browser next urls: 
+- [http://localhost/api/doc](http://localhost/api/doc)
+- [http://localhost:5601 (Kibana)](http://localhost:5601)
+
+## How to enable paid features for Elasticsearch
+Switch the value of Elasticsearch's `xpack.license.self_generated.type` option from `basic` to `trial` (`/docker/elasticsearch/config/elasticsearch.yml`).
 
 ## Getting shell to container
 After application will start (`make start`) and in order to get shell access inside symfony container you can run following command:
@@ -127,12 +157,12 @@ Note 2: Please use `exit` command in order to return from container's shell to l
 In case you edited Dockerfile or other environment configuration you'll need to build containers again using next commands:
 ```bash
 make stop
-docker-compose build
+make build
 make start
 ```
-Note 1: Please use next command if you need to build staging environment `docker-compose -f docker-compose-staging.yml build` instead `docker-compose build`.
+Note 1: Please use next command if you need to build staging environment `make build-staging` instead `make build`.
 
-Note 2: Please use next command if you need to build prod environment `docker-compose -f docker-compose-prod.yml build` instead `docker-compose build`.
+Note 2: Please use next command if you need to build prod environment `make build-prod` instead `make build`.
 
 ## Start and stop environment
 Please use next make commands in order to start and stop environment:
@@ -146,6 +176,11 @@ Note 2: For prod environment need to be used next make commands: `make start-pro
 
 ## Additional main command available
 ```bash
+make build
+make build-test
+make build-staging
+make build-prod
+
 make start
 make start-test
 make start-staging
@@ -171,6 +206,8 @@ make ssh-nginx
 make ssh-supervisord
 make ssh-mysql
 make ssh-rabbitmq
+make ssh-elasticsearch
+make ssh-kibana
 
 make composer-install-no-dev
 make composer-install
@@ -183,6 +220,8 @@ make logs-nginx
 make logs-supervisord
 make logs-mysql
 make logs-rabbitmq
+make logs-elasticsearch
+make logs-kibana
 
 make drop-migrate
 make migrate
@@ -194,6 +233,8 @@ make fixtures
 make create-roles-groups
 
 make messenger-setup-transports
+
+make elastic-create-or-update-template
 
 make phpunit
 make report-code-coverage
@@ -235,6 +276,7 @@ Notes: Please see more commands in Makefile
 * [easy-coding-standard](https://github.com/Symplify/EasyCodingStandard)
 * [PhpMetrics](https://github.com/phpmetrics/PhpMetrics)
 * [beberlei/doctrineextensions](https://github.com/beberlei/DoctrineExtensions)
+* [elasticsearch](https://github.com/elastic/elasticsearch-php)
 
 ## External links / resources
 * [Symfony Flex REST API](https://github.com/tarlepp/symfony-flex-backend.git): code in "src/" folder forked from Symfony Flex REST API.

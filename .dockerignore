@@ -9,6 +9,7 @@
 /public/bundles/
 /var/mysql-data
 /var/rabbitmq
+/var/elasticsearch-data
 /vendor/
 /tools/*/vendor/
 

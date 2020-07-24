@@ -6,6 +6,7 @@ This document describing how you can configure your IDE [PhpStorm](https://www.j
 * Go to `Settings -> Plugins` and install next plugins:
     - .env files support
     - .ignore
+    - Elasticsearch Plugin
     - Makefile support
     - Php Annotations
     - Php Inspections ​(EA Extended)

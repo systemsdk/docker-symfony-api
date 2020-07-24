@@ -84,7 +84,8 @@ class LockedUserSubscriber implements EventSubscriberInterface
             throw new UnsupportedUserException('Unsupported user.');
         }
 
-        if (count($user->getLogsLoginFailure()) > 10) {
+        if ($_ENV['LOCK_USER_ON_LOGIN_FAILURE_ATTEMPTS']
+            && count($user->getLogsLoginFailure()) > $_ENV['LOCK_USER_ON_LOGIN_FAILURE_ATTEMPTS']) {
             throw new LockedException('Locked account.');
         }
 

@@ -13,7 +13,7 @@ use Throwable;
 /**
  * Class HealthService
  *
- * @package App\Util
+ * @package App\Service
  */
 final class HealthService
 {

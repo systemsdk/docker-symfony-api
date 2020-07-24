@@ -67,6 +67,14 @@ services:
 
     App\Service\Interfaces\MessageServiceInterface:
         class: App\Service\MessageService
+        #lazy: true
 
+    App\Service\Interfaces\ElasticsearchServiceInterface:
+        class: App\Service\ElasticsearchService
+        arguments:
+            $host: '%env(ELASTICSEARCH_HOST)%'
+            $username: '%env(ELASTICSEARCH_USERNAME)%'
+            $password: '%env(ELASTICSEARCH_PASSWORD)%'
+        #lazy: true
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -1,6 +1,15 @@
 dir=${CURDIR}
-project=-p symfony
-service=symfony:latest
+
+ifndef APP_ENV
+	include .env
+	# Determine if .env.local file exist
+	ifneq ("$(wildcard .env.local)","")
+		include .env.local
+	endif
+endif
+
+project=-p ${COMPOSE_PROJECT_NAME}
+service=${COMPOSE_PROJECT_NAME}:latest
 openssl_bin:=$(shell which openssl)
 interactive:=$(shell [ -t 0 ] && echo 1)
 ifneq ($(interactive),1)
@@ -11,13 +20,17 @@ ifeq ($(GITLAB_CI),1)
 	phpunitOptions=--coverage-text --colors=never
 endif
 
-ifndef APP_ENV
-	include .env
-	# Determine if .env.local file exist
-	ifneq ("$(wildcard .env.local)","")
-		include .env.local
-	endif
-endif
+build:
+	@docker-compose -f docker-compose.yml build
+
+build-test:
+	@docker-compose -f docker-compose-test-ci.yml build
+
+build-staging:
+	@docker-compose -f docker-compose-staging.yml build
+
+build-prod:
+	@docker-compose -f docker-compose-prod.yml build
 
 start:
 	@docker-compose -f docker-compose.yml $(project) up -d
@@ -88,6 +101,12 @@ ssh-mysql:
 ssh-rabbitmq:
 	@docker-compose $(project) exec rabbitmq /bin/sh
 
+ssh-elasticsearch:
+	@docker-compose $(project) exec elasticsearch bash
+
+ssh-kibana:
+	@docker-compose $(project) exec kibana bash
+
 exec:
 	@docker-compose $(project) exec $(optionT) symfony $$cmd
 
@@ -103,6 +122,9 @@ report-clean:
 wait-for-db:
 	@make exec cmd="php bin/console db:wait"
 
+wait-for-elastic:
+	@make exec cmd="php bin/console elastic:wait"
+
 composer-install-no-dev:
 	@make exec-bash cmd="COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-dev"
 
@@ -117,19 +139,25 @@ info:
 	@make exec cmd="php --version"
 
 logs:
-	@docker logs -f symfony
+	@docker logs -f ${COMPOSE_PROJECT_NAME}_symfony
 
 logs-nginx:
-	@docker logs -f nginx
+	@docker logs -f ${COMPOSE_PROJECT_NAME}_nginx
 
 logs-supervisord:
-	@docker logs -f supervisord
+	@docker logs -f ${COMPOSE_PROJECT_NAME}_supervisord
 
 logs-mysql:
-	@docker logs -f mysql
+	@docker logs -f ${COMPOSE_PROJECT_NAME}_mysql
 
 logs-rabbitmq:
-	@docker logs -f rabbitmq
+	@docker logs -f ${COMPOSE_PROJECT_NAME}_rabbitmq
+
+logs-elasticsearch:
+	@docker logs -f ${COMPOSE_PROJECT_NAME}_elasticsearch
+
+logs-kibana:
+	@docker logs -f ${COMPOSE_PROJECT_NAME}_kibana
 
 drop-migrate:
 	@make exec cmd="php bin/console doctrine:schema:drop --full-database --force"
@@ -154,6 +182,9 @@ create-roles-groups:
 
 messenger-setup-transports:
 	@make exec cmd="php bin/console messenger:setup-transports"
+
+elastic-create-or-update-template:
+	@make exec cmd="php bin/console elastic:create-or-update-template"
 
 phpunit:
 	@make exec-bash cmd="rm -rf ./var/cache/test* && bin/console cache:warmup --env=test && ./vendor/bin/phpunit -c phpunit.xml.dist --coverage-html reports/coverage $(phpunitOptions) --coverage-clover reports/clover.xml --log-junit reports/junit.xml"

@@ -15,13 +15,16 @@ jobs:
             make start-test
 
       - run:
-          name: Wait for DB container is running and initialize DB & messenger component
+          name: Wait for DB container is running and initialize DB & messenger component / cron / elastic
           command: |
             make wait-for-db
             make drop-migrate
             make generate-jwt-keys
             make create-roles-groups
+            make migrate-cron-jobs
             make messenger-setup-transports
+            make wait-for-elastic
+            make elastic-create-or-update-template
 
       - run:
           name: Run unit/functional tests

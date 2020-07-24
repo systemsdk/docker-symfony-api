@@ -29,7 +29,7 @@ use UnexpectedValueException;
 /**
  * Trait MethodValidator
  *
- * @package App\Rest\Traits\Methods
+ * @package App\Rest\Traits
  */
 trait RestMethodHelper
 {
