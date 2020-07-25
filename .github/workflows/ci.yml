@@ -20,6 +20,8 @@ jobs:
 
         steps:
             - uses: actions/checkout@v1
+            - name: Set Elastic data folder rights
+              run: chmod 777 var/elasticsearch-data
             - name: Build the docker images
               run: make build-test
             - name: Start the docker images

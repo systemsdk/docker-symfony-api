@@ -23,6 +23,7 @@ stages:
 build:
   stage: build
   script:
+    - chmod 777 var/elasticsearch-data
     - make build-test
     - make start-test
     - docker ps -a

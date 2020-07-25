@@ -9,6 +9,7 @@ pipelines:
         script:
           - chmod +x .bitbucket/dependencies.sh
           - .bitbucket/dependencies.sh
+          - chmod 777 var/elasticsearch-data
           - make build-test
           - make start-test
           - docker ps -a

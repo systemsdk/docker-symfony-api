@@ -63,6 +63,7 @@ class WaitElasticCommand extends Command
             } catch (Exception $e) {
                 $output->writeln('<comment>Trying to connect to elastic seconds:' . $i . '</comment>');
                 sleep(self::WAIT_SLEEP_TIME);
+                $this->elasticsearchService->instantiate();
 
                 continue;
             }

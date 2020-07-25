@@ -21,6 +21,10 @@ class ElasticsearchService implements ElasticsearchServiceInterface
     public const INDEX_PREFIX = 'index';
     public const INDEX_DATE_FORMAT = 'Y_m_d';
     public const TEMPLATE_NAME = 'template_1';
+
+    private string $host;
+    private string $username;
+    private string $password;
     private Client $client;
 
     /**
@@ -32,8 +36,19 @@ class ElasticsearchService implements ElasticsearchServiceInterface
      */
     public function __construct(string $host, string $username, string $password)
     {
-        $this->client = ClientBuilder::create()->setHosts([$host])
-            ->setBasicAuthentication($username, $password)
+        $this->host = $host;
+        $this->username = $username;
+        $this->password = $password;
+        $this->instantiate();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function instantiate(): void
+    {
+        $this->client = ClientBuilder::create()->setHosts([$this->host])
+            ->setBasicAuthentication($this->username, $this->password)
             ->build();
     }
 

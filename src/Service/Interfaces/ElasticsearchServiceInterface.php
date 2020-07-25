@@ -14,6 +14,11 @@ namespace App\Service\Interfaces;
 interface ElasticsearchServiceInterface
 {
     /**
+     * Instantiate client instance
+     */
+    public function instantiate(): void;
+
+    /**
      * Index a document
      *
      * @param string $index

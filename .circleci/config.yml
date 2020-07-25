@@ -10,8 +10,9 @@ jobs:
       - checkout
 
       - run:
-          name: Start container and verify it's working
+          name: Prepare and start containers and verify it's working
           command: |
+            chmod 777 var/elasticsearch-data
             make start-test
 
       - run:
