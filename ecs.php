@@ -25,6 +25,8 @@ use PhpCsFixer\Fixer\PhpTag\BlankLineAfterOpeningTagFixer;
 use PhpCsFixer\Fixer\Whitespace\BlankLineBeforeStatementFixer;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
+use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
 use Symplify\CodingStandard\Fixer\Commenting\ParamReturnAndVarTagMalformsFixer;
 use Symplify\CodingStandard\Fixer\Strict\BlankLineAfterStrictTypesFixer;
 
@@ -88,6 +90,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             BlankLineAfterStrictTypesFixer::class => null,
             ParamReturnAndVarTagMalformsFixer::class => null,
             PhpdocAlignFixer::class => null,
+            ArrayListItemNewlineFixer::class => null,
+            ArrayOpenerAndCloserNewlineFixer::class => null,
         ]
     );
 };
