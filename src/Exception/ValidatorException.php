@@ -9,9 +9,9 @@ namespace App\Exception;
 use App\Exception\Interfaces\ClientErrorInterface;
 use App\Utils\JSON;
 use JsonException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Exception\ValidatorException as BaseValidatorException;
 
 /**
@@ -23,9 +23,6 @@ class ValidatorException extends BaseValidatorException implements ClientErrorIn
 {
     /**
      * Constructor
-     *
-     * @param string                           $target
-     * @param ConstraintViolationListInterface $errors
      *
      * @throws JsonException
      */

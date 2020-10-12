@@ -6,12 +6,12 @@ declare(strict_types = 1);
 
 namespace App\Service;
 
-use App\Service\Interfaces\RequestLoggerServiceInterface;
 use App\Entity\ApiKey;
 use App\Entity\LogRequest;
 use App\Entity\User;
-use Psr\Log\LoggerInterface;
 use App\Resource\LogRequestResource;
+use App\Service\Interfaces\RequestLoggerServiceInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -34,10 +34,6 @@ class RequestLoggerService implements RequestLoggerServiceInterface
 
     /**
      * Constructor
-     *
-     * @param LogRequestResource $resource
-     * @param LoggerInterface    $logger
-     * @param array              $sensitiveProperties
      */
     public function __construct(LogRequestResource $resource, LoggerInterface $logger, array $sensitiveProperties)
     {
@@ -47,13 +43,9 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     }
 
     /**
-     * Setter for response object.
-     *
-     * @param Response $response
-     *
-     * @return RequestLoggerServiceInterface
+     * {@inheritdoc}
      */
-    public function setResponse(Response $response): RequestLoggerServiceInterface
+    public function setResponse(Response $response): self
     {
         $this->response = $response;
 
@@ -61,13 +53,9 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     }
 
     /**
-     * Setter for request object.
-     *
-     * @param Request $request
-     *
-     * @return RequestLoggerServiceInterface
+     * {@inheritdoc}
      */
-    public function setRequest(Request $request): RequestLoggerServiceInterface
+    public function setRequest(Request $request): self
     {
         $this->request = $request;
 
@@ -75,13 +63,9 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     }
 
     /**
-     * Setter method for current user.
-     *
-     * @param User|null $user
-     *
-     * @return RequestLoggerServiceInterface
+     * {@inheritdoc}
      */
-    public function setUser(?User $user = null): RequestLoggerServiceInterface
+    public function setUser(?User $user = null): self
     {
         $this->user = $user;
 
@@ -89,13 +73,9 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     }
 
     /**
-     * Setter method for current api key
-     *
-     * @param ApiKey|null $apiKey
-     *
-     * @return RequestLoggerServiceInterface
+     * {@inheritdoc}
      */
-    public function setApiKey(?ApiKey $apiKey = null): RequestLoggerServiceInterface
+    public function setApiKey(?ApiKey $apiKey = null): self
     {
         $this->apiKey = $apiKey;
 
@@ -103,13 +83,9 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     }
 
     /**
-     * Setter method for 'master request' info.
-     *
-     * @param bool $masterRequest
-     *
-     * @return RequestLoggerServiceInterface
+     * {@inheritdoc}
      */
-    public function setMasterRequest(bool $masterRequest): RequestLoggerServiceInterface
+    public function setMasterRequest(bool $masterRequest): self
     {
         $this->masterRequest = $masterRequest;
 

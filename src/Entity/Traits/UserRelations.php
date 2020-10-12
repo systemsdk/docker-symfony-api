@@ -9,11 +9,10 @@ namespace App\Entity\Traits;
 use App\Entity\LogLogin;
 use App\Entity\LogLoginFailure;
 use App\Entity\LogRequest;
-use App\Entity\User;
 use App\Entity\UserGroup;
-use App\Entity\Interfaces\UserGroupAwareInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -28,6 +27,8 @@ trait UserRelations
      *
      * @Groups({
      *      "User.userGroups",
+     *
+     *      "set.UserProfile",
      *  })
      *
      * @ORM\ManyToMany(
@@ -91,10 +92,10 @@ trait UserRelations
      * If you want to get user inherited roles you need to implement that
      * logic by yourself OR use eg. `/user/{uuid}/roles` API endpoint.
      *
-     * @psalm-return array<int, string>
-     *
      * @Groups({
      *      "User.roles",
+     *
+     *      "set.UserProfile",
      *  })
      *
      * @return string[]
@@ -148,52 +149,39 @@ trait UserRelations
 
     /**
      * Method to attach new user group to user.
-     *
-     * @param UserGroup $userGroup
-     *
-     * @return User|UserGroupAwareInterface
      */
-    public function addUserGroup(UserGroup $userGroup): UserGroupAwareInterface
+    public function addUserGroup(UserGroup $userGroup): self
     {
         if (!$this->userGroups->contains($userGroup)) {
             $this->userGroups->add($userGroup);
 
-            /** @noinspection PhpParamsInspection */
+            /* @noinspection PhpParamsInspection */
             $userGroup->addUser($this);
         }
 
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this;
     }
 
     /**
      * Method to remove specified user group from user.
-     *
-     * @param UserGroup $userGroup
-     *
-     * @return User|UserGroupAwareInterface
      */
-    public function removeUserGroup(UserGroup $userGroup): UserGroupAwareInterface
+    public function removeUserGroup(UserGroup $userGroup): self
     {
         if ($this->userGroups->removeElement($userGroup)) {
-            /** @noinspection PhpParamsInspection */
+            /* @noinspection PhpParamsInspection */
             $userGroup->removeUser($this);
         }
 
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this;
     }
 
     /**
      * Method to remove all many-to-many user group relations from current user.
-     *
-     * @return User|UserGroupAwareInterface
      */
-    public function clearUserGroups(): UserGroupAwareInterface
+    public function clearUserGroups(): self
     {
         $this->userGroups->clear();
 
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this;
     }
 }

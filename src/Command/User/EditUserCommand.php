@@ -6,16 +6,16 @@ declare(strict_types = 1);
 
 namespace App\Command\User;
 
-use Symfony\Component\Console\Command\Command;
 use App\Command\Traits\StyleSymfony;
-use Symfony\Component\Console\Exception\LogicException;
+use App\DTO\User\UserUpdate as UserDto;
+use App\Entity\User as UserEntity;
+use App\Form\Type\Console\UserType;
 use App\Resource\UserResource;
+use Matthias\SymfonyConsoleForm\Console\Helper\FormHelper;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Entity\User as UserEntity;
-use App\DTO\User\UserUpdate as UserDto;
-use App\Form\Type\Console\UserType;
-use Matthias\SymfonyConsoleForm\Console\Helper\FormHelper;
 use Throwable;
 
 /**
@@ -34,9 +34,6 @@ class EditUserCommand extends Command
     /**
      * Constructor
      *
-     * @param UserResource $userResource
-     * @param UserHelper   $userHelper
-     *
      * @throws LogicException
      */
     public function __construct(UserResource $userResource, UserHelper $userHelper)
@@ -51,14 +48,9 @@ class EditUserCommand extends Command
 
     /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -82,13 +74,7 @@ class EditUserCommand extends Command
     /**
      * Method to update specified user entity via specified form.
      *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @param UserEntity $user
-     *
      * @throws Throwable
-     *
-     * @return string
      */
     private function updateUser(InputInterface $input, OutputInterface $output, UserEntity $user): string
     {

@@ -8,12 +8,12 @@ namespace App\Entity;
 
 use App\Entity\Interfaces\EntityInterface;
 use App\Entity\Traits\Uuid;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 use DateTimeImmutable;
 use DateTimeZone;
+use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use Swagger\Annotations as SWG;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Throwable;
 
 /**
@@ -32,8 +32,6 @@ class Health implements EntityInterface
     use Uuid;
 
     /**
-     * @var UuidInterface
-     *
      * @Groups({
      *      "Health",
      *      "Health.id",
@@ -52,8 +50,6 @@ class Health implements EntityInterface
     private UuidInterface $id;
 
     /**
-     * @var DateTimeImmutable
-     *
      * @Groups({
      *      "Health",
      *      "Health.timestamp",
@@ -67,7 +63,6 @@ class Health implements EntityInterface
      */
     private DateTimeImmutable $timestamp;
 
-
     /**
      * Constructor
      *
@@ -76,30 +71,19 @@ class Health implements EntityInterface
     public function __construct()
     {
         $this->id = $this->createUuid();
-        $this->setTimestamp(new DateTimeImmutable('now', new DateTimeZone('UTC')));
+        $this->timestamp = new DateTimeImmutable('now', new DateTimeZone('UTC'));
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id->toString();
     }
 
-    /**
-     * @return DateTimeImmutable
-     */
     public function getTimestamp(): DateTimeImmutable
     {
         return $this->getCreatedAt();
     }
 
-    /**
-     * @param DateTimeImmutable $timestamp
-     *
-     * @return Health
-     */
     public function setTimestamp(DateTimeImmutable $timestamp): self
     {
         $this->timestamp = $timestamp;
@@ -107,11 +91,6 @@ class Health implements EntityInterface
         return $this;
     }
 
-    /**
-     * Returns createdAt.
-     *
-     * @return DateTimeImmutable
-     */
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->timestamp;

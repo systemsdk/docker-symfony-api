@@ -56,8 +56,6 @@ class ApiKeyController extends Controller
 
     /**
      * Constructor
-     *
-     * @param ApiKeyResource $resource
      */
     public function __construct(ApiKeyResource $resource)
     {

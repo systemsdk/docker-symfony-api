@@ -16,13 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 abstract class ContainerTestCase extends KernelTestCase
 {
-    private ?ContainerInterface $testContainer;
+    private ?ContainerInterface $testContainer = null;
 
-    /**
-     * Getter method for container
-     *
-     * @return ContainerInterface
-     */
     public function getContainer(): ContainerInterface
     {
         if (!($this->testContainer instanceof ContainerInterface)) {

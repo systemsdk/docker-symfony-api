@@ -243,6 +243,10 @@ make phpcs
 make ecs
 make ecs-fix
 make phpmetrics
+make phpcpd
+make phpmd
+make phpstan
+make phpinsights
 
 etc....
 ```
@@ -275,6 +279,10 @@ Notes: Please see more commands in Makefile
 * [php-coveralls](https://github.com/php-coveralls/php-coveralls)
 * [easy-coding-standard](https://github.com/Symplify/EasyCodingStandard)
 * [PhpMetrics](https://github.com/phpmetrics/PhpMetrics)
+* [phpcpd](https://packagist.org/packages/sebastian/phpcpd)
+* [phpmd](https://packagist.org/packages/phpmd/phpmd)
+* [phpstan](https://packagist.org/packages/phpstan/phpstan)
+* [phpinsights](https://packagist.org/packages/nunomaduro/phpinsights)
 * [beberlei/doctrineextensions](https://github.com/beberlei/DoctrineExtensions)
 * [elasticsearch](https://github.com/elastic/elasticsearch-php)
 

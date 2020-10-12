@@ -6,12 +6,12 @@ declare(strict_types = 1);
 
 namespace App\DTO\ApiKey;
 
-use App\DTO\RestDto;
 use App\DTO\Interfaces\RestDtoInterface;
+use App\DTO\RestDto;
 use App\Entity\ApiKey as Entity;
 use App\Entity\Interfaces\EntityInterface;
-use App\Entity\UserGroup as UserGroupEntity;
 use App\Entity\Interfaces\UserGroupAwareInterface;
+use App\Entity\UserGroup as UserGroupEntity;
 use App\Validator\Constraints as AppAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -20,9 +20,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @package App\DTO
  *
- * @method self|RestDtoInterface  get(string $id): RestDtoInterface
- * @method self|RestDtoInterface  patch(RestDtoInterface $dto): RestDtoInterface
- * @method Entity|EntityInterface update(EntityInterface $entity): EntityInterface
+ * @method self|RestDtoInterface get(string $id)
+ * @method self|RestDtoInterface patch(RestDtoInterface $dto)
+ * @method Entity|EntityInterface update(EntityInterface $entity)
  */
 class ApiKey extends RestDto
 {
@@ -34,16 +34,11 @@ class ApiKey extends RestDto
     ];
 
     /**
-     * @var string
-     *
      * @Assert\NotBlank()
      * @Assert\NotNull()
      */
     protected string $description = '';
 
-    /**
-     * @var string
-     */
     protected string $token = '';
 
     /**
@@ -53,20 +48,11 @@ class ApiKey extends RestDto
      */
     protected array $userGroups = [];
 
-
-    /**
-     * @return string
-     */
     public function getToken(): string
     {
         return $this->token;
     }
 
-    /**
-     * @param string $token
-     *
-     * @return ApiKey
-     */
     public function setToken(string $token): self
     {
         $this->setVisited('token');
@@ -75,19 +61,11 @@ class ApiKey extends RestDto
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     *
-     * @return ApiKey
-     */
     public function setDescription(string $description): self
     {
         $this->setVisited('description');
@@ -97,7 +75,7 @@ class ApiKey extends RestDto
     }
 
     /**
-     * @return array|UserGroupEntity[]
+     * @return array<int, UserGroupEntity>
      */
     public function getUserGroups(): array
     {
@@ -105,9 +83,7 @@ class ApiKey extends RestDto
     }
 
     /**
-     * @param array $userGroups
-     *
-     * @return ApiKey
+     * @param array<int, UserGroupEntity> $userGroups
      */
     public function setUserGroups(array $userGroups): self
     {
@@ -118,11 +94,9 @@ class ApiKey extends RestDto
     }
 
     /**
-     * Method to load DTO data from specified entity.
+     * {@inheritdoc}
      *
      * @param EntityInterface|Entity $entity
-     *
-     * @return RestDtoInterface|ApiKey
      */
     public function load(EntityInterface $entity): RestDtoInterface
     {
@@ -141,8 +115,7 @@ class ApiKey extends RestDto
     /**
      * Method to update ApiKey entity user groups.
      *
-     * @param UserGroupAwareInterface $entity
-     * @param UserGroupEntity[]       $value
+     * @param array<int, UserGroupEntity> $value
      */
     protected function updateUserGroups(UserGroupAwareInterface $entity, array $value): void
     {

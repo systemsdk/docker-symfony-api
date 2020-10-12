@@ -37,28 +37,18 @@ class RolesService implements RolesServiceInterface
     /**
      * Constructor
      *
-     * @param array $rolesHierarchy
+     * @param array<string, array<int, string>> $rolesHierarchy
      */
     public function __construct(array $rolesHierarchy)
     {
         $this->rolesHierarchy = $rolesHierarchy;
     }
 
-    /**
-     * Getter for role hierarchy.
-     *
-     * @return array
-     */
     public function getHierarchy(): array
     {
         return $this->rolesHierarchy;
     }
 
-    /**
-     * Getter method to return all roles in single dimensional array.
-     *
-     * @return array
-     */
     public function getRoles(): array
     {
         return [
@@ -70,13 +60,6 @@ class RolesService implements RolesServiceInterface
         ];
     }
 
-    /**
-     * Getter method for role label.
-     *
-     * @param string $role
-     *
-     * @return string
-     */
     public function getRoleLabel(string $role): string
     {
         $output = 'Unknown - ' . $role;
@@ -88,13 +71,6 @@ class RolesService implements RolesServiceInterface
         return $output;
     }
 
-    /**
-     * Getter method for short role.
-     *
-     * @param string $role
-     *
-     * @return string
-     */
     public function getShort(string $role): string
     {
         $offset = mb_strpos($role, '_');
@@ -103,13 +79,6 @@ class RolesService implements RolesServiceInterface
         return mb_strtolower(mb_substr($role, $offset));
     }
 
-    /**
-     * Helper method to get inherited roles for given roles.
-     *
-     * @param array $roles
-     *
-     * @return array
-     */
     public function getInheritedRoles(array $roles): array
     {
         return array_values(array_unique((new RoleHierarchy($this->rolesHierarchy))->getReachableRoleNames($roles)));

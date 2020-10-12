@@ -6,8 +6,8 @@ declare(strict_types = 1);
 
 namespace App\DTO\User;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User as Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class UserCreate
@@ -17,8 +17,6 @@ use App\Entity\User as Entity;
 class UserCreate extends User
 {
     /**
-     * @var string
-     *
      * @Assert\NotBlank()
      * @Assert\NotNull()
      * @Assert\Length(min = Entity::PASSWORD_MIN_LENGTH, max = 255, allowEmptyString="false")

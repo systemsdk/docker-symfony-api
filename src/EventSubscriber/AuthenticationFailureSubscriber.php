@@ -6,12 +6,12 @@ declare(strict_types = 1);
 
 namespace App\EventSubscriber;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use App\Service\LoginLoggerService;
-use App\Repository\UserRepository;
 use App\Doctrine\DBAL\Types\EnumLogLoginType;
-use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
+use App\Repository\UserRepository;
+use App\Service\LoginLoggerService;
 use Doctrine\ORM\ORMException;
+use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Throwable;
 
 /**
@@ -21,14 +21,11 @@ use Throwable;
  */
 class AuthenticationFailureSubscriber implements EventSubscriberInterface
 {
-    protected LoginLoggerService $loginLoggerService;
-    protected UserRepository $userRepository;
+    private LoginLoggerService $loginLoggerService;
+    private UserRepository $userRepository;
 
     /**
      * Constructor
-     *
-     * @param LoginLoggerService    $loginLoggerService
-     * @param UserRepository $userRepository
      */
     public function __construct(LoginLoggerService $loginLoggerService, UserRepository $userRepository)
     {
@@ -37,22 +34,9 @@ class AuthenticationFailureSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Returns an array of event names this subscriber wants to listen to.
+     * {@inheritdoc}
      *
-     * The array keys are event names and the value can be:
-     *
-     *  * The method name to call (priority defaults to 0)
-     *  * An array composed of the method name to call and the priority
-     *  * An array of arrays composed of the method names to call and respective
-     *    priorities, or 0 if unset
-     *
-     * For instance:
-     *
-     *  * array('eventName' => 'methodName')
-     *  * array('eventName' => array('methodName', $priority))
-     *  * array('eventName' => array(array('methodName1', $priority), array('methodName2')))
-     *
-     * @return array<string, string> The event names to listen to
+     * @return array<string, string>
      */
     public static function getSubscribedEvents(): array
     {
@@ -64,10 +48,8 @@ class AuthenticationFailureSubscriber implements EventSubscriberInterface
     /**
      * Method to log login failures to database.
      *
-     * This method is called when '\Lexik\Bundle\JWTAuthenticationBundle\Events::AUTHENTICATION_FAILURE'
-     * event is broadcast.
-     *
-     * @param AuthenticationFailureEvent $event
+     * This method is called when following event is broadcast;
+     *  - \Lexik\Bundle\JWTAuthenticationBundle\Events::AUTHENTICATION_FAILURE
      *
      * @throws ORMException|Throwable
      */

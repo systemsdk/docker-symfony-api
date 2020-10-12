@@ -46,14 +46,12 @@ class PhpUnitUtil
     private static array $validValueCache = [];
 
     /**
-     * @var array<string, mixed>
+     * @var array<string, stdClass|DateTime|string>
      */
     private static array $invalidValueCache = [];
 
     /**
      * @codeCoverageIgnore
-     *
-     * @param KernelInterface $kernel
      *
      * @throws Exception
      */
@@ -73,10 +71,7 @@ class PhpUnitUtil
     /**
      * @codeCoverageIgnore
      *
-     * @param string $folder
-     * @param string $pattern
-     *
-     * @return array
+     * @return array<int, string>
      */
     public static function recursiveFileSearch(string $folder, string $pattern): array
     {
@@ -96,9 +91,9 @@ class PhpUnitUtil
     /**
      * Method to call specified 'protected' or 'private' method on given class.
      *
-     * @param object  $object The instantiated instance of your class
-     * @param string  $name   The name of your private/protected method
-     * @param array   $args   Method arguments
+     * @param object $object The instantiated instance of your class
+     * @param string $name The name of your private/protected method
+     * @param array<mixed> $args Method arguments
      *
      * @throws ReflectionException
      *
@@ -117,7 +112,7 @@ class PhpUnitUtil
      *      $foo->invoke($cls, $...);
      *
      * @param object $object The instantiated instance of your class
-     * @param string $name   The name of your private/protected method
+     * @param string $name The name of your private/protected method
      *
      * @throws ReflectionException
      *
@@ -136,7 +131,6 @@ class PhpUnitUtil
     /**
      * Helper method to get any property value from given class.
      *
-     * @param string $property
      * @param object $object
      *
      * @throws ReflectionException
@@ -154,8 +148,6 @@ class PhpUnitUtil
 
     /**
      * @param Type|string|null $type
-     *
-     * @return string
      */
     public static function getType($type): string
     {
@@ -204,8 +196,7 @@ class PhpUnitUtil
     /**
      * Helper method to override any property value within given class.
      *
-     * @param string $property
-     * @param mixed  $value
+     * @param mixed $value
      * @param object $object
      *
      * @throws ReflectionException
@@ -221,10 +212,9 @@ class PhpUnitUtil
     /**
      * Helper method to get valid value for specified type.
      *
-     * @param string       $type
-     * @param mixed[]|null $meta
+     * @param array<mixed>|null $meta
      *
-     * @return array<mixed, object|mixed>|int|string|object|true
+     * @return mixed
      *
      * @throws Throwable
      */
@@ -299,8 +289,6 @@ class PhpUnitUtil
 
     /**
      * Helper method to get invalid value for specified type.
-     *
-     * @param string $type
      *
      * @return stdClass|DateTime|string
      *

@@ -6,15 +6,15 @@ declare(strict_types = 1);
 
 namespace App\ArgumentResolver;
 
-use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+use App\DTO\Interfaces\RestDtoInterface;
 use App\Rest\Controller;
 use App\Rest\ControllerCollection;
 use AutoMapperPlus\AutoMapperInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
-use App\DTO\Interfaces\RestDtoInterface;
 use AutoMapperPlus\Exception\UnregisteredMappingException;
 use Generator;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
 /**
  * Class RestDtoValueResolver
@@ -23,9 +23,6 @@ use Generator;
  */
 class RestDtoValueResolver implements ArgumentValueResolverInterface
 {
-    /**
-     * string
-     */
     private const CONTROLLER_KEY = '_controller';
 
     /**
@@ -49,12 +46,8 @@ class RestDtoValueResolver implements ArgumentValueResolverInterface
     private ControllerCollection $controllerCollection;
     private AutoMapperInterface $autoMapper;
 
-
     /**
      * Constructor
-     *
-     * @param ControllerCollection $controllerCollection
-     * @param AutoMapperInterface  $autoMapper
      */
     public function __construct(ControllerCollection $controllerCollection, AutoMapperInterface $autoMapper)
     {
@@ -63,12 +56,7 @@ class RestDtoValueResolver implements ArgumentValueResolverInterface
     }
 
     /**
-     * Whether this resolver can resolve the value for the given ArgumentMetadata.
-     *
-     * @param Request          $request
-     * @param ArgumentMetadata $argument
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
@@ -84,16 +72,11 @@ class RestDtoValueResolver implements ArgumentValueResolverInterface
     }
 
     /**
-     * Returns the possible value(s).
-     *
-     * @param Request          $request
-     * @param ArgumentMetadata $argumentMetadata
+     * {@inheritdoc}
      *
      * @throws UnregisteredMappingException
-     *
-     * @return Generator
      */
-    public function resolve(Request $request, ArgumentMetadata $argumentMetadata): Generator
+    public function resolve(Request $request, ArgumentMetadata $argument): Generator
     {
         [$controllerName, $actionName] = explode('::', (string)$request->attributes->get(self::CONTROLLER_KEY));
 

@@ -6,54 +6,31 @@ declare(strict_types = 1);
 
 namespace App\DataFixtures\ORM;
 
+use App\Entity\Role;
+use App\Security\Interfaces\RolesServiceInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Security\Interfaces\RolesServiceInterface;
-use App\Entity\Role;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Throwable;
 
 /**
  * Class LoadRoleData
  *
  * @package App\DataFixtures\ORM
+ *
+ * @psalm-suppress MissingConstructor
  */
 final class LoadRoleData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-    /**
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    private ContainerInterface $container;
+    use ContainerAwareTrait;
 
-    /**
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
     private ObjectManager $manager;
-
-    /**
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
     private RolesServiceInterface $roles;
-
-
-    /**
-     * Setter for container.
-     *
-     * @param ContainerInterface|null $container
-     */
-    public function setContainer(?ContainerInterface $container = null): void
-    {
-        if ($container !== null) {
-            $this->container = $container;
-        }
-    }
 
     /**
      * Load data fixtures with the passed EntityManager
-     *
-     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager): void
     {
@@ -69,8 +46,6 @@ final class LoadRoleData extends Fixture implements OrderedFixtureInterface, Con
 
     /**
      * Get the order of this fixture
-     *
-     * @return int
      */
     public function getOrder(): int
     {
@@ -80,11 +55,7 @@ final class LoadRoleData extends Fixture implements OrderedFixtureInterface, Con
     /**
      * Method to create, persist and flush Role entity to database.
      *
-     * @param string $role
-     *
      * @throws Throwable
-     *
-     * @return bool
      */
     private function createRole(string $role): bool
     {

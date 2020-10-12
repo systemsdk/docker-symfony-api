@@ -6,10 +6,8 @@ declare(strict_types = 1);
 
 namespace App\Serializer\Normalizer;
 
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 /**
@@ -23,8 +21,6 @@ class CollectionNormalizer implements NormalizerInterface
 
     /**
      * Constructor
-     *
-     * @param ObjectNormalizer $normalizer
      */
     public function __construct(ObjectNormalizer $normalizer)
     {
@@ -32,19 +28,13 @@ class CollectionNormalizer implements NormalizerInterface
     }
 
     /**
-     * @param Collection|ArrayCollection|mixed $collection
-     * @param string|null                      $format
-     * @param array<array-key, mixed>          $context
-     *
-     * @throws ExceptionInterface
-     *
-     * @return array
+     * {@inheritdoc}
      */
-    public function normalize($collection, $format = null, array $context = []): array
+    public function normalize($object, $format = null, array $context = []): array
     {
         $output = [];
 
-        foreach ($collection as $value) {
+        foreach ($object as $value) {
             $output[] = $this->normalizer->normalize($value, $format, $context);
         }
 

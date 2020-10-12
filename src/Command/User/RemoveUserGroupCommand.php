@@ -6,13 +6,13 @@ declare(strict_types = 1);
 
 namespace App\Command\User;
 
-use Symfony\Component\Console\Command\Command;
 use App\Command\Traits\StyleSymfony;
-use Symfony\Component\Console\Exception\LogicException;
+use App\Entity\UserGroup;
 use App\Resource\UserGroupResource;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Entity\UserGroup;
 use Throwable;
 
 /**
@@ -28,12 +28,8 @@ class RemoveUserGroupCommand extends Command
     private UserGroupResource $userGroupResource;
     private UserHelper $userHelper;
 
-
     /**
      * Constructor
-     *
-     * @param UserGroupResource $userGroupResource
-     * @param UserHelper        $userHelper
      *
      * @throws LogicException
      */
@@ -49,14 +45,9 @@ class RemoveUserGroupCommand extends Command
 
     /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

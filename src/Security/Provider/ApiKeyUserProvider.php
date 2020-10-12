@@ -6,13 +6,12 @@ declare(strict_types = 1);
 
 namespace App\Security\Provider;
 
-use App\Security\Provider\Interfaces\ApiKeyUserProviderInterface;
 use App\Entity\ApiKey;
 use App\Repository\ApiKeyRepository;
 use App\Security\ApiKeyUser;
 use App\Security\Interfaces\ApiKeyUserInterface;
+use App\Security\Provider\Interfaces\ApiKeyUserProviderInterface;
 use App\Security\RolesService;
-use Exception;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,9 +28,6 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface
 
     /**
      * Constructor
-     *
-     * @param ApiKeyRepository $apiKeyRepository
-     * @param RolesService     $rolesService
      */
     public function __construct(ApiKeyRepository $apiKeyRepository, RolesService $rolesService)
     {
@@ -40,11 +36,7 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface
     }
 
     /**
-     * Method to fetch ApiKey entity for specified token.
-     *
-     * @param string $token
-     *
-     * @return ApiKey|null
+     * {@inheritdoc}
      */
     public function getApiKeyForToken(string $token): ?ApiKey
     {
@@ -52,16 +44,7 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface
     }
 
     /**
-     * Loads the user for the given username.
-     *
-     * This method must throw UsernameNotFoundException if the user is not found. If user (API key) is found method
-     * will create ApiKeyUser object for specified ApiKey entity.
-     *
-     * @param string $token
-     *
-     * @throws UsernameNotFoundException
-     *
-     * @return ApiKeyUserInterface
+     * {@inheritdoc}
      */
     public function loadUserByUsername($token): ApiKeyUserInterface
     {
@@ -71,23 +54,11 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface
             throw new UsernameNotFoundException('API key is not valid');
         }
 
-        return new ApiKeyUser($apiKey, $this->rolesService);
+        return new ApiKeyUser($apiKey, $this->rolesService->getInheritedRoles($apiKey->getRoles()));
     }
 
     /**
-     * Refreshes the user.
-     *
-     * It is up to the implementation to decide if the user data should be totally reloaded (e.g. from the database),
-     * or if the UserInterface object can just be merged into some internal array of users / identity map.
-     *
-     * @SuppressWarnings("unused")
-     *
-     * @param UserInterface $user
-     *
-     * @throws Exception
-     * @throws UnsupportedUserException
-     *
-     * @return UserInterface
+     * {@inheritdoc}
      */
     public function refreshUser(UserInterface $user): UserInterface
     {
@@ -95,11 +66,7 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface
     }
 
     /**
-     * Whether this provider supports the given user class.
-     *
-     * @param string $class
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function supportsClass($class): bool
     {

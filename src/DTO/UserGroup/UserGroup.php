@@ -6,8 +6,8 @@ declare(strict_types = 1);
 
 namespace App\DTO\UserGroup;
 
-use App\DTO\RestDto;
 use App\DTO\Interfaces\RestDtoInterface;
+use App\DTO\RestDto;
 use App\Entity\Interfaces\EntityInterface;
 use App\Entity\Role as RoleEntity;
 use App\Entity\UserGroup as Entity;
@@ -19,14 +19,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @package App\DTO\UserGroup
  *
- * @method self|RestDtoInterface  patch(RestDtoInterface $dto): RestDtoInterface
- * @method Entity|EntityInterface update(EntityInterface $entity): EntityInterface
+ * @method self|RestDtoInterface get(string $id)
+ * @method self|RestDtoInterface patch(RestDtoInterface $dto)
+ * @method Entity|EntityInterface update(EntityInterface $entity)
  */
 class UserGroup extends RestDto
 {
     /**
-     * @var string
-     *
      * @Assert\NotBlank()
      * @Assert\NotNull()
      * @Assert\Length(min = 4, max = 255, allowEmptyString="false")
@@ -34,26 +33,15 @@ class UserGroup extends RestDto
     protected string $name = '';
 
     /**
-     * @var \App\Entity\Role
-     *
      * @AppAssert\EntityReferenceExists(entityClass=RoleEntity::class)
      */
     protected ?RoleEntity $role = null;
 
-
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return UserGroup
-     */
     public function setName(string $name): self
     {
         $this->setVisited('name');
@@ -62,19 +50,11 @@ class UserGroup extends RestDto
         return $this;
     }
 
-    /**
-     * @return RoleEntity|string|null
-     */
-    public function getRole()
+    public function getRole(): ?RoleEntity
     {
         return $this->role;
     }
 
-    /**
-     * @param RoleEntity $role
-     *
-     * @return UserGroup
-     */
     public function setRole(RoleEntity $role): self
     {
         $this->setVisited('role');

@@ -22,12 +22,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"test1234\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"test1234\"\n}"
 						},
 						"url": {
 							"raw": "https://{{host}}/api/auth/getToken",
@@ -52,7 +47,7 @@
 			"name": "Profile",
 			"item": [
 				{
-					"name": "profileData",
+					"name": "profile",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -73,12 +68,12 @@
 								"profile"
 							]
 						},
-						"description": "Get current user profile data."
+						"description": "Get current user profile data, accessible only for 'IS_AUTHENTICATED_FULLY' users."
 					},
 					"response": []
 				},
 				{
-					"name": "profileRoles",
+					"name": "roles",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -100,12 +95,12 @@
 								"roles"
 							]
 						},
-						"description": "Get current user roles as an array."
+						"description": "Get current user roles as an array, accessible only for 'IS_AUTHENTICATED_FULLY' users."
 					},
 					"response": []
 				},
 				{
-					"name": "profileGroups",
+					"name": "groups",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -127,7 +122,7 @@
 								"groups"
 							]
 						},
-						"description": "Get current user user groups."
+						"description": "Get current user user groups, accessible only for 'IS_AUTHENTICATED_FULLY' users."
 					},
 					"response": []
 				}
@@ -205,7 +200,222 @@
 								"api_key",
 								"count"
 							]
-						}
+						},
+						"description": "Count entities, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/api_key",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"api_key"
+							]
+						},
+						"description": "Get list of entities, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"test api key\",\n    \"userGroups\": [\n        \"3b4e8d1c-08e1-11eb-9e18-0242ac120007\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/api_key",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"api_key"
+							]
+						},
+						"description": "Create entity, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/api_key/5ce02838-08e5-11eb-a845-0242ac120007",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"api_key",
+								"5ce02838-08e5-11eb-a845-0242ac120007"
+							]
+						},
+						"description": "Find entity, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"test api key #2\",\n    \"userGroups\": [\n        \"3b4e8d1c-08e1-11eb-9e18-0242ac120007\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/api_key/5ce02838-08e5-11eb-a845-0242ac120007",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"api_key",
+								"5ce02838-08e5-11eb-a845-0242ac120007"
+							]
+						},
+						"description": "/api/api_key/{id}"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"test api key 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{host}}/api/api_key/5ce02838-08e5-11eb-a845-0242ac120007",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"api_key",
+								"5ce02838-08e5-11eb-a845-0242ac120007"
+							]
+						},
+						"description": "Patch entity with new data, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/api_key/5ce02838-08e5-11eb-a845-0242ac120007",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"api_key",
+								"5ce02838-08e5-11eb-a845-0242ac120007"
+							]
+						},
+						"description": "/api/api_key/{id}"
+					},
+					"response": []
+				},
+				{
+					"name": "ids list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/api_key/ids",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"api_key",
+								"ids"
+							]
+						},
+						"description": "Find ids list, accessible only for 'ROLE_ROOT' users."
 					},
 					"response": []
 				}
@@ -213,45 +423,913 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "userCreate",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{token}}",
-						"type": "text"
+			"name": "Localization",
+			"item": [
+				{
+					"name": "languages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{host}}/api/localization/language",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"localization",
+								"language"
+							]
+						},
+						"description": "Endpoint action to get supported languages. This is for use to choose what language your frontend application can use within its translations."
 					},
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"username\": \"admin1\",\n    \"firstName\": \"Admin\",\n    \"lastName\": \"Adminovich\",\n    \"email\": \"admin@test.com\",\n    \"userGroups\": [\n        \"fc65ae62-08d9-11ea-8a3e-0242ac120004\"\n    ],\n    \"password\": \"test1234\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"response": []
+				},
+				{
+					"name": "locales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{host}}/api/localization/locale",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"localization",
+								"locale"
+							]
+						},
+						"description": "Endpoint action to get supported locales. This is for use to choose what locale your frontend application can use within its number, time, date, datetime, etc. formatting."
+					},
+					"response": []
+				},
+				{
+					"name": "timezones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{host}}/api/localization/timezone",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"localization",
+								"timezone"
+							]
+						},
+						"description": "Endpoint action to get list of supported timezones. This is for use to choose what timezone your frontend application can use within its date, time, datetime, etc. formatting."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Role Management",
+			"item": [
+				{
+					"name": "find",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/role/ROLE_ADMIN",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"ROLE_ADMIN"
+							]
+						},
+						"description": "Find role entity, accessible only for 'ROLE_ADMIN' users."
+					},
+					"response": []
+				},
+				{
+					"name": "inherited",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/role/ROLE_ROOT/inherited",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"ROLE_ROOT",
+								"inherited"
+							]
+						},
+						"description": "Return all inherited roles as an array for specified Role, accessible for 'IS_AUTHENTICATED_FULLY' users."
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/role/count",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"count"
+							]
+						},
+						"description": "Count entities, accessible only for 'ROLE_ADMIN' users."
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/role",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"role"
+							]
+						},
+						"description": "Get list of entities, accessible only for 'ROLE_ADMIN' users."
+					},
+					"response": []
+				},
+				{
+					"name": "ids list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/role/ids",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"role",
+								"ids"
+							]
+						},
+						"description": "Find ids list, accessible only for 'ROLE_ADMIN' users."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User Management",
+			"item": [
+				{
+					"name": "Add group to the user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user/64863022-08e1-11eb-8207-0242ac120007/group/3b505b88-08e1-11eb-ad26-0242ac120007",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"64863022-08e1-11eb-8207-0242ac120007",
+								"group",
+								"3b505b88-08e1-11eb-ad26-0242ac120007"
+							]
+						},
+						"description": "Attach specified user group to specified user, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete group from the user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user/64863022-08e1-11eb-8207-0242ac120007/group/3b505b88-08e1-11eb-ad26-0242ac120007",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"64863022-08e1-11eb-8207-0242ac120007",
+								"group",
+								"3b505b88-08e1-11eb-ad26-0242ac120007"
+							]
+						},
+						"description": "Detach specified user group from specified user, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user/3c8e841c-0c0a-11eb-94ad-0242ac120006",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"3c8e841c-0c0a-11eb-94ad-0242ac120006"
+							]
+						},
+						"description": "Delete user entity, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user/count",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"count"
+							]
+						},
+						"description": "Count entities, accessible only for 'ROLE_ADMIN' users."
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						},
+						"description": "Get list of entities, accessible only for 'ROLE_ADMIN' users."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"firstName\": \"Admin\",\n    \"lastName\": \"Adminovich\",\n    \"email\": \"admin@test.com\",\n    \"userGroups\": [\n        \"3b4e8d1c-08e1-11eb-9e18-0242ac120007\"\n    ],\n    \"password\": \"test1234\",\n    \"language\": \"en\",\n    \"locale\": \"en\",\n    \"timezone\": \"UTC\"\n}"
+						},
+						"url": {
+							"raw": "https://{{host}}/api/user",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						},
+						"description": "Create entity, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user/64863022-08e1-11eb-8207-0242ac120007",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"64863022-08e1-11eb-8207-0242ac120007"
+							]
+						},
+						"description": "Find entity, accessible only for 'ROLE_ADMIN' users."
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"firstName\": \"Admin\",\n    \"lastName\": \"Adminovich\",\n    \"email\": \"admin@test.com\",\n    \"userGroups\": [\n        \"3b4e8d1c-08e1-11eb-9e18-0242ac120007\"\n    ],\n    \"password\": \"test1234\",\n    \"language\": \"en\",\n    \"locale\": \"en\",\n    \"timezone\": \"UTC\"\n}"
+						},
+						"url": {
+							"raw": "https://{{host}}/api/user/d878a4a0-0c0c-11eb-b06d-0242ac120006",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"d878a4a0-0c0c-11eb-b06d-0242ac120006"
+							]
+						},
+						"description": "Update entity with new data, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"firstName\": \"Admin\",\n    \"lastName\": \"Adminovich\",\n    \"email\": \"admin@test.com\",\n    \"userGroups\": [\n        \"3b4e8d1c-08e1-11eb-9e18-0242ac120007\"\n    ],\n    \"password\": \"test1234\",\n    \"language\": \"en\",\n    \"locale\": \"en\",\n    \"timezone\": \"UTC\"\n}"
+						},
+						"url": {
+							"raw": "https://{{host}}/api/user/d878a4a0-0c0c-11eb-b06d-0242ac120006",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"d878a4a0-0c0c-11eb-b06d-0242ac120006"
+							]
+						},
+						"description": "Patch entity with new data, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "ids",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user/ids",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"ids"
+							]
+						},
+						"description": "Find ids list, accessible only for 'ROLE_ADMIN' users."
+					},
+					"response": []
+				},
+				{
+					"name": "userGroups",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user/64863022-08e1-11eb-8207-0242ac120007/groups",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"64863022-08e1-11eb-8207-0242ac120007",
+								"groups"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "https://{{host}}/api/user",
-					"protocol": "https",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"user"
-					]
+				{
+					"name": "userRoles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user/64863022-08e1-11eb-8207-0242ac120007/roles",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"64863022-08e1-11eb-8207-0242ac120007",
+								"roles"
+							]
+						},
+						"description": "Fetch specified user roles, accessible only for 'IS_USER_HIMSELF' or 'ROLE_ROOT' users."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "UserGroup Management",
+			"item": [
+				{
+					"name": "Add user to the user group",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user_group/3b505b88-08e1-11eb-ad26-0242ac120007/user/64863022-08e1-11eb-8207-0242ac120007",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user_group",
+								"3b505b88-08e1-11eb-ad26-0242ac120007",
+								"user",
+								"64863022-08e1-11eb-8207-0242ac120007"
+							]
+						},
+						"description": "Attach specified user to specified user group, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
 				},
-				"description": "Create user"
-			},
-			"response": []
+				{
+					"name": "Delete user from the user group",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user_group/3b505b88-08e1-11eb-ad26-0242ac120007/user/64863022-08e1-11eb-8207-0242ac120007",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user_group",
+								"3b505b88-08e1-11eb-ad26-0242ac120007",
+								"user",
+								"64863022-08e1-11eb-8207-0242ac120007"
+							]
+						},
+						"description": "Detach specified user from specified user group, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user_group/count",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user_group",
+								"count"
+							]
+						},
+						"description": "Count entities, accessible only for 'ROLE_ADMIN' users."
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user_group",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user_group"
+							]
+						},
+						"description": "Get list of entities, accessible only for 'ROLE_ADMIN' users."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Admin users\",\n    \"role\": \"ROLE_ADMIN\"\n}"
+						},
+						"url": {
+							"raw": "https://{{host}}/api/user_group",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user_group"
+							]
+						},
+						"description": "Create entity, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user_group/8278f380-0c15-11eb-8ab7-0242ac120006",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user_group",
+								"8278f380-0c15-11eb-8ab7-0242ac120006"
+							]
+						},
+						"description": "Find entity, accessible only for 'ROLE_ADMIN' users."
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Admin users 1\",\n    \"role\": \"ROLE_ADMIN\"\n}"
+						},
+						"url": {
+							"raw": "https://{{host}}/api/user_group/8278f380-0c15-11eb-8ab7-0242ac120006",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user_group",
+								"8278f380-0c15-11eb-8ab7-0242ac120006"
+							]
+						},
+						"description": "Update entity with new data, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Admin users\",\n    \"role\": \"ROLE_ADMIN\"\n}"
+						},
+						"url": {
+							"raw": "https://{{host}}/api/user_group/8278f380-0c15-11eb-8ab7-0242ac120006",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user_group",
+								"8278f380-0c15-11eb-8ab7-0242ac120006"
+							]
+						},
+						"description": "Patch entity with new data, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user_group/8278f380-0c15-11eb-8ab7-0242ac120006",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user_group",
+								"8278f380-0c15-11eb-8ab7-0242ac120006"
+							]
+						},
+						"description": "Delete entity, accessible only for 'ROLE_ROOT' users."
+					},
+					"response": []
+				},
+				{
+					"name": "ids",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user_group/ids",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user_group",
+								"ids"
+							]
+						},
+						"description": "Find ids list, accessible only for 'ROLE_ADMIN' users."
+					},
+					"response": []
+				},
+				{
+					"name": "group users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{host}}/api/user_group/3b4e8d1c-08e1-11eb-9e18-0242ac120007/users",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"user_group",
+								"3b4e8d1c-08e1-11eb-9e18-0242ac120007",
+								"users"
+							]
+						},
+						"description": "List specified user group users, accessible only for 'ROLE_ADMIN' users."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"protocolProfileBehavior": {}

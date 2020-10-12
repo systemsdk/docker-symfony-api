@@ -34,9 +34,6 @@ class EditApiKeyCommand extends Command
     /**
      * Constructor
      *
-     * @param ApiKeyResource $apiKeyResource
-     * @param ApiKeyHelper   $apiKeyHelper
-     *
      * @throws LogicException
      */
     public function __construct(ApiKeyResource $apiKeyResource, ApiKeyHelper $apiKeyHelper)
@@ -51,14 +48,9 @@ class EditApiKeyCommand extends Command
 
     /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an exit code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -82,13 +74,9 @@ class EditApiKeyCommand extends Command
     /**
      * Method to update specified API key via specified form.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     * @param ApiKeyEntity    $apiKey
+     * @return mixed[]
      *
      * @throws Throwable
-     *
-     * @return array
      */
     private function updateApiKey(InputInterface $input, OutputInterface $output, ApiKeyEntity $apiKey): array
     {

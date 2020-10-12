@@ -18,8 +18,8 @@ trait RestResourceIds
     /**
      * Before lifecycle method for ids method.
      *
-     * @param array $criteria
-     * @param array $search
+     * @param mixed[] $criteria
+     * @param mixed[] $search
      */
     public function beforeIds(array &$criteria, array &$search): void
     {
@@ -28,9 +28,9 @@ trait RestResourceIds
     /**
      * Before lifecycle method for ids method.
      *
-     * @param array  $criteria
-     * @param array  $search
-     * @param array  $ids
+     * @param mixed[] $criteria
+     * @param mixed[] $search
+     * @param string[] $ids
      */
     public function afterIds(array &$criteria, array &$search, array &$ids): void
     {

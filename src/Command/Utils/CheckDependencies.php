@@ -6,17 +6,18 @@ declare(strict_types = 1);
 
 namespace App\Command\Utils;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Exception\RuntimeException;
 use App\Command\Traits\StyleSymfony;
-use LogicException;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use InvalidArgumentException;
+use JsonException;
+use LogicException;
 use SplFileInfo;
 use stdClass;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\TableSeparator;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
@@ -40,8 +41,6 @@ class CheckDependencies extends Command
 
     /**
      * Constructor
-     *
-     * @param string $projectDir
      */
     public function __construct(string $projectDir)
     {
@@ -51,14 +50,8 @@ class CheckDependencies extends Command
         $this->projectDir = $projectDir;
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return int 0 if everything went fine, or an error code
+     * @noinspection PhpMissingParentCallCommonInspection
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -87,7 +80,7 @@ class CheckDependencies extends Command
      * @throws LogicException
      * @throws InvalidArgumentException
      *
-     * @return array
+     * @return array<int, string>
      */
     private function getNamespaceDirectories(): array
     {
@@ -117,9 +110,9 @@ class CheckDependencies extends Command
     /**
      * Method to determine table rows.
      *
-     * @param array $directories
+     * @param array<int, string> $directories
      *
-     * @return array
+     * @return array<int, array<int, string>|TableSeparator>
      */
     private function determineTableRows(array $directories): array
     {
@@ -140,7 +133,7 @@ class CheckDependencies extends Command
                 // First row of current library
                 if ($row === 0) {
                     // We want to add table separator between different libraries
-                    if (count((array)$rows) > 0) {
+                    if (count($rows) > 0) {
                         $rows[] = new TableSeparator();
                     }
 
@@ -169,9 +162,9 @@ class CheckDependencies extends Command
     /**
      * Method to process namespace inside 'tools' directory.
      *
-     * @param string $path
+     * @throws JsonException
      *
-     * @return stdClass[]
+     * @return array<int, stdClass>
      */
     private function processNamespacePath(string $path): array
     {
@@ -206,11 +199,6 @@ class CheckDependencies extends Command
 
     /**
      * Helper method to get progress bar for console.
-     *
-     * @param int    $steps
-     * @param string $message
-     *
-     * @return ProgressBar
      */
     private function getProgressBar(int $steps, string $message): ProgressBar
     {

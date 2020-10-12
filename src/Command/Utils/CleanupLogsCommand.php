@@ -6,13 +6,13 @@ declare(strict_types = 1);
 
 namespace App\Command\Utils;
 
-use Symfony\Component\Console\Command\Command;
 use App\Command\Traits\StyleSymfony;
+use App\Repository\LogLoginRepository;
+use App\Repository\LogRequestRepository;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Repository\LogLoginRepository;
-use App\Repository\LogRequestRepository;
 use Throwable;
 
 /**
@@ -26,15 +26,11 @@ class CleanupLogsCommand extends Command
     use StyleSymfony;
 
     public const COMMAND_NAME = 'logs:cleanup';
-
     private LogLoginRepository $logLoginRepository;
     private LogRequestRepository $logRequestRepository;
 
     /**
      * Constructor
-     *
-     * @param LogLoginRepository $logLoginRepository
-     * @param LogRequestRepository $logRequestRepository;
      *
      * @throws LogicException
      */
@@ -52,12 +48,7 @@ class CleanupLogsCommand extends Command
     /**
      * Executes the current command.
      *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
-     *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -75,8 +66,6 @@ class CleanupLogsCommand extends Command
      * Cleanup db tables
      *
      * @throws Throwable
-     *
-     * @return bool
      */
     private function cleanUpDbTables(): bool
     {

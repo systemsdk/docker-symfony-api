@@ -7,8 +7,8 @@ declare(strict_types = 1);
 namespace App\AutoMapper\ApiKey;
 
 use App\AutoMapper\RestRequestMapper;
-use App\Resource\UserGroupResource;
 use App\Entity\UserGroup;
+use App\Resource\UserGroupResource;
 
 /**
  * Class RequestMapper
@@ -29,11 +29,8 @@ class RequestMapper extends RestRequestMapper
 
     private UserGroupResource $userGroupResource;
 
-
     /**
      * Constructor
-     *
-     * @param UserGroupResource $userGroupResource
      */
     public function __construct(UserGroupResource $userGroupResource)
     {
@@ -41,9 +38,9 @@ class RequestMapper extends RestRequestMapper
     }
 
     /**
-     * @param array $userGroups
+     * @param array<int, string> $userGroups
      *
-     * @return array|UserGroup[]
+     * @return array<int, UserGroup>
      */
     protected function transformUserGroups(array $userGroups): array
     {

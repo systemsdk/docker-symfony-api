@@ -7,17 +7,13 @@ declare(strict_types = 1);
 namespace App\Controller\Api;
 
 use App\Service\VersionService;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
 /**
  * Class VersionController
- *
- * @Route(
- *     path="/version",
- *  )
  *
  * @SWG\Tag(name="Tools")
  *
@@ -25,11 +21,21 @@ use Throwable;
  */
 class VersionController
 {
+    private VersionService $versionService;
+
+    /**
+     * Constructor
+     */
+    public function __construct(VersionService $versionService)
+    {
+        $this->versionService = $versionService;
+    }
+
     /**
      * Get API version.
      *
      * @Route(
-     *     path="",
+     *     path="/version",
      *     methods={"GET"}
      *  )
      *
@@ -38,25 +44,17 @@ class VersionController
      * @SWG\Response(
      *      response=200,
      *      description="success",
-     *      @SWG\Schema(
+     * @SWG\Schema(
      *          type="object",
      *          example={"version": "1.0.0"},
-     *          @SWG\Property(property="version", type="string", description="Version number"),
+     * @SWG\Property(property="version", type="string", description="Version number"),
      *      ),
      *  )
      *
-     * @param VersionService $version
-     *
      * @throws Throwable
-     *
-     * @return JsonResponse
      */
-    public function index(VersionService $version): JsonResponse
+    public function __invoke(): JsonResponse
     {
-        $data = [
-            'version' => $version->get(),
-        ];
-
-        return new JsonResponse($data);
+        return new JsonResponse(['version' => $this->versionService->get()]);
     }
 }

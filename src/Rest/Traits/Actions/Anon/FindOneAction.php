@@ -6,13 +6,12 @@ declare(strict_types = 1);
 
 namespace App\Rest\Traits\Actions\Anon;
 
-use App\Annotation\RestApiDoc;
 use App\Rest\Traits\Methods\FindOneMethod;
+use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
-use Swagger\Annotations as SWG;
 
 /**
  * Trait FindOneAction
@@ -42,20 +41,13 @@ trait FindOneAction
      * @SWG\Response(
      *      response=200,
      *      description="success",
-     *      @SWG\Schema(
+     * @SWG\Schema(
      *          type="object",
      *          example={},
      *      ),
      *  )
      *
-     * @RestApiDoc()
-     *
-     * @param Request $request
-     * @param string  $id
-     *
      * @throws Throwable
-     *
-     * @return Response
      */
     public function findOneAction(Request $request, string $id): Response
     {

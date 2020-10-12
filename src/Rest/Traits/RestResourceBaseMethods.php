@@ -9,10 +9,8 @@ namespace App\Rest\Traits;
 use App\DTO\Interfaces\RestDtoInterface;
 use App\Entity\Interfaces\EntityInterface;
 use App\Exception\ValidatorException;
-use App\Repository\Interfaces\BaseRepositoryInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Throwable;
 
 /**
@@ -27,46 +25,8 @@ trait RestResourceBaseMethods
 
     /**
      * {@inheritdoc}
-     */
-    abstract public function getRepository(): BaseRepositoryInterface;
-
-    /**
-     * {@inheritdoc}
-     */
-    abstract public function getValidator(): ValidatorInterface;
-
-    /**
-     * Getter method DTO class with loaded entity data.
      *
-     * @param string           $id
-     * @param string           $dtoClass
-     * @param RestDtoInterface $dto
-     * @param bool|null        $patch
-     *
-     * @throws Throwable
-     *
-     * @return RestDtoInterface
-     */
-    abstract public function getDtoForEntity(
-        string $id,
-        string $dtoClass,
-        RestDtoInterface $dto,
-        ?bool $patch = null
-    ): RestDtoInterface;
-
-    /**
-     * Generic find method to return an array of items from database. Return value is an array of specified repository
-     * entities.
-     *
-     * @param array|null $criteria
-     * @param array|null $orderBy
-     * @param int|null   $limit
-     * @param int|null   $offset
-     * @param array|null $search
-     *
-     * @throws Throwable
-     *
-     * @return EntityInterface[]
+     * @return array<int, EntityInterface>
      */
     public function find(
         ?array $criteria = null,
@@ -89,15 +49,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * Generic findOne method to return single item from database. Return value is single entity from specified
-     * repository.
-     *
-     * @param string    $id
-     * @param bool|null $throwExceptionIfNotFound
-     *
-     * @throws Throwable
-     *
-     * @return EntityInterface|null
+     * {@inheritdoc}
      */
     public function findOne(string $id, ?bool $throwExceptionIfNotFound = null): ?EntityInterface
     {
@@ -114,16 +66,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * Generic findOneBy method to return single item from database by given criteria. Return value is single entity
-     * from specified repository or null if entity was not found.
-     *
-     * @param mixed[]      $criteria
-     * @param mixed[]|null $orderBy
-     * @param bool|null    $throwExceptionIfNotFound
-     *
-     * @throws Throwable
-     *
-     * @return EntityInterface|null
+     * {@inheritdoc}
      */
     public function findOneBy(
         array $criteria,
@@ -144,14 +87,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * Generic count method to return entity count for specified criteria and search terms.
-     *
-     * @param array|null $criteria
-     * @param array|null $search
-     *
-     * @throws Throwable
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function count(?array $criteria = null, ?array $search = null): int
     {
@@ -167,27 +103,18 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * Generic method to create new item (entity) to specified database repository. Return value is created entity for
-     * specified repository.
-     *
-     * @param RestDtoInterface $dto
-     * @param bool|null        $flush
-     * @param bool|null        $skipValidation
-     *
-     * @throws Throwable
-     *
-     * @return EntityInterface
+     * {@inheritdoc}
      */
     public function create(RestDtoInterface $dto, ?bool $flush = null, ?bool $skipValidation = null): EntityInterface
     {
         $flush ??= true;
         $skipValidation ??= false;
-        // Validate DTO
-        $this->validateDto($dto, $skipValidation);
         // Create new entity
         $entity = $this->createEntity();
         // Before callback method call
         $this->beforeCreate($dto, $entity);
+        // Validate DTO
+        $this->validateDto($dto, $skipValidation);
         // Create or update entity
         $this->persistEntity($entity, $dto, $flush, $skipValidation);
         // After callback method call
@@ -197,16 +124,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * Generic method to update specified entity with new data.
-     *
-     * @param string           $id
-     * @param RestDtoInterface $dto
-     * @param bool|null        $flush
-     * @param bool|null        $skipValidation
-     *
-     * @throws Throwable
-     *
-     * @return EntityInterface
+     * {@inheritdoc}
      */
     public function update(
         string $id,
@@ -223,10 +141,10 @@ trait RestResourceBaseMethods
          * that dto with given partial OR whole dto class.
          */
         $restDto = $this->getDtoForEntity($id, get_class($dto), $dto);
-        // Validate DTO
-        $this->validateDto($restDto, $skipValidation);
         // Before callback method call
         $this->beforeUpdate($id, $restDto, $entity);
+        // Validate DTO
+        $this->validateDto($restDto, $skipValidation);
         // Create or update entity
         $this->persistEntity($entity, $restDto, $flush, $skipValidation);
         // After callback method call
@@ -236,16 +154,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * Generic method to patch specified entity with new partial data.
-     *
-     * @param string           $id
-     * @param RestDtoInterface $dto
-     * @param bool|null        $flush
-     * @param bool|null        $skipValidation
-     *
-     * @throws Throwable
-     *
-     * @return EntityInterface
+     * {@inheritdoc}
      */
     public function patch(
         string $id,
@@ -262,10 +171,10 @@ trait RestResourceBaseMethods
          * that dto with given partial OR whole dto class.
          */
         $restDto = $this->getDtoForEntity($id, get_class($dto), $dto, true);
-        // Validate DTO
-        $this->validateDto($restDto, $skipValidation);
         // Before callback method call
         $this->beforePatch($id, $restDto, $entity);
+        // Validate DTO
+        $this->validateDto($restDto, $skipValidation);
         // Create or update entity
         $this->persistEntity($entity, $restDto, $flush, $skipValidation);
         // After callback method call
@@ -275,14 +184,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * Generic method to delete specified entity from database.
-     *
-     * @param string    $id
-     * @param bool|null $flush
-     *
-     * @throws Throwable
-     *
-     * @return EntityInterface
+     * {@inheritdoc}
      */
     public function delete(string $id, ?bool $flush = null): EntityInterface
     {
@@ -300,15 +202,9 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * Generic ids method to return an array of id values from database. Return value is an array of specified
-     * repository entity id values.
+     * {@inheritdoc}
      *
-     * @param array|null $criteria
-     * @param array|null $search
-     *
-     * @throws Throwable
-     *
-     * @return array
+     * @return array<int, string>
      */
     public function getIds(?array $criteria = null, ?array $search = null): array
     {
@@ -325,15 +221,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * Generic method to save given entity to specified repository. Return value is created entity.
-     *
-     * @param EntityInterface $entity
-     * @param bool|null       $flush
-     * @param bool|null       $skipValidation
-     *
-     * @throws Throwable
-     *
-     * @return EntityInterface
+     * {@inheritdoc}
      */
     public function save(EntityInterface $entity, ?bool $flush = null, ?bool $skipValidation = null): EntityInterface
     {
@@ -354,11 +242,6 @@ trait RestResourceBaseMethods
     /**
      * Helper method to set data to specified entity and store it to database.
      *
-     * @param EntityInterface  $entity
-     * @param RestDtoInterface $dto
-     * @param bool             $flush
-     * @param bool             $skipValidation
-     *
      * @throws Throwable
      */
     protected function persistEntity(
@@ -374,11 +257,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * @param string $id
-     *
-     * @throws Throwable
-     *
-     * @return EntityInterface
+     * @throws NotFoundHttpException
      */
     protected function getEntity(string $id): EntityInterface
     {
@@ -393,9 +272,6 @@ trait RestResourceBaseMethods
 
     /**
      * Helper method to validate given DTO class.
-     *
-     * @param RestDtoInterface $dto
-     * @param bool             $skipValidation
      *
      * @throws Throwable
      */
@@ -413,9 +289,6 @@ trait RestResourceBaseMethods
     /**
      * Method to validate specified entity.
      *
-     * @param EntityInterface $entity
-     * @param bool            $skipValidation
-     *
      * @throws Throwable
      */
     private function validateEntity(EntityInterface $entity, bool $skipValidation): void
@@ -430,8 +303,6 @@ trait RestResourceBaseMethods
 
     /**
      * @psalm-suppress MoreSpecificReturnType
-     *
-     * @return EntityInterface
      */
     private function createEntity(): EntityInterface
     {
@@ -442,9 +313,6 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * @param bool                 $throwExceptionIfNotFound
-     * @param EntityInterface|null $entity
-     *
      * @throws NotFoundHttpException
      */
     private function checkThatEntityExists(bool $throwExceptionIfNotFound, ?EntityInterface $entity): void

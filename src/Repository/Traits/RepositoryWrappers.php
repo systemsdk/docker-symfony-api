@@ -7,11 +7,10 @@ declare(strict_types = 1);
 namespace App\Repository\Traits;
 
 use App\Rest\UuidHelper;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 use Ramsey\Uuid\Exception\InvalidUuidStringException;
 use Throwable;
 use UnexpectedValueException;
@@ -28,14 +27,7 @@ trait RepositoryWrappers
     protected ManagerRegistry $managerRegistry;
 
     /**
-     * Gets a reference to the entity identified by the given type and identifier without actually loading it,
-     * if the entity is not yet loaded.
-     *
-     * @param string $id
-     *
-     * @throws ORMException
-     *
-     * @return object|null
+     * {@inheritdoc}
      */
     public function getReference(string $id)
     {
@@ -51,9 +43,7 @@ trait RepositoryWrappers
     }
 
     /**
-     * Gets all association mappings of the class.
-     *
-     * @return array<int, string>
+     * {@inheritdoc}
      */
     public function getAssociations(): array
     {
@@ -61,9 +51,7 @@ trait RepositoryWrappers
     }
 
     /**
-     * Returns the ORM metadata descriptor for a class.
-     *
-     * @return ClassMetadataInfo
+     * {@inheritdoc}
      */
     public function getClassMetaData(): ClassMetadataInfo
     {
@@ -71,9 +59,7 @@ trait RepositoryWrappers
     }
 
     /**
-     * Getter method for EntityManager for current entity.
-     *
-     * @return EntityManager
+     * {@inheritdoc}
      */
     public function getEntityManager(): EntityManager
     {
@@ -94,12 +80,7 @@ trait RepositoryWrappers
     }
 
     /**
-     * Method to create new query builder for current entity.
-     *
-     * @param string|null $alias
-     * @param string|null $indexBy
-     *
-     * @return QueryBuilder
+     * {@inheritdoc}
      */
     public function createQueryBuilder(?string $alias = null, ?string $indexBy = null): QueryBuilder
     {

@@ -6,15 +6,15 @@ declare(strict_types = 1);
 
 namespace App\Command\User;
 
-use Symfony\Component\Console\Command\Command;
-use App\Command\Traits\StyleSymfony;
-use App\Command\Traits\GetApplication;
 use App\Command\HelperConfigure;
+use App\Command\Traits\GetApplication;
+use App\Command\Traits\StyleSymfony;
 use App\DTO\UserGroup\UserGroupCreate as UserGroupDto;
 use App\Form\Type\Console\UserGroupType;
 use App\Repository\RoleRepository;
 use App\Resource\UserGroupResource;
 use Matthias\SymfonyConsoleForm\Console\Helper\FormHelper;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -51,12 +51,8 @@ class CreateUserGroupCommand extends Command
     private UserGroupResource $userGroupResource;
     private RoleRepository $roleRepository;
 
-
     /**
      * Constructor
-     *
-     * @param UserGroupResource $userGroupResource
-     * @param RoleRepository    $roleRepository
      *
      * @throws LogicException
      */
@@ -78,19 +74,15 @@ class CreateUserGroupCommand extends Command
     protected function configure(): void
     {
         parent::configure();
+
         HelperConfigure::configure($this, self::$commandParameters);
     }
 
     /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface $input An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -114,10 +106,6 @@ class CreateUserGroupCommand extends Command
     /**
      * Method to check if database contains role(s), if non exists method will run 'user:create-roles' command
      * which creates all roles to database so that user groups can be created.
-     *
-     * @param OutputInterface $output
-     * @param bool            $interactive
-     * @param SymfonyStyle    $io
      *
      * @throws Throwable
      */

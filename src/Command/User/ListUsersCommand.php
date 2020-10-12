@@ -6,16 +6,16 @@ declare(strict_types = 1);
 
 namespace App\Command\User;
 
-use Symfony\Component\Console\Command\Command;
 use App\Command\Traits\StyleSymfony;
+use App\Entity\User;
+use App\Entity\UserGroup;
 use App\Resource\UserResource;
 use App\Security\RolesService;
+use Closure;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Closure;
-use App\Entity\UserGroup;
-use App\Entity\User;
 use Throwable;
 
 /**
@@ -31,12 +31,8 @@ class ListUsersCommand extends Command
     private UserResource $userResource;
     private RolesService $roles;
 
-
     /**
      * Constructor
-     *
-     * @param UserResource $userResource
-     * @param RolesService $roles
      *
      * @throws LogicException
      */
@@ -52,14 +48,9 @@ class ListUsersCommand extends Command
 
     /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -83,7 +74,7 @@ class ListUsersCommand extends Command
      *
      * @throws Throwable
      *
-     * @return array
+     * @return mixed[]
      */
     private function getRows(): array
     {
@@ -92,8 +83,6 @@ class ListUsersCommand extends Command
 
     /**
      * Getter method for user formatter closure. This closure will format single User entity for console table.
-     *
-     * @return Closure
      */
     private function getFormatterUser(): Closure
     {

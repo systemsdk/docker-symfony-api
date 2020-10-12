@@ -24,9 +24,9 @@ use Throwable;
  * @ORM\Table(
  *      name="log_request",
  *      indexes={
- *          @ORM\Index(name="user_id", columns={"user_id"}),
- *          @ORM\Index(name="api_key_id", columns={"api_key_id"}),
- *          @ORM\Index(name="request_date", columns={"date"}),
+ * @ORM\Index(name="user_id", columns={"user_id"}),
+ * @ORM\Index(name="api_key_id", columns={"api_key_id"}),
+ * @ORM\Index(name="request_date", columns={"date"}),
  *      }
  *  )
  * @ORM\Entity(
@@ -44,11 +44,10 @@ class LogRequest implements EntityInterface
     use Uuid;
 
     /**
-     * @var UuidInterface
-     *
      * @Groups({
      *     "LogRequest",
      *     "LogRequest.id",
+     *
      *     "ApiKey.logsRequest",
      *     "User.logRequest",
      *  })
@@ -66,8 +65,6 @@ class LogRequest implements EntityInterface
     private UuidInterface $id;
 
     /**
-     * @var User|null
-     *
      * @Groups({
      *      "LogRequest.user",
      *  })
@@ -77,7 +74,7 @@ class LogRequest implements EntityInterface
      *      inversedBy="logsRequest",
      *  )
      * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(
+     * @ORM\JoinColumn(
      *          name="user_id",
      *          referencedColumnName="id",
      *          nullable=true,
@@ -88,8 +85,6 @@ class LogRequest implements EntityInterface
     private ?User $user = null;
 
     /**
-     * @var ApiKey|null
-     *
      * @Groups({
      *      "LogRequest.apiKey",
      *  })
@@ -99,7 +94,7 @@ class LogRequest implements EntityInterface
      *      inversedBy="logsRequest",
      *  )
      * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(
+     * @ORM\JoinColumn(
      *          name="api_key_id",
      *          referencedColumnName="id",
      *          nullable=true,
@@ -110,8 +105,6 @@ class LogRequest implements EntityInterface
     private ?ApiKey $apiKey = null;
 
     /**
-     * @var int
-     *
      * @Groups({
      *      "LogRequest",
      *      "LogRequest.statusCode",
@@ -126,8 +119,6 @@ class LogRequest implements EntityInterface
     private int $statusCode = 0;
 
     /**
-     * @var int
-     *
      * @Groups({
      *      "LogRequest",
      *      "LogRequest.responseContentLength",
@@ -142,8 +133,6 @@ class LogRequest implements EntityInterface
     private int $responseContentLength = 0;
 
     /**
-     * @var bool
-     *
      * @Groups({
      *      "LogRequest",
      *      "LogRequest.isMasterRequest",
@@ -161,13 +150,6 @@ class LogRequest implements EntityInterface
 
     /**
      * Constructor
-     *
-     * @param array         $sensitiveProperties
-     * @param Request|null  $request
-     * @param Response|null $response
-     * @param User|null     $user
-     * @param ApiKey|null   $apiKey
-     * @param bool          $masterRequest
      *
      * @throws Throwable
      */
@@ -196,65 +178,41 @@ class LogRequest implements EntityInterface
         }
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id->toString();
     }
 
-    /**
-     * @return User|null
-     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
-    /**
-     * @return int
-     */
     public function getStatusCode(): int
     {
         return $this->statusCode;
     }
 
-    /**
-     * @return int
-     */
     public function getResponseContentLength(): int
     {
         return $this->responseContentLength;
     }
 
-    /**
-     * @return ApiKey|null
-     */
     public function getApiKey(): ?ApiKey
     {
         return $this->apiKey;
     }
 
-    /**
-     * @return bool
-     */
     public function isMasterRequest(): bool
     {
         return $this->masterRequest;
     }
 
-    /**
-     * @return array
-     */
     public function getSensitiveProperties(): array
     {
         return $this->sensitiveProperties;
     }
 
-    /**
-     * @param Response $response
-     */
     private function processResponse(Response $response): void
     {
         $content = $response->getContent();

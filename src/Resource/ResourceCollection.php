@@ -24,7 +24,7 @@ use Throwable;
  *
  * @property IteratorAggregate|IteratorAggregate<int, RestResourceInterface> $items
  *
- * @method RestResourceInterface                         get(string $className)
+ * @method RestResourceInterface get(string $className)
  * @method IteratorAggregate<int, RestResourceInterface> getAll(): IteratorAggregate
  */
 class ResourceCollection implements Countable
@@ -35,8 +35,7 @@ class ResourceCollection implements Countable
     /**
      * Constructor
      *
-     * @param IteratorAggregate|IteratorAggregate<int, RestResourceInterface> $resources
-     * @param LoggerInterface                                                 $logger
+     * @param IteratorAggregate<int, RestResourceInterface> $resources
      */
     public function __construct(IteratorAggregate $resources, LoggerInterface $logger)
     {
@@ -46,10 +45,6 @@ class ResourceCollection implements Countable
 
     /**
      * Getter method for REST resource by entity class name.
-     *
-     * @param string $className
-     *
-     * @return RestResourceInterface
      */
     public function getEntityResource(string $className): RestResourceInterface
     {
@@ -57,7 +52,7 @@ class ResourceCollection implements Countable
 
         if ($current === null) {
             $message = sprintf(
-                'Resource class does not exists for entity \'%s\'',
+                'Resource class does not exist for entity \'%s\'',
                 $className
             );
 
@@ -69,10 +64,6 @@ class ResourceCollection implements Countable
 
     /**
      * Method to check if specified entity class REST resource exist or not in current collection.
-     *
-     * @param string|null $className
-     *
-     * @return bool
      */
     public function hasEntityResource(?string $className = null): bool
     {
@@ -102,10 +93,6 @@ class ResourceCollection implements Countable
 
     /**
      * Getter method to get filtered item by given entity class.
-     *
-     * @param string $entityName
-     *
-     * @return RestResourceInterface|null
      */
     private function getFilteredItemByEntity(string $entityName): ?RestResourceInterface
     {

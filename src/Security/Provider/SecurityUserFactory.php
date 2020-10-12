@@ -29,10 +29,6 @@ class SecurityUserFactory implements UserProviderInterface
 
     /**
      * Constructor
-     *
-     * @param UserRepository $userRepository
-     * @param RolesService   $rolesService
-     * @param string         $uuidV1Regex
      */
     public function __construct(UserRepository $userRepository, RolesService $rolesService, string $uuidV1Regex)
     {
@@ -42,15 +38,9 @@ class SecurityUserFactory implements UserProviderInterface
     }
 
     /**
-     * Loads the user for the given username.
-     *
-     * This method must return null if the user is not found.
-     *
-     * @param string $username The username
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return UserInterface
      */
     public function loadUserByUsername($username): UserInterface
     {
@@ -63,7 +53,7 @@ class SecurityUserFactory implements UserProviderInterface
             throw new UsernameNotFoundException(sprintf('User not found for UUID: "%s".', $username));
         }
 
-        return (new SecurityUser($user))->setRoles($this->rolesService->getInheritedRoles($user->getRoles()));
+        return new SecurityUser($user, $this->rolesService->getInheritedRoles($user->getRoles()));
     }
 
     /**
@@ -76,10 +66,6 @@ class SecurityUserFactory implements UserProviderInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @throws Throwable
-     *
-     * @return SecurityUser
      */
     public function refreshUser(UserInterface $user): SecurityUser
     {
@@ -93,7 +79,6 @@ class SecurityUserFactory implements UserProviderInterface
             throw new UsernameNotFoundException(sprintf('User not found for UUID: "%s".', $user->getUsername()));
         }
 
-        return (new SecurityUser($userEntity))
-            ->setRoles($this->rolesService->getInheritedRoles($userEntity->getRoles()));
+        return new SecurityUser($userEntity, $this->rolesService->getInheritedRoles($userEntity->getRoles()));
     }
 }

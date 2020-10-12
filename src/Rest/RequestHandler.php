@@ -26,10 +26,10 @@ final class RequestHandler
      * Method to get used criteria array for 'find' and 'count' methods. Some examples below.
      *
      * Basic usage:
-     *  ?where={"foo": "bar"}                       => WHERE entity.foo = 'bar'
-     *  ?where={"bar.foo": "foobar"}                => WHERE bar.foo = 'foobar'
-     *  ?where={"id": [1,2,3]}                      => WHERE entity.id IN (1,2,3)
-     *  ?where={"bar.foo": [1,2,3]}                 => WHERE bar.foo IN (1,2,3)
+     *  ?where={"foo": "bar"} => WHERE entity.foo = 'bar'
+     *  ?where={"bar.foo": "foobar"} => WHERE bar.foo = 'foobar'
+     *  ?where={"id": [1,2,3]} => WHERE entity.id IN (1,2,3)
+     *  ?where={"bar.foo": [1,2,3]} => WHERE bar.foo IN (1,2,3)
      *
      * Advanced usage:
      *  By default you cannot make anything else that described above, but you can easily manage special cases within
@@ -38,11 +38,9 @@ final class RequestHandler
      *  Note that with advanced usage you can easily use everything that App\Repository\Base::getExpression method
      *  supports - and that is basically 99% that you need on advanced search criteria.
      *
-     * @param HttpFoundationRequest $request
-     *
      * @throws HttpException
      *
-     * @return array
+     * @return array<string, string|array<string|int, string|int>>
      */
     public static function getCriteria(HttpFoundationRequest $request): array
     {
@@ -66,24 +64,22 @@ final class RequestHandler
      * Getter method for used order by option within 'find' method. Some examples below.
      *
      * Basic usage:
-     *  ?order=column1                                  => ORDER BY entity.column1 ASC
-     *  ?order=-column1                                 => ORDER BY entity.column2 DESC
-     *  ?order=foo.column1                              => ORDER BY foo.column1 ASC
-     *  ?order=-foo.column1                             => ORDER BY foo.column2 DESC
+     *  ?order=column1 => ORDER BY entity.column1 ASC
+     *  ?order=-column1 => ORDER BY entity.column2 DESC
+     *  ?order=foo.column1 => ORDER BY foo.column1 ASC
+     *  ?order=-foo.column1 => ORDER BY foo.column2 DESC
      *
      * Array parameter usage:
-     *  ?order[column1]=ASC                             => ORDER BY entity.column1 ASC
-     *  ?order[column1]=DESC                            => ORDER BY entity.column1 DESC
-     *  ?order[column1]=foobar                          => ORDER BY entity.column1 ASC
-     *  ?order[column1]=DESC&order[column2]=DESC        => ORDER BY entity.column1 DESC, entity.column2 DESC
-     *  ?order[foo.column1]=ASC                         => ORDER BY foo.column1 ASC
-     *  ?order[foo.column1]=DESC                        => ORDER BY foo.column1 DESC
-     *  ?order[foo.column1]=foobar                      => ORDER BY foo.column1 ASC
-     *  ?order[foo.column1]=DESC&order[column2]=DESC    => ORDER BY foo.column1 DESC, entity.column2 DESC
+     *  ?order[column1]=ASC => ORDER BY entity.column1 ASC
+     *  ?order[column1]=DESC => ORDER BY entity.column1 DESC
+     *  ?order[column1]=foobar => ORDER BY entity.column1 ASC
+     *  ?order[column1]=DESC&order[column2]=DESC => ORDER BY entity.column1 DESC, entity.column2 DESC
+     *  ?order[foo.column1]=ASC => ORDER BY foo.column1 ASC
+     *  ?order[foo.column1]=DESC => ORDER BY foo.column1 DESC
+     *  ?order[foo.column1]=foobar => ORDER BY foo.column1 ASC
+     *  ?order[foo.column1]=DESC&order[column2]=DESC => ORDER BY foo.column1 DESC, entity.column2 DESC
      *
-     * @param HttpFoundationRequest $request
-     *
-     * @return array
+     * @return array<string, string>
      */
     public static function getOrderBy(HttpFoundationRequest $request): array
     {
@@ -102,10 +98,6 @@ final class RequestHandler
      *
      * Usage:
      *  ?limit=10
-     *
-     * @param HttpFoundationRequest $request
-     *
-     * @return int|null
      */
     public static function getLimit(HttpFoundationRequest $request): ?int
     {
@@ -119,10 +111,6 @@ final class RequestHandler
      *
      * Usage:
      *  ?offset=10
-     *
-     * @param HttpFoundationRequest $request
-     *
-     * @return int|null
      */
     public static function getOffset(HttpFoundationRequest $request): ?int
     {
@@ -142,11 +130,9 @@ final class RequestHandler
      *  ?search={"or": ["term1", "term2"]}
      *  ?search={"and": ["term1", "term2"], "or": ["term3", "term4"]}
      *
-     * @param HttpFoundationRequest $request
-     *
      * @throws HttpException
      *
-     * @return array
+     * @return array<mixed>
      */
     public static function getSearchTerms(HttpFoundationRequest $request): array
     {
@@ -158,11 +144,9 @@ final class RequestHandler
     /**
      * Method to return search term criteria as an array that repositories can easily use.
      *
-     * @param string $search
-     *
      * @throws HttpException
      *
-     * @return array
+     * @return array<string|int, array<int, string>|string>
      */
     private static function getSearchTermCriteria(string $search): array
     {
@@ -183,11 +167,9 @@ final class RequestHandler
      * Method to determine used search terms. Note that this will first try to JSON decode given search term. This is
      * for cases that 'search' request parameter contains 'and' or 'or' terms.
      *
-     * @param string $search
-     *
      * @throws HttpException
      *
-     * @return array|null
+     * @return array<int, array<int, string>|string>|null
      */
     private static function determineSearchTerms(string $search): ?array
     {
@@ -207,7 +189,8 @@ final class RequestHandler
     /**
      * @param mixed $searchTerms
      *
-     * @throws LogicException|HttpException
+     * @throws LogicException
+     * @throws HttpException
      */
     private static function checkSearchTerms($searchTerms): void
     {
@@ -227,9 +210,9 @@ final class RequestHandler
      * Method to normalize specified search terms. Within this we will just filter out any "empty" values and return
      * unique terms after that.
      *
-     * @param array $searchTerms
+     * @param array<int, array<int, string>|string> $searchTerms
      *
-     * @return array
+     * @return array<int, array<int, string>|string>
      */
     private static function normalizeSearchTerms(array $searchTerms): array
     {
@@ -240,19 +223,13 @@ final class RequestHandler
     }
 
     /**
-     * @param array $output
+     * @param array<string, string> $output
      *
-     * @return Closure
+     * @psalm-suppress MissingClosureParamType
      */
     private static function getIterator(array &$output): Closure
     {
-        /**
-         * @psalm-suppress MissingClosureParamType
-         *
-         * @param string     $value
-         * @param int|string $key
-         */
-        return static function (string &$value, $key) use (&$output): void {
+        return static function (string $value, $key) use (&$output): void {
             $order = in_array(mb_strtoupper($value), ['ASC', 'DESC'], true) ? mb_strtoupper($value) : 'ASC';
             $column = is_string($key) ? $key : $value;
 

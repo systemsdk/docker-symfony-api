@@ -6,18 +6,18 @@ declare(strict_types = 1);
 
 namespace App\Form\Type\Console;
 
-use Symfony\Component\Form\AbstractType;
+use App\DTO\User\User as UserDto;
+use App\Form\DataTransformer\UserGroupTransformer;
+use App\Form\Type\Interfaces\FormTypeLabelInterface;
 use App\Form\Type\Traits\AddBasicFieldToForm;
 use App\Form\Type\Traits\UserGroupChoices;
-use Symfony\Component\Form\Extension\Core\Type;
-use App\Form\Type\Interfaces\FormTypeLabelInterface;
-use App\Form\DataTransformer\UserGroupTransformer;
 use App\Resource\UserGroupResource;
 use App\Service\LocalizationService;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\DTO\User\User as UserDto;
 use Throwable;
 
 /**
@@ -96,10 +96,6 @@ class UserType extends AbstractType
 
     /**
      * Constructor
-     *
-     * @param UserGroupResource    $userGroupResource
-     * @param UserGroupTransformer $userGroupTransformer
-     * @param LocalizationService  $localization
      */
     public function __construct(
         UserGroupResource $userGroupResource,
@@ -112,8 +108,7 @@ class UserType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param array              $options
+     * @param mixed[] $options
      *
      * @throws Throwable
      */
@@ -149,14 +144,12 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'data_class' => UserDto::class,
         ]);
     }
 
-    /**
-     * @param FormBuilderInterface $builder
-     */
     private function addLocalizationFieldsToForm(FormBuilderInterface $builder): void
     {
         $languages = $this->localization->getLanguages();
@@ -197,7 +190,9 @@ class UserType extends AbstractType
     }
 
     /**
-     * @return array
+     * Method to get choices array for time zones.
+     *
+     * @return array<string, string>
      */
     private function getTimeZoneChoices(): array
     {

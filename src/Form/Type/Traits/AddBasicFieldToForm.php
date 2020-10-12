@@ -16,8 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 trait AddBasicFieldToForm
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array                $fields
+     * @param array<int, array<int, mixed>> $fields
      */
     protected function addBasicFieldToForm(FormBuilderInterface $builder, array $fields): void
     {

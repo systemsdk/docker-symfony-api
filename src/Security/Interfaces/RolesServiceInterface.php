@@ -23,46 +23,40 @@ interface RolesServiceInterface
     /**
      * Constructor
      *
-     * @param array $rolesHierarchy
+     * @param array<string, array<int, string>> $rolesHierarchy
      */
     public function __construct(array $rolesHierarchy);
 
     /**
      * Getter for role hierarchy.
      *
-     * @return array
+     * @return array<string, array<int, string>>
      */
     public function getHierarchy(): array;
 
     /**
      * Getter method to return all roles in single dimensional array.
      *
-     * @return array
+     * @return array<int, string>
      */
     public function getRoles(): array;
 
     /**
      * Getter method for role label.
-     *
-     * @param string $role
-     *
-     * @return string
      */
     public function getRoleLabel(string $role): string;
 
     /**
      * Getter method for short role.
-     *
-     * @param string $role
-     *
-     * @return string
      */
     public function getShort(string $role): string;
 
     /**
-     * @param array $roles
+     * Helper method to get inherited roles for given roles.
      *
-     * @return array
+     * @param array<int, string> $roles
+     *
+     * @return array<int, string>
      */
     public function getInheritedRoles(array $roles): array;
 }

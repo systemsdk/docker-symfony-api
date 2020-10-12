@@ -6,9 +6,9 @@ declare(strict_types = 1);
 
 namespace App\Command\ApiKey;
 
+use App\Entity\ApiKey as ApiKeyEntity;
 use App\Resource\ApiKeyResource;
 use App\Security\RolesService;
-use App\Entity\ApiKey as ApiKeyEntity;
 use Closure;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
@@ -23,12 +23,8 @@ class ApiKeyHelper
     private ApiKeyResource $apiKeyResource;
     private RolesService $rolesService;
 
-
     /**
      * Constructor
-     *
-     * @param ApiKeyResource $apiKeyResource
-     * @param RolesService   $rolesService
      */
     public function __construct(ApiKeyResource $apiKeyResource, RolesService $rolesService)
     {
@@ -40,12 +36,7 @@ class ApiKeyHelper
      * Method to get API key entity. Also note that this may return a null in cases that user do not want to make any
      * changes to API keys.
      *
-     * @param SymfonyStyle $io
-     * @param string $question
-     *
      * @throws Throwable
-     *
-     * @return ApiKeyEntity|null
      */
     public function getApiKey(SymfonyStyle $io, string $question): ?ApiKeyEntity
     {
@@ -80,10 +71,7 @@ class ApiKeyHelper
      *  - User modifies API key
      *  - User removes API key
      *
-     * @param string       $message
-     * @param ApiKeyEntity $apiKey
-     *
-     * @return array
+     * @return array<int, string>
      */
     public function getApiKeyMessage(string $message, ApiKeyEntity $apiKey): array
     {
@@ -100,12 +88,7 @@ class ApiKeyHelper
     /**
      * Method to list ApiKeys where user can select desired one.
      *
-     * @param SymfonyStyle $io
-     * @param string $question
-     *
      * @throws Throwable
-     *
-     * @return ApiKeyEntity|null
      */
     private function getApiKeyEntity(SymfonyStyle $io, string $question): ?ApiKeyEntity
     {
@@ -120,13 +103,11 @@ class ApiKeyHelper
     /**
      * Method to return ApiKeyIterator closure. This will format ApiKey entities for choice list.
      *
-     * @param array $choices
-     *
-     * @return Closure
+     * @param string[] $choices
      */
     private function getApiKeyIterator(array &$choices): Closure
     {
-        /**
+        /*
          * Lambda function create api key choices
          *
          * @param ApiKeyEntity $apiKey

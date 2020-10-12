@@ -8,12 +8,12 @@ namespace App\Command\Scheduler;
 
 use App\Command\Traits\StyleSymfony;
 use App\Command\Utils\CleanupLogsCommand;
-use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Doctrine\ORM\EntityManagerInterface;
+use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Exception\LogicException;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 /**
@@ -26,15 +26,10 @@ class CleanupLogsScheduledCommand extends Command
     // Traits
     use StyleSymfony;
 
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $entityManager;
 
     /**
      * Constructor
-     *
-     * @param EntityManagerInterface $entityManager
      *
      * @throws LogicException
      */
@@ -53,12 +48,9 @@ class CleanupLogsScheduledCommand extends Command
     /**
      * Executes the current command.
      *
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -74,12 +66,7 @@ class CleanupLogsScheduledCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
      * @throws Throwable
-     *
-     * @return string
      */
     private function createScheduledCommand(
         InputInterface $input,
@@ -93,20 +80,21 @@ class CleanupLogsScheduledCommand extends Command
             return "The job CleanupLogs is already present [id='{$entity->getId()}'] - have a nice day";
         }
 
-        # ┌───────────── minute (0 - 59)
-        # | ┌───────────── hour (0 - 23)
-        # │ │ ┌───────────── day of the month (1 - 31)
-        # │ │ │ ┌───────────── month (1 - 12)
-        # │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday;
-        # │ │ │ │ │                                   7 is also Sunday on some systems)
-        # │ │ │ │ │
-        # │ │ │ │ │
-        # * * * * * command to execute
+        // ┌───────────── minute (0 - 59)
+        // | ┌───────────── hour (0 - 23)
+        // │ │ ┌───────────── day of the month (1 - 31)
+        // │ │ │ ┌───────────── month (1 - 12)
+        // │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday;
+        // │ │ │ │ │                                   7 is also Sunday on some systems)
+        // │ │ │ │ │
+        // │ │ │ │ │
+        // * * * * * command to execute
 
         $scheduledCommand = (new ScheduledCommand())
             ->setName('Cleanup logs in tables log_login, log_request')
             ->setCommand(CleanupLogsCommand::COMMAND_NAME)
-            ->setCronExpression('0 0 * * *')  // Run once a day, midnight
+            // Run once a day, midnight
+            ->setCronExpression('0 0 * * *')
             ->setPriority(100)
             ->setLogFile('cleanup-logs.log')
             ->setExecuteImmediately(false)

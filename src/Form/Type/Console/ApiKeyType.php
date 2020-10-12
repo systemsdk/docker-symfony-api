@@ -6,18 +6,18 @@ declare(strict_types = 1);
 
 namespace App\Form\Type\Console;
 
-use Symfony\Component\Form\AbstractType;
+use App\DTO\ApiKey\ApiKey;
+use App\Form\DataTransformer\UserGroupTransformer;
+use App\Form\Type\Interfaces\FormTypeLabelInterface;
 use App\Form\Type\Traits\AddBasicFieldToForm;
 use App\Form\Type\Traits\UserGroupChoices;
-use App\DTO\ApiKey\ApiKey;
-use Symfony\Component\Form\Extension\Core\Type;
-use App\Form\Type\Interfaces\FormTypeLabelInterface;
-use App\Form\DataTransformer\UserGroupTransformer;
 use App\Resource\UserGroupResource;
-use Throwable;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Throwable;
 
 /**
  * Class ApiKeyType
@@ -46,13 +46,11 @@ class ApiKeyType extends AbstractType
             ],
         ],
     ];
+
     private UserGroupTransformer $userGroupTransformer;
 
     /**
      * Constructor
-     *
-     * @param UserGroupResource    $userGroupResource
-     * @param UserGroupTransformer $userGroupTransformer
      */
     public function __construct(UserGroupResource $userGroupResource, UserGroupTransformer $userGroupTransformer)
     {
@@ -61,8 +59,7 @@ class ApiKeyType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param array              $options
+     * {@inheritdoc}
      *
      * @throws Throwable
      */
@@ -89,8 +86,6 @@ class ApiKeyType extends AbstractType
 
     /**
      * Configures the options for this type.
-     *
-     * @param OptionsResolver $resolver The resolver for the options
      *
      * @throws AccessException
      */

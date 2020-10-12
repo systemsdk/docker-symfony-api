@@ -40,9 +40,7 @@ class EntityValueResolver implements ArgumentValueResolverInterface
     private ResourceCollection $resourceCollection;
 
     /**
-     * EntityValueResolver constructor.
-     *
-     * @param ResourceCollection $resourceCollection
+     * Constructor
      */
     public function __construct(ResourceCollection $resourceCollection)
     {
@@ -50,29 +48,19 @@ class EntityValueResolver implements ArgumentValueResolverInterface
     }
 
     /**
-     * Whether this resolver can resolve the value for the given ArgumentMetadata.
-     *
-     * @param Request          $request
-     * @param ArgumentMetadata $argument
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
         return is_string($request->get($argument->getName()))
-               && is_subclass_of((string)$argument->getType(), EntityInterface::class, true)
-               && $this->resourceCollection->hasEntityResource($argument->getType());
+            && is_subclass_of((string)$argument->getType(), EntityInterface::class, true)
+            && $this->resourceCollection->hasEntityResource($argument->getType());
     }
 
     /**
-     * Returns the possible value(s).
-     *
-     * @param Request          $request
-     * @param ArgumentMetadata $argument
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return Generator
      */
     public function resolve(Request $request, ArgumentMetadata $argument): Generator
     {

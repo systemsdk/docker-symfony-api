@@ -21,18 +21,12 @@ use Throwable;
  */
 trait CountMethod
 {
-    // Traits
-    use AbstractGenericMethods;
-
     /**
      * Generic 'countMethod' method for REST resources.
      *
-     * @param Request       $request
-     * @param array|null $allowedHttpMethods
+     * @param string[]|null $allowedHttpMethods
      *
      * @throws Throwable
-     *
-     * @return Response
      */
     public function countMethod(Request $request, ?array $allowedHttpMethods = null): Response
     {

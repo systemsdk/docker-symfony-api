@@ -17,15 +17,7 @@ use Closure;
 final class SearchTerm implements SearchTermInterface
 {
     /**
-     * Static method to get search term criteria for specified columns and search terms with specified operand and mode.
-     *
-     * @param string|array $column  Search column(s), could be a string or an array of strings.
-     * @param string|array $search  Search term(s), could be a string or an array of strings.
-     * @param string|null  $operand Used operand with multiple search terms. See OPERAND_* constants. Defaults
-     *                                 to self::OPERAND_OR
-     * @param int|null     $mode    Used mode on LIKE search. See MODE_* constants. Defaults to self::MODE_FULL
-     *
-     * @return array|null
+     * {@inheritdoc}
      */
     public static function getCriteria($column, $search, ?string $operand = null, ?int $mode = null): ?array
     {
@@ -45,12 +37,10 @@ final class SearchTerm implements SearchTermInterface
     /**
      * Helper method to create used criteria array with given columns and search terms.
      *
-     * @param array    $columns
-     * @param array    $searchTerms
-     * @param string   $operand
-     * @param int      $mode
+     * @param array<int, string> $columns
+     * @param array<int, string> $searchTerms
      *
-     * @return array|null
+     * @return array<string, array<string, array>>|null
      */
     private static function createCriteria(array $columns, array $searchTerms, string $operand, int $mode): ?array
     {
@@ -80,10 +70,7 @@ final class SearchTerm implements SearchTermInterface
     /**
      * Method to get term iterator closure.
      *
-     * @param array $columns
-     * @param int   $mode
-     *
-     * @return Closure
+     * @param array<int, string> $columns
      */
     private static function getTermIterator(array $columns, int $mode): Closure
     {
@@ -94,20 +81,15 @@ final class SearchTerm implements SearchTermInterface
 
     /**
      * Method to get column iterator closure.
-     *
-     * @param string $term
-     * @param int    $mode
-     *
-     * @return Closure
      */
     private static function getColumnIterator(string $term, int $mode): Closure
     {
-        /**
+        /*
          * Lambda function to create actual criteria for specified column + term + mode combo.
          *
          * @param string $column
          *
-         * @return array
+         * @return array<int, string>
          */
         return static fn (string $column): array => [
             strpos($column, '.') === false ? 'entity.' . $column : $column, 'like', self::getTerm($mode, $term),
@@ -116,11 +98,6 @@ final class SearchTerm implements SearchTermInterface
 
     /**
      * Method to get search term clause for 'LIKE' query for specified mode.
-     *
-     * @param int    $mode
-     * @param string $term
-     *
-     * @return string
      */
     private static function getTerm(int $mode, string $term): string
     {
@@ -141,9 +118,9 @@ final class SearchTerm implements SearchTermInterface
     }
 
     /**
-     * @param string|array $column  Search column(s), could be a string or an array of strings.
+     * @param string|array<int, string> $column search column(s), could be a string or an array of strings
      *
-     * @return array
+     * @return array<int, string>
      */
     private static function getColumns($column): array
     {
@@ -157,9 +134,9 @@ final class SearchTerm implements SearchTermInterface
     /**
      * Method to get search terms.
      *
-     * @param string|array|null $search Search term(s), could be a string or an array of strings.
+     * @param string|array<int, string>|null $search search term(s), could be a string or an array of strings
      *
-     * @return array
+     * @return array<int, string>
      */
     private static function getSearchTerms($search): array
     {

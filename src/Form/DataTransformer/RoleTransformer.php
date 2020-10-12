@@ -6,11 +6,11 @@ declare(strict_types = 1);
 
 namespace App\Form\DataTransformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
-use App\Resource\RoleResource;
 use App\Entity\Role;
-use Throwable;
+use App\Resource\RoleResource;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
+use Throwable;
 
 /**
  * Class RoleTransformer
@@ -23,8 +23,6 @@ class RoleTransformer implements DataTransformerInterface
 
     /**
      * Constructor
-     *
-     * @param RoleResource $resource
      */
     public function __construct(RoleResource $resource)
     {
@@ -34,9 +32,7 @@ class RoleTransformer implements DataTransformerInterface
     /**
      * Transforms an object (Role) to a string (Role id).
      *
-     * @param Role|mixed|null $role
-     *
-     * @return string
+     * @param Role|mixed $role
      */
     public function transform($role): string
     {
@@ -46,12 +42,10 @@ class RoleTransformer implements DataTransformerInterface
     /**
      * Transforms a string (Role id) to an object (Role).
      *
-     * @param string|mixed|null $roleName
+     * @param string|mixed $roleName
      *
-     * @throws TransformationFailedException if object (issue) is not found.
+     * @throws TransformationFailedException if object (issue) is not found
      * @throws Throwable
-     *
-     * @return Role|null
      */
     public function reverseTransform($roleName): ?Role
     {

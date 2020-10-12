@@ -19,8 +19,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 trait Blameable
 {
     /**
-     * @var User|null
-     *
      * @Gedmo\Blameable(on="create")
      *
      * @Groups({
@@ -41,8 +39,6 @@ trait Blameable
     protected ?User $createdBy = null;
 
     /**
-     * @var User|null
-     *
      * @Gedmo\Blameable(on="update")
      *
      * @Groups({
@@ -62,20 +58,11 @@ trait Blameable
      */
     protected ?User $updatedBy = null;
 
-
-    /**
-     * @return User|null
-     */
     public function getCreatedBy(): ?User
     {
         return $this->createdBy;
     }
 
-    /**
-     * @param User|null $createdBy
-     *
-     * @return $this
-     */
     public function setCreatedBy(?User $createdBy = null): self
     {
         $this->createdBy = $createdBy;
@@ -83,19 +70,11 @@ trait Blameable
         return $this;
     }
 
-    /**
-     * @return User|null
-     */
     public function getUpdatedBy(): ?User
     {
         return $this->updatedBy;
     }
 
-    /**
-     * @param User|null $updatedBy
-     *
-     * @return $this
-     */
     public function setUpdatedBy(?User $updatedBy = null): self
     {
         $this->updatedBy = $updatedBy;

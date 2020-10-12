@@ -7,12 +7,12 @@ declare(strict_types = 1);
 namespace App\Rest;
 
 use App\Rest\Interfaces\ControllerInterface;
-use App\Rest\Interfaces\RestResourceInterface;
 use App\Rest\Interfaces\ResponseHandlerInterface;
+use App\Rest\Interfaces\RestResourceInterface;
 use App\Rest\Traits\Actions\RestActionBase;
 use App\Rest\Traits\RestMethodHelper;
-use UnexpectedValueException;
 use Symfony\Component\HttpFoundation\Response;
+use UnexpectedValueException;
 
 /**
  * Class Controller
@@ -49,16 +49,6 @@ abstract class Controller implements ControllerInterface
     /**
      * {@inheritdoc}
      */
-    public function setResource(RestResourceInterface $resource): self
-    {
-        $this->resource = $resource;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getResource(): RestResourceInterface
     {
         if (!$this->resource instanceof RestResourceInterface) {
@@ -71,9 +61,9 @@ abstract class Controller implements ControllerInterface
     /**
      * {@inheritdoc}
      */
-    public function setResponseHandler(ResponseHandler $responseHandler): self
+    public function setResource(RestResourceInterface $resource): self
     {
-        $this->responseHandler = $responseHandler;
+        $this->resource = $resource;
 
         return $this;
     }
@@ -88,5 +78,15 @@ abstract class Controller implements ControllerInterface
         }
 
         return $this->responseHandler;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setResponseHandler(ResponseHandler $responseHandler): self
+    {
+        $this->responseHandler = $responseHandler;
+
+        return $this;
     }
 }

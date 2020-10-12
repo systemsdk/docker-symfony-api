@@ -6,10 +6,9 @@ declare(strict_types = 1);
 
 namespace App\Command\User;
 
-use Symfony\Component\Console\Command\Command;
+use App\Command\HelperConfigure;
 use App\Command\Traits\ApiKeyUserManagementHelper;
 use App\Command\Traits\StyleSymfony;
-use App\Command\HelperConfigure;
 use App\DTO\User\UserCreate as UserDto;
 use App\Form\Type\Console\UserType;
 use App\Repository\RoleRepository;
@@ -17,7 +16,7 @@ use App\Resource\UserGroupResource;
 use App\Resource\UserResource;
 use App\Security\RolesService;
 use Matthias\SymfonyConsoleForm\Console\Helper\FormHelper;
-use Symfony\Component\Console\Exception\InvalidArgumentException;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -73,14 +72,8 @@ class CreateUserCommand extends Command
     private RolesService $rolesService;
     private RoleRepository $roleRepository;
 
-
     /**
      * Constructor
-     *
-     * @param UserResource      $userResource
-     * @param UserGroupResource $userGroupResource
-     * @param RolesService      $rolesService
-     * @param RoleRepository    $roleRepository
      *
      * @throws LogicException
      */
@@ -102,8 +95,6 @@ class CreateUserCommand extends Command
 
     /**
      * Getter for RolesService
-     *
-     * @return RolesService
      */
     public function getRolesService(): RolesService
     {
@@ -112,25 +103,19 @@ class CreateUserCommand extends Command
 
     /**
      * Configures the current command.
-     *
-     * @throws InvalidArgumentException
      */
     protected function configure(): void
     {
         parent::configure();
+
         HelperConfigure::configure($this, self::$commandParameters);
     }
 
     /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -158,10 +143,6 @@ class CreateUserCommand extends Command
      *
      * Also note that if groups are not found method will reset application 'role' table content, so that we can be
      * sure that we can create all groups correctly.
-     *
-     * @param OutputInterface $output
-     * @param bool $interactive
-     * @param SymfonyStyle $io
      *
      * @throws Throwable
      */

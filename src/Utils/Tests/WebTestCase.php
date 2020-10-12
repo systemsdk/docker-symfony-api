@@ -26,6 +26,7 @@ abstract class WebTestCase extends BaseWebTestCase
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
+
         gc_enable();
     }
 
@@ -35,6 +36,7 @@ abstract class WebTestCase extends BaseWebTestCase
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
+
         gc_collect_cycles();
     }
 
@@ -44,6 +46,7 @@ abstract class WebTestCase extends BaseWebTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         self::bootKernel();
         /** @var Auth $authService */
         $authService = self::$container->get('test.app.utils.tests.auth');
@@ -53,12 +56,8 @@ abstract class WebTestCase extends BaseWebTestCase
     /**
      * Helper method to get authorized client for specified username and password.
      *
-     * @param string|null  $username
-     * @param string|null  $password
-     * @param array|null   $options
-     * @param array|null   $server
-     *
-     * @return KernelBrowser
+     * @param array<mixed>|null $options
+     * @param array<mixed>|null $server
      *
      * @throws Throwable
      */
@@ -88,11 +87,8 @@ abstract class WebTestCase extends BaseWebTestCase
     /**
      * Helper method to get authorized API Key client for specified role.
      *
-     * @param string|null  $role
-     * @param array|null   $options
-     * @param array|null   $server
-     *
-     * @return KernelBrowser
+     * @param array<mixed>|null $options
+     * @param array<mixed>|null $server
      */
     public function getApiKeyClient(?string $role = null, ?array $options = null, ?array $server = null): KernelBrowser
     {

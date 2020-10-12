@@ -6,16 +6,13 @@ declare(strict_types = 1);
 
 namespace App\Repository;
 
-use App\Repository\Interfaces\BaseRepositoryInterface;
 use App\Entity\Interfaces\EntityInterface;
+use App\Repository\Interfaces\BaseRepositoryInterface;
 use App\Repository\Traits\RepositoryMethods;
 use App\Repository\Traits\RepositoryWrappers;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
-use InvalidArgumentException;
 
 /**
  * Class BaseRepository
@@ -38,7 +35,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Joins that need to attach to queries, this is needed for to prevent duplicate joins on those.
      *
-     * @var array<string, array<int, mixed>>
+     * @var array<string, array<int, array<int, array<int, string>>>>
      */
     private static array $joins = [
         self::INNER_JOIN => [],
@@ -46,7 +43,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     ];
 
     /**
-     * @var array<string, array<int, mixed>>
+     * @var array<string, array<int, string>>
      */
     private static array $processedJoins = [
         self::INNER_JOIN => [],
@@ -54,7 +51,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     ];
 
     /**
-     * @var array<int, array<int, mixed|callable>>
+     * @var array<int, array<int, callable|mixed>>
      */
     private static array $callbacks = [];
 
@@ -65,8 +62,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
     /**
      * Constructor
-     *
-     * @param ManagerRegistry $managerRegistry
      */
     public function __construct(ManagerRegistry $managerRegistry)
     {
@@ -74,9 +69,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Getter method for entity name.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getEntityName(): string
     {
@@ -84,9 +77,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Getter method for search columns of current entity.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getSearchColumns(): array
     {
@@ -94,17 +85,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Helper method to persist specified entity to database.
-     *
-     * @param EntityInterface $entity
-     * @param bool|null       $flush
-     *
-     * @return BaseRepositoryInterface
-     *
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * {@inheritdoc}
      */
-    public function save(EntityInterface $entity, ?bool $flush = null): BaseRepositoryInterface
+    public function save(EntityInterface $entity, ?bool $flush = null): self
     {
         $flush ??= true;
         // Persist on database
@@ -118,17 +101,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Helper method to remove specified entity from database.
-     *
-     * @param EntityInterface $entity
-     * @param bool|null       $flush
-     *
-     * @return BaseRepositoryInterface
-     *
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * {@inheritdoc}
      */
-    public function remove(EntityInterface $entity, ?bool $flush = null): BaseRepositoryInterface
+    public function remove(EntityInterface $entity, ?bool $flush = null): self
     {
         $flush ??= true;
         // Remove from database
@@ -142,9 +117,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * With this method you can attach some custom functions for generic REST API find / count queries.
-     *
-     * @param QueryBuilder $queryBuilder
+     * {@inheritdoc}
      */
     public function processQueryBuilder(QueryBuilder $queryBuilder): void
     {
@@ -156,19 +129,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Adds left join to current QueryBuilder query.
-     *
-     * @note Requires processJoins() to be run
-     *
-     * @see QueryBuilder::leftJoin() for parameters
-     *
-     * @param array $parameters
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return BaseRepositoryInterface
+     * {@inheritdoc}
      */
-    public function addLeftJoin(array $parameters): BaseRepositoryInterface
+    public function addLeftJoin(array $parameters): self
     {
         if (count($parameters) > 1) {
             $this->addJoinToQuery(self::LEFT_JOIN, $parameters);
@@ -178,19 +141,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Adds inner join to current QueryBuilder query.
-     *
-     * @note Requires processJoins() to be run
-     *
-     * @see QueryBuilder::innerJoin() for parameters
-     *
-     * @param array $parameters
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return BaseRepositoryInterface
+     * {@inheritdoc}
      */
-    public function addInnerJoin(array $parameters): BaseRepositoryInterface
+    public function addInnerJoin(array $parameters): self
     {
         if (count($parameters) > 0) {
             $this->addJoinToQuery(self::INNER_JOIN, $parameters);
@@ -200,20 +153,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * Method to add callback to current query builder instance which is calling 'processQueryBuilder' method. By
-     * default this method is called from following core methods:
-     *  - countAdvanced
-     *  - findByAdvanced
-     *  - findIds
-     *
-     * Note that every callback will get 'QueryBuilder' as in first parameter.
-     *
-     * @param callable   $callable
-     * @param array|null $args
-     *
-     * @return BaseRepositoryInterface
+     * {@inheritdoc}
      */
-    public function addCallback(callable $callable, ?array $args = null): BaseRepositoryInterface
+    public function addCallback(callable $callable, ?array $args = null): self
     {
         $args ??= [];
         $hash = sha1(serialize(array_merge([spl_object_hash((object)$callable)], $args)));
@@ -228,8 +170,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
     /**
      * Process defined joins for current QueryBuilder instance.
-     *
-     * @param QueryBuilder $queryBuilder
      */
     protected function processJoins(QueryBuilder $queryBuilder): void
     {
@@ -245,7 +185,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Process defined callbacks for current QueryBuilder instance.
      *
-     * @param QueryBuilder $queryBuilder
+     * @psalm-suppress PossiblyInvalidArgument
      */
     protected function processCallbacks(QueryBuilder $queryBuilder): void
     {
@@ -267,8 +207,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * @see QueryBuilder::leftJoin()
      * @see QueryBuilder::innerJoin()
      *
-     * @param string  $type       Join type; leftJoin, innerJoin or join
-     * @param array   $parameters Query builder join parameters
+     * @param string $type Join type; leftJoin, innerJoin or join
+     * @param array<int, array<int, string>> $parameters Query builder join parameters
      */
     private function addJoinToQuery(string $type, array $parameters): void
     {

@@ -49,20 +49,14 @@ class CreateApiKeyCommand extends Command
     private UserGroupResource $userGroupResource;
     private RolesService $rolesService;
     private RoleRepository $roleRepository;
+
     /**
      * @psalm-suppress PropertyNotSetInConstructor
      */
     private SymfonyStyle $io;
 
-
     /**
      * Constructor
-     *
-     * @param ApiKeyHelper      $apiKeyHelper
-     * @param ApiKeyResource    $apiKeyResource
-     * @param UserGroupResource $userGroupResource
-     * @param RolesService      $rolesService
-     * @param RoleRepository    $roleRepository
      *
      * @throws LogicException
      */
@@ -86,8 +80,6 @@ class CreateApiKeyCommand extends Command
 
     /**
      * Getter for RolesService
-     *
-     * @return RolesService
      */
     public function getRolesService(): RolesService
     {
@@ -102,19 +94,15 @@ class CreateApiKeyCommand extends Command
     protected function configure(): void
     {
         parent::configure();
+
         HelperConfigure::configure($this, self::$commandParameters);
     }
 
     /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an exit code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -144,9 +132,6 @@ class CreateApiKeyCommand extends Command
      *
      * Also note that if groups are not found method will reset application 'role' table content, so that we can be
      * sure that we can create all groups correctly.
-     *
-     * @param OutputInterface $output
-     * @param bool            $interactive
      *
      * @throws Throwable
      */

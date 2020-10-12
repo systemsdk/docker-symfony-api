@@ -6,11 +6,11 @@ declare(strict_types = 1);
 
 namespace App\EventListener;
 
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use App\Entity\User;
-use LengthException;
 use App\Security\SecurityUser;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use LengthException;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserEntityEventListener
@@ -23,8 +23,6 @@ class UserEntityEventListener
 
     /**
      * Constructor
-     *
-     * @param UserPasswordEncoderInterface $userPasswordEncoder
      */
     public function __construct(UserPasswordEncoderInterface $userPasswordEncoder)
     {
@@ -33,10 +31,6 @@ class UserEntityEventListener
 
     /**
      * Doctrine lifecycle event for 'prePersist' event.
-     *
-     * @param LifecycleEventArgs $event
-     *
-     * @throws LengthException
      */
     public function prePersist(LifecycleEventArgs $event): void
     {
@@ -45,10 +39,6 @@ class UserEntityEventListener
 
     /**
      * Doctrine lifecycle event for 'preUpdate' event.
-     *
-     * @param LifecycleEventArgs $event
-     *
-     * @throws LengthException
      */
     public function preUpdate(LifecycleEventArgs $event): void
     {
@@ -56,8 +46,6 @@ class UserEntityEventListener
     }
 
     /**
-     * @param LifecycleEventArgs $event
-     *
      * @throws LengthException
      */
     private function process(LifecycleEventArgs $event): void
@@ -73,8 +61,6 @@ class UserEntityEventListener
 
     /**
      * Method to change user password whenever it's needed.
-     *
-     * @param User $user
      *
      * @throws LengthException
      */
@@ -93,7 +79,7 @@ class UserEntityEventListener
 
             // Password hash callback
             $callback = fn (string $plainPassword): string => $this->userPasswordEncoder
-                ->encodePassword(new SecurityUser($user), $plainPassword);
+                ->encodePassword(new SecurityUser($user, []), $plainPassword);
             // Set new password and encode it with user encoder
             $user->setPassword($callback, $plainPassword);
             // And clean up plain password from entity

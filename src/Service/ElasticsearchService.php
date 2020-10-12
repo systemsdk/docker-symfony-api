@@ -7,9 +7,9 @@ declare(strict_types = 1);
 namespace App\Service;
 
 use App\Service\Interfaces\ElasticsearchServiceInterface;
-use Elasticsearch\ClientBuilder;
-use Elasticsearch\Client;
 use DateTimeInterface;
+use Elasticsearch\Client;
+use Elasticsearch\ClientBuilder;
 
 /**
  * Class ElasticsearchService
@@ -29,10 +29,6 @@ class ElasticsearchService implements ElasticsearchServiceInterface
 
     /**
      * Constructor
-     *
-     * @param string $host
-     * @param string $username
-     * @param string $password
      */
     public function __construct(string $host, string $username, string $password)
     {
@@ -43,7 +39,7 @@ class ElasticsearchService implements ElasticsearchServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function instantiate(): void
     {
@@ -53,7 +49,7 @@ class ElasticsearchService implements ElasticsearchServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function index(string $index, string $documentId, array $body)
     {
@@ -61,7 +57,7 @@ class ElasticsearchService implements ElasticsearchServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function info(array $params = [])
     {
@@ -69,7 +65,7 @@ class ElasticsearchService implements ElasticsearchServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTemplate(array $params): array
     {
@@ -77,7 +73,7 @@ class ElasticsearchService implements ElasticsearchServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function putTemplate(array $params): array
     {
@@ -85,7 +81,7 @@ class ElasticsearchService implements ElasticsearchServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function search(string $index, array $body, int $from = 0, int $size = 100)
     {
@@ -93,7 +89,7 @@ class ElasticsearchService implements ElasticsearchServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function generateIndexName(?int $timestamp = null): string
     {
@@ -102,7 +98,7 @@ class ElasticsearchService implements ElasticsearchServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function getDateTimeFormat(): string
     {
@@ -110,7 +106,7 @@ class ElasticsearchService implements ElasticsearchServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function getPropertiesData(): array
     {

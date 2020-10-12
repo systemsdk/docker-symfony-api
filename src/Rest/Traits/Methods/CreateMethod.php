@@ -21,19 +21,12 @@ use Throwable;
  */
 trait CreateMethod
 {
-    // Traits
-    use AbstractGenericMethods;
-
     /**
      * Generic 'createMethod' method for REST resources.
      *
-     * @param Request          $request
-     * @param RestDtoInterface $restDto
-     * @param array|null    $allowedHttpMethods
+     * @param string[]|null $allowedHttpMethods
      *
      * @throws Throwable
-     *
-     * @return Response
      */
     public function createMethod(
         Request $request,

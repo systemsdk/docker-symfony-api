@@ -6,10 +6,10 @@ declare(strict_types = 1);
 
 namespace App\Service;
 
-use App\Service\Interfaces\LoginLoggerServiceInterface;
 use App\Entity\LogLogin;
 use App\Entity\User;
 use App\Resource\LogLoginResource;
+use App\Service\Interfaces\LoginLoggerServiceInterface;
 use BadMethodCallException;
 use DeviceDetector\DeviceDetector;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,26 +30,19 @@ class LoginLoggerService implements LoginLoggerServiceInterface
 
     /**
      * Constructor
-     *
-     * @param LogLoginResource $logLoginFailureResource
-     * @param RequestStack     $requestStack
      */
-    public function __construct(LogLoginResource $logLoginFailureResource, RequestStack $requestStack)
+    public function __construct(LogLoginResource $logLoginResource, RequestStack $requestStack)
     {
         // Store used services
-        $this->logLoginResource = $logLoginFailureResource;
+        $this->logLoginResource = $logLoginResource;
         $this->requestStack = $requestStack;
         $this->deviceDetector = new DeviceDetector();
     }
 
     /**
-     * Setter for User object
-     *
-     * @param User|null $user
-     *
-     * @return LoginLoggerServiceInterface
+     * {@inheritdoc}
      */
-    public function setUser(?User $user = null): LoginLoggerServiceInterface
+    public function setUser(?User $user = null): self
     {
         $this->user = $user;
 
@@ -57,11 +50,7 @@ class LoginLoggerService implements LoginLoggerServiceInterface
     }
 
     /**
-     * Method to handle login event.
-     *
-     * @param string $type
-     *
-     * @throws Throwable
+     * {@inheritdoc}
      */
     public function process(string $type): void
     {
@@ -82,14 +71,10 @@ class LoginLoggerService implements LoginLoggerServiceInterface
     /**
      * Method to create new login entry and store it to database.
      *
-     * @param string  $type
-     * @param Request $request
-     *
      * @throws Throwable
      */
     private function createEntry(string $type, Request $request): void
     {
-        /** @var LogLogin $entry */
         $entry = new LogLogin($type, $request, $this->deviceDetector, $this->user);
         // And store entry to database
         $this->logLoginResource->save($entry, true);

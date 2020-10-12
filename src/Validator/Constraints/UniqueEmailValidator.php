@@ -23,8 +23,6 @@ class UniqueEmailValidator extends ConstraintValidator
 
     /**
      * Constructor
-     *
-     * @param UserRepository $repository
      */
     public function __construct(UserRepository $repository)
     {
@@ -32,10 +30,7 @@ class UniqueEmailValidator extends ConstraintValidator
     }
 
     /**
-     * Checks if the passed value is valid.
-     *
-     * @param UserInterface|mixed    $value      The value that should be validated
-     * @param Constraint|UniqueEmail $constraint The constraint for the validation
+     * {@inheritdoc}
      *
      * @throws NonUniqueResultException
      */

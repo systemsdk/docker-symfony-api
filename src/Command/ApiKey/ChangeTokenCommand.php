@@ -6,13 +6,13 @@ declare(strict_types = 1);
 
 namespace App\Command\ApiKey;
 
-use Symfony\Component\Console\Command\Command;
 use App\Command\Traits\StyleSymfony;
+use App\Entity\ApiKey as ApiKeyEntity;
 use App\Resource\ApiKeyResource;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Entity\ApiKey as ApiKeyEntity;
-use Symfony\Component\Console\Exception\LogicException;
 use Throwable;
 
 /**
@@ -28,18 +28,15 @@ class ChangeTokenCommand extends Command
     private ApiKeyResource $apiKeyResource;
     private ApiKeyHelper $apiKeyHelper;
 
-
     /**
      * Constructor
-     *
-     * @param ApiKeyResource $apiKeyResource
-     * @param ApiKeyHelper   $apiKeyHelper
      *
      * @throws LogicException
      */
     public function __construct(ApiKeyResource $apiKeyResource, ApiKeyHelper $apiKeyHelper)
     {
         parent::__construct('api-key:change-token');
+
         $this->apiKeyResource = $apiKeyResource;
         $this->apiKeyHelper = $apiKeyHelper;
         $this->setDescription('Command to change token for existing API key');
@@ -47,14 +44,9 @@ class ChangeTokenCommand extends Command
 
     /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an exit code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -78,11 +70,9 @@ class ChangeTokenCommand extends Command
     /**
      * Method to change API key token.
      *
-     * @param ApiKeyEntity $apiKey
-     *
      * @throws Throwable
      *
-     * @return array
+     * @return mixed[]
      */
     private function changeApiKeyToken(ApiKeyEntity $apiKey): array
     {

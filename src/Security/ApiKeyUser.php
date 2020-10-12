@@ -6,9 +6,8 @@ declare(strict_types = 1);
 
 namespace App\Security;
 
-use App\Security\Interfaces\ApiKeyUserInterface;
 use App\Entity\ApiKey;
-use App\Entity\UserGroup;
+use App\Security\Interfaces\ApiKeyUserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -34,7 +33,7 @@ class ApiKeyUser implements ApiKeyUserInterface
     private ApiKey $apiKey;
 
     /**
-     * @var string[]
+     * @var array<int, string>
      *
      * @Groups({
      *      "ApiKeyUser",
@@ -44,38 +43,24 @@ class ApiKeyUser implements ApiKeyUserInterface
     private array $roles;
 
     /**
-     * Constructor
-     *
-     * @param ApiKey       $apiKey
-     * @param RolesService $rolesService
+     * {@inheritdoc}
      */
-    public function __construct(ApiKey $apiKey, RolesService $rolesService)
+    public function __construct(ApiKey $apiKey, array $roles)
     {
         $this->apiKey = $apiKey;
         $this->username = $this->apiKey->getToken();
-        // Iterate API key user groups and extract roles from those and attach base 'ROLE_API'
-        $roles = $this->apiKey
-            ->getUserGroups()
-            ->map(static fn (UserGroup $userGroup): string => $userGroup->getRole()->getId())
-            ->toArray();
-        $roles[] = RolesService::ROLE_API;
-        $this->roles = array_unique($rolesService->getInheritedRoles($roles));
+        $this->roles = array_unique(array_merge($roles, [RolesService::ROLE_API]));
     }
 
-    /**
-     * Getter method for ApiKey entity
-     *
-     * @return ApiKey
-     */
     public function getApiKey(): ApiKey
     {
         return $this->apiKey;
     }
 
     /**
-     * Returns the roles granted to the api user.
+     * {@inheritdoc}
      *
-     * @return array The user roles
+     * @return array<int, string> The user roles
      */
     public function getRoles(): array
     {
@@ -83,14 +68,9 @@ class ApiKeyUser implements ApiKeyUserInterface
     }
 
     /**
-     * Returns the password used to authenticate the user.
-     *
-     * This should be the encoded password. On authentication, a plain-text
-     * password will be salted, encoded, and then compared to this value.
+     * {@inheritdoc}
      *
      * @codeCoverageIgnore
-     *
-     * @return string
      */
     public function getPassword(): string
     {
@@ -98,13 +78,9 @@ class ApiKeyUser implements ApiKeyUserInterface
     }
 
     /**
-     * Returns the salt that was originally used to encode the password.
-     *
-     * This can return null if the password was not encoded using a salt.
+     * {@inheritdoc}
      *
      * @codeCoverageIgnore
-     *
-     * @return string|null
      */
     public function getSalt(): ?string
     {
@@ -112,11 +88,9 @@ class ApiKeyUser implements ApiKeyUserInterface
     }
 
     /**
-     * Returns the username used to authenticate the user.
+     * {@inheritdoc}
      *
      * @codeCoverageIgnore
-     *
-     * @return string The username
      */
     public function getUsername(): string
     {
@@ -124,10 +98,7 @@ class ApiKeyUser implements ApiKeyUserInterface
     }
 
     /**
-     * Removes sensitive data from the user.
-     *
-     * This is important if, at any given point, sensitive information like
-     * the plain-text password is stored on this object.
+     * {@inheritdoc}
      *
      * @codeCoverageIgnore
      */

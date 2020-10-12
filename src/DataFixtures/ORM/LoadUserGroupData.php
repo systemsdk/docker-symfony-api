@@ -6,55 +6,45 @@ declare(strict_types = 1);
 
 namespace App\DataFixtures\ORM;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Doctrine\Persistence\ObjectManager;
-use App\Security\Interfaces\RolesServiceInterface;
 use App\Entity\Role;
 use App\Entity\UserGroup;
+use App\Rest\UuidHelper;
+use App\Security\Interfaces\RolesServiceInterface;
+use App\Utils\Tests\PhpUnitUtil;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Throwable;
 
 /**
  * Class LoadUserGroupData
  *
  * @package App\DataFixtures\ORM
+ *
+ * @psalm-suppress MissingConstructor
  */
 final class LoadUserGroupData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-    /**
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    private ContainerInterface $container;
+    use ContainerAwareTrait;
 
     /**
-     * @psalm-suppress PropertyNotSetInConstructor
+     * @var array<string, string>
      */
+    public static array $uuids = [
+        'Role-logged' => 'f94629ce-c79b-11ea-87d0-0242ac130003',
+        'Role-api' => 'fe4df1e0-c79b-11ea-87d0-0242ac130003',
+        'Role-user' => '042650e4-c79c-11ea-87d0-0242ac130003',
+        'Role-admin' => '08c19fa0-c79c-11ea-87d0-0242ac130003',
+        'Role-root' => '0ef6ce9a-c79c-11ea-87d0-0242ac130003',
+    ];
+
     private ObjectManager $manager;
-
-    /**
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
     private RolesServiceInterface $roles;
-
-
-    /**
-     * Setter for container.
-     *
-     * @param ContainerInterface|null $container
-     */
-    public function setContainer(?ContainerInterface $container = null): void
-    {
-        if ($container !== null) {
-            $this->container = $container;
-        }
-    }
 
     /**
      * Load data fixtures with the passed EntityManager
-     *
-     * @param ObjectManager $manager
      *
      * @throws Throwable
      */
@@ -72,8 +62,6 @@ final class LoadUserGroupData extends Fixture implements OrderedFixtureInterface
 
     /**
      * Get the order of this fixture
-     *
-     * @return int
      */
     public function getOrder(): int
     {
@@ -83,11 +71,7 @@ final class LoadUserGroupData extends Fixture implements OrderedFixtureInterface
     /**
      * Method to create UserGroup entity for specified role.
      *
-     * @param string $role
-     *
      * @throws Throwable
-     *
-     * @return bool
      */
     private function createUserGroup(string $role): bool
     {
@@ -98,6 +82,12 @@ final class LoadUserGroupData extends Fixture implements OrderedFixtureInterface
         $entity = new UserGroup();
         $entity->setRole($roleReference);
         $entity->setName($this->roles->getRoleLabel($role));
+
+        PhpUnitUtil::setProperty(
+            'id',
+            UuidHelper::fromString(self::$uuids['Role-' . $this->roles->getShort($role)]),
+            $entity
+        );
 
         // Persist entity
         $this->manager->persist($entity);

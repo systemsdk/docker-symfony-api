@@ -1,9 +1,9 @@
 <?php
-
 declare(strict_types = 1);
 
 // phpcs:ignoreFile
 /** @noinspection PhpIllegalPsrClassPathInspection */
+
 namespace DoctrineMigrations;
 
 use Doctrine\DBAL\DBALException;
@@ -15,18 +15,13 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20191001194001 extends AbstractMigration
 {
-    /** @noinspection PhpMissingParentCallCommonInspection */
-    /**
-     * @return string
-     */
+    /* @noinspection PhpMissingParentCallCommonInspection */
     public function getDescription(): string
     {
         return 'Initial database structure';
     }
 
     /**
-     * @param Schema $schema
-     *
      * @throws DBALException
      */
     public function up(Schema $schema): void
@@ -295,8 +290,6 @@ SQL;
     }
 
     /**
-     * @param Schema $schema
-     *
      * @throws DBALException
      */
     public function down(Schema $schema): void

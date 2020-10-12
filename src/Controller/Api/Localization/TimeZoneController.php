@@ -32,8 +32,6 @@ class TimeZoneController
 
     /**
      * Constructor
-     *
-     * @param LocalizationService $localization
      */
     public function __construct(LocalizationService $localization)
     {
@@ -43,34 +41,34 @@ class TimeZoneController
     /**
      * Endpoint action to get list of supported timezones. This is for use to
      * choose what timezone your frontend application can use within its date,
-     * time,  datetime, etc. formatting.
+     * time, datetime, etc. formatting.
      *
      * @SWG\Response(
      *      response=200,
      *      description="List of timezone objects.",
-     *      @SWG\Schema(
+     * @SWG\Schema(
      *          type="array",
-     *          @SWG\Items(
+     * @SWG\Items(
      *              type="object",
-     *              @SWG\Property(
+     * @SWG\Property(
      *                  property="timezone",
      *                  type="string",
      *                  example="Europe",
      *                  description="Africa,America,Antarctica,Arctic,Asia,Atlantic,Australia,Europe,Pacific,UTC."
      *              ),
-     *              @SWG\Property(
+     * @SWG\Property(
      *                  property="identier",
      *                  type="string",
      *                  example="Europe/Kiev",
      *                  description="Timezone identifier that you can use with other librariers."
      *              ),
-     *              @SWG\Property(
+     * @SWG\Property(
      *                  property="offset",
      *                  type="string",
      *                  example="GMT+2:00",
      *                  description="GMT offset of identifier."
      *              ),
-     *              @SWG\Property(
+     * @SWG\Property(
      *                  property="value",
      *                  type="string",
      *                  example="Europe/Kiev",
@@ -79,8 +77,6 @@ class TimeZoneController
      *          ),
      *      ),
      *  )
-     *
-     * @return JsonResponse
      *
      * @throws Throwable
      */

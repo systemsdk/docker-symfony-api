@@ -21,8 +21,6 @@ class MailerService
 
     /**
      * Constructor
-     *
-     * @param MailerInterface $mailer
      */
     public function __construct(MailerInterface $mailer)
     {
@@ -31,11 +29,6 @@ class MailerService
 
     /**
      * Send mail to recipients
-     *
-     * @param string $title
-     * @param string $from
-     * @param string $to
-     * @param string $body
      *
      * @throws Throwable
      */

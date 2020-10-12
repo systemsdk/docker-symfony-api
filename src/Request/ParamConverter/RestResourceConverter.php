@@ -20,16 +20,16 @@ use Throwable;
  * This is meant to be used within controller actions that uses @ParamConverter annotation. Example:
  *  /**
  *   * @Route(
- *   *    "/{userEntity}",
- *   *    requirements={
- *   *        "userEntity" = "%app.uuid_v1_regex%",
- *   *    }
+ *   * "/{userEntity}",
+ *   * requirements={
+ *   * "userEntity" = "%app.uuid_v1_regex%",
+ *   * }
  *   * )
  *   *
  *   * @ParamConverter(
- *   *      "userEntity",
- *   *      class="App\Resource\UserResource",
- *   *  )
+ *   * "userEntity",
+ *   * class="App\Resource\UserResource",
+ *   * )
  *   *
  *   * @param User $collection
  *   *\/
@@ -44,12 +44,10 @@ use Throwable;
  */
 class RestResourceConverter implements ParamConverterInterface
 {
-    private ResourceCollection  $collection;
+    private ResourceCollection $collection;
 
     /**
      * RestResourceConverter constructor.
-     *
-     * @param ResourceCollection $collection
      */
     public function __construct(ResourceCollection $collection)
     {
@@ -57,14 +55,9 @@ class RestResourceConverter implements ParamConverterInterface
     }
 
     /**
-     * Stores the object in the request.
-     *
-     * @param Request        $request
-     * @param ParamConverter $configuration Contains the name, class and options of the object
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return bool True if the object has been successfully set, else false
      */
     public function apply(Request $request, ParamConverter $configuration): bool
     {
@@ -80,11 +73,7 @@ class RestResourceConverter implements ParamConverterInterface
     }
 
     /**
-     * Checks if the object is supported.
-     *
-     * @param ParamConverter $configuration
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function supports(ParamConverter $configuration): bool
     {

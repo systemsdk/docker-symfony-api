@@ -20,9 +20,6 @@ abstract class EnumType extends Type
     protected static string $name;
     protected static array $values = [];
 
-    /**
-     * @return array
-     */
     public static function getValues(): array
     {
         return static::$values;
@@ -30,15 +27,8 @@ abstract class EnumType extends Type
 
     /**
      * Gets the SQL declaration snippet for a field of this type.
-     *
-     * @SuppressWarnings("unused")
-     *
-     * @param array            $fieldDeclaration
-     * @param AbstractPlatform $platform
-     *
-     * @return string
      */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         $iterator = static fn (string $value): string => "'" . $value . "'";
 
@@ -46,12 +36,7 @@ abstract class EnumType extends Type
     }
 
     /**
-     * @param mixed            $value
-     * @param AbstractPlatform $platform
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
@@ -69,9 +54,6 @@ abstract class EnumType extends Type
         return $value;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return static::$name;
@@ -81,10 +63,6 @@ abstract class EnumType extends Type
      * If this Doctrine Type maps to an already mapped database type, reverse schema engineering can't take them apart.
      * You need to mark one of those types as commented, which will have Doctrine use an SQL comment to type hint the
      * actual Doctrine Type.
-     *
-     * @param AbstractPlatform $platform
-     *
-     * @return bool
      */
     public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {

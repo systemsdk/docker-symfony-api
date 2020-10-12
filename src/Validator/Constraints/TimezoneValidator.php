@@ -21,8 +21,6 @@ class TimezoneValidator extends ConstraintValidator
 
     /**
      * Constructor
-     *
-     * @param LocalizationService $localization
      */
     public function __construct(LocalizationService $localization)
     {

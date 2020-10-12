@@ -8,19 +8,19 @@ namespace App\EventSubscriber;
 
 use App\Exception\Interfaces\ClientErrorInterface;
 use App\Security\UserTypeIdentification;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use App\Utils\JSON;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\ORMException;
+use JsonException;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Throwable;
-use JsonException;
 
 /**
  * Class ExceptionSubscriber
@@ -36,10 +36,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     /**
      * Constructor
-     *
-     * @param LoggerInterface        $logger
-     * @param UserTypeIdentification $userService
-     * @param string                 $environment
      */
     public function __construct(LoggerInterface $logger, UserTypeIdentification $userService, string $environment)
     {
@@ -49,22 +45,9 @@ class ExceptionSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Returns an array of event names this subscriber wants to listen to.
+     * {@inheritdoc}
      *
-     * The array keys are event names and the value can be:
-     *
-     *  * The method name to call (priority defaults to 0)
-     *  * An array composed of the method name to call and the priority
-     *  * An array of arrays composed of the method names to call and respective
-     *    priorities, or 0 if unset
-     *
-     * For instance:
-     *
-     *  * array('eventName' => 'methodName')
-     *  * array('eventName' => array('methodName', $priority))
-     *  * array('eventName' => array(array('methodName1', $priority), array('methodName2')))
-     *
-     * @return array<string, array<int, string|int>> The event names to listen to
+     * @return array<string, array<int, string|int>>
      */
     public static function getSubscribedEvents(): array
     {
@@ -78,8 +61,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     /**
      * Method to handle kernel exception.
-     *
-     * @param ExceptionEvent $event
      *
      * @throws JsonException
      */
@@ -100,10 +81,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     /**
      * Method to get "proper" status code for exception response.
-     *
-     * @param Throwable $exception
-     *
-     * @return int
      */
     private function getStatusCode(Throwable $exception): int
     {
@@ -113,10 +90,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
     /**
      * Method to get actual error message.
      *
-     * @param Throwable $exception
-     * @param Response  $response
-     *
-     * @return array
+     * @return array<string, string|int|array<string, string|int|array<int, string>>>
      */
     private function getErrorMessage(Throwable $exception, Response $response): array
     {
@@ -147,10 +121,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
     /**
      * Helper method to convert exception message for user. This method is used in 'production' environment so, that
      * application won't reveal any sensitive error data to users.
-     *
-     * @param Throwable $exception
-     *
-     * @return string
      */
     private function getExceptionMessage(Throwable $exception): string
     {
@@ -159,11 +129,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
             : $this->getMessageForProductionEnvironment($exception);
     }
 
-    /**
-     * @param Throwable $exception
-     *
-     * @return string
-     */
     private function getMessageForProductionEnvironment(Throwable $exception): string
     {
         $message = $exception->getMessage();
@@ -176,7 +141,8 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
         if (in_array(get_class($exception), $accessDeniedClasses, true)) {
             $message = 'Access denied.';
-        } elseif ($exception instanceof DBALException || $exception instanceof ORMException) { // Database errors
+        } elseif ($exception instanceof DBALException || $exception instanceof ORMException) {
+            // Database errors
             $message = 'Database error.';
         } elseif (!$this->isClientExceptions($exception)) {
             $message = 'Internal server error.';
@@ -187,11 +153,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     /**
      * Method to determine status code for specified exception.
-     *
-     * @param Throwable $exception
-     * @param bool      $isUser
-     *
-     * @return int
      */
     private function determineStatusCode(Throwable $exception, bool $isUser): int
     {
@@ -219,10 +180,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
     /**
      * Method to check if exception is ok to show to user (client) or not. Note
      * that if this returns true exception message is shown as-is to user.
-     *
-     * @param Throwable $exception
-     *
-     * @return bool
      */
     private function isClientExceptions(Throwable $exception): bool
     {

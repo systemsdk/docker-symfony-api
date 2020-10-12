@@ -6,8 +6,8 @@ declare(strict_types = 1);
 
 namespace App\Rest;
 
-use App\Rest\Interfaces\ControllerInterface;
 use App\Collection\Traits\Collection;
+use App\Rest\Interfaces\ControllerInterface;
 use Closure;
 use Countable;
 use InvalidArgumentException;
@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
  *
  * @property IteratorAggregate|IteratorAggregate<int, ControllerInterface> $items
  *
- * @method ControllerInterface                         get(string $className)
+ * @method ControllerInterface get(string $className)
  * @method IteratorAggregate<int, ControllerInterface> getAll(): IteratorAggregate
  */
 class ControllerCollection implements Countable
@@ -32,8 +32,7 @@ class ControllerCollection implements Countable
     /**
      * Constructor
      *
-     * @param IteratorAggregate|IteratorAggregate<int, ControllerInterface> $controllers
-     * @param LoggerInterface                                               $logger
+     * @param IteratorAggregate<int, ControllerInterface> $controllers
      */
     public function __construct(IteratorAggregate $controllers, LoggerInterface $logger)
     {

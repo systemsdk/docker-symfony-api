@@ -48,18 +48,18 @@ $application = new Application($kernel);
 $application->setAutoExit(false);
 
 // Add the doctrine:database:drop command to the application and run it
-$dropDatabaseDoctrineCommand = static function () use ($application) {
+$dropDatabaseDoctrineCommand = static function () use ($application): void {
     $input = new ArrayInput([
-        'command'       => 'doctrine:database:drop',
-        '--force'       => true,
-        '--if-exists'   => true,
+        'command' => 'doctrine:database:drop',
+        '--force' => true,
+        '--if-exists' => true,
     ]);
     $input->setInteractive(false);
     $application->run($input, new ConsoleOutput());
 };
 
 // Add the doctrine:database:create command to the application and run it
-$createDatabaseDoctrineCommand = static function () use ($application) {
+$createDatabaseDoctrineCommand = static function () use ($application): void {
     $input = new ArrayInput([
         'command' => 'doctrine:database:create',
     ]);
@@ -68,9 +68,9 @@ $createDatabaseDoctrineCommand = static function () use ($application) {
 };
 
 // Add the doctrine:schema:update command to the application and run it
-$updateSchemaDoctrineCommand = static function () use ($application) {
+$updateSchemaDoctrineCommand = static function () use ($application): void {
     $input = new ArrayInput([
-        'command'          => 'doctrine:migrations:migrate',
+        'command' => 'doctrine:migrations:migrate',
         '--no-interaction' => true,
     ]);
     $input->setInteractive(false);
@@ -78,17 +78,17 @@ $updateSchemaDoctrineCommand = static function () use ($application) {
 };
 
 // Add the doctrine:fixtures:load command to the application and run it
-$loadFixturesDoctrineCommand = static function () use ($application) {
+$loadFixturesDoctrineCommand = static function () use ($application): void {
     $input = new ArrayInput([
-        'command'           => 'doctrine:fixtures:load',
-        '--no-interaction'  => true,
+        'command' => 'doctrine:fixtures:load',
+        '--no-interaction' => true,
     ]);
     $input->setInteractive(false);
     $application->run($input, new ConsoleOutput());
 };
 
 // Ensure that we have "clean" JWT auth cache file
-$createJwtAuthCache = static function () {
+$createJwtAuthCache = static function (): void {
     // Specify used cache file
     $filename = sprintf(
         '%s%stest_jwt_auth_cache%s.json',
@@ -105,7 +105,7 @@ $createJwtAuthCache = static function () {
 };
 
 // Create database cache file
-$createDatabaseCreateCache = static function () use ($databaseCacheFile) {
+$createDatabaseCreateCache = static function () use ($databaseCacheFile): void {
     // Create database cache file
     file_put_contents($databaseCacheFile, '{"init": ' . (new DateTime())->format(DATE_RFC3339) . '}');
 };

@@ -6,8 +6,8 @@ declare(strict_types = 1);
 
 namespace App\Utils\Tests;
 
-use Generator;
 use App\Rest\UuidHelper;
+use Generator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -38,10 +38,6 @@ abstract class RestTraitTestCase extends WebTestCase
     /**
      * @dataProvider dataProviderTestThatCountRouteDoesNotAllowNotSupportedHttpMethods
      *
-     * @param string|null $username
-     * @param string|null $password
-     * @param string|null $method
-     *
      * @throws Throwable
      *
      * @testdox Test that `/count` route doesn't allow `$method` method with `$username + $password`.
@@ -59,10 +55,6 @@ abstract class RestTraitTestCase extends WebTestCase
     /**
      * @dataProvider dataProviderTestThatCountRouteWorksWithAllowedHttpMethods
      *
-     * @param string|null $username
-     * @param string|null $password
-     * @param string|null $method
-     *
      * @throws Throwable
      *
      * @testdox Test that `/count` route works as expected when using `$method` method with `$username + $password`.
@@ -79,10 +71,6 @@ abstract class RestTraitTestCase extends WebTestCase
 
     /**
      * @dataProvider dataProviderTestThatCountRouteDoesNotAllowInvalidUser
-     *
-     * @param string|null $username
-     * @param string|null $password
-     * @param string|null $method
      *
      * @throws Throwable
      *
@@ -105,10 +93,6 @@ abstract class RestTraitTestCase extends WebTestCase
     /**
      * @dataProvider dataProviderTestThatRootRouteDoesNotAllowNotSupportedHttpMethods
      *
-     * @param string|null $username
-     * @param string|null $password
-     * @param string|null $method
-     *
      * @throws Throwable
      *
      * @testdox Test that `/` route doesn't allow `$method` method with `$username + $password`.
@@ -126,10 +110,6 @@ abstract class RestTraitTestCase extends WebTestCase
     /**
      * @dataProvider dataProviderTestThatRootRouteWorksWithAllowedHttpMethods
      *
-     * @param string|null $username
-     * @param string|null $password
-     * @param string|null $method
-     *
      * @throws Throwable
      *
      * @testdox Test that `/` route works as expected when using `$method` method with `$username + $password`.
@@ -146,10 +126,6 @@ abstract class RestTraitTestCase extends WebTestCase
 
     /**
      * @dataProvider dataProviderTestThatRootRouteDoesNotAllowInvalidUser
-     *
-     * @param string|null $username
-     * @param string|null $password
-     * @param string|null $method
      *
      * @throws Throwable
      *
@@ -172,11 +148,6 @@ abstract class RestTraitTestCase extends WebTestCase
     /**
      * @dataProvider dataProviderTestThatRootRouteWithIdDoesNotAllowNotSupportedHttpMethods
      *
-     * @param string      $uuid
-     * @param string|null $username
-     * @param string|null $password
-     * @param string|null $method
-     *
      * @throws Throwable
      *
      * @testdox Test that `/$uuid` route doesn't allow `$method` method with `$username + $password`.
@@ -195,11 +166,6 @@ abstract class RestTraitTestCase extends WebTestCase
     /**
      * @dataProvider dataProviderTestThatRootRouteWithIdWorksWithAllowedHttpMethods
      *
-     * @param string      $uuid
-     * @param string|null $username
-     * @param string|null $password
-     * @param string|null $method
-     *
      * @throws Throwable
      *
      * @testdox Test that `/$uuid` route works as expected when using `$method` method with `$username + $password`.
@@ -217,11 +183,6 @@ abstract class RestTraitTestCase extends WebTestCase
 
     /**
      * @dataProvider dataProviderTestThatRootRouteWithIdDoesNotAllowInvalidUser
-     *
-     * @param string      $uuid
-     * @param string|null $username
-     * @param string|null $password
-     * @param string|null $method
      *
      * @throws Throwable
      *
@@ -245,10 +206,6 @@ abstract class RestTraitTestCase extends WebTestCase
     /**
      * @dataProvider dataProviderTestThatIdsRouteDoesNotAllowNotSupportedHttpMethods
      *
-     * @param string|null $username
-     * @param string|null $password
-     * @param string|null $method
-     *
      * @throws Throwable
      *
      * @testdox Test that `/ids` route doesn't allow `$method` method with `$username + $password`.
@@ -266,10 +223,6 @@ abstract class RestTraitTestCase extends WebTestCase
     /**
      * @dataProvider dataProviderTestThatIdsRouteWorksWithAllowedHttpMethods
      *
-     * @param string|null $username
-     * @param string|null $password
-     * @param string|null $method
-     *
      * @throws Throwable
      *
      * @testdox Test that `/ids` route works as expected when using `$method` method with `$username + $password`.
@@ -286,10 +239,6 @@ abstract class RestTraitTestCase extends WebTestCase
 
     /**
      * @dataProvider dataProviderTestThatIdsRouteDoesNotAllowInvalidUser
-     *
-     * @param string|null $username
-     * @param string|null $password
-     * @param string|null $method
      *
      * @throws Throwable
      *
@@ -479,7 +428,7 @@ abstract class RestTraitTestCase extends WebTestCase
 
     /**
      * @param Generator<array<int, string|null>> $users
-     * @param array<int, array<int, string>>     $methods
+     * @param array<int, array<int, string>> $methods
      *
      * @return Generator<array<int, string|null>>
      */
@@ -499,13 +448,6 @@ abstract class RestTraitTestCase extends WebTestCase
     }
 
     /**
-     * @param string      $route
-     * @param string|null $username
-     * @param string|null $password
-     * @param string|null $method
-     *
-     * @return Response
-     *
      * @throws Throwable
      */
     private function getClientResponse(

@@ -21,8 +21,6 @@ final class HealthService
 
     /**
      * Constructor
-     *
-     * @param HealthRepository $repository
      */
     public function __construct(HealthRepository $repository)
     {
@@ -36,8 +34,6 @@ final class HealthService
      *  3) Read data from database
      *
      * These steps should make sure that at least application database is working as expected.
-     *
-     * @return Health|null
      *
      * @throws Throwable
      */

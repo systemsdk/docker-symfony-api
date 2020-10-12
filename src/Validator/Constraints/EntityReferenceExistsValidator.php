@@ -7,9 +7,9 @@ declare(strict_types = 1);
 namespace App\Validator\Constraints;
 
 use App\Entity\Interfaces\EntityInterface;
-use Psr\Log\LoggerInterface;
 use Closure;
 use Doctrine\ORM\EntityNotFoundException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -26,8 +26,6 @@ class EntityReferenceExistsValidator extends ConstraintValidator
 
     /**
      * Constructor.
-     *
-     * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
     {
@@ -35,10 +33,7 @@ class EntityReferenceExistsValidator extends ConstraintValidator
     }
 
     /**
-     * Checks if the passed value is valid.
-     *
-     * @param EntityInterface|array|mixed $value The value that should be validated
-     * @param Constraint                  $constraint The constraint for the validation
+     * {@inheritdoc}
      */
     public function validate($value, Constraint $constraint): void
     {
@@ -46,7 +41,6 @@ class EntityReferenceExistsValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, EntityReferenceExists::class);
         }
 
-        /** @var array<int, EntityInterface> $values */
         $values = $this->normalize($constraint->entityClass, $value);
         $this->check($values);
     }
@@ -54,10 +48,9 @@ class EntityReferenceExistsValidator extends ConstraintValidator
     /**
      * Checks if the passed value is valid.
      *
-     * @param string                      $target Target class to check
-     * @param EntityInterface|array|mixed $input  The value that should be validated
+     * @param EntityInterface|array<int, EntityInterface>|mixed $input
      *
-     * @return array
+     * @return array<int, EntityInterface>
      */
     private function normalize(string $target, $input): array
     {
@@ -77,7 +70,7 @@ class EntityReferenceExistsValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $entities
+     * @param array<int, EntityInterface> $entities
      */
     private function check(array $entities): void
     {
@@ -114,8 +107,6 @@ class EntityReferenceExistsValidator extends ConstraintValidator
 
     /**
      * Method to return used filter closure.
-     *
-     * @return Closure
      */
     private function getFilterClosure(): Closure
     {

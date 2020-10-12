@@ -21,18 +21,12 @@ use Throwable;
  */
 trait FindMethod
 {
-    // Traits
-    use AbstractGenericMethods;
-
     /**
      * Generic 'findMethod' method for REST resources.
      *
-     * @param Request       $request
-     * @param array|null $allowedHttpMethods
+     * @param string[]|null $allowedHttpMethods
      *
      * @throws Throwable
-     *
-     * @return Response
      */
     public function findMethod(Request $request, ?array $allowedHttpMethods = null): Response
     {

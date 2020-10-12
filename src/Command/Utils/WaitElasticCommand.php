@@ -1,17 +1,17 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 /**
  * /src/Command/Utils/WaitElasticCommand.php
  */
 
 namespace App\Command\Utils;
 
+use App\Service\Interfaces\ElasticsearchServiceInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Service\Interfaces\ElasticsearchServiceInterface;
-use Exception;
-use Symfony\Component\Console\Exception\LogicException;
+use Throwable;
 
 /**
  * Class WaitElasticCommand
@@ -22,23 +22,19 @@ class WaitElasticCommand extends Command
 {
     /**
      * Wait sleep time for elastic connection in seconds
-     *
-     * @var int
      */
     private const WAIT_SLEEP_TIME = 2;
     private ElasticsearchServiceInterface $elasticsearchService;
 
-
     /**
      * Constructor
-     *
-     * @param ElasticsearchServiceInterface $elasticsearchService
      *
      * @throws LogicException
      */
     public function __construct(ElasticsearchServiceInterface $elasticsearchService)
     {
         parent::__construct('elastic:wait');
+
         $this->elasticsearchService = $elasticsearchService;
         $this->setDescription('Waits for elastic availability.')
             ->setHelp('This command allows you to wait for elastic availability.');
@@ -47,10 +43,7 @@ class WaitElasticCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param InputInterface   $input
-     * @param OutputInterface $output
-     *
-     * @return int
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -60,7 +53,7 @@ class WaitElasticCommand extends Command
                 $output->writeln('<info>Connection to elastic ' . $data['version']['number'] . ' is ok!</info>');
 
                 return 0;
-            } catch (Exception $e) {
+            } catch (Throwable $exception) {
                 $output->writeln('<comment>Trying to connect to elastic seconds:' . $i . '</comment>');
                 sleep(self::WAIT_SLEEP_TIME);
                 $this->elasticsearchService->instantiate();

@@ -6,14 +6,14 @@ declare(strict_types = 1);
 
 namespace App\Command\ApiKey;
 
-use Symfony\Component\Console\Command\Command;
 use App\Command\Traits\StyleSymfony;
-use Symfony\Component\Console\Exception\LogicException;
-use App\Resource\ApiKeyResource;
 use App\Entity\ApiKey as ApiKeyEntity;
-use Throwable;
+use App\Resource\ApiKeyResource;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 /**
  * Class RemoveApiKeyCommand
@@ -28,12 +28,8 @@ class RemoveApiKeyCommand extends Command
     private ApiKeyResource $apiKeyResource;
     private ApiKeyHelper $apiKeyHelper;
 
-
     /**
      * Constructor
-     *
-     * @param ApiKeyResource $apiKeyResource
-     * @param ApiKeyHelper   $apiKeyHelper
      *
      * @throws LogicException
      */
@@ -49,14 +45,9 @@ class RemoveApiKeyCommand extends Command
 
     /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an exit code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

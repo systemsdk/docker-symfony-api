@@ -1,77 +1,65 @@
 <?php
 declare(strict_types = 1);
 /**
- * /src/EventSubscriber/RequestSubscriber.php
+ * /src/EventSubscriber/RequestLogSubscriber.php
  */
 
 namespace App\EventSubscriber;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use App\Service\RequestLoggerService;
-use App\Entity\User as ApplicationUser;
+use App\Entity\User as UserEntity;
 use App\Repository\UserRepository;
+use App\Security\ApiKeyUser;
 use App\Security\SecurityUser;
 use App\Security\UserTypeIdentification;
+use App\Service\RequestLoggerService;
 use Psr\Log\LoggerInterface;
-use App\Security\ApiKeyUser;
-use Exception;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\TerminateEvent;
+use Throwable;
 
 /**
- * Class RequestSubscriber
+ * Class RequestLogSubscriber
  *
  * @package App\EventSubscriber
  */
-class RequestSubscriber implements EventSubscriberInterface
+class RequestLogSubscriber implements EventSubscriberInterface
 {
     private RequestLoggerService $requestLogger;
     private UserRepository $userRepository;
     private LoggerInterface $logger;
     private UserTypeIdentification $userService;
+    private array $ignoredRoutes;
 
     /**
      * Constructor
      *
-     * @param RequestLoggerService   $requestLoggerService
-     * @param UserRepository         $userRepository
-     * @param LoggerInterface        $logger
-     * @param UserTypeIdentification $userService
+     * @param array<int, string> $ignoredRoutes
      */
     public function __construct(
         RequestLoggerService $requestLoggerService,
         UserRepository $userRepository,
         LoggerInterface $logger,
-        UserTypeIdentification $userService
+        UserTypeIdentification $userService,
+        array $ignoredRoutes
     ) {
         $this->requestLogger = $requestLoggerService;
         $this->userRepository = $userRepository;
         $this->logger = $logger;
         $this->userService = $userService;
+        $this->ignoredRoutes = $ignoredRoutes;
     }
 
     /**
-     * Returns an array of event names this subscriber wants to listen to.
+     * {@inheritdoc}
      *
-     * The array keys are event names and the value can be:
-     *
-     *  * The method name to call (priority defaults to 0)
-     *  * An array composed of the method name to call and the priority
-     *  * An array of arrays composed of the method names to call and respective
-     *    priorities, or 0 if unset
-     *
-     * For instance:
-     *
-     *  * array('eventName' => 'methodName')
-     *  * array('eventName' => array('methodName', $priority))
-     *  * array('eventName' => array(array('methodName1', $priority), array('methodName2')))
-     *
-     * @return array<string, array<int, string|int>> The event names to listen to
+     * @return array<string, array<int, string|int>>
      */
     public static function getSubscribedEvents(): array
     {
         return [
-            ResponseEvent::class => [
-                'onKernelResponse',
+            TerminateEvent::class => [
+                'onTerminateEvent',
                 15,
             ],
         ];
@@ -80,21 +68,24 @@ class RequestSubscriber implements EventSubscriberInterface
     /**
      * Subscriber method to log every request / response.
      *
-     * @param ResponseEvent $event
-     *
-     * @throws Exception
+     * @throws Throwable
      */
-    public function onKernelResponse(ResponseEvent $event): void
+    public function onTerminateEvent(TerminateEvent $event): void
     {
         $request = $event->getRequest();
         $path = $request->getPathInfo();
 
-        static $ignorePaths = ['', '/', '/api', '/api/', '/api/health', '/api/version'];
-
-        // We don't want to log ignored paths, /_profiler* -path and OPTIONS requests
-        if (in_array($path, $ignorePaths, true)
-            || (strpos($path, '/_profiler') !== false)
-            || ($request->getRealMethod() === 'OPTIONS')
+        // We don't want to log OPTIONS requests, /_profiler* -path, ignored routes and wildcard ignored routes
+        if ($request->getRealMethod() === Request::METHOD_OPTIONS
+            || strpos($path, '/_profiler') !== false
+            || in_array($path, $this->ignoredRoutes, true)
+            || count(
+                array_filter(
+                    $this->ignoredRoutes,
+                    static fn ($route): bool => strpos($route, '/*') !== false
+                        && strpos($path, substr($route, 0, -2)) !== false
+                )
+            ) !== 0
         ) {
             return;
         }
@@ -105,11 +96,9 @@ class RequestSubscriber implements EventSubscriberInterface
     /**
      * Method to process current request event.
      *
-     * @param ResponseEvent $event
-     *
-     * @throws Exception
+     * @throws Throwable
      */
-    private function process(ResponseEvent $event): void
+    private function process(TerminateEvent $event): void
     {
         $request = $event->getRequest();
         // Set needed data to logger and handle actual log
@@ -120,7 +109,7 @@ class RequestSubscriber implements EventSubscriberInterface
         if ($identify instanceof SecurityUser) {
             $userEntity = $this->userRepository->getReference($identify->getUsername());
 
-            if ($userEntity instanceof ApplicationUser) {
+            if ($userEntity instanceof UserEntity) {
                 $this->requestLogger->setUser($userEntity);
             } else {
                 $this->logger->error(

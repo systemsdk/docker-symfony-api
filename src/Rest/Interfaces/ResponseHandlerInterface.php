@@ -27,41 +27,28 @@ interface ResponseHandlerInterface
 
     /**
      * Constructor
-     *
-     * @param SerializerInterface $serializer
      */
     public function __construct(SerializerInterface $serializer);
 
     /**
      * Getter for serializer
-     *
-     * @return SerializerInterface
      */
     public function getSerializer(): SerializerInterface;
 
     /**
      * Helper method to get serialization context for request.
      *
-     * @param Request                    $request
-     * @param RestResourceInterface|null $restResource
-     *
-     * @return array
+     * @return array<int|string, array<int, array<int, string>|string>|bool|string>
      */
     public function getSerializeContext(Request $request, ?RestResourceInterface $restResource = null): array;
 
     /**
      * Helper method to create response for request.
      *
-     * @param Request                    $request
-     * @param mixed                      $data
-     * @param RestResourceInterface|null $restResource
-     * @param int|null                   $httpStatus
-     * @param string|null                $format
-     * @param array|null                 $context
+     * @param mixed $data
+     * @param array<int|string, bool|array<int, string>>|null $context
      *
      * @throws HttpException
-     *
-     * @return Response
      */
     public function createResponse(
         Request $request,
@@ -74,8 +61,6 @@ interface ResponseHandlerInterface
 
     /**
      * Method to handle form errors.
-     *
-     * @param FormInterface $form
      *
      * @throws HttpException
      */

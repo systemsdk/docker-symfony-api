@@ -31,8 +31,6 @@ class LanguageController
 
     /**
      * Constructor
-     *
-     * @param LocalizationService $localization
      */
     public function __construct(LocalizationService $localization)
     {
@@ -46,14 +44,12 @@ class LanguageController
      * @SWG\Response(
      *      response=200,
      *      description="List of language strings.",
-     *      @SWG\Schema(
+     * @SWG\Schema(
      *          type="array",
      *          example={"en","ru"},
-     *          @SWG\Items(type="string"),
+     * @SWG\Items(type="string"),
      *      ),
      *  )
-     *
-     * @return JsonResponse
      */
     public function __invoke(): JsonResponse
     {

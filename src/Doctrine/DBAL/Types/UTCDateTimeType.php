@@ -23,17 +23,10 @@ class UTCDateTimeType extends DateTimeType
 {
     private static ?DateTimeZone $utc;
 
-
     /**
-     * Converts a value from its PHP representation to its database representation
-     * of this type.
-     *
-     * @param mixed            $value    The value to convert.
-     * @param AbstractPlatform $platform The currently used database platform.
+     * {@inheritdoc}
      *
      * @throws ConversionException
-     *
-     * @return string The database representation of the value.
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
@@ -45,15 +38,9 @@ class UTCDateTimeType extends DateTimeType
     }
 
     /**
-     * Converts a value from its database representation to its PHP representation
-     * of this type.
-     *
-     * @param mixed            $value    The value to convert.
-     * @param AbstractPlatform $platform The currently used database platform.
+     * {@inheritdoc}
      *
      * @throws ConversionException
-     *
-     * @return mixed The PHP representation of the value.
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
@@ -74,8 +61,6 @@ class UTCDateTimeType extends DateTimeType
 
     /**
      * {@inheritdoc}
-     *
-     * @param AbstractPlatform $platform
      */
     public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {
@@ -86,8 +71,6 @@ class UTCDateTimeType extends DateTimeType
 
     /**
      * Method to initialize DateTimeZone as in UTC.
-     *
-     * @return DateTimeZone
      */
     private function getUtcDateTimeZone(): DateTimeZone
     {
@@ -97,13 +80,7 @@ class UTCDateTimeType extends DateTimeType
     /**
      * Method to check if conversion was successfully or not.
      *
-     * @param string           $value
-     * @param AbstractPlatform $platform
-     * @param DateTime|null    $converted
-     *
      * @throws ConversionException
-     *
-     * @return DateTime
      */
     private function checkConvertedValue(string $value, AbstractPlatform $platform, ?DateTime $converted): DateTime
     {

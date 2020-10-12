@@ -52,6 +52,10 @@ services:
         arguments:
             $sensitiveProperties: '%env(json:REQUEST_LOG_SENSITIVE_PROPERTIES)%'
 
+    App\EventSubscriber\RequestLogSubscriber:
+        arguments:
+            $ignoredRoutes: '%env(json:REQUEST_LOG_IGNORED_ROUTES)%'
+
     App\Resource\ResourceCollection:
         arguments: [ !tagged app.rest.resource ]
 

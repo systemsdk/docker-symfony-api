@@ -8,7 +8,6 @@ namespace App\Security\Interfaces;
 
 use App\Entity\ApiKey;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Security\RolesService;
 
 /**
  * Interface ApiKeyUserInterface
@@ -20,15 +19,12 @@ interface ApiKeyUserInterface extends UserInterface
     /**
      * Constructor
      *
-     * @param ApiKey       $apiKey
-     * @param RolesService $rolesService
+     * @param array<int, string> $roles
      */
-    public function __construct(ApiKey $apiKey, RolesService $rolesService);
+    public function __construct(ApiKey $apiKey, array $roles);
 
     /**
      * Getter method for ApiKey entity
-     *
-     * @return ApiKey
      */
     public function getApiKey(): ApiKey;
 }

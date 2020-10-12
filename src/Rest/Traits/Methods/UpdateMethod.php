@@ -21,20 +21,12 @@ use Throwable;
  */
 trait UpdateMethod
 {
-    // Traits
-    use AbstractGenericMethods;
-
     /**
      * Generic 'updateMethod' method for REST resources.
      *
-     * @param Request          $request
-     * @param RestDtoInterface $restDto
-     * @param string           $id
-     * @param array|null       $allowedHttpMethods
+     * @param string[]|null $allowedHttpMethods
      *
      * @throws Throwable
-     *
-     * @return Response
      */
     public function updateMethod(
         Request $request,

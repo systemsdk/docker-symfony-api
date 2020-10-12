@@ -24,10 +24,6 @@ trait StopwatchAware
      * @see https://symfony.com/doc/current/service_container/autowiring.html#autowiring-other-methods-e-g-setters
      *
      * @required
-     *
-     * @param Stopwatch $stopwatch
-     *
-     * @return self
      */
     public function setStopwatch(Stopwatch $stopwatch): self
     {

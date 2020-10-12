@@ -20,8 +20,7 @@ use Symfony\Component\Console\Input\InputOption;
 class HelperConfigure
 {
     /**
-     * @param Command $command
-     * @param array   $parameters
+     * @param array<int, array<string, int|string>> $parameters
      *
      * @throws InvalidArgumentException
      */
@@ -33,8 +32,6 @@ class HelperConfigure
 
     /**
      * @throws InvalidArgumentException
-     *
-     * @return Closure
      */
     private static function getParameterIterator(): Closure
     {

@@ -6,16 +6,16 @@ declare(strict_types = 1);
 
 namespace App\Command\ApiKey;
 
-use Symfony\Component\Console\Command\Command;
+use App\Entity\ApiKey;
+use App\Entity\UserGroup;
 use App\Resource\ApiKeyResource;
 use App\Security\RolesService;
+use Closure;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use App\Entity\UserGroup;
-use App\Entity\ApiKey;
-use Closure;
-use Symfony\Component\Console\Exception\LogicException;
 use Throwable;
 
 /**
@@ -27,17 +27,9 @@ class ListApiKeysCommand extends Command
 {
     private ApiKeyResource $apiKeyResource;
     private RolesService $rolesService;
-    /**
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    private SymfonyStyle $io;
-
 
     /**
      * Constructor
-     *
-     * @param ApiKeyResource $apiKeyResource
-     * @param RolesService   $rolesService
      *
      * @throws LogicException
      */
@@ -53,19 +45,14 @@ class ListApiKeysCommand extends Command
 
     /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an exit code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->io = new SymfonyStyle($input, $output);
-        $this->io->write("\033\143");
+        $io = new SymfonyStyle($input, $output);
+        $io->write("\033\143");
         $headers = [
             'Id',
             'Token',
@@ -73,8 +60,8 @@ class ListApiKeysCommand extends Command
             'Groups',
             'Roles (inherited)',
         ];
-        $this->io->title('Current API keys');
-        $this->io->table($headers, $this->getRows());
+        $io->title('Current API keys');
+        $io->table($headers, $this->getRows());
 
         return 0;
     }
@@ -84,7 +71,7 @@ class ListApiKeysCommand extends Command
      *
      * @throws Throwable
      *
-     * @return array
+     * @return mixed[]
      */
     private function getRows(): array
     {
@@ -93,8 +80,6 @@ class ListApiKeysCommand extends Command
 
     /**
      * Getter method for API key formatter closure. This closure will format single ApiKey entity for console table.
-     *
-     * @return Closure
      */
     private function getFormatterApiKey(): Closure
     {

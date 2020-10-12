@@ -19,8 +19,6 @@ trait GetApplication
 {
     /**
      * @throws RuntimeException
-     *
-     * @return Application
      */
     public function getApplication(): Application
     {

@@ -6,9 +6,9 @@ declare(strict_types = 1);
 
 namespace App\Form\DataTransformer;
 
-use Symfony\Component\Form\DataTransformerInterface;
-use App\Resource\UserGroupResource;
 use App\Entity\UserGroup;
+use App\Resource\UserGroupResource;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
@@ -22,8 +22,6 @@ class UserGroupTransformer implements DataTransformerInterface
 
     /**
      * Constructor
-     *
-     * @param UserGroupResource $resource
      */
     public function __construct(UserGroupResource $resource)
     {
@@ -33,22 +31,18 @@ class UserGroupTransformer implements DataTransformerInterface
     /**
      * Transforms an object (Role) to a string (Role id).
      *
-     * @param array|UserGroup[]|mixed|null $userGroups
+     * @param array<int, string|UserGroup>|mixed $userGroups
      *
-     * @return array
+     * @return array<int, string>
+     *
+     * @psalm-suppress MissingClosureParamType
      */
-    public function transform($userGroups): ?array
+    public function transform($userGroups): array
     {
         $output = [];
 
         if (is_array($userGroups)) {
-            $iterator =
-                /**
-                 * @param string|UserGroup $userGroup
-                 *
-                 * @return string
-                 */
-                static fn ($userGroup): string => $userGroup instanceof UserGroup ? $userGroup->getId() : $userGroup;
+            $iterator = static fn ($group): string => $group instanceof UserGroup ? $group->getId() : (string)$group;
 
             $output = array_values(array_map('\strval', array_map($iterator, $userGroups)));
         }
@@ -59,11 +53,11 @@ class UserGroupTransformer implements DataTransformerInterface
     /**
      * Transforms a string (Role id) to an object (Role).
      *
-     * @param array|mixed $userGroups
+     * @param array<int, string>|mixed $userGroups
      *
-     * @throws TransformationFailedException if object (issue) is not found.
+     * @throws TransformationFailedException if object (issue) is not found
      *
-     * @return array|UserGroup[]|null
+     * @return array<int, UserGroup>|null
      */
     public function reverseTransform($userGroups): ?array
     {

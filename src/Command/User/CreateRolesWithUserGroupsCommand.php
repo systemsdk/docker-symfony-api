@@ -6,12 +6,12 @@ declare(strict_types = 1);
 
 namespace App\Command\User;
 
-use Symfony\Component\Console\Command\Command;
 use App\Command\Traits\ApiKeyUserManagementHelper;
 use App\Command\Traits\StyleSymfony;
 use App\Repository\RoleRepository;
 use App\Resource\UserGroupResource;
 use App\Security\RolesService;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -33,13 +33,8 @@ class CreateRolesWithUserGroupsCommand extends Command
     private RolesService $rolesService;
     private RoleRepository $roleRepository;
 
-
     /**
      * Constructor
-     *
-     * @param UserGroupResource $userGroupResource
-     * @param RolesService      $rolesService
-     * @param RoleRepository    $roleRepository
      *
      * @throws LogicException
      */
@@ -59,8 +54,6 @@ class CreateRolesWithUserGroupsCommand extends Command
 
     /**
      * Getter for RolesService
-     *
-     * @return RolesService
      */
     public function getRolesService(): RolesService
     {
@@ -71,12 +64,9 @@ class CreateRolesWithUserGroupsCommand extends Command
     /**
      * Executes the current command.
      *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -99,13 +89,7 @@ class CreateRolesWithUserGroupsCommand extends Command
      * Also note that if groups are not found method will reset application 'role' table content, so that we can be
      * sure that we can create all groups correctly.
      *
-     * @param OutputInterface $output
-     * @param bool $interactive
-     * @param SymfonyStyle $io
-     *
      * @throws Throwable
-     *
-     * @return bool
      */
     private function checkUserGroups(OutputInterface $output, bool $interactive, SymfonyStyle $io): bool
     {

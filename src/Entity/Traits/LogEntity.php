@@ -24,8 +24,6 @@ use Throwable;
 trait LogEntity
 {
     /**
-     * @var DateTimeImmutable
-     *
      * @Groups({
      *      "LogLogin",
      *      "LogLogin.time",
@@ -42,8 +40,6 @@ trait LogEntity
     protected DateTimeImmutable $time;
 
     /**
-     * @var DateTimeImmutable
-     *
      * @Groups({
      *      "LogLogin",
      *      "LogLogin.date",
@@ -60,8 +56,6 @@ trait LogEntity
     protected DateTimeImmutable $date;
 
     /**
-     * @var string
-     *
      * @Groups({
      *      "LogLogin",
      *      "LogLogin.agent",
@@ -78,8 +72,6 @@ trait LogEntity
     protected string $agent = '';
 
     /**
-     * @var string
-     *
      * @Groups({
      *      "LogLogin",
      *      "LogLogin.httpHost",
@@ -97,8 +89,6 @@ trait LogEntity
     protected string $httpHost = '';
 
     /**
-     * @var string
-     *
      * @Groups({
      *      "LogLogin",
      *      "LogLogin.clientIp",
@@ -115,55 +105,42 @@ trait LogEntity
      */
     private string $clientIp = '';
 
-
-    /**
-     * @return DateTimeImmutable
-     */
     public function getTime(): DateTimeImmutable
     {
         return $this->time;
     }
 
-    /**
-     * @return DateTimeImmutable
-     */
     public function getDate(): DateTimeImmutable
     {
         return $this->date;
     }
 
-    /**
-     * @return string
-     */
     public function getAgent(): string
     {
         return $this->agent;
     }
 
-    /**
-     * @return string
-     */
     public function getHttpHost(): string
     {
         return $this->httpHost;
     }
 
-    /**
-     * @return string
-     */
     public function getClientIp(): string
     {
         return $this->clientIp;
     }
 
-    /**
-     * Returns createdAt.
-     *
-     * @return DateTimeImmutable|null
-     */
     public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->getDate();
+    }
+
+    private function processRequestData(Request $request): void
+    {
+        $userAgent = $request->headers->get('User-Agent') ?? '';
+        $this->clientIp = (string)$request->getClientIp();
+        $this->httpHost = $request->getHttpHost();
+        $this->agent = $userAgent;
     }
 
     /**
@@ -171,22 +148,10 @@ trait LogEntity
      *
      * @throws Throwable
      */
-    protected function processTimeAndDate(): void
+    private function processTimeAndDate(): void
     {
         $now = new DateTimeImmutable('now', new DateTimeZone('UTC'));
         $this->time = $now;
         $this->date = $now;
-    }
-
-    /**
-     * @param Request $request
-     */
-    protected function processRequestData(Request $request): void
-    {
-        /** @var string $userAgent */
-        $userAgent = $request->headers->get('User-Agent') ?? '';
-        $this->clientIp = (string)$request->getClientIp();
-        $this->httpHost = $request->getHttpHost();
-        $this->agent = $userAgent;
     }
 }

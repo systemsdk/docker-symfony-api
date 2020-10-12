@@ -21,7 +21,7 @@ use Throwable;
  * @ORM\Table(
  *      name="role",
  *      uniqueConstraints={
- *          @ORM\UniqueConstraint(name="uq_role", columns={"role"}),
+ * @ORM\UniqueConstraint(name="uq_role", columns={"role"}),
  *      },
  *  )
  * @ORM\Entity()
@@ -35,12 +35,15 @@ class Role implements EntityInterface
     use Timestampable;
 
     /**
-     * @var string
-     *
      * @Groups({
      *      "Role",
      *      "Role.role",
+     *
      *      "UserGroup.role",
+     *
+     *      "set.UserProfile",
+     *      "set.UserProfileGroups",
+     *      "set.UserGroupBasic",
      *  })
      *
      * @ORM\Column(
@@ -54,8 +57,6 @@ class Role implements EntityInterface
     private string $id;
 
     /**
-     * @var string
-     *
      * @Groups({
      *      "Role",
      *      "Role.description",
@@ -85,7 +86,6 @@ class Role implements EntityInterface
      */
     private Collection $userGroups;
 
-
     /**
      * Constructor
      *
@@ -99,27 +99,16 @@ class Role implements EntityInterface
         $this->userGroups = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     *
-     * @return Role
-     */
     public function setDescription(string $description): self
     {
         $this->description = $description;

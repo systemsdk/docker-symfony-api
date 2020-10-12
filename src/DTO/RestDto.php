@@ -31,28 +31,19 @@ abstract class RestDto implements RestDtoInterface
      *
      * And in that method make all necessary that you need to set that specified value.
      *
-     * @var array
+     * @var mixed[]
      */
     protected static array $mappings = [];
 
-    /**
-     * @var string|null
-     */
     protected ?string $id = null;
 
     /**
      * An array of 'visited' setter properties of current dto.
      *
-     * @var array
+     * @var array<int, string>
      */
     private array $visited = [];
 
-
-    /**
-     * @param string $id
-     *
-     * @return RestDtoInterface
-     */
     public function setId(string $id): RestDtoInterface
     {
         $this->setVisited('id');
@@ -61,31 +52,16 @@ abstract class RestDto implements RestDtoInterface
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * Getter method for visited setters. This is needed for dto patching.
-     *
-     * @return array
-     */
     public function getVisited(): array
     {
         return array_filter($this->visited, static fn (string $property): bool => $property !== 'id');
     }
 
-    /**
-     * Setter for visited data. This is needed for dto patching.
-     *
-     * @param string $property
-     *
-     * @return RestDtoInterface
-     */
     public function setVisited(string $property): RestDtoInterface
     {
         $this->visited[] = $property;
@@ -95,10 +71,6 @@ abstract class RestDto implements RestDtoInterface
 
     /**
      * Method to update specified entity with DTO data.
-     *
-     * @param EntityInterface $entity
-     *
-     * @return EntityInterface
      */
     public function update(EntityInterface $entity): EntityInterface
     {
@@ -121,11 +93,7 @@ abstract class RestDto implements RestDtoInterface
     /**
      * Method to patch current dto with another one.
      *
-     * @param RestDtoInterface $dto
-     *
      * @throws LogicException|BadMethodCallException
-     *
-     * @return RestDtoInterface
      */
     public function patch(RestDtoInterface $dto): RestDtoInterface
     {
@@ -144,12 +112,7 @@ abstract class RestDto implements RestDtoInterface
     /**
      * Method to determine used getter method for DTO property.
      *
-     * @param RestDtoInterface $dto
-     * @param string           $property
-     *
      * @throws LogicException
-     *
-     * @return string
      */
     private function determineGetterMethod(RestDtoInterface $dto, string $property): string
     {
@@ -170,12 +133,7 @@ abstract class RestDto implements RestDtoInterface
     }
 
     /**
-     * @param RestDtoInterface $dto
-     * @param string           $property
-     *
      * @throws LogicException
-     *
-     * @return string|null
      */
     private function getGetterMethod(RestDtoInterface $dto, string $property): ?string
     {
@@ -190,12 +148,9 @@ abstract class RestDto implements RestDtoInterface
     }
 
     /**
-     * @param string $property
-     * @param array  $getterMethods
+     * @param array<int, string> $getterMethods
      *
      * @throws LogicException
-     *
-     * @return string|null
      */
     private function validateGetterMethod(string $property, array $getterMethods): ?string
     {

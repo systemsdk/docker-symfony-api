@@ -6,16 +6,16 @@ declare(strict_types = 1);
 
 namespace App\Command\User;
 
-use Symfony\Component\Console\Command\Command;
 use App\Command\Traits\StyleSymfony;
+use App\DTO\UserGroup\UserGroupPatch as UserGroupDto;
+use App\Entity\UserGroup as UserGroupEntity;
+use App\Form\Type\Console\UserGroupType;
 use App\Resource\UserGroupResource;
+use Matthias\SymfonyConsoleForm\Console\Helper\FormHelper;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Entity\UserGroup as UserGroupEntity;
-use App\DTO\UserGroup\UserGroupPatch as UserGroupDto;
-use Matthias\SymfonyConsoleForm\Console\Helper\FormHelper;
-use App\Form\Type\Console\UserGroupType;
 use Throwable;
 
 /**
@@ -31,12 +31,8 @@ class EditUserGroupCommand extends Command
     private UserGroupResource $userGroupResource;
     private UserHelper $userHelper;
 
-
     /**
      * Constructor
-     *
-     * @param UserGroupResource $userGroupResource
-     * @param UserHelper        $userHelper
      *
      * @throws LogicException
      */
@@ -52,14 +48,9 @@ class EditUserGroupCommand extends Command
 
     /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -82,13 +73,7 @@ class EditUserGroupCommand extends Command
     /**
      * Method to update specified user group entity via specified form.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     * @param UserGroupEntity $userGroup
-     *
      * @throws Throwable
-     *
-     * @return string
      */
     protected function updateUserGroup(
         InputInterface $input,

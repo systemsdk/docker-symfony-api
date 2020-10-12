@@ -7,12 +7,11 @@ declare(strict_types = 1);
 namespace App\Utils\Tests;
 
 use App\Utils\JSON;
+use JsonException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Throwable;
 use UnexpectedValueException;
-use JsonException;
 
 /**
  * Class Auth
@@ -21,27 +20,22 @@ use JsonException;
  */
 class Auth
 {
-    private ContainerInterface $testContainer;
+    private KernelInterface $kernel;
 
     /**
      * Constructor
-     *
-     * @param ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(KernelInterface $kernel)
     {
-        $this->testContainer = $container;
+        $this->kernel = $kernel;
     }
 
     /**
      * Method to get authorization headers for specified user.
      *
-     * @param string $username
-     * @param string $password
+     * @return array<string, string>
      *
      * @throws Throwable
-     *
-     * @return array<string, string>
      */
     public function getAuthorizationHeadersForUser(string $username, string $password): array
     {
@@ -51,8 +45,6 @@ class Auth
 
     /**
      * Method to get authorization headers for specified API Key role.
-     *
-     * @param string $role
      *
      * @return array<string, string>
      */
@@ -68,8 +60,6 @@ class Auth
 
     /**
      * Method to get authorization headers for specified token.
-     *
-     * @param string $token
      *
      * @return array<string, string>
      */
@@ -99,12 +89,8 @@ class Auth
      *
      * @codeCoverageIgnore
      *
-     * @param string $username
-     * @param string $password
-     *
-     * @throws UnexpectedValueException|JsonException
-     *
-     * @return string
+     * @throws UnexpectedValueException
+     * @throws JsonException
      */
     private function getToken(string $username, string $password): string
     {
@@ -117,7 +103,6 @@ class Auth
         );
 
         // Read current cache
-        /** @var array<string, string> $cache */
         $cache = (array)JSON::decode((string)file_get_contents($filename), true);
         // Create hash for username + password
         $hash = sha1($username . $password);
@@ -126,7 +111,7 @@ class Auth
         if (!array_key_exists($hash, $cache)) {
             // Get client
             /** @var KernelBrowser $client */
-            $client = $this->testContainer->get('test.client');
+            $client = $this->kernel->getContainer()->get('test.client');
             // Create request to make login using given credentials
             $client->request(
                 'POST',
@@ -143,12 +128,7 @@ class Auth
                 JSON::encode(compact('username', 'password'))
             );
 
-            /** @var Response|null $response */
             $response = $client->getResponse();
-
-            if ($response === null) {
-                throw new UnexpectedValueException('Test client did not return response at all');
-            }
 
             if ($response->getStatusCode() !== 200) {
                 throw new UnexpectedValueException(

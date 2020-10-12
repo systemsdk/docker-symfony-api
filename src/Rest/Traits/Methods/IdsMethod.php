@@ -21,18 +21,12 @@ use Throwable;
  */
 trait IdsMethod
 {
-    // Traits
-    use AbstractGenericMethods;
-
     /**
      * Generic 'idsMethod' method for REST resources.
      *
-     * @param Request     $request
-     * @param array|null  $allowedHttpMethods
+     * @param string[]|null $allowedHttpMethods
      *
      * @throws Throwable
-     *
-     * @return Response
      */
     public function idsMethod(Request $request, ?array $allowedHttpMethods = null): Response
     {

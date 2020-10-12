@@ -6,20 +6,16 @@ declare(strict_types = 1);
 
 namespace App\Controller\Api;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 use App\Rest\ResponseHandler;
 use App\Service\HealthService;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
 /**
  * Class HealthController
- *
- * @Route(
- *     path="/health",
- *  )
  *
  * @SWG\Tag(name="Tools")
  *
@@ -27,13 +23,25 @@ use Throwable;
  */
 class HealthController
 {
+    private ResponseHandler $responseHandler;
+    private HealthService $healthService;
+
+    /**
+     * Constructor
+     */
+    public function __construct(ResponseHandler $responseHandler, HealthService $healthService)
+    {
+        $this->responseHandler = $responseHandler;
+        $this->healthService = $healthService;
+    }
+
     /**
      * Some simple tasks to ensure that application is up and running like expected.
      *
-     * @link https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+     * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
      *
      * @Route(
-     *     path="",
+     *     path="/health",
      *     methods={"GET"}
      *  )
      *
@@ -42,26 +50,20 @@ class HealthController
      * @SWG\Response(
      *      response=200,
      *      description="success",
-     *      @SWG\Schema(
+     * @SWG\Schema(
      *          type="object",
      *          example={"timestamp": "2019-08-01T09:00:00+00:00"},
-     *          @SWG\Property(property="timestamp", type="string"),
+     * @SWG\Property(property="timestamp", type="string"),
      *      ),
      *  )
      *
-     * @param Request         $request
-     * @param ResponseHandler $responseHandler
-     * @param HealthService   $healthService
-     *
      * @throws Throwable
-     *
-     * @return Response
      */
-    public function index(Request $request, ResponseHandler $responseHandler, HealthService $healthService): Response
+    public function __invoke(Request $request): Response
     {
-        return $responseHandler->createResponse(
+        return $this->responseHandler->createResponse(
             $request,
-            $healthService->check(),
+            $this->healthService->check(),
             null,
             Response::HTTP_OK,
             ResponseHandler::FORMAT_JSON,

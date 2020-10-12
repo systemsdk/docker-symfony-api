@@ -8,11 +8,14 @@ namespace App\Repository\Interfaces;
 
 use App\Entity\Interfaces\EntityInterface;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
+use Throwable;
 
 /**
  * Interface BaseRepositoryInterface
@@ -23,16 +26,19 @@ interface BaseRepositoryInterface
 {
     /**
      * Getter method for entity name.
-     *
-     * @return string
      */
     public function getEntityName(): string;
 
     /**
+     * Getter method for search columns of current entity.
+     *
+     * @return array<int, string>
+     */
+    public function getSearchColumns(): array;
+
+    /**
      * Gets a reference to the entity identified by the given type and identifier without actually loading it,
      * if the entity is not yet loaded.
-     *
-     * @param string $id
      *
      * @throws ORMException
      *
@@ -43,42 +49,27 @@ interface BaseRepositoryInterface
     /**
      * Gets all association mappings of the class.
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getAssociations(): array;
 
     /**
-     * Getter method for search columns of current entity.
-     *
-     * @return array
+     * Returns the ORM metadata descriptor for a class.
      */
-    public function getSearchColumns(): array;
+    public function getClassMetaData(): ClassMetadataInfo;
 
     /**
      * Getter method for EntityManager for current entity.
-     *
-     * @return EntityManager
      */
     public function getEntityManager(): EntityManager;
 
     /**
      * Method to create new query builder for current entity.
-     *
-     * @param string|null $alias
-     * @param string|null $indexBy
-     *
-     * @return QueryBuilder
      */
     public function createQueryBuilder(?string $alias = null, ?string $indexBy = null): QueryBuilder;
 
     /**
      * Wrapper for default Doctrine repository find method.
-     *
-     * @param string   $id
-     * @param int|null $lockMode
-     * @param int|null $lockVersion
-     *
-     * @return EntityInterface|null
      */
     public function find(string $id, ?int $lockMode = null, ?int $lockVersion = null): ?EntityInterface;
 
@@ -86,10 +77,9 @@ interface BaseRepositoryInterface
      * Advanced version of find method, with this you can process query as you like, eg. add joins and callbacks to
      * modify / optimize current query.
      *
-     * @param string     $id
      * @param string|int $hydrationMode
      *
-     * @return array|EntityInterface
+     * @return array<int|string, mixed>|EntityInterface
      *
      * @throws NonUniqueResultException
      */
@@ -98,8 +88,8 @@ interface BaseRepositoryInterface
     /**
      * Wrapper for default Doctrine repository findOneBy method.
      *
-     * @param array      $criteria
-     * @param array|null $orderBy
+     * @param array<int|string, string|array> $criteria
+     * @param array<int, string>|null $orderBy
      *
      * @return EntityInterface|object|null
      */
@@ -108,27 +98,23 @@ interface BaseRepositoryInterface
     /**
      * Wrapper for default Doctrine repository findBy method.
      *
-     * @param array        $criteria
-     * @param array|null   $orderBy
-     * @param int|null     $limit
-     * @param int|null     $offset
+     * @param array<int|string, string|array> $criteria
+     * @param array<int, string>|null $orderBy
      *
-     * @return array
+     * @return array<int, EntityInterface|object>
      */
     public function findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array;
 
     /**
      * Generic replacement for basic 'findBy' method if/when you want to use generic LIKE search.
      *
-     * @param array      $criteria
-     * @param array|null $orderBy
-     * @param int|null   $limit
-     * @param int|null   $offset
-     * @param array|null $search
+     * @param array<int|string, string|array> $criteria
+     * @param array<string, string>|null $orderBy
+     * @param array<string, string>|null $search
      *
-     * @throws InvalidArgumentException
+     * @throws Throwable
      *
-     * @return array
+     * @return array<int, EntityInterface>
      */
     public function findByAdvanced(
         array $criteria,
@@ -141,17 +127,17 @@ interface BaseRepositoryInterface
     /**
      * Wrapper for default Doctrine repository findBy method.
      *
-     * @return array
+     * @return array<int, EntityInterface|object>
      */
     public function findAll(): array;
 
     /**
      * Repository method to fetch current entity id values from database and return those as an array.
      *
-     * @param array|null $criteria
-     * @param array|null $search
+     * @param array<int|string, string|array>|null $criteria
+     * @param array<string, string>|null $search
      *
-     * @return array
+     * @return array<int, string>
      *
      * @throws InvalidArgumentException
      */
@@ -160,51 +146,39 @@ interface BaseRepositoryInterface
     /**
      * Generic count method to determine count of entities for specified criteria and search term(s).
      *
-     * @param array|null $criteria
-     * @param array|null $search
+     * @param array<int|string, string|array>|null $criteria
+     * @param array<string, string>|null $search
      *
-     * @return int
-     *
-     * @throws InvalidArgumentException|NonUniqueResultException
+     * @throws InvalidArgumentException
+     * @throws NonUniqueResultException
+     * @throws NoResultException
      */
     public function countAdvanced(?array $criteria = null, ?array $search = null): int;
 
     /**
      * Helper method to 'reset' repository entity table - in other words delete all records - so be carefully with
      * this...
-     *
-     * @return int
      */
     public function reset(): int;
 
     /**
      * Helper method to persist specified entity to database.
      *
-     * @param EntityInterface $entity
-     * @param bool|null       $flush
-     *
-     * @throws ORMException|OptimisticLockException
-     *
-     * @return BaseRepositoryInterface
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function save(EntityInterface $entity, ?bool $flush = null): self;
 
     /**
      * Helper method to remove specified entity from database.
      *
-     * @param EntityInterface $entity
-     * @param bool|null       $flush
-     *
-     * @throws ORMException|OptimisticLockException
-     *
-     * @return BaseRepositoryInterface
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function remove(EntityInterface $entity, ?bool $flush = null): self;
 
     /**
      * With this method you can attach some custom functions for generic REST API find / count queries.
-     *
-     * @param QueryBuilder $queryBuilder
      */
     public function processQueryBuilder(QueryBuilder $queryBuilder): void;
 
@@ -213,13 +187,11 @@ interface BaseRepositoryInterface
      *
      * @note Requires processJoins() to be run
      *
-     * @param array<int, mixed> $parameters
+     * @see QueryBuilder::leftJoin() for parameters
+     *
+     * @param array<int, array<int, string>> $parameters
      *
      * @throws InvalidArgumentException
-     *
-     * @return BaseRepositoryInterface
-     *
-     * @see QueryBuilder::leftJoin() for parameters
      */
     public function addLeftJoin(array $parameters): self;
 
@@ -228,13 +200,11 @@ interface BaseRepositoryInterface
      *
      * @note Requires processJoins() to be run
      *
-     * @param array $parameters
+     * @see QueryBuilder::innerJoin() for parameters
+     *
+     * @param array<int, array<int, string>> $parameters
      *
      * @throws InvalidArgumentException
-     *
-     * @return BaseRepositoryInterface
-     *
-     * @see QueryBuilder::innerJoin() for parameters
      */
     public function addInnerJoin(array $parameters): self;
 
@@ -247,10 +217,7 @@ interface BaseRepositoryInterface
      *
      * Note that every callback will get 'QueryBuilder' as in first parameter.
      *
-     * @param callable   $callable
-     * @param array|null $args
-     *
-     * @return BaseRepositoryInterface
+     * @param array<int, mixed>|null $args
      */
     public function addCallback(callable $callable, ?array $args = null): self;
 }

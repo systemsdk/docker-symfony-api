@@ -20,14 +20,11 @@ trait RestResourceDelete
     /**
      * Before lifecycle method for delete method.
      *
-     * Notes:   If you make changes to entity in this lifecycle method by default it will be saved on end of current
+     * Notes: If you make changes to entity in this lifecycle method by default it will be saved on end of current
      *          request. To prevent this you need to detach current entity from entity manager.
      *
      *          Also note that if you've made some changes to entity and you eg. throw an exception within this method
      *          your entity will be saved if it has eg Blameable / Timestampable traits attached.
-     *
-     * @param string          $id
-     * @param EntityInterface $entity
      */
     public function beforeDelete(string &$id, EntityInterface $entity): void
     {
@@ -36,14 +33,11 @@ trait RestResourceDelete
     /**
      * After lifecycle method for delete method.
      *
-     * Notes:   If you make changes to entity in this lifecycle method by default it will be saved on end of current
+     * Notes: If you make changes to entity in this lifecycle method by default it will be saved on end of current
      *          request. To prevent this you need to detach current entity from entity manager.
      *
      *          Also note that if you've made some changes to entity and you eg. throw an exception within this method
      *          your entity will be saved if it has eg Blameable / Timestampable traits attached.
-     *
-     * @param string          $id
-     * @param EntityInterface $entity
      */
     public function afterDelete(string &$id, EntityInterface $entity): void
     {

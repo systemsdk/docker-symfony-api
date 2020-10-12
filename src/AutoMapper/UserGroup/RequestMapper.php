@@ -7,8 +7,8 @@ declare(strict_types = 1);
 namespace App\AutoMapper\UserGroup;
 
 use App\AutoMapper\RestRequestMapper;
-use App\Resource\RoleResource;
 use App\Entity\Role;
+use App\Resource\RoleResource;
 use Doctrine\ORM\ORMException;
 
 /**
@@ -28,11 +28,8 @@ class RequestMapper extends RestRequestMapper
 
     private RoleResource $roleResource;
 
-
     /**
      * Constructor
-     *
-     * @param RoleResource $roleResource
      */
     public function __construct(RoleResource $roleResource)
     {
@@ -40,11 +37,7 @@ class RequestMapper extends RestRequestMapper
     }
 
     /**
-     * @param string $role
-     *
      * @throws ORMException
-     *
-     * @return Role
      */
     protected function transformRole(string $role): Role
     {

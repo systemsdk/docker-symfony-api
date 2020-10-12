@@ -1,11 +1,14 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
+/**
+ * /src/Utils/Traits/MailSender.php
+ */
 
 namespace App\Utils\Traits;
 
 use App\Service\MailerService;
-use Throwable;
 use Psr\Cache\InvalidArgumentException;
+use Throwable;
 use Twig\Environment as Twig;
 
 trait MailSender
@@ -15,8 +18,6 @@ trait MailSender
 
     /**
      * @required
-     *
-     * @param MailerService $mailerService
      */
     public function setMailerService(MailerService $mailerService): void
     {
@@ -25,8 +26,6 @@ trait MailSender
 
     /**
      * @required
-     *
-     * @param Twig $twig
      */
     public function setTwig(Twig $twig): void
     {

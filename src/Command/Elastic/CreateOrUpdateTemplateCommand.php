@@ -6,12 +6,12 @@ declare(strict_types = 1);
 
 namespace App\Command\Elastic;
 
-use Symfony\Component\Console\Command\Command;
 use App\Command\Traits\StyleSymfony;
+use App\Service\Interfaces\ElasticsearchServiceInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Service\Interfaces\ElasticsearchServiceInterface;
 use Throwable;
 
 /**
@@ -25,13 +25,10 @@ class CreateOrUpdateTemplateCommand extends Command
     use StyleSymfony;
 
     public const COMMAND_NAME = 'elastic:create-or-update-template';
-
     private ElasticsearchServiceInterface $elasticsearchService;
 
     /**
      * Constructor
-     *
-     * @param ElasticsearchServiceInterface $elasticsearchService
      *
      * @throws LogicException
      */
@@ -48,12 +45,9 @@ class CreateOrUpdateTemplateCommand extends Command
     /**
      * Executes the current command.
      *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -71,8 +65,6 @@ class CreateOrUpdateTemplateCommand extends Command
      * Create/update elastic template
      *
      * @throws Throwable
-     *
-     * @return string
      */
     private function createIndexTemplate(): string
     {
@@ -105,7 +97,7 @@ class CreateOrUpdateTemplateCommand extends Command
                         'filter' => [],
                     ],
                 ],
-            ]
+            ],
         ]);
 
         return $action . ' ' . $this->elasticsearchService::TEMPLATE_NAME . ' template - have a nice day';

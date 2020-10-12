@@ -20,19 +20,12 @@ use Throwable;
  */
 trait DeleteMethod
 {
-    // Traits
-    use AbstractGenericMethods;
-
     /**
      * Generic 'deleteMethod' method for REST resources.
      *
-     * @param Request     $request
-     * @param string      $id
-     * @param array|null  $allowedHttpMethods
+     * @param string[]|null $allowedHttpMethods
      *
      * @throws Throwable
-     *
-     * @return Response
      */
     public function deleteMethod(Request $request, string $id, ?array $allowedHttpMethods = null): Response
     {

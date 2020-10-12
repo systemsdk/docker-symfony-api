@@ -6,12 +6,13 @@ declare(strict_types = 1);
 
 namespace App\Service;
 
-use Psr\Log\LoggerInterface;
 use App\Utils\JSON;
-use Exception;
+use Closure;
+use Psr\Log\LoggerInterface;
 use stdClass;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
+use Throwable;
 
 /**
  * Class VersionService
@@ -26,10 +27,6 @@ class VersionService
 
     /**
      * Constructor
-     *
-     * @param string          $projectDir
-     * @param CacheInterface  $appCache
-     * @param LoggerInterface $logger
      */
     public function __construct(string $projectDir, CacheInterface $appCache, LoggerInterface $logger)
     {
@@ -38,12 +35,11 @@ class VersionService
         $this->logger = $logger;
     }
 
-    /** @noinspection PhpDocMissingThrowsInspection */
     /**
      * Method to get application version from cache or create new entry to cache with version value from
      * composer.json file.
      *
-     * @return string
+     * @noinspection PhpDocMissingThrowsInspection
      */
     public function get(): string
     {
@@ -51,17 +47,24 @@ class VersionService
 
         try {
             /** @noinspection PhpUnhandledExceptionInspection */
-            $output = $this->cache->get('application_version', function (ItemInterface $item): string {
-                $item->expiresAfter(31536000); // One year
-                /** @var stdClass $composerData */
-                $composerData = JSON::decode((string)file_get_contents($this->projectDir . '/composer.json'));
-
-                return (string)($composerData->version ?? '0.0.0');
-            });
-        } catch (Exception $exception) {
+            $output = $this->cache->get('application_version', $this->getClosure());
+        } catch (Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
 
         return $output;
+    }
+
+    private function getClosure(): Closure
+    {
+        return function (ItemInterface $item): string {
+            // One year
+            $item->expiresAfter(31536000);
+
+            /** @var stdClass $composerData */
+            $composerData = JSON::decode((string)file_get_contents($this->projectDir . '/composer.json'));
+
+            return (string)($composerData->version ?? '0.0.0');
+        };
     }
 }

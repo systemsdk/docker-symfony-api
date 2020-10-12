@@ -6,10 +6,10 @@ declare(strict_types = 1);
 
 namespace App\Command\Traits;
 
-use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
 /**
@@ -26,6 +26,7 @@ trait ExecuteMultipleCommand
      * @var array<int|string, string>
      */
     private array $choices = [];
+
     /**
      * @psalm-suppress PropertyNotSetInConstructor
      */
@@ -42,14 +43,9 @@ trait ExecuteMultipleCommand
     }
 
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an exit code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -76,8 +72,6 @@ trait ExecuteMultipleCommand
 
     /**
      * Method to ask user to make choose one of defined choices.
-     *
-     * @return string|null
      */
     private function ask(): ?string
     {

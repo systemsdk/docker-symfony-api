@@ -6,13 +6,12 @@ declare(strict_types = 1);
 
 namespace App\Rest\Traits\Actions\Anon;
 
-use App\Annotation\RestApiDoc;
 use App\Rest\Traits\Methods\CountMethod;
+use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
-use Swagger\Annotations as SWG;
 
 /**
  * Trait CountAction
@@ -39,20 +38,14 @@ trait CountAction
      * @SWG\Response(
      *      response=200,
      *      description="success",
-     *      @SWG\Schema(
+     * @SWG\Schema(
      *          type="object",
      *          example={"count": "1"},
-     *          @SWG\Property(property="count", type="integer"),
+     * @SWG\Property(property="count", type="integer"),
      *      ),
      *  )
      *
-     * @RestApiDoc()
-     *
-     * @param Request $request
-     *
      * @throws Throwable
-     *
-     * @return Response
      */
     public function countAction(Request $request): Response
     {

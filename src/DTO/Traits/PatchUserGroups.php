@@ -6,8 +6,8 @@ declare(strict_types = 1);
 
 namespace App\DTO\Traits;
 
-use App\Entity\UserGroup as UserGroupEntity;
 use App\Entity\Interfaces\UserGroupAwareInterface;
+use App\Entity\UserGroup as UserGroupEntity;
 
 /**
  * Trait PatchUserGroups
@@ -19,8 +19,7 @@ trait PatchUserGroups
     /**
      * Method to patch entity user groups.
      *
-     * @param UserGroupAwareInterface $entity
-     * @param array|UserGroupEntity[] $value
+     * @param array<int, UserGroupEntity> $value
      */
     protected function updateUserGroups(UserGroupAwareInterface $entity, array $value): void
     {

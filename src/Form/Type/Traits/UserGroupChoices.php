@@ -24,7 +24,7 @@ trait UserGroupChoices
      *
      * @throws Throwable
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function getUserGroupChoices(): array
     {

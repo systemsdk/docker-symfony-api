@@ -21,12 +21,12 @@ use Throwable;
  *
  * @codingStandardsIgnoreStart
  *
- * @method Entity|null   find(string $id, ?int $lockMode = null, ?int $lockVersion = null): ?Entity
- * @method array|Entity  findAdvanced(string $id, $hydrationMode = null)
- * @method Entity|null   findOneBy(array $criteria, ?array $orderBy = null): ?Entity
- * @method array         findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array
- * @method array         findByAdvanced(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null, ?array $search = null): array
- * @method array         findAll(): array
+ * @method Entity|null find(string $id, ?int $lockMode = null, ?int $lockVersion = null): ?Entity
+ * @method array<int, Entity> findAdvanced(string $id, $hydrationMode = null)
+ * @method Entity|null findOneBy(array $criteria, ?array $orderBy = null): ?Entity
+ * @method array<int, Entity> findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array
+ * @method array<int, Entity> findByAdvanced(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null, ?array $search = null): array
+ * @method array<int, Entity> findAll(): array
  *
  * @codingStandardsIgnoreEnd
  */
@@ -38,8 +38,6 @@ class HealthRepository extends BaseRepository
      * Method to read value from database
      *
      * @throws NonUniqueResultException
-     *
-     * @return Entity|null
      */
     public function read(): ?Entity
     {
@@ -57,8 +55,6 @@ class HealthRepository extends BaseRepository
      * Method to write new value to database.
      *
      * @throws Throwable
-     *
-     * @return Entity
      */
     public function create(): Entity
     {
@@ -74,8 +70,6 @@ class HealthRepository extends BaseRepository
      * Method to cleanup 'health' table.
      *
      * @throws Exception
-     *
-     * @return int
      */
     public function cleanup(): int
     {

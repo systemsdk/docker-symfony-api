@@ -6,15 +6,15 @@ declare(strict_types = 1);
 
 namespace App\Command\User;
 
-use Symfony\Component\Console\Command\Command;
 use App\Command\Traits\StyleSymfony;
-use App\Resource\UserGroupResource;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Exception\LogicException;
 use App\Entity\User;
 use App\Entity\UserGroup;
+use App\Resource\UserGroupResource;
 use Closure;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\LogicException;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 /**
@@ -29,11 +29,8 @@ class ListUserGroupsCommand extends Command
 
     private UserGroupResource $userGroupResource;
 
-
     /**
      * Constructor
-     *
-     * @param UserGroupResource $userGroupResource
      *
      * @throws LogicException
      */
@@ -48,14 +45,9 @@ class ListUserGroupsCommand extends Command
 
     /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * {@inheritdoc}
      *
      * @throws Throwable
-     *
-     * @return int 0 if everything went fine, or an error code
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -77,7 +69,7 @@ class ListUserGroupsCommand extends Command
      *
      * @throws Throwable
      *
-     * @return array
+     * @return mixed[]
      */
     private function getRows(): array
     {
@@ -87,8 +79,6 @@ class ListUserGroupsCommand extends Command
     /**
      * Getter method for user group formatter closure. This closure will format single UserGroup entity for console
      * table.
-     *
-     * @return Closure
      */
     private function getFormatterUserGroup(): Closure
     {

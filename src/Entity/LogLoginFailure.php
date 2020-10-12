@@ -22,7 +22,7 @@ use Throwable;
  * @ORM\Table(
  *      name="log_login_failure",
  *      indexes={
- *          @ORM\Index(name="user_id", columns={"user_id"}),
+ * @ORM\Index(name="user_id", columns={"user_id"}),
  *      }
  *  )
  * @ORM\Entity(
@@ -37,8 +37,6 @@ class LogLoginFailure implements EntityInterface
     use Uuid;
 
     /**
-     * @var UuidInterface
-     *
      * @Groups({
      *      "LogLoginFailure",
      *      "LogLoginFailure.id",
@@ -57,8 +55,6 @@ class LogLoginFailure implements EntityInterface
     private UuidInterface $id;
 
     /**
-     * @var User
-     *
      * @Groups({
      *      "LogLoginFailure",
      *      "LogLoginFailure.user",
@@ -69,7 +65,7 @@ class LogLoginFailure implements EntityInterface
      *      inversedBy="logsLoginFailure",
      *  )
      * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(
+     * @ORM\JoinColumn(
      *          name="user_id",
      *          referencedColumnName="id",
      *          nullable=false,
@@ -80,8 +76,6 @@ class LogLoginFailure implements EntityInterface
     private User $user;
 
     /**
-     * @var DateTimeImmutable
-     *
      * @Groups({
      *      "LogLoginFailure",
      *      "LogLoginFailure.timestamp",
@@ -95,11 +89,8 @@ class LogLoginFailure implements EntityInterface
      */
     private DateTimeImmutable $timestamp;
 
-
     /**
      * Constructor
-     *
-     * @param User $user
      *
      * @throws Throwable
      */
@@ -110,35 +101,21 @@ class LogLoginFailure implements EntityInterface
         $this->timestamp = new DateTimeImmutable('now', new DateTimeZone('UTC'));
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id->toString();
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return DateTimeImmutable
-     */
     public function getTimestamp(): DateTimeImmutable
     {
         return $this->getCreatedAt();
     }
 
-    /**
-     * Returns createdAt.
-     *
-     * @return DateTimeImmutable
-     */
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->timestamp;

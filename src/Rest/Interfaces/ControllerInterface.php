@@ -24,8 +24,6 @@ interface ControllerInterface
     /**
      * Setter method for `resource` service.
      *
-     * @param RestResourceInterface $resource
-     *
      * @return ControllerInterface|Controller|self
      */
     public function setResource(RestResourceInterface $resource);
@@ -34,10 +32,15 @@ interface ControllerInterface
      * Getter method for `resource` service.
      *
      * @throws UnexpectedValueException
-     *
-     * @return RestResourceInterface
      */
     public function getResource(): RestResourceInterface;
+
+    /**
+     * Getter method for `ResponseHandler` service.
+     *
+     * @throws UnexpectedValueException
+     */
+    public function getResponseHandler(): ResponseHandlerInterface;
 
     /**
      * Setter method for `ResponseHandler` service, this is called by Symfony DI.
@@ -45,38 +48,20 @@ interface ControllerInterface
      * @see https://symfony.com/doc/current/service_container/autowiring.html#autowiring-other-methods-e-g-setters
      *
      * @required
-     *
-     * @param ResponseHandler $responseHandler
-     *
-     * @return ControllerInterface|Controller|self
      */
-    public function setResponseHandler(ResponseHandler $responseHandler);
-
-    /**
-     * Getter method for `ResponseHandler` service.
-     *
-     * @throws UnexpectedValueException
-     *
-     * @return ResponseHandlerInterface
-     */
-    public function getResponseHandler(): ResponseHandlerInterface;
+    public function setResponseHandler(ResponseHandler $responseHandler): self;
 
     /**
      * Getter method for used DTO class for current controller.
      *
-     * @param string|null $method
-     *
      * @throws UnexpectedValueException
-     *
-     * @return string
      */
     public function getDtoClass(?string $method = null): string;
 
     /**
      * Method to validate REST trait method.
      *
-     * @param Request  $request
-     * @param string[] $allowedHttpMethods
+     * @param array<int, string> $allowedHttpMethods
      *
      * @throws LogicException
      * @throws MethodNotAllowedHttpException
@@ -86,21 +71,19 @@ interface ControllerInterface
     /**
      * Method to handle possible REST method trait exception.
      *
-     * @param Throwable   $exception
-     * @param string|null $id
-     *
      * @throws Throwable
-     *
-     * @return Throwable
      */
     public function handleRestMethodException(Throwable $exception, ?string $id = null): Throwable;
 
     /**
+     * @param array<int, string> $allowedHttpMethods
+     */
+    public function getResourceForMethod(Request $request, array $allowedHttpMethods): RestResourceInterface;
+
+    /**
      * Method to process current criteria array.
      *
-     * @param array $criteria
-     * @param Request $request
-     * @param string  $method
+     * @param array<int|string, string|array> $criteria
      */
     public function processCriteria(array &$criteria, Request $request, string $method): void;
 }

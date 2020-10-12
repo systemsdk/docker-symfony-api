@@ -6,15 +6,15 @@ declare(strict_types = 1);
 
 namespace App\Command\User;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Exception\LogicException;
 use App\Command\Traits\StyleSymfony;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Role;
 use App\Repository\RoleRepository;
 use App\Security\RolesService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Entity\Role;
 use Throwable;
 
 /**
@@ -31,13 +31,8 @@ class CreateRolesCommand extends Command
     private RoleRepository $roleRepository;
     private RolesService $rolesService;
 
-
     /**
      * Constructor
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param RoleRepository         $roleRepository
-     * @param RolesService           $rolesService
      *
      * @throws LogicException
      */
@@ -55,14 +50,8 @@ class CreateRolesCommand extends Command
         $this->setDescription('Console command to create roles to database');
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
-     *
-     * @return int 0 if everything went fine, or an error code
+     * @noinspection PhpMissingParentCallCommonInspection
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -91,11 +80,7 @@ class CreateRolesCommand extends Command
     /**
      * Method to check if specified role exists on database and if not create and persist it to database.
      *
-     * @param string $role
-     *
      * @throws Throwable
-     *
-     * @return int
      */
     private function createRole(string $role): int
     {
@@ -113,9 +98,7 @@ class CreateRolesCommand extends Command
     /**
      * Method to clean existing roles from database that does not really exists.
      *
-     * @param array $roles
-     *
-     * @return int
+     * @param array<int, string> $roles
      */
     private function clearRoles(array $roles): int
     {

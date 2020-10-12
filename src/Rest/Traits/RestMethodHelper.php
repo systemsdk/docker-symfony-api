@@ -8,13 +8,11 @@ namespace App\Rest\Traits;
 
 use App\DTO\Interfaces\RestDtoInterface;
 use App\Rest\Interfaces\ControllerInterface;
-use App\Rest\Interfaces\ResponseHandlerInterface;
-use App\Rest\Interfaces\RestResourceInterface;
 use App\Rest\Traits\Methods\RestMethodProcessCriteria;
-use Doctrine\Persistence\Mapping\MappingException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\UnitOfWork;
+use Doctrine\Persistence\Mapping\MappingException;
 use Error;
 use Exception;
 use LogicException;
@@ -43,23 +41,9 @@ trait RestMethodHelper
     protected static array $dtoClasses = [];
 
     /**
-     * {@inheritdoc}
-     */
-    abstract public function getResource(): RestResourceInterface;
-
-    /**
-     * {@inheritdoc}
-     */
-    abstract public function getResponseHandler(): ResponseHandlerInterface;
-
-    /**
      * Getter method for used DTO class for current controller.
      *
-     * @param string|null $method
-     *
      * @throws UnexpectedValueException
-     *
-     * @return string
      */
     public function getDtoClass(?string $method = null): string
     {
@@ -82,9 +66,6 @@ trait RestMethodHelper
 
     /**
      * Method to validate REST trait method.
-     *
-     * @param Request  $request
-     * @param array    $allowedHttpMethods
      *
      * @throws LogicException
      * @throws MethodNotAllowedHttpException
@@ -121,10 +102,6 @@ trait RestMethodHelper
 
     /**
      * Getter method for exception code with fallback to `400` bad response.
-     *
-     * @param Throwable $exception
-     *
-     * @return int
      */
     private function getExceptionCode(Throwable $exception): int
     {
@@ -135,8 +112,6 @@ trait RestMethodHelper
 
     /**
      * Method to detach entity from entity manager so possible changes to it won't be saved.
-     *
-     * @param string $id
      *
      * @throws MappingException
      */
@@ -149,7 +124,7 @@ trait RestMethodHelper
 
         // Detach entity from manager if it's been managed by it
         if ($entity !== null
-            /** @scrutinizer ignore-call */
+            /* @scrutinizer ignore-call */
             && $entityManager->getUnitOfWork()->getEntityState($entity) === UnitOfWork::STATE_MANAGED
         ) {
             $entityManager->clear();
@@ -158,8 +133,6 @@ trait RestMethodHelper
 
     /**
      * @param Throwable|Exception|TypeError|Error $exception
-     *
-     * @return Throwable
      */
     private function determineOutputAndStatusCodeForRestMethodException($exception): Throwable
     {

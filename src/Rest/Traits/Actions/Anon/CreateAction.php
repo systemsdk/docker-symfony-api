@@ -6,14 +6,13 @@ declare(strict_types = 1);
 
 namespace App\Rest\Traits\Actions\Anon;
 
-use App\Annotation\RestApiDoc;
 use App\DTO\Interfaces\RestDtoInterface;
 use App\Rest\Traits\Methods\CreateMethod;
+use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
-use Swagger\Annotations as SWG;
 
 /**
  * Trait CreateAction
@@ -40,20 +39,13 @@ trait CreateAction
      * @SWG\Response(
      *      response=201,
      *      description="created",
-     *      @SWG\Schema(
+     * @SWG\Schema(
      *          type="object",
      *          example={},
      *      ),
      *  )
      *
-     * @RestApiDoc()
-     *
-     * @param Request          $request
-     * @param RestDtoInterface $restDto
-     *
      * @throws Throwable
-     *
-     * @return Response
      */
     public function createAction(Request $request, RestDtoInterface $restDto): Response
     {

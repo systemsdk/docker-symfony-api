@@ -6,14 +6,14 @@ declare(strict_types = 1);
 
 namespace App\Form\Type\Console;
 
-use Symfony\Component\Form\AbstractType;
-use App\Form\Type\Traits\AddBasicFieldToForm;
-use App\Form\Type\Interfaces\FormTypeLabelInterface;
 use App\DTO\UserGroup\UserGroup;
 use App\Entity\Role as RoleEntity;
 use App\Form\DataTransformer\RoleTransformer;
+use App\Form\Type\Interfaces\FormTypeLabelInterface;
+use App\Form\Type\Traits\AddBasicFieldToForm;
 use App\Resource\RoleResource;
 use App\Security\RolesService;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -47,16 +47,13 @@ class UserGroupType extends AbstractType
             ],
         ],
     ];
+
     private RolesService $rolesService;
     private RoleResource $roleResource;
     private RoleTransformer $roleTransformer;
 
     /**
      * Constructor
-     *
-     * @param RolesService    $rolesService
-     * @param RoleResource    $roleResource
-     * @param RoleTransformer $roleTransformer
      */
     public function __construct(
         RolesService $rolesService,
@@ -69,14 +66,14 @@ class UserGroupType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param array              $options
+     * {@inheritdoc}
      *
      * @throws InvalidArgumentException|Throwable
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
+
         $this->addBasicFieldToForm($builder, self::$formFields);
         $builder
             ->add(
@@ -94,20 +91,19 @@ class UserGroupType extends AbstractType
     /**
      * Configures the options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options
-     *
      * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'data_class' => UserGroup::class,
         ]);
     }
 
     /**
-     * Method to  choices array for user groups.
+     * Method to get choices array for user groups.
      *
      * @throws Throwable
      *

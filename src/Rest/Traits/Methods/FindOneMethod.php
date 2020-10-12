@@ -20,19 +20,12 @@ use Throwable;
  */
 trait FindOneMethod
 {
-    // Traits
-    use AbstractGenericMethods;
-
     /**
      * Generic 'findOneMethod' method for REST resources.
      *
-     * @param Request     $request
-     * @param string      $id
-     * @param array|null  $allowedHttpMethods
+     * @param string[]|null $allowedHttpMethods
      *
      * @throws Throwable
-     *
-     * @return Response
      */
     public function findOneMethod(Request $request, string $id, ?array $allowedHttpMethods = null): Response
     {

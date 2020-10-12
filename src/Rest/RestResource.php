@@ -6,9 +6,9 @@ declare(strict_types = 1);
 
 namespace App\Rest;
 
-use App\Rest\Interfaces\RestResourceInterface;
 use App\DTO\Interfaces\RestDtoInterface;
 use App\Repository\Interfaces\BaseRepositoryInterface;
+use App\Rest\Interfaces\RestResourceInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use UnexpectedValueException;
 
@@ -45,7 +45,7 @@ abstract class RestResource implements RestResourceInterface
     /**
      * {@inheritdoc}
      */
-    public function setRepository(BaseRepositoryInterface $repository): RestResourceInterface
+    public function setRepository(BaseRepositoryInterface $repository): self
     {
         $this->repository = $repository;
 
@@ -63,7 +63,7 @@ abstract class RestResource implements RestResourceInterface
     /**
      * {@inheritdoc}
      */
-    public function setValidator(ValidatorInterface $validator): RestResourceInterface
+    public function setValidator(ValidatorInterface $validator): self
     {
         $this->validator = $validator;
 
@@ -136,8 +136,7 @@ abstract class RestResource implements RestResourceInterface
         // Create new instance of DTO and load entity to that.
         /** @var RestDtoInterface $restDto */
         /** @var class-string<RestDtoInterface> $dtoClass */
-        $restDto = new $dtoClass();
-        $restDto->setId($id);
+        $restDto = (new $dtoClass())->setId($id);
 
         if ($patch === true) {
             $restDto->load($entity);

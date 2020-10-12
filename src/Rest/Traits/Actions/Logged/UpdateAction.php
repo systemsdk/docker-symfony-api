@@ -6,15 +6,14 @@ declare(strict_types = 1);
 
 namespace App\Rest\Traits\Actions\Logged;
 
-use App\Annotation\RestApiDoc;
 use App\DTO\Interfaces\RestDtoInterface;
 use App\Rest\Traits\Methods\UpdateMethod;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
-use Swagger\Annotations as SWG;
 
 /**
  * Trait UpdateAction
@@ -46,7 +45,7 @@ trait UpdateAction
      * @SWG\Response(
      *      response=200,
      *      description="success",
-     *      @SWG\Schema(
+     * @SWG\Schema(
      *          type="object",
      *          example={},
      *      ),
@@ -57,22 +56,14 @@ trait UpdateAction
      *      examples={
      *          "Access denied": "{code: 403, message: 'Access denied'}",
      *      },
-     *      @SWG\Schema(
+     * @SWG\Schema(
      *          type="object",
-     *          @SWG\Property(property="code", type="integer", description="Error code"),
-     *          @SWG\Property(property="message", type="string", description="Error description"),
+     * @SWG\Property(property="code", type="integer", description="Error code"),
+     * @SWG\Property(property="message", type="string", description="Error description"),
      *      ),
      *  )
      *
-     * @RestApiDoc()
-     *
-     * @param Request          $request
-     * @param RestDtoInterface $restDto
-     * @param string           $id
-     *
      * @throws Throwable
-     *
-     * @return Response
      */
     public function updateAction(Request $request, RestDtoInterface $restDto, string $id): Response
     {

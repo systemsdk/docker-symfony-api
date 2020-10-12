@@ -22,55 +22,31 @@ interface RequestLoggerServiceInterface
 {
     /**
      * Constructor
-     *
-     * @param LogRequestResource $resource
-     * @param LoggerInterface    $logger
-     * @param array              $sensitiveProperties
      */
     public function __construct(LogRequestResource $resource, LoggerInterface $logger, array $sensitiveProperties);
 
     /**
      * Setter for response object.
-     *
-     * @param Response $response
-     *
-     * @return RequestLoggerServiceInterface
      */
     public function setResponse(Response $response): self;
 
     /**
      * Setter for request object.
-     *
-     * @param Request $request
-     *
-     * @return RequestLoggerServiceInterface
      */
     public function setRequest(Request $request): self;
 
     /**
      * Setter method for current user.
-     *
-     * @param User|null $user
-     *
-     * @return RequestLoggerServiceInterface
      */
     public function setUser(?User $user = null): self;
 
     /**
      * Setter method for current api key
-     *
-     * @param ApiKey|null $apiKey
-     *
-     * @return RequestLoggerServiceInterface
      */
     public function setApiKey(?ApiKey $apiKey = null): self;
 
     /**
      * Setter method for 'master request' info.
-     *
-     * @param bool $masterRequest
-     *
-     * @return RequestLoggerServiceInterface
      */
     public function setMasterRequest(bool $masterRequest): self;
 
