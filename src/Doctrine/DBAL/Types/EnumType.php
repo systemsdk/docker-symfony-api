@@ -18,6 +18,10 @@ use InvalidArgumentException;
 abstract class EnumType extends Type
 {
     protected static string $name;
+
+    /**
+     * @var array<int, string>
+     */
     protected static array $values = [];
 
     public static function getValues(): array

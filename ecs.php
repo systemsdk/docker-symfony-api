@@ -29,6 +29,7 @@ use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
 use Symplify\CodingStandard\Fixer\Commenting\ParamReturnAndVarTagMalformsFixer;
 use Symplify\CodingStandard\Fixer\Strict\BlankLineAfterStrictTypesFixer;
+use SlevomatCodingStandard\Sniffs\Whitespaces\DuplicateSpacesSniff;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(__DIR__ . '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/psr12.php');
@@ -72,6 +73,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->call('configure', [['statements' => ['continue', 'declare', 'return', 'throw', 'try']]]);
 
     $services->set(SingleBlankLineBeforeNamespaceFixer::class);
+
+    $services->set(DuplicateSpacesSniff::class)->property('ignoreSpacesInAnnotation', true);
 
     $parameters = $containerConfigurator->parameters();
 

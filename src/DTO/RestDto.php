@@ -31,7 +31,7 @@ abstract class RestDto implements RestDtoInterface
      *
      * And in that method make all necessary that you need to set that specified value.
      *
-     * @var mixed[]
+     * @var array<string, string>
      */
     protected static array $mappings = [];
 

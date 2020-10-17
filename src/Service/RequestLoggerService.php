@@ -25,7 +25,6 @@ class RequestLoggerService implements RequestLoggerServiceInterface
 {
     private LogRequestResource $resource;
     private LoggerInterface $logger;
-    private array $sensitiveProperties;
     private ?Response $response = null;
     private ?Request $request = null;
     private ?User $user = null;
@@ -33,7 +32,14 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     private bool $masterRequest = false;
 
     /**
+     * @var array<int, string>
+     */
+    private array $sensitiveProperties;
+
+    /**
      * Constructor
+     *
+     * @param array<int, string> $sensitiveProperties
      */
     public function __construct(LogRequestResource $resource, LoggerInterface $logger, array $sensitiveProperties)
     {

@@ -201,10 +201,10 @@ phpcs: ## Run PHP CodeSniffer
 
 ###> ecs ###
 ecs: ## Run Easy Coding Standard
-	@make exec-bash cmd="error_reporting=0 ./vendor/bin/ecs --clear-cache check src tests"
+	@make exec-bash cmd="./vendor/bin/ecs --version && ./vendor/bin/ecs --clear-cache check src tests"
 
 ecs-fix: ## Run The Easy Coding Standard to fix issues
-	@make exec-bash cmd="error_reporting=0 ./vendor/bin/ecs --clear-cache --fix check src tests"
+	@make exec-bash cmd="./vendor/bin/ecs --version && ./vendor/bin/ecs --clear-cache --fix check src tests"
 ###< ecs ###
 
 ###> phpmetrics ###

@@ -26,7 +26,7 @@ trait LogRequestProcessRequest
     private string $replaceValue = '*** REPLACED ***';
 
     /**
-     * @var mixed[]
+     * @var array<string, string>
      *
      * @Groups({
      *      "LogRequest",
@@ -232,7 +232,7 @@ trait LogRequestProcessRequest
     private string $content = '';
 
     /**
-     * @var mixed[]
+     * @var array<string, string>
      *
      * @Groups({
      *      "LogRequest",

@@ -146,10 +146,15 @@ class LogRequest implements EntityInterface
      */
     private bool $masterRequest;
 
+    /**
+     * @var array<int, string>
+     */
     private array $sensitiveProperties;
 
     /**
      * Constructor
+     *
+     * @param array<int, string> $sensitiveProperties
      *
      * @throws Throwable
      */

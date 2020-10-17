@@ -108,7 +108,7 @@ class UserType extends AbstractType
     }
 
     /**
-     * @param mixed[] $options
+     * {@inheritdoc}
      *
      * @throws Throwable
      */

@@ -93,7 +93,7 @@ class PhpUnitUtil
      *
      * @param object $object The instantiated instance of your class
      * @param string $name The name of your private/protected method
-     * @param array<mixed> $args Method arguments
+     * @param array<int, mixed> $args Method arguments
      *
      * @throws ReflectionException
      *
@@ -212,7 +212,7 @@ class PhpUnitUtil
     /**
      * Helper method to get valid value for specified type.
      *
-     * @param array<mixed>|null $meta
+     * @param array<string, string>|null $meta
      *
      * @return mixed
      *

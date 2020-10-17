@@ -17,6 +17,10 @@ class EnumLocaleType extends EnumType
     public const LOCALE_RU = 'ru';
 
     protected static string $name = 'EnumLocale';
+
+    /**
+     * @var array<int, string>
+     */
     protected static array $values = [
         self::LOCALE_EN,
         self::LOCALE_RU,

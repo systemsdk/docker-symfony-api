@@ -29,6 +29,10 @@ class RequestLogSubscriber implements EventSubscriberInterface
     private UserRepository $userRepository;
     private LoggerInterface $logger;
     private UserTypeIdentification $userService;
+
+    /**
+     * @var array<int, string>
+     */
     private array $ignoredRoutes;
 
     /**

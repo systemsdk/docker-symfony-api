@@ -32,7 +32,19 @@ class ExceptionSubscriber implements EventSubscriberInterface
     private UserTypeIdentification $userService;
     private LoggerInterface $logger;
     private string $environment;
+
+    /**
+     * @var array<string, bool>
+     */
     private static array $cache = [];
+
+    /**
+     * @var array<int, string>
+     */
+    private static array $clientExceptions = [
+        HttpExceptionInterface::class,
+        ClientErrorInterface::class,
+    ];
 
     /**
      * Constructor
@@ -185,16 +197,10 @@ class ExceptionSubscriber implements EventSubscriberInterface
     {
         $cacheKey = spl_object_hash($exception);
 
-        if (!in_array($cacheKey, self::$cache, true)) {
-            self::$cache[$cacheKey] = count(
-                array_intersect(
-                    class_implements($exception),
-                    [
-                        HttpExceptionInterface::class,
-                        ClientErrorInterface::class,
-                    ]
-                )
-            ) !== 0;
+        if (!array_key_exists($cacheKey, self::$cache)) {
+            $intersect = array_intersect((array)class_implements($exception), self::$clientExceptions);
+
+            self::$cache[$cacheKey] = count($intersect) !== 0;
         }
 
         return self::$cache[$cacheKey];
