@@ -6,7 +6,7 @@ declare(strict_types = 1);
 
 namespace App\Controller\Api;
 
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
@@ -26,9 +26,9 @@ class IndexController
      *     methods={"GET"}
      *  )
      *
-     * @SWG\Get(security={})
+     * @OA\Get(security={})
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="success",
      * )

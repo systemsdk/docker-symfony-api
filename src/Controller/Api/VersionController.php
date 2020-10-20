@@ -7,7 +7,7 @@ declare(strict_types = 1);
 namespace App\Controller\Api;
 
 use App\Service\VersionService;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
@@ -15,7 +15,7 @@ use Throwable;
 /**
  * Class VersionController
  *
- * @SWG\Tag(name="Tools")
+ * @OA\Tag(name="Tools")
  *
  * @package App\Controller\Api
  */
@@ -39,17 +39,17 @@ class VersionController
      *     methods={"GET"}
      *  )
      *
-     * @SWG\Get(security={})
+     * @OA\Get(security={})
      *
-     * @SWG\Response(
-     *      response=200,
-     *      description="success",
-     * @SWG\Schema(
-     *          type="object",
-     *          example={"version": "1.0.0"},
-     * @SWG\Property(property="version", type="string", description="Version number"),
-     *      ),
-     *  )
+     * @OA\Response(
+     *     response=200,
+     *     description="success",
+     *     @OA\Schema(
+     *         type="object",
+     *         example={"version": "1.0.0"},
+     *         @OA\Property(property="version", type="string", description="Version number"),
+     *     ),
+     * )
      *
      * @throws Throwable
      */

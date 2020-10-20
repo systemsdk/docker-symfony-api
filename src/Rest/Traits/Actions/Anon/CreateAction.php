@@ -8,7 +8,7 @@ namespace App\Rest\Traits\Actions\Anon;
 
 use App\DTO\Interfaces\RestDtoInterface;
 use App\Rest\Traits\Methods\CreateMethod;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,14 +36,14 @@ trait CreateAction
      *     methods={"POST"},
      *  )
      *
-     * @SWG\Response(
-     *      response=201,
-     *      description="created",
-     * @SWG\Schema(
-     *          type="object",
-     *          example={},
-     *      ),
-     *  )
+     * @OA\Response(
+     *     response=201,
+     *     description="created",
+     *     @OA\Schema(
+     *         type="object",
+     *         example={},
+     *     ),
+     * )
      *
      * @throws Throwable
      */

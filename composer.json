@@ -42,7 +42,7 @@
 		"lexik/jwt-authentication-bundle": "^2.8",
 		"mark-gerarts/automapper-plus-bundle": "^1.3",
 		"matthiasnoback/symfony-console-form": "^3.6",
-		"nelmio/api-doc-bundle": "^3.6",
+		"nelmio/api-doc-bundle": "^4.0",
 		"nelmio/cors-bundle": "^2.1",
 		"piwik/device-detector": "^3.12",
 		"ramsey/uuid-doctrine": "^1.6",

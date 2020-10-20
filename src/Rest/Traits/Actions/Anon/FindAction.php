@@ -7,7 +7,7 @@ declare(strict_types = 1);
 namespace App\Rest\Traits\Actions\Anon;
 
 use App\Rest\Traits\Methods\FindMethod;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,14 +35,14 @@ trait FindAction
      *     methods={"GET"},
      *  )
      *
-     * @SWG\Response(
-     *      response=200,
-     *      description="success",
-     * @SWG\Schema(
-     *          type="array",
-     * @SWG\Items(type="string"),
-     *      ),
-     *  )
+     * @OA\Response(
+     *     response=200,
+     *     description="success",
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(type="string"),
+     *     ),
+     * )
      *
      * @throws Throwable
      */

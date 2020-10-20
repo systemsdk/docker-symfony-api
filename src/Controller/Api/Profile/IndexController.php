@@ -11,8 +11,8 @@ use App\Security\RolesService;
 use App\Utils\JSON;
 use JsonException;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 /**
  * Class IndexController
  *
- * @SWG\Tag(name="Profile")
+ * @OA\Tag(name="Profile")
  *
  * @package App\Controller\Api\Profile
  */
@@ -44,33 +44,33 @@ class IndexController
      * @Route(
      *     path="/profile",
      *     methods={"GET"}
-     *  );
+     * );
      *
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="User profile data",
-     * @SWG\Schema(
+     *      @OA\Schema(
      *          ref=@Model(
      *              type=User::class,
      *              groups={"set.UserProfile"},
      *          ),
      *      ),
      *  )
-     * @SWG\Response(
-     *      response=401,
-     *      description="Invalid token",
-     * @SWG\Schema(
-     *          type="object",
-     * @SWG\Property(property="code", type="integer", description="Error code"),
-     * @SWG\Property(property="message", type="string", description="Error description"),
-     *      ),
-     *      examples={
-     *          "Token not found": "{code: 401, message: 'JWT Token not found'}",
-     *          "Expired token": "{code: 401, message: 'Expired JWT Token'}",
-     *      },
-     *  )
+     * @OA\Response(
+     *     response=401,
+     *     description="Invalid token",
+     *     @OA\Schema(
+     *         type="object",
+     *         example={
+     *             "Token not found": "{code: 401, message: 'JWT Token not found'}",
+     *             "Expired token": "{code: 401, message: 'Expired JWT Token'}",
+     *         },
+     *         @OA\Property(property="code", type="integer", description="Error code"),
+     *         @OA\Property(property="message", type="string", description="Error description"),
+     *     ),
+     * )
      *
      * @throws JsonException
      */

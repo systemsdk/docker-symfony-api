@@ -7,7 +7,7 @@ declare(strict_types = 1);
 namespace App\Rest\Traits\Actions\Anon;
 
 use App\Rest\Traits\Methods\CountMethod;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,15 +35,15 @@ trait CountAction
      *     methods={"GET"},
      *  )
      *
-     * @SWG\Response(
-     *      response=200,
-     *      description="success",
-     * @SWG\Schema(
-     *          type="object",
-     *          example={"count": "1"},
-     * @SWG\Property(property="count", type="integer"),
-     *      ),
-     *  )
+     * @OA\Response(
+     *     response=200,
+     *     description="success",
+     *     @OA\Schema(
+     *         type="object",
+     *         example={"count": "1"},
+     *         @OA\Property(property="count", type="integer"),
+     *     ),
+     * )
      *
      * @throws Throwable
      */

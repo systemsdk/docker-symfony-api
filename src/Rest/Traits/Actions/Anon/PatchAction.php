@@ -8,7 +8,7 @@ namespace App\Rest\Traits\Actions\Anon;
 
 use App\DTO\Interfaces\RestDtoInterface;
 use App\Rest\Traits\Methods\PatchMethod;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,14 +39,14 @@ trait PatchAction
      *      methods={"PATCH"},
      *  )
      *
-     * @SWG\Response(
-     *      response=200,
-     *      description="success",
-     * @SWG\Schema(
-     *          type="object",
-     *          example={},
-     *      ),
-     *  )
+     * @OA\Response(
+     *     response=200,
+     *     description="success",
+     *     @OA\Schema(
+     *         type="object",
+     *         example={},
+     *     ),
+     * )
      *
      * @throws Throwable
      */

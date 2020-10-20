@@ -10,9 +10,9 @@ use App\Entity\User;
 use App\Entity\UserGroup;
 use App\Resource\UserResource;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +22,7 @@ use Throwable;
 /**
  * Class DetachUserGroupController
  *
- * @SWG\Tag(name="User Management")
+ * @OA\Tag(name="User Management")
  *
  * @package App\Controller\Api\User
  */
@@ -63,28 +63,32 @@ class DetachUserGroupController
      *
      * @Security("is_granted('ROLE_ROOT')")
      *
-     * @SWG\Parameter(
-     *      type="string",
+     * @OA\Parameter(
      *      name="userId",
      *      in="path",
      *      required=true,
      *      description="User GUID",
-     *      default="User GUID",
+     *      @OA\Schema(
+     *          type="string",
+     *          default="User GUID",
+     *      )
      *  )
-     * @SWG\Parameter(
-     *      type="string",
+     * @OA\Parameter(
      *      name="userGroupId",
      *      in="path",
      *      required=true,
      *      description="User Group GUID",
-     *      default="User Group GUID",
+     *      @OA\Schema(
+     *          type="string",
+     *          default="User Group GUID",
+     *      )
      *  )
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="User groups",
-     * @SWG\Schema(
+     *      @OA\Schema(
      *          type="array",
-     * @SWG\Items(
+     *          @OA\Items(
      *              ref=@Model(
      *                  type=App\Entity\UserGroup::class,
      *                  groups={"UserGroup", "UserGroup.role"},
@@ -92,29 +96,29 @@ class DetachUserGroupController
      *          ),
      *      ),
      *  )
-     * @SWG\Response(
+     * @OA\Response(
      *      response=401,
      *      description="Unauthorized",
-     *      examples={
-     *          "Token not found": "{code: 401, message: 'JWT Token not found'}",
-     *          "Expired token": "{code: 401, message: 'Expired JWT Token'}",
-     *      },
-     * @SWG\Schema(
+     *      @OA\Schema(
      *          type="object",
-     * @SWG\Property(property="code", type="integer", description="Error code"),
-     * @SWG\Property(property="message", type="string", description="Error description"),
+     *          example={
+     *              "Token not found": "{code: 401, message: 'JWT Token not found'}",
+     *              "Expired token": "{code: 401, message: 'Expired JWT Token'}",
+     *          },
+     *          @OA\Property(property="code", type="integer", description="Error code"),
+     *          @OA\Property(property="message", type="string", description="Error description"),
      *      ),
      *  )
-     * @SWG\Response(
+     * @OA\Response(
      *      response=403,
      *      description="Forbidden",
-     *      examples={
-     *          "Access denied": "{code: 403, message: 'Access denied'}",
-     *      },
-     * @SWG\Schema(
+     *      @OA\Schema(
      *          type="object",
-     * @SWG\Property(property="code", type="integer", description="Error code"),
-     * @SWG\Property(property="message", type="string", description="Error description"),
+     *          example={
+     *              "Access denied": "{code: 403, message: 'Access denied'}",
+     *          },
+     *          @OA\Property(property="code", type="integer", description="Error code"),
+     *          @OA\Property(property="message", type="string", description="Error description"),
      *      ),
      *  )
      *

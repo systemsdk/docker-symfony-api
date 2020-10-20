@@ -8,7 +8,7 @@ namespace App\Controller\Api;
 
 use App\Rest\ResponseHandler;
 use App\Service\HealthService;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +17,7 @@ use Throwable;
 /**
  * Class HealthController
  *
- * @SWG\Tag(name="Tools")
+ * @OA\Tag(name="Tools")
  *
  * @package App\Controller\Api
  */
@@ -45,17 +45,17 @@ class HealthController
      *     methods={"GET"}
      *  )
      *
-     * @SWG\Get(security={})
+     * @OA\Get(security={})
      *
-     * @SWG\Response(
-     *      response=200,
-     *      description="success",
-     * @SWG\Schema(
-     *          type="object",
-     *          example={"timestamp": "2019-08-01T09:00:00+00:00"},
-     * @SWG\Property(property="timestamp", type="string"),
-     *      ),
-     *  )
+     * @OA\Response(
+     *     response=200,
+     *     description="success",
+     *     @OA\Schema(
+     *         type="object",
+     *         example={"timestamp": "2019-08-01T09:00:00+00:00"},
+     *         @OA\Property(property="timestamp", type="string"),
+     *     ),
+     * )
      *
      * @throws Throwable
      */

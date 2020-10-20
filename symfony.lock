@@ -147,9 +147,6 @@
     "ergebnis/json-printer": {
         "version": "3.0.2"
     },
-    "exsyst/swagger": {
-        "version": "v0.4.1"
-    },
     "ezimuel/guzzlestreams": {
         "version": "3.0.1"
     },

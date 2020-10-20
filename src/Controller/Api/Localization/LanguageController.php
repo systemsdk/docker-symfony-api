@@ -7,7 +7,7 @@ declare(strict_types = 1);
 namespace App\Controller\Api\Localization;
 
 use App\Service\LocalizationService;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,9 +19,9 @@ use Symfony\Component\Routing\Annotation\Route;
  *     methods={"GET"}
  *  )
  *
- * @SWG\Get(security={})
+ * @OA\Get(security={})
  *
- * @SWG\Tag(name="Localization")
+ * @OA\Tag(name="Localization")
  *
  * @package App\Controller\Api\Localization
  */
@@ -41,13 +41,13 @@ class LanguageController
      * Endpoint action to get supported languages. This is for use to choose
      * what language your frontend application can use within its translations.
      *
-     * @SWG\Response(
+     * @OA\Response(
      *      response=200,
      *      description="List of language strings.",
-     * @SWG\Schema(
+     *      @OA\Schema(
      *          type="array",
      *          example={"en","ru"},
-     * @SWG\Items(type="string"),
+     *          @OA\Items(type="string"),
      *      ),
      *  )
      */

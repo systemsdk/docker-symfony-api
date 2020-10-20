@@ -11,8 +11,8 @@ use App\Entity\Traits\Uuid;
 use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
+use OpenApi\Annotations as OA;
 use Ramsey\Uuid\UuidInterface;
-use Swagger\Annotations as SWG;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Throwable;
 
@@ -50,7 +50,7 @@ class LogLoginFailure implements EntityInterface
      *  )
      * @ORM\Id()
      *
-     * @SWG\Property(type="string", format="uuid")
+     * @OA\Property(type="string", format="uuid")
      */
     private UuidInterface $id;
 

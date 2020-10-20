@@ -7,7 +7,7 @@ declare(strict_types = 1);
 namespace App\Rest\Traits\Actions\Anon;
 
 use App\Rest\Traits\Methods\DeleteMethod;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,14 +38,14 @@ trait DeleteAction
      *      methods={"DELETE"},
      *  )
      *
-     * @SWG\Response(
-     *      response=200,
-     *      description="deleted",
-     * @SWG\Schema(
-     *          type="object",
-     *          example={},
-     *      ),
-     *  )
+     * @OA\Response(
+     *     response=200,
+     *     description="deleted",
+     *     @OA\Schema(
+     *         type="object",
+     *         example={},
+     *     ),
+     * )
      *
      * @throws Throwable
      */

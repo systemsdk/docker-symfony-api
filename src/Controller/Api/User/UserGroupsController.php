@@ -8,9 +8,9 @@ namespace App\Controller\Api\User;
 
 use App\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 /**
  * Class UserGroupsController
  *
- * @SWG\Tag(name="User Management")
+ * @OA\Tag(name="User Management")
  *
  * @package App\Controller\Api\User
  */
@@ -39,11 +39,11 @@ class UserGroupsController
      * Fetch specified user user groups, accessible only for 'IS_USER_HIMSELF' or 'ROLE_ROOT' users.
      *
      * @Route(
-     *      "/user/{requestUser}/groups",
-     *      requirements={
-     *          "requestUser" = "%app.uuid_v1_regex%",
-     *      },
-     *      methods={"GET"},
+     *     "/user/{requestUser}/groups",
+     *     requirements={
+     *         "requestUser" = "%app.uuid_v1_regex%",
+     *     },
+     *     methods={"GET"},
      *  )
      *
      * @ParamConverter(
@@ -53,43 +53,43 @@ class UserGroupsController
      *
      * @Security("is_granted('IS_USER_HIMSELF', requestUser) or is_granted('ROLE_ROOT')")
      *
-     * @SWG\Response(
-     *      response=200,
-     *      description="User groups",
-     * @SWG\Schema(
-     *          type="array",
-     * @SWG\Items(
-     *              ref=@Model(
-     *                  type=App\Entity\UserGroup::class,
-     *                  groups={"UserGroup", "UserGroup.role"},
-     *              ),
-     *          ),
-     *      ),
+     * @OA\Response(
+     *     response=200,
+     *     description="User groups",
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(
+     *             ref=@Model(
+     *                 type=App\Entity\UserGroup::class,
+     *                 groups={"UserGroup", "UserGroup.role"},
+     *             ),
+     *         ),
+     *     ),
+     * )
+     * @OA\Response(
+     *     response=401,
+     *     description="Unauthorized",
+     *     @OA\Schema(
+     *         type="object",
+     *         example={
+     *             "Token not found": "{code: 401, message: 'JWT Token not found'}",
+     *             "Expired token": "{code: 401, message: 'Expired JWT Token'}",
+     *         },
+     *         @OA\Property(property="code", type="integer", description="Error code"),
+     *         @OA\Property(property="message", type="string", description="Error description"),
+     *     ),
      *  )
-     * @SWG\Response(
-     *      response=401,
-     *      description="Unauthorized",
-     *      examples={
-     *          "Token not found": "{code: 401, message: 'JWT Token not found'}",
-     *          "Expired token": "{code: 401, message: 'Expired JWT Token'}",
-     *      },
-     * @SWG\Schema(
-     *          type="object",
-     * @SWG\Property(property="code", type="integer", description="Error code"),
-     * @SWG\Property(property="message", type="string", description="Error description"),
-     *      ),
-     *  )
-     * @SWG\Response(
-     *      response=403,
-     *      description="Access denied",
-     *      examples={
-     *          "Access denied": "{code: 403, message: 'Access denied'}",
-     *      },
-     * @SWG\Schema(
-     *          type="object",
-     * @SWG\Property(property="code", type="integer", description="Error code"),
-     * @SWG\Property(property="message", type="string", description="Error description"),
-     *      ),
+     * @OA\Response(
+     *     response=403,
+     *     description="Access denied",
+     *     @OA\Schema(
+     *         type="object",
+     *         example={
+     *             "Access denied": "{code: 403, message: 'Access denied'}",
+     *         },
+     *         @OA\Property(property="code", type="integer", description="Error code"),
+     *         @OA\Property(property="message", type="string", description="Error description"),
+     *     ),
      *  )
      */
     public function __invoke(User $requestUser): JsonResponse
