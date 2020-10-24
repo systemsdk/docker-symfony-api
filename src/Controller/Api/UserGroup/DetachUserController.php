@@ -64,7 +64,7 @@ class DetachUserController
      * @Security("is_granted('ROLE_ROOT')")
      *
      * @OA\Parameter(
-     *     name="userGroupId",
+     *     name="userGroup",
      *     in="path",
      *     required=true,
      *     description="User Group GUID",
@@ -74,7 +74,7 @@ class DetachUserController
      *     )
      * )
      * @OA\Parameter(
-     *     name="userId",
+     *     name="user",
      *     in="path",
      *     required=true,
      *     description="User GUID",
@@ -86,7 +86,7 @@ class DetachUserController
      * @OA\Response(
      *     response=200,
      *     description="Users",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *         type="array",
      *         @OA\Items(
      *             ref=@Model(
@@ -98,17 +98,23 @@ class DetachUserController
      * )
      * @OA\Response(
      *     response=401,
-     *     description="Invalid token",
-     *     @OA\Schema(
-     *         example={
-     *             "Token not found": "{code: 401, message: 'JWT Token not found'}",
-     *             "Expired token": "{code: 401, message: 'Expired JWT Token'}",
-     *         },
+     *     description="Invalid token (not found or expired)",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         example={"code": 401, "message": "JWT Token not found"},
+     *         @OA\Property(property="code", type="integer", description="Error code"),
+     *         @OA\Property(property="message", type="string", description="Error description"),
      *     ),
      * )
      * @OA\Response(
      *     response=403,
      *     description="Access denied",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         example={"code": 403, "message": "Access denied"},
+     *         @OA\Property(property="code", type="integer", description="Error code"),
+     *         @OA\Property(property="message", type="string", description="Error description"),
+     *     ),
      *  )
      *
      * @throws Throwable

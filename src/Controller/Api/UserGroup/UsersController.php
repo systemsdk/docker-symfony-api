@@ -61,7 +61,7 @@ class UsersController
      * @OA\Response(
      *     response=200,
      *     description="User group users",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *         ref=@Model(
      *             type=User::class,
      *             groups={"User", "User.userGroups", "User.roles", "UserGroup", "UserGroup.role"},
@@ -70,12 +70,12 @@ class UsersController
      * )
      * @OA\Response(
      *     response=401,
-     *     description="Invalid token",
-     *     @OA\Schema(
-     *         example={
-     *             "Token not found": "{code: 401, message: 'JWT Token not found'}",
-     *             "Expired token": "{code: 401, message: 'Expired JWT Token'}",
-     *         },
+     *     description="Invalid token (not found or expired)",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         example={"code": 401, "message": "JWT Token not found"},
+     *         @OA\Property(property="code", type="integer", description="Error code"),
+     *         @OA\Property(property="message", type="string", description="Error description"),
      *     ),
      * )
      * @OA\Response(

@@ -60,7 +60,7 @@ class DeleteUserController extends Controller
      * @OA\Response(
      *     response=200,
      *     description="deleted",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *         ref=@Model(
      *             type=User::class,
      *             groups={"User"},
@@ -70,11 +70,9 @@ class DeleteUserController extends Controller
      * @OA\Response(
      *     response=403,
      *     description="Access denied",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *         type="object",
-     *         example={
-     *             "Access denied": "{code: 403, message: 'Access denied'}",
-     *         },
+     *         example={"code": 403, "message": "Access denied"},
      *         @OA\Property(property="code", type="integer", description="Error code"),
      *         @OA\Property(property="message", type="string", description="Error description"),
      *     ),

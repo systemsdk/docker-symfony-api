@@ -41,7 +41,7 @@ trait DeleteAction
      * @OA\Response(
      *     response=200,
      *     description="deleted",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *         type="object",
      *         example={},
      *     ),

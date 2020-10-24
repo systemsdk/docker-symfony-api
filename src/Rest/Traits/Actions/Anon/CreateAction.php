@@ -36,10 +36,19 @@ trait CreateAction
      *     methods={"POST"},
      *  )
      *
+     * @OA\RequestBody(
+     *      request="body",
+     *      description="object",
+     *      @OA\JsonContent(
+     *          type="object",
+     *          example={"param": "value"},
+     *      )
+     * )
+     *
      * @OA\Response(
      *     response=201,
      *     description="created",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *         type="object",
      *         example={},
      *     ),

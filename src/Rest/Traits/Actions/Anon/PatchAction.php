@@ -39,10 +39,19 @@ trait PatchAction
      *      methods={"PATCH"},
      *  )
      *
+     * @OA\RequestBody(
+     *      request="body",
+     *      description="object",
+     *      @OA\JsonContent(
+     *          type="object",
+     *          example={"param": "value"},
+     *      )
+     * )
+     *
      * @OA\Response(
      *     response=200,
      *     description="success",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *         type="object",
      *         example={},
      *     ),

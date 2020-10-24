@@ -50,7 +50,7 @@ class HealthController
      * @OA\Response(
      *     response=200,
      *     description="success",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *         type="object",
      *         example={"timestamp": "2019-08-01T09:00:00+00:00"},
      *         @OA\Property(property="timestamp", type="string"),

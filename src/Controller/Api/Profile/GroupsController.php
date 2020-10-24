@@ -48,7 +48,7 @@ class GroupsController
      * @OA\Response(
      *     response=200,
      *     description="User groups",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *         type="array",
      *         @OA\Items(
      *             ref=@Model(
@@ -60,13 +60,10 @@ class GroupsController
      *  )
      * @OA\Response(
      *     response=401,
-     *     description="Invalid token",
-     *     @OA\Schema(
+     *     description="Invalid token (not found or expired)",
+     *     @OA\JsonContent(
      *         type="object",
-     *         example={
-     *             "Token not found": "{code: 401, message: 'JWT Token not found'}",
-     *             "Expired token": "{code: 401, message: 'Expired JWT Token'}",
-     *         },
+     *         example={"code": 401, "message": "JWT Token not found"},
      *         @OA\Property(property="code", type="integer", description="Error code"),
      *         @OA\Property(property="message", type="string", description="Error description"),
      *     ),
@@ -74,15 +71,13 @@ class GroupsController
      * @OA\Response(
      *     response=403,
      *     description="Access denied",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *        type="object",
-     *        example={
-     *            "Access denied": "{code: 403, message: 'Access denied'}",
-     *        },
+     *        example={"code": 403, "message": "Access denied"},
      *        @OA\Property(property="code", type="integer", description="Error code"),
      *        @OA\Property(property="message", type="string", description="Error description"),
      *     ),
-     *  )
+     * )
      */
     public function __invoke(User $loggedInUser): JsonResponse
     {

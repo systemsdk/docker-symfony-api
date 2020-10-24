@@ -44,7 +44,7 @@ class LanguageController
      * @OA\Response(
      *      response=200,
      *      description="List of language strings.",
-     *      @OA\Schema(
+     *      @OA\JsonContent(
      *          type="array",
      *          example={"en","ru"},
      *          @OA\Items(type="string"),

@@ -38,7 +38,7 @@ trait FindAction
      * @OA\Response(
      *     response=200,
      *     description="success",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *         type="array",
      *         @OA\Items(type="string"),
      *     ),

@@ -47,7 +47,7 @@ class RolesController
      * @OA\Response(
      *     response=200,
      *     description="User roles",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *         type="array",
      *         @OA\Items(
      *             ref=@Model(
@@ -59,13 +59,10 @@ class RolesController
      *  )
      * @OA\Response(
      *     response=401,
-     *     description="Invalid token",
-     *     @OA\Schema(
+     *     description="Invalid token (not found or expired)",
+     *     @OA\JsonContent(
      *         type="object",
-     *         example={
-     *             "Token not found": "{code: 401, message: 'JWT Token not found'}",
-     *             "Expired token": "{code: 401, message: 'Expired JWT Token'}",
-     *         },
+     *         example={"code": 401, "message": "JWT Token not found"},
      *         @OA\Property(property="code", type="integer", description="Error code"),
      *         @OA\Property(property="message", type="string", description="Error description"),
      *     ),

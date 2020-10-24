@@ -44,7 +44,7 @@ class VersionController
      * @OA\Response(
      *     response=200,
      *     description="success",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *         type="object",
      *         example={"version": "1.0.0"},
      *         @OA\Property(property="version", type="string", description="Version number"),

@@ -41,7 +41,7 @@ trait FindOneAction
      * @OA\Response(
      *     response=200,
      *     description="success",
-     *     @OA\Schema(
+     *     @OA\JsonContent(
      *         type="object",
      *         example={},
      *     ),

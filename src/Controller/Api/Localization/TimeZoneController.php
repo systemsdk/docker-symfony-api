@@ -44,39 +44,39 @@ class TimeZoneController
      * time, datetime, etc. formatting.
      *
      * @OA\Response(
-     *      response=200,
-     *      description="List of timezone objects.",
-     * @OA\Schema(
-     *          type="array",
-     * @OA\Items(
-     *              type="object",
-     * @OA\Property(
-     *                  property="timezone",
-     *                  type="string",
-     *                  example="Europe",
-     *                  description="Africa,America,Antarctica,Arctic,Asia,Atlantic,Australia,Europe,Pacific,UTC."
-     *              ),
-     * @OA\Property(
-     *                  property="identier",
-     *                  type="string",
-     *                  example="Europe/Kiev",
-     *                  description="Timezone identifier that you can use with other librariers."
-     *              ),
-     * @OA\Property(
-     *                  property="offset",
-     *                  type="string",
-     *                  example="GMT+2:00",
-     *                  description="GMT offset of identifier."
-     *              ),
-     * @OA\Property(
-     *                  property="value",
-     *                  type="string",
-     *                  example="Europe/Kiev",
-     *                  description="User friendly value of identifier value eg. '_' characters are replaced by space."
-     *              ),
-     *          ),
-     *      ),
-     *  )
+     *     response=200,
+     *     description="List of timezone objects.",
+     *     @OA\JsonContent(
+     *         type="array",
+     *         @OA\Items(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="timezone",
+     *                 type="string",
+     *                 example="Europe",
+     *                 description="Africa,America,Antarctica,Arctic,Asia,Atlantic,Australia,Europe,Pacific,UTC."
+     *             ),
+     *             @OA\Property(
+     *                 property="identier",
+     *                 type="string",
+     *                 example="Europe/Kiev",
+     *                 description="Timezone identifier that you can use with other librariers."
+     *             ),
+     *             @OA\Property(
+     *                 property="offset",
+     *                 type="string",
+     *                 example="GMT+2:00",
+     *                 description="GMT offset of identifier."
+     *             ),
+     *             @OA\Property(
+     *                 property="value",
+     *                 type="string",
+     *                 example="Europe/Kiev",
+     *                 description="User friendly value of identifier value eg. '_' characters are replaced by space."
+     *             ),
+     *         ),
+     *     ),
+     * )
      *
      * @throws Throwable
      */
