@@ -120,6 +120,9 @@
     "doctrine/sql-formatter": {
         "version": "1.1.0"
     },
+    "dragonmantank/cron-expression": {
+        "version": "v3.0.2"
+    },
     "easycorp/easy-log-handler": {
         "version": "1.0",
         "recipe": {
@@ -210,9 +213,6 @@
     },
     "monolog/monolog": {
         "version": "1.25.2"
-    },
-    "mtdowling/cron-expression": {
-        "version": "v1.2.1"
     },
     "mustangostang/spyc": {
         "version": "0.6.3"
