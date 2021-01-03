@@ -24,27 +24,28 @@ use PhpCsFixer\Fixer\Phpdoc\PhpdocSummaryFixer;
 use PhpCsFixer\Fixer\PhpTag\BlankLineAfterOpeningTagFixer;
 use PhpCsFixer\Fixer\Whitespace\BlankLineBeforeStatementFixer;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
+use SlevomatCodingStandard\Sniffs\Whitespaces\DuplicateSpacesSniff;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
 use Symplify\CodingStandard\Fixer\Commenting\ParamReturnAndVarTagMalformsFixer;
 use Symplify\CodingStandard\Fixer\Strict\BlankLineAfterStrictTypesFixer;
-use SlevomatCodingStandard\Sniffs\Whitespaces\DuplicateSpacesSniff;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $containerConfigurator->import(__DIR__ . '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/psr12.php');
+    $imports = [
+        '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/psr12.php',
+        '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/php70.php',
+        '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/php71.php',
+        '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/clean-code.php',
+        '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/common.php',
+        '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/dead-code.php',
+        '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/symfony.php',
+    ];
 
-    $containerConfigurator->import(__DIR__ . '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/php70.php');
-
-    $containerConfigurator->import(__DIR__ . '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/php71.php');
-
-    $containerConfigurator->import(__DIR__ . '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/clean-code.php');
-
-    $containerConfigurator->import(__DIR__ . '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/common.php');
-
-    $containerConfigurator->import(__DIR__ . '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/dead-code.php');
-
-    $containerConfigurator->import(__DIR__ . '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/symfony.php');
+    array_map(
+        [$containerConfigurator, 'import'],
+        array_map(static fn (string $path): string => __DIR__ . $path, $imports)
+    );
 
     $services = $containerConfigurator->services();
 
