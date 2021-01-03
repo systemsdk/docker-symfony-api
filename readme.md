@@ -273,7 +273,7 @@ Notes: Please see more commands in Makefile
 * [symfony-console-form](https://packagist.org/packages/matthiasnoback/symfony-console-form)
 * [api-doc-bundle](https://packagist.org/packages/nelmio/api-doc-bundle)
 * [cors-bundle](https://packagist.org/packages/nelmio/cors-bundle)
-* [device-detector](https://packagist.org/packages/piwik/device-detector)
+* [device-detector](https://packagist.org/packages/matomo/device-detector)
 * [uuid-doctrine](https://packagist.org/packages/ramsey/uuid-doctrine)
 * [doctrine-extensions-bundle](https://packagist.org/packages/stof/doctrine-extensions-bundle)
 * [php-coveralls](https://github.com/php-coveralls/php-coveralls)
