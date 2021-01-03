@@ -10,9 +10,9 @@ use App\Entity\Interfaces\EntityInterface;
 use App\Repository\Interfaces\BaseRepositoryInterface;
 use App\Repository\Traits\RepositoryMethods;
 use App\Repository\Traits\RepositoryWrappers;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Class BaseRepository

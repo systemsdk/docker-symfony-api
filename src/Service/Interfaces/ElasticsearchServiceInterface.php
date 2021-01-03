@@ -32,9 +32,6 @@ interface ElasticsearchServiceInterface
      */
     public function info(array $params = []);
 
-    /**
-     * Get template
-     */
     public function getTemplate(array $params): array;
 
     /**

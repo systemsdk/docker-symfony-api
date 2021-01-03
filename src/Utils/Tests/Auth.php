@@ -109,7 +109,6 @@ class Auth
 
         // User + password doesn't exists on cache - so we need to make real login
         if (!array_key_exists($hash, $cache)) {
-            // Get client
             /** @var KernelBrowser $client */
             $client = $this->kernel->getContainer()->get('test.client');
             // Create request to make login using given credentials

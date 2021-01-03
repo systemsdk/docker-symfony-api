@@ -29,7 +29,7 @@ make restart-prod                       # Stop and start prod environment
 make env-staging                        # Create cached config file .env.local.php (usually for staging environment)
 make env-prod                           # Create cached config file .env.local.php (usually for prod environment)
 
-generate-jwt-keys                       # Generates JWT auth keys
+make generate-jwt-keys                  # Generates JWT auth keys
 
 make ssh                                # Enter symfony container shell
 make ssh-nginx                          # Enter nginx container shell
@@ -78,10 +78,10 @@ make elastic-create-or-update-template  # Create/update index template in Elasti
 make phpunit                            # Run all tests
 make report-code-coverage               # Update code coverage report on https://coveralls.io (COVERALLS_REPO_TOKEN should be set on CI side)
 
-make phpcs                              # Run PHP CodeSniffer
 make ecs                                # Run The Easiest Way to Use Any Coding Standard
 make ecs-fix                            # Run The Easiest Way to Use Any Coding Standard to fix issues
-phpmetrics                              # Generates PhpMetrics static analysis
+make phpcs                              # Run PHP CodeSniffer
+make phpmetrics                         # Generates PhpMetrics static analysis
 make phpcpd                             # Run php copy/paste detector
 make phpmd                              # Run php mess detector
 make phpstan                            # Run php static analysis tool

@@ -60,7 +60,6 @@ class CreateDateDimensionEntitiesCommand extends Command
     {
         // Create output decorator helpers for the Symfony Style Guide.
         $this->io = new SymfonyStyle($input, $output);
-        // Set title
         $this->io->title($this->getDescription());
         // Determine start and end years
         $yearStart = $this->getYearStart();

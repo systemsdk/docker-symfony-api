@@ -211,6 +211,9 @@
     "mark-gerarts/automapper-plus-bundle": {
         "version": "1.2.1"
     },
+    "matomo/device-detector": {
+        "version": "4.0.2"
+    },
     "matthiasnoback/symfony-console-form": {
         "version": "v3.6.0"
     },
@@ -552,6 +555,9 @@
     },
     "symfony/property-info": {
         "version": "v4.4.1"
+    },
+    "symfony/proxy-manager-bridge": {
+        "version": "v4.4.18"
     },
     "symfony/requirements-checker": {
         "version": "1.0",

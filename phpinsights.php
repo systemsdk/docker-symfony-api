@@ -64,6 +64,7 @@ return [
         SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff::class,
         SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff::class,
         SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff::class,
+        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff::class,
     ],
     'config' => [
         ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff::class => [
@@ -112,7 +113,7 @@ return [
             'searchAnnotations' => true,
         ],
         SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff::class => [
-            'newlinesCountAfterDeclare' => 1,
+            'newlinesCountAfterDeclare' => 2,
             'newlinesCountBetweenOpenTagAndDeclare' => 1,
             'spacesCountAroundEqualsSign' => 1,
         ],
