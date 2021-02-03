@@ -30,6 +30,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
       supervisor \
       cron \
       libzip-dev \
+      wget \
       librabbitmq-dev \
     && pecl install amqp \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
@@ -60,6 +61,10 @@ COPY ./docker/$BUILD_ARGUMENT_ENV/php.ini /usr/local/etc/php/php.ini
 COPY ./docker/general/do_we_need_xdebug.sh /tmp/
 COPY ./docker/dev/xdebug.ini /tmp/
 RUN chmod u+x /tmp/do_we_need_xdebug.sh && /tmp/do_we_need_xdebug.sh
+
+# install security-checker in case dev/test environment
+COPY ./docker/general/do_we_need_security-checker.sh /tmp/
+RUN chmod u+x /tmp/do_we_need_security-checker.sh && /tmp/do_we_need_security-checker.sh
 
 # install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

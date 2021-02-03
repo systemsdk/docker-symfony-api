@@ -18,4 +18,4 @@ monolog:
             level: error
         easylog:
             type: service
-            id: EasyCorp\EasyLog\EasyLogHandler
+            id: easy_log.handler

@@ -33,10 +33,10 @@
 		"ext-pdo": "*",
 		"ext-pdo_mysql": "*",
 		"ext-amqp": "*",
-		"antishov/doctrine-extensions-bundle": "^1.4",
+		"stof/doctrine-extensions-bundle": "^1.5",
 		"beberlei/doctrineextensions": "^1.3",
 		"doctrine/doctrine-migrations-bundle": "^3.0",
-		"easycorp/easy-log-handler": "1.0.*",
+		"systemsdk/easy-log-bundle": "1.10.*",
 		"elasticsearch/elasticsearch": "^7.10",
 		"jmose/command-scheduler-bundle": "^3.0",
 		"lexik/jwt-authentication-bundle": "^2.10",
@@ -88,7 +88,6 @@
 		"doctrine/doctrine-fixtures-bundle": "^3.4",
 		"ergebnis/composer-normalize": "^2.13",
 		"roave/security-advisories": "dev-master",
-		"sensiolabs/security-checker": "^6.0",
 		"symfony/debug-bundle": "4.4.*",
 		"symfony/maker-bundle": "^1.26",
 		"symfony/requirements-checker": "^2.0",
@@ -136,14 +135,14 @@
 	"scripts": {
 		"post-install-cmd": [
 			"if test -d vendor/symfony/requirements-checker; then ./vendor/bin/requirements-checker; fi",
-			"if test -d vendor/sensiolabs/security-checker; then ./vendor/bin/security-checker security:check; fi",
 			"if test -d vendor/bamarni/composer-bin-plugin; then composer bin all install; fi",
+			"if which local-php-security-checker; then local-php-security-checker --update-cache && local-php-security-checker; fi",
 			"@auto-scripts"
 		],
 		"post-update-cmd": [
 			"if test -d vendor/symfony/requirements-checker; then ./vendor/bin/requirements-checker; fi",
-			"if test -d vendor/sensiolabs/security-checker; then ./vendor/bin/security-checker security:check; fi",
 			"if test -d vendor/bamarni/composer-bin-plugin; then composer bin all update; fi",
+			"if which local-php-security-checker; then local-php-security-checker --update-cache && local-php-security-checker; fi",
 			"@auto-scripts"
 		],
 		"auto-scripts": {

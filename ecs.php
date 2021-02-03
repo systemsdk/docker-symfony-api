@@ -38,7 +38,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/php71.php',
         '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/clean-code.php',
         '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/common.php',
-        '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/dead-code.php',
         '/tools/03_ecs/vendor/symplify/easy-coding-standard/config/set/symfony.php',
     ];
 

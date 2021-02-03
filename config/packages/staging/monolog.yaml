@@ -26,4 +26,4 @@ monolog:
             level: debug
         easylog:
             type: service
-            id: EasyCorp\EasyLog\EasyLogHandler
+            id: easy_log.handler

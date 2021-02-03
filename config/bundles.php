@@ -19,4 +19,5 @@ return [
     AutoMapperPlus\AutoMapperPlusBundle\AutoMapperPlusBundle::class => ['all' => true],
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
     JMose\CommandSchedulerBundle\JMoseCommandSchedulerBundle::class => ['all' => true],
+    Systemsdk\Bundle\EasyLogBundle\EasyLogBundle::class => ['all' => true],
 ];
