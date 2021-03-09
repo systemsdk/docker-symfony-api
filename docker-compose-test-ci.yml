@@ -30,6 +30,8 @@ services:
           - "BUILD_ARGUMENT_DEBUG_ENABLED=false"
         dockerfile: ./Dockerfile
       container_name: ${COMPOSE_PROJECT_NAME}_symfony
+      volumes:
+        - ./.git:/var/www/html/.git
       depends_on:
         - mysql
         - rabbitmq
