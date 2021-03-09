@@ -8,6 +8,7 @@ ifndef APP_ENV
 	endif
 endif
 
+symfony_user=-u www-data
 project=-p ${COMPOSE_PROJECT_NAME}
 service=${COMPOSE_PROJECT_NAME}:latest
 openssl_bin:=$(shell which openssl)
@@ -87,7 +88,7 @@ endif
 ###< lexik/jwt-authentication-bundle ###
 
 ssh:
-	@docker-compose $(project) exec $(optionT) symfony bash
+	@docker-compose $(project) exec $(optionT) $(symfony_user) symfony bash
 
 ssh-nginx:
 	@docker-compose $(project) exec nginx /bin/sh
@@ -108,10 +109,13 @@ ssh-kibana:
 	@docker-compose $(project) exec kibana bash
 
 exec:
-	@docker-compose $(project) exec $(optionT) symfony $$cmd
+	@docker-compose $(project) exec $(optionT) $(symfony_user) symfony $$cmd
 
 exec-bash:
-	@docker-compose $(project) exec $(optionT) symfony bash -c "$(cmd)"
+	@docker-compose $(project) exec $(optionT) $(symfony_user) symfony bash -c "$(cmd)"
+
+exec-by-root:
+	@docker-compose $(project) exec $(optionT) symfony $$cmd
 
 report-prepare:
 	mkdir -p $(dir)/reports/coverage
@@ -209,7 +213,7 @@ ecs-fix: ## Run The Easy Coding Standard to fix issues
 
 ###> phpmetrics ###
 phpmetrics:
-	@make exec cmd="make phpmetrics-process"
+	@make exec-by-root cmd="make phpmetrics-process"
 
 phpmetrics-process: ## Generates PhpMetrics static analysis, should be run inside symfony container
 	@mkdir -p reports/phpmetrics
@@ -219,7 +223,7 @@ phpmetrics-process: ## Generates PhpMetrics static analysis, should be run insid
 	fi;
 	@echo "\033[32mRunning PhpMetrics\033[39m"
 	@php ./vendor/bin/phpmetrics --version
-	@./vendor/bin/phpmetrics --junit=reports/junit.xml --report-html=reports/phpmetrics .
+	@php ./vendor/bin/phpmetrics --junit=reports/junit.xml --report-html=reports/phpmetrics .
 ###< phpmetrics ###
 
 ###> php copy/paste detector ###

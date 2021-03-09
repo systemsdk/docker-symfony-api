@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 /**
- * /tests/Functional/Api/Controller/DefaultControllerTest.php
+ * /tests/Functional/Controller/Api/DefaultControllerTest.php
  */
 
-namespace App\Tests\Functional\Api\Controller;
+namespace App\Tests\Functional\Controller\Api;
 
 use App\Utils\Tests\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +13,7 @@ use Throwable;
 /**
  * Class DefaultControllerTest
  *
- * @package App\Tests\Functional\Api\Controller
+ * @package App\Tests\Functional\Controller\Api
  */
 class DefaultControllerTest extends WebTestCase
 {
@@ -29,8 +29,7 @@ class DefaultControllerTest extends WebTestCase
         $client = $this->getTestClient();
         $client->request('GET', $this->baseUrl);
 
-        /** @var Response $response */
         $response = $client->getResponse();
-        static::assertSame(200, $response->getStatusCode(), "Response:\n" . $response);
+        static::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
     }
 }

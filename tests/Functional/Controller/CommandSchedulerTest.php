@@ -1,12 +1,17 @@
 <?php
 declare(strict_types = 1);
 
-namespace App\Tests\Functional;
+namespace App\Tests\Functional\Controller;
 
 use App\Utils\Tests\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
+/**
+ * Class CommandSchedulerTest
+ *
+ * @package App\Tests\Functional\Controller
+ */
 class CommandSchedulerTest extends WebTestCase
 {
     /**
@@ -19,7 +24,6 @@ class CommandSchedulerTest extends WebTestCase
         $client = $this->getTestClient();
         $client->request('GET', '/command-scheduler/list');
 
-        /** @var Response $response */
         $response = $client->getResponse();
         static::assertInstanceOf(Response::class, $response);
         // check for 401 due to allow only for user with admin role

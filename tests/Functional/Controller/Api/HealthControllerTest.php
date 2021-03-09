@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 /**
- * /tests/Functional/Api/Controller/HealthControllerTest.php
+ * /tests/Functional/Controller/Api/HealthControllerTest.php
  */
 
-namespace App\Tests\Functional\Api\Controller;
+namespace App\Tests\Functional\Controller\Api;
 
 use App\Resource\LogRequestResource;
 use App\Utils\Tests\WebTestCase;
@@ -14,7 +14,7 @@ use Throwable;
 /**
  * Class HealthControllerTest
  *
- * @package App\Tests\Functional\Api\Controller
+ * @package App\Tests\Functional\Controller\Api
  */
 class HealthControllerTest extends WebTestCase
 {
@@ -30,7 +30,6 @@ class HealthControllerTest extends WebTestCase
         $client = $this->getTestClient();
         $client->request('GET', $this->baseUrl);
 
-        /** @var Response $response */
         $response = $client->getResponse();
         static::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
     }

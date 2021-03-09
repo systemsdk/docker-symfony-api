@@ -24,6 +24,7 @@ Note: OS recommendation - Linux Ubuntu based.
 5. RabbitMQ 3
 6. Elasticsearch 7
 7. Kibana 7
+8. Redis 6
 
 ## Setting up PROD environment
 1.Clone this repository from GitHub.
@@ -103,13 +104,13 @@ Note 3: Delete var/mysql-data folder if it is exist.
 
 - In case you need debug only requests with IDE KEY: PHPSTORM from frontend in your browser:
 ```bash
-xdebug.remote_autostart = 0
+xdebug.start_with_request = no
 ```
 Install locally in Firefox extension "Xdebug helper" and set in settings IDE KEY: PHPSTORM
 
 - In case you need debug any request to an api (by default):
 ```bash
-xdebug.remote_autostart = 1
+xdebug.start_with_request = yes
 ```
 
 5.Elasticsearch is pre-configured with the following privileged bootstrap user(you can use it in order to enter in Kibana):
@@ -298,6 +299,7 @@ Notes: Please see more commands in Makefile
 * [Xdebug configuration](docs/xdebug.md)
 * [Swagger](docs/swagger.md)
 * [Postman](docs/postman.md)
+* [Redis GUI](docs/rdm.md)
 * [Messenger component](docs/messenger.md)
 
 ## Working on your project

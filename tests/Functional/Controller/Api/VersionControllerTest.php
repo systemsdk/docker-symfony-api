@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 /**
- * /tests/Functional/Api/Controller/VersionControllerTest.php
+ * /tests/Functional/Controller/Api/VersionControllerTest.php
  */
 
-namespace App\Tests\Functional\Api\Controller;
+namespace App\Tests\Functional\Controller\Api;
 
 use App\Resource\LogRequestResource;
 use App\Utils\JSON;
@@ -15,7 +15,7 @@ use Throwable;
 /**
  * Class VersionControllerTest
  *
- * @package App\Tests\Functional\Api\Controller
+ * @package App\Tests\Functional\Controller\Api
  */
 class VersionControllerTest extends WebTestCase
 {
@@ -31,7 +31,6 @@ class VersionControllerTest extends WebTestCase
         $client = $this->getTestClient();
         $client->request('GET', $this->baseUrl);
 
-        /** @var Response $response */
         $response = $client->getResponse();
         static::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
     }
@@ -64,10 +63,12 @@ class VersionControllerTest extends WebTestCase
         $client = $this->getTestClient();
         $client->request('GET', $this->baseUrl);
 
-        /** @var Response $response */
         $response = $client->getResponse();
         $version = $response->headers->get('X-API-VERSION');
         static::assertNotNull($version);
-        static::assertSame(JSON::decode(file_get_contents(__DIR__ . '/../../../../composer.json'))->version, $version);
+        static::assertSame(
+            JSON::decode((string)file_get_contents(__DIR__ . '/../../../../composer.json'))->version,
+            $version
+        );
     }
 }

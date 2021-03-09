@@ -1,9 +1,9 @@
-version: '3'
+version: '3.5'
 
 services:
 
     nginx:
-      image: nginx:latest
+      image: ${COMPOSE_PROJECT_NAME}_nginx:latest
       build:
         context: ./docker/
         args:
@@ -18,11 +18,11 @@ services:
         - .:/var/www/html:ro
       depends_on:
         - symfony
-      links:
+      networks:
         - symfony
 
     symfony: &symfony-template
-      image: symfony:latest
+      image: ${COMPOSE_PROJECT_NAME}_symfony:latest
       build:
         context: .
         args:
@@ -37,10 +37,9 @@ services:
         - mysql
         - rabbitmq
         - elasticsearch
-      links:
-        - mysql
-        - rabbitmq
-        - elasticsearch
+        - redis
+      networks:
+        - symfony
 
     ### Cron tasks, RabbitMQ consumers
     supervisord:
@@ -59,9 +58,11 @@ services:
         - MYSQL_DATABASE=symfony
       volumes:
         - ./var/mysql-data:/var/lib/mysql
+      networks:
+        - symfony
 
     rabbitmq:
-      image: rabbitmq:3-management-alpine
+      image: ${COMPOSE_PROJECT_NAME}_rabbitmq
       build:
         context: ./docker/rabbitmq/
         dockerfile: ./Dockerfile
@@ -76,9 +77,11 @@ services:
         - 15672:15672
       volumes:
         - ./var/rabbitmq:/var/lib/rabbitmq
+      networks:
+        - symfony
 
     elasticsearch:
-      image: elasticsearch:latest
+      image: ${COMPOSE_PROJECT_NAME}_elasticsearch
       build:
         context: ./docker/
         args:
@@ -98,9 +101,11 @@ services:
       volumes:
         - ./docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
         - ./var/elasticsearch-data:/usr/share/elasticsearch/data
+      networks:
+        - symfony
 
     kibana:
-      image: kibana:latest
+      image: ${COMPOSE_PROJECT_NAME}_kibana
       build:
         context: ./docker/
         args:
@@ -113,3 +118,18 @@ services:
         - ./docker/staging/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
       depends_on:
         - elasticsearch
+      networks:
+        - symfony
+
+    redis:
+      image: ${COMPOSE_PROJECT_NAME}_redis
+      container_name: ${COMPOSE_PROJECT_NAME}_redis
+      build:
+        context: ./docker/redis
+      restart: always
+      networks:
+        - symfony
+
+networks:
+  symfony:
+    name: symfony
