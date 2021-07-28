@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/EventSubscriber/ResponseSubscriber.php
- */
+
+declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
@@ -17,14 +15,9 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
  */
 class ResponseSubscriber implements EventSubscriberInterface
 {
-    private VersionService $version;
-
-    /**
-     * Constructor
-     */
-    public function __construct(VersionService $version)
-    {
-        $this->version = $version;
+    public function __construct(
+        private VersionService $version,
+    ) {
     }
 
     /**

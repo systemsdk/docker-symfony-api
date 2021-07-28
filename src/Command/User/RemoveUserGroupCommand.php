@@ -1,12 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/User/RemoveUserGroupCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\User;
 
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\Entity\UserGroup;
 use App\Resource\UserGroupResource;
 use Symfony\Component\Console\Command\Command;
@@ -22,29 +20,25 @@ use Throwable;
  */
 class RemoveUserGroupCommand extends Command
 {
-    // Traits
-    use StyleSymfony;
-
-    private UserGroupResource $userGroupResource;
-    private UserHelper $userHelper;
+    use SymfonyStyleTrait;
 
     /**
      * Constructor
      *
      * @throws LogicException
      */
-    public function __construct(UserGroupResource $userGroupResource, UserHelper $userHelper)
-    {
+    public function __construct(
+        private UserGroupResource $userGroupResource,
+        private UserHelper $userHelper,
+    ) {
         parent::__construct('user:remove-group');
-
-        $this->userGroupResource = $userGroupResource;
-        $this->userHelper = $userHelper;
 
         $this->setDescription('Console command to remove existing user group');
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      *
      * @throws Throwable
@@ -52,21 +46,23 @@ class RemoveUserGroupCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);
-
         $userGroup = $this->userHelper->getUserGroup($io, 'Which user group you want to remove?');
-        $message = null;
-
-        if ($userGroup instanceof UserGroup) {
-            // Delete user group
-            $this->userGroupResource->delete($userGroup->getId());
-            $message = 'User group removed - have a nice day';
-        }
+        $message = $userGroup instanceof UserGroup ? $this->delete($userGroup) : null;
 
         if ($input->isInteractive()) {
-            $message ??= 'Nothing changed - have a nice day';
-            $io->success($message);
+            $io->success($message ?? 'Nothing changed - have a nice day');
         }
 
         return 0;
+    }
+
+    /**
+     * @throws Throwable
+     */
+    private function delete(UserGroup $userGroup): string
+    {
+        $this->userGroupResource->delete($userGroup->getId());
+
+        return 'User group removed - have a nice day';
     }
 }

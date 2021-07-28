@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/EventSubscriber/BodySubscriber.php
- */
+
+declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
@@ -11,6 +9,9 @@ use JsonException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
+
+use function in_array;
+use function is_array;
 
 /**
  * Class BodySubscriber

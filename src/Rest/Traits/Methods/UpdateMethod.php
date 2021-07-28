@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Methods/UpdateMethod.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Methods;
 
@@ -32,9 +30,9 @@ trait UpdateMethod
         Request $request,
         RestDtoInterface $restDto,
         string $id,
-        ?array $allowedHttpMethods = null
+        ?array $allowedHttpMethods = null,
     ): Response {
-        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? ['PUT']);
+        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? [Request::METHOD_PUT]);
 
         try {
             $data = $resource->update($id, $restDto, true);

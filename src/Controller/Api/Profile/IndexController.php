@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/Profile/IndexController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\Profile;
 
@@ -26,16 +24,10 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class IndexController
 {
-    private SerializerInterface $serializer;
-    private RolesService $rolesService;
-
-    /**
-     * Constructor
-     */
-    public function __construct(SerializerInterface $serializer, RolesService $rolesService)
-    {
-        $this->serializer = $serializer;
-        $this->rolesService = $rolesService;
+    public function __construct(
+        private SerializerInterface $serializer,
+        private RolesService $rolesService,
+    ) {
     }
 
     /**
@@ -73,10 +65,10 @@ class IndexController
      */
     public function __invoke(User $loggedInUser): JsonResponse
     {
-        /** @var array<string, string|array> $output */
+        /** @var array<string, string|array<string, string>> $output */
         $output = JSON::decode(
-            $this->serializer->serialize($loggedInUser, 'json', ['groups' => 'set.UserProfile']),
-            true
+            $this->serializer->serialize($loggedInUser, 'json', ['groups' => User::SET_USER_PROFILE]),
+            true,
         );
         /** @var array<int, string> $roles */
         $roles = $output['roles'];

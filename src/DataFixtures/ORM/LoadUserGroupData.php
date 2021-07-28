@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/DataFixtures/ORM/LoadUserGroupData.php
- */
+
+declare(strict_types=1);
 
 namespace App\DataFixtures\ORM;
 
@@ -17,6 +15,8 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Throwable;
+
+use function array_map;
 
 /**
  * Class LoadUserGroupData

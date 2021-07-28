@@ -1,14 +1,12 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/User/CreateUserCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\User;
 
 use App\Command\HelperConfigure;
-use App\Command\Traits\ApiKeyUserManagementHelper;
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\ApiKeyUserManagementHelperTrait;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\DTO\User\UserCreate as UserDto;
 use App\Form\Type\Console\UserType;
 use App\Repository\RoleRepository;
@@ -30,9 +28,8 @@ use Throwable;
  */
 class CreateUserCommand extends Command
 {
-    // Traits
-    use ApiKeyUserManagementHelper;
-    use StyleSymfony;
+    use ApiKeyUserManagementHelperTrait;
+    use SymfonyStyleTrait;
 
     private const PARAMETER_NAME = 'name';
     private const PARAMETER_DESCRIPTION = 'description';
@@ -67,28 +64,18 @@ class CreateUserCommand extends Command
         ],
     ];
 
-    private UserResource $userResource;
-    private UserGroupResource $userGroupResource;
-    private RolesService $rolesService;
-    private RoleRepository $roleRepository;
-
     /**
      * Constructor
      *
      * @throws LogicException
      */
     public function __construct(
-        UserResource $userResource,
-        UserGroupResource $userGroupResource,
-        RolesService $rolesService,
-        RoleRepository $roleRepository
+        private UserResource $userResource,
+        private UserGroupResource $userGroupResource,
+        private RolesService $rolesService,
+        private RoleRepository $roleRepository,
     ) {
         parent::__construct('user:create');
-
-        $this->userResource = $userResource;
-        $this->userGroupResource = $userGroupResource;
-        $this->rolesService = $rolesService;
-        $this->roleRepository = $roleRepository;
 
         $this->setDescription('Console command to create user to database');
     }
@@ -111,8 +98,9 @@ class CreateUserCommand extends Command
         HelperConfigure::configure($this, self::$commandParameters);
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      *
      * @throws Throwable

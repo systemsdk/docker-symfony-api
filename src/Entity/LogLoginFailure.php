@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Entity/LogLoginFailure.php
- */
+
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -22,18 +20,17 @@ use Throwable;
  * @ORM\Table(
  *      name="log_login_failure",
  *      indexes={
- * @ORM\Index(name="user_id", columns={"user_id"}),
- *      }
+ *          @ORM\Index(name="user_id", columns={"user_id"}),
+ *      },
  *  )
  * @ORM\Entity(
- *      readOnly=true
+ *      readOnly=true,
  *  )
  *
  * @package App\Entity
  */
 class LogLoginFailure implements EntityInterface
 {
-    // Traits
     use Uuid;
 
     /**
@@ -65,7 +62,7 @@ class LogLoginFailure implements EntityInterface
      *      inversedBy="logsLoginFailure",
      *  )
      * @ORM\JoinColumns({
-     * @ORM\JoinColumn(
+     *      @ORM\JoinColumn(
      *          name="user_id",
      *          referencedColumnName="id",
      *          nullable=false,
@@ -98,7 +95,7 @@ class LogLoginFailure implements EntityInterface
     {
         $this->id = $this->createUuid();
         $this->user = $user;
-        $this->timestamp = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        $this->timestamp = new DateTimeImmutable(timezone: new DateTimeZone('UTC'));
     }
 
     public function getId(): string

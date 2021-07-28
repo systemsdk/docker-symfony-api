@@ -1,12 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/ApiKey/EditApiKeyCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\ApiKey;
 
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\DTO\ApiKey\ApiKey as ApiKeyDto;
 use App\Entity\ApiKey as ApiKeyEntity;
 use App\Form\Type\Console\ApiKeyType;
@@ -25,29 +23,25 @@ use Throwable;
  */
 class EditApiKeyCommand extends Command
 {
-    // Traits
-    use StyleSymfony;
-
-    private ApiKeyResource $apiKeyResource;
-    private ApiKeyHelper $apiKeyHelper;
+    use SymfonyStyleTrait;
 
     /**
      * Constructor
      *
      * @throws LogicException
      */
-    public function __construct(ApiKeyResource $apiKeyResource, ApiKeyHelper $apiKeyHelper)
-    {
+    public function __construct(
+        private ApiKeyResource $apiKeyResource,
+        private ApiKeyHelper $apiKeyHelper,
+    ) {
         parent::__construct('api-key:edit');
-
-        $this->apiKeyResource = $apiKeyResource;
-        $this->apiKeyHelper = $apiKeyHelper;
 
         $this->setDescription('Command to edit existing API key');
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      *
      * @throws Throwable
@@ -55,17 +49,11 @@ class EditApiKeyCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);
-        // Get API key entity
         $apiKey = $this->apiKeyHelper->getApiKey($io, 'Which API key you want to edit?');
-        $message = null;
-
-        if ($apiKey instanceof ApiKeyEntity) {
-            $message = $this->updateApiKey($input, $output, $apiKey);
-        }
+        $message = $apiKey instanceof ApiKeyEntity ? $this->updateApiKey($input, $output, $apiKey) : null;
 
         if ($input->isInteractive()) {
-            $message ??= 'Nothing changed - have a nice day';
-            $io->success($message);
+            $io->success($message ?? ['Nothing changed - have a nice day']);
         }
 
         return 0;
@@ -74,7 +62,7 @@ class EditApiKeyCommand extends Command
     /**
      * Method to update specified API key via specified form.
      *
-     * @return mixed[]
+     * @return array<int, string>
      *
      * @throws Throwable
      */

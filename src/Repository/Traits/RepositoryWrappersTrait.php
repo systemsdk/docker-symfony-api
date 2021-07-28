@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Repository/Traits/RepositoryWrappers.php
- */
+
+declare(strict_types=1);
 
 namespace App\Repository\Traits;
 
@@ -10,32 +8,24 @@ use App\Rest\UuidHelper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ManagerRegistry;
 use Ramsey\Uuid\Exception\InvalidUuidStringException;
-use Throwable;
 use UnexpectedValueException;
 
 /**
- * Class RepositoryWrappers
+ * Class RepositoryWrappersTrait
  *
  * @package App\Repository\Traits
- *
- * @method string getEntityName(): string
  */
-trait RepositoryWrappers
+trait RepositoryWrappersTrait
 {
-    protected ManagerRegistry $managerRegistry;
-
     /**
      * {@inheritdoc}
      */
-    public function getReference(string $id)
+    public function getReference(string $id): ?object
     {
         try {
             $referenceId = UuidHelper::fromString($id);
-        } catch (InvalidUuidStringException $exception) {
-            (static fn (Throwable $exception): string => (string)$exception)($exception);
-
+        } catch (InvalidUuidStringException) {
             $referenceId = $id;
         }
 
@@ -44,6 +34,8 @@ trait RepositoryWrappers
 
     /**
      * {@inheritdoc}
+     *
+     * @psalm-return array<string, array<string, mixed>>
      */
     public function getAssociations(): array
     {

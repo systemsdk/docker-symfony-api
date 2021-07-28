@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 // phpcs:ignoreFile
 /** @noinspection PhpIllegalPsrClassPathInspection */
@@ -15,7 +16,9 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20191001194001 extends AbstractMigration
 {
-    /* @noinspection PhpMissingParentCallCommonInspection */
+    /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
     public function getDescription(): string
     {
         return 'Initial database structure';
@@ -245,6 +248,7 @@ SQL;
         $this->addSql($sqlDateDimension);
 
         $sqlFunctions = <<<SQL
+DROP FUNCTION IF EXISTS ouuid_to_uuid;
 CREATE
   FUNCTION ouuid_to_uuid(uuid BINARY(16))
   RETURNS VARCHAR(36) CHARSET utf8mb4 COLLATE utf8mb4_general_ci
@@ -256,6 +260,7 @@ CREATE
   SUBSTR(HEX(uuid), 17,4), '-',
   SUBSTR(HEX(uuid), 21, 12 )
 ));
+DROP FUNCTION IF EXISTS uuid_to_ouuid;
 CREATE
   FUNCTION uuid_to_ouuid(uuid BINARY(36))
   RETURNS binary(16) DETERMINISTIC

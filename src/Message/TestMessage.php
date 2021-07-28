@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Message/TestMessage.php
- */
+
+declare(strict_types=1);
 
 namespace App\Message;
 
@@ -16,11 +14,9 @@ use App\Message\Interfaces\MessageHighInterface;
  */
 class TestMessage implements MessageHighInterface
 {
-    private string $someId;
-
-    public function __construct(string $someId)
-    {
-        $this->someId = $someId;
+    public function __construct(
+        private string $someId,
+    ) {
     }
 
     public function getSomeId(): string

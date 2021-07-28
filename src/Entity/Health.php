@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Entity/Health.php
- */
+
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -71,7 +69,7 @@ class Health implements EntityInterface
     public function __construct()
     {
         $this->id = $this->createUuid();
-        $this->timestamp = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        $this->timestamp = new DateTimeImmutable(timezone: new DateTimeZone('UTC'));
     }
 
     public function getId(): string

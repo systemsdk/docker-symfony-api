@@ -1,15 +1,13 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/AutoMapper/UserGroup/RequestMapper.php
- */
+
+declare(strict_types=1);
 
 namespace App\AutoMapper\UserGroup;
 
 use App\AutoMapper\RestRequestMapper;
 use App\Entity\Role;
 use App\Resource\RoleResource;
-use Doctrine\ORM\ORMException;
+use Throwable;
 
 /**
  * Class RequestMapper
@@ -26,18 +24,13 @@ class RequestMapper extends RestRequestMapper
         'role',
     ];
 
-    private RoleResource $roleResource;
-
-    /**
-     * Constructor
-     */
-    public function __construct(RoleResource $roleResource)
-    {
-        $this->roleResource = $roleResource;
+    public function __construct(
+        private RoleResource $roleResource,
+    ) {
     }
 
     /**
-     * @throws ORMException
+     * @throws Throwable
      */
     protected function transformRole(string $role): Role
     {

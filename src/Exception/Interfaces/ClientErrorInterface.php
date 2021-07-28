@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Exception/Interfaces/ClientErrorInterface.php
- */
+
+declare(strict_types=1);
 
 namespace App\Exception\Interfaces;
 

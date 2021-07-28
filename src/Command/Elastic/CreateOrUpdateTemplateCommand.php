@@ -1,18 +1,18 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/Elastic/CreateOrUpdateTemplateCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\Elastic;
 
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\Service\Interfaces\ElasticsearchServiceInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
+
+use function array_key_exists;
 
 /**
  * Class CreateOrUpdateTemplateCommand
@@ -21,28 +21,28 @@ use Throwable;
  */
 class CreateOrUpdateTemplateCommand extends Command
 {
-    // Traits
-    use StyleSymfony;
+    use SymfonyStyleTrait;
 
     public const COMMAND_NAME = 'elastic:create-or-update-template';
-    private ElasticsearchServiceInterface $elasticsearchService;
 
     /**
      * Constructor
      *
      * @throws LogicException
      */
-    public function __construct(ElasticsearchServiceInterface $elasticsearchService)
-    {
+    public function __construct(
+        private ElasticsearchServiceInterface $elasticsearchService,
+        private int $elasticNumberOfShards,
+        private int $elasticNumberOfReplicas,
+    ) {
         parent::__construct(self::COMMAND_NAME);
-
-        $this->elasticsearchService = $elasticsearchService;
 
         $this->setDescription('Command to create/update index template in Elastic');
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * Executes the current command.
      *
      * {@inheritdoc}
@@ -82,8 +82,8 @@ class CreateOrUpdateTemplateCommand extends Command
             'body' => [
                 'index_patterns' => [$this->elasticsearchService::INDEX_PREFIX . '_*'],
                 'settings' => [
-                    'number_of_shards' => $_ENV['ELASTICSEARCH_NUMBER_OF_SHARDS'],
-                    'number_of_replicas' => $_ENV['ELASTICSEARCH_NUMBER_OF_REPLICAS'],
+                    'number_of_shards' => $this->elasticNumberOfShards,
+                    'number_of_replicas' => $this->elasticNumberOfReplicas,
                 ],
                 'mappings' => [
                     '_source' => [

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/Traits/ExecuteMultipleCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\Traits;
 
@@ -12,30 +10,29 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
+use function array_flip;
+use function array_search;
+use function array_values;
+
 /**
- * Trait ExecuteMultipleCommand
+ * Trait ExecuteMultipleCommandTrait
  *
  * @package App\Command\Traits
  */
-trait ExecuteMultipleCommand
+trait ExecuteMultipleCommandTrait
 {
-    // Traits
-    use GetApplication;
+    use GetApplicationTrait;
+    use SymfonyStyleTrait;
 
     /**
-     * @var array<int|string, string>
+     * @var array<array-key, string>
      */
     private array $choices = [];
 
     /**
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    private SymfonyStyle $io;
-
-    /**
      * Setter method for choices to use.
      *
-     * @param array<int|string, string> $choices
+     * @param array<array-key, string> $choices
      */
     protected function setChoices(array $choices): void
     {
@@ -49,9 +46,8 @@ trait ExecuteMultipleCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->io = new SymfonyStyle($input, $output);
-        $this->io->write("\033\143");
-        $command = $this->ask();
+        $io = $this->getSymfonyStyle($input, $output);
+        $command = $this->ask($io);
 
         while ($command !== null) {
             $arguments = [
@@ -60,11 +56,11 @@ trait ExecuteMultipleCommand
             $input = new ArrayInput($arguments);
             $cmd = $this->getApplication()->find($command);
             $outputValue = $cmd->run($input, $output);
-            $command = $this->ask();
+            $command = $this->ask($io);
         }
 
         if ($input->isInteractive()) {
-            $this->io->success('Have a nice day');
+            $io->success('Have a nice day');
         }
 
         return $outputValue ?? 0;
@@ -73,12 +69,12 @@ trait ExecuteMultipleCommand
     /**
      * Method to ask user to make choose one of defined choices.
      */
-    private function ask(): ?string
+    private function ask(SymfonyStyle $io): ?string
     {
         $index = array_search(
-            $this->io->choice('What you want to do', array_values($this->choices)),
+            $io->choice('What you want to do', array_values($this->choices)),
             array_values($this->choices),
-            true
+            true,
         );
         $choice = (string)array_values(array_flip($this->choices))[(int)$index];
 

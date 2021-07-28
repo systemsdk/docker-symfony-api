@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/DTO/RestDto.php
- */
+
+declare(strict_types=1);
 
 namespace App\DTO;
 
@@ -10,6 +8,14 @@ use App\DTO\Interfaces\RestDtoInterface;
 use App\Entity\Interfaces\EntityInterface;
 use BadMethodCallException;
 use LogicException;
+
+use function array_filter;
+use function array_key_exists;
+use function count;
+use function current;
+use function method_exists;
+use function sprintf;
+use function ucfirst;
 
 /**
  * Class RestDto
@@ -44,7 +50,7 @@ abstract class RestDto implements RestDtoInterface
      */
     private array $visited = [];
 
-    public function setId(string $id): RestDtoInterface
+    public function setId(string $id): self
     {
         $this->setVisited('id');
         $this->id = $id;
@@ -62,7 +68,7 @@ abstract class RestDto implements RestDtoInterface
         return array_filter($this->visited, static fn (string $property): bool => $property !== 'id');
     }
 
-    public function setVisited(string $property): RestDtoInterface
+    public function setVisited(string $property): self
     {
         $this->visited[] = $property;
 
@@ -95,7 +101,7 @@ abstract class RestDto implements RestDtoInterface
      *
      * @throws LogicException|BadMethodCallException
      */
-    public function patch(RestDtoInterface $dto): RestDtoInterface
+    public function patch(RestDtoInterface $dto): self
     {
         foreach ($dto->getVisited() as $property) {
             // Determine getter method
@@ -122,7 +128,7 @@ abstract class RestDto implements RestDtoInterface
         if ($getter === null) {
             $message = sprintf(
                 'DTO class \'%s\' does not have getter method property \'%s\' - cannot patch dto',
-                get_class($dto),
+                $dto::class,
                 $property
             );
 

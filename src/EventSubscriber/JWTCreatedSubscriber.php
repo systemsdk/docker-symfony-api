@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/EventSubscriber/JWTCreatedSubscriber.php
- */
+
+declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
@@ -17,6 +15,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use function hash;
+use function implode;
+
 /**
  * Class JWTCreatedSubscriber
  *
@@ -24,16 +25,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class JWTCreatedSubscriber implements EventSubscriberInterface
 {
-    private RequestStack $requestStack;
-    private LoggerInterface $logger;
-
-    /**
-     * Constructor
-     */
-    public function __construct(RequestStack $requestStack, LoggerInterface $logger)
-    {
-        $this->requestStack = $requestStack;
-        $this->logger = $logger;
+    public function __construct(
+        private RequestStack $requestStack,
+        private LoggerInterface $logger,
+    ) {
     }
 
     /**

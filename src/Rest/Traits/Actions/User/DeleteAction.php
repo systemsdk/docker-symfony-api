@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Actions/User/DeleteAction.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Actions\User;
 
@@ -25,7 +23,6 @@ use Throwable;
  */
 trait DeleteAction
 {
-    // Traits
     use DeleteMethod;
 
     /**

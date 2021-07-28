@@ -1,12 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/User/EditUserCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\User;
 
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\DTO\User\UserUpdate as UserDto;
 use App\Entity\User as UserEntity;
 use App\Form\Type\Console\UserType;
@@ -25,29 +23,25 @@ use Throwable;
  */
 class EditUserCommand extends Command
 {
-    // Traits
-    use StyleSymfony;
-
-    private UserResource $userResource;
-    private UserHelper $userHelper;
+    use SymfonyStyleTrait;
 
     /**
      * Constructor
      *
      * @throws LogicException
      */
-    public function __construct(UserResource $userResource, UserHelper $userHelper)
-    {
+    public function __construct(
+        private UserResource $userResource,
+        private UserHelper $userHelper,
+    ) {
         parent::__construct('user:edit');
-
-        $this->userResource = $userResource;
-        $this->userHelper = $userHelper;
 
         $this->setDescription('Command to edit existing user');
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      *
      * @throws Throwable
@@ -55,17 +49,11 @@ class EditUserCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);
-        // Get user entity
         $user = $this->userHelper->getUser($io, 'Which user you want to edit?');
-        $message = null;
-
-        if ($user instanceof UserEntity) {
-            $message = $this->updateUser($input, $output, $user);
-        }
+        $message = $user instanceof UserEntity ? $this->updateUser($input, $output, $user) : null;
 
         if ($input->isInteractive()) {
-            $message ??= 'Nothing changed - have a nice day';
-            $io->success($message);
+            $io->success($message ?? 'Nothing changed - have a nice day');
         }
 
         return 0;

@@ -1,12 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/Utils/CleanupLogsCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\Utils;
 
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\Repository\LogLoginRepository;
 use App\Repository\LogRequestRepository;
 use Symfony\Component\Console\Command\Command;
@@ -22,30 +20,27 @@ use Throwable;
  */
 class CleanupLogsCommand extends Command
 {
-    // Traits
-    use StyleSymfony;
+    use SymfonyStyleTrait;
 
     public const COMMAND_NAME = 'logs:cleanup';
-    private LogLoginRepository $logLoginRepository;
-    private LogRequestRepository $logRequestRepository;
 
     /**
      * Constructor
      *
      * @throws LogicException
      */
-    public function __construct(LogLoginRepository $logLoginRepository, LogRequestRepository $logRequestRepository)
-    {
+    public function __construct(
+        private LogLoginRepository $logLoginRepository,
+        private LogRequestRepository $logRequestRepository,
+    ) {
         parent::__construct(self::COMMAND_NAME);
-
-        $this->logLoginRepository = $logLoginRepository;
-        $this->logRequestRepository = $logRequestRepository;
 
         $this->setDescription('Command to cleanup logs(log_login, log_request) in the database');
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * Executes the current command.
      *
      * @throws Throwable

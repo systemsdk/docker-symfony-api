@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/MethodValidator.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits;
 
@@ -12,20 +10,23 @@ use App\Rest\Traits\Methods\RestMethodProcessCriteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\UnitOfWork;
-use Doctrine\Persistence\Mapping\MappingException;
-use Error;
-use Exception;
 use LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
-use TypeError;
 use UnexpectedValueException;
 
+use function array_key_exists;
+use function class_implements;
+use function in_array;
+use function is_array;
+use function sprintf;
+
 /**
- * Trait MethodValidator
+ * Trait RestMethodHelper
  *
  * @package App\Rest\Traits
  */
@@ -51,11 +52,13 @@ trait RestMethodHelper
             ? static::$dtoClasses[$method]
             : $this->getResource()->getDtoClass();
 
-        if (!in_array(RestDtoInterface::class, class_implements($dtoClass), true)) {
+        $interfaces = class_implements($dtoClass);
+
+        if (is_array($interfaces) && !in_array(RestDtoInterface::class, $interfaces, true)) {
             $message = sprintf(
                 'Given DTO class \'%s\' is not implementing \'%s\' interface.',
                 $dtoClass,
-                RestDtoInterface::class
+                RestDtoInterface::class,
             );
 
             throw new UnexpectedValueException($message);
@@ -67,6 +70,8 @@ trait RestMethodHelper
     /**
      * Method to validate REST trait method.
      *
+     * @param array<int, string> $allowedHttpMethods
+     *
      * @throws LogicException
      * @throws MethodNotAllowedHttpException
      */
@@ -77,7 +82,7 @@ trait RestMethodHelper
             $message = sprintf(
                 'You cannot use \'%s\' controller class with REST traits if that does not implement \'%s\'',
                 static::class,
-                ControllerInterface::class
+                ControllerInterface::class,
             );
 
             throw new LogicException($message);
@@ -90,6 +95,8 @@ trait RestMethodHelper
 
     /**
      * {@inheritdoc}
+     *
+     * @throws Throwable
      */
     public function handleRestMethodException(Throwable $exception, ?string $id = null): Throwable
     {
@@ -113,7 +120,7 @@ trait RestMethodHelper
     /**
      * Method to detach entity from entity manager so possible changes to it won't be saved.
      *
-     * @throws MappingException
+     * @throws Throwable
      */
     private function detachEntityFromManager(string $id): void
     {
@@ -123,7 +130,8 @@ trait RestMethodHelper
         $entity = $currentResource->getRepository()->find($id);
 
         // Detach entity from manager if it's been managed by it
-        if ($entity !== null
+        if (
+            $entity !== null
             /* @scrutinizer ignore-call */
             && $entityManager->getUnitOfWork()->getEntityState($entity) === UnitOfWork::STATE_MANAGED
         ) {
@@ -131,22 +139,29 @@ trait RestMethodHelper
         }
     }
 
-    /**
-     * @param Throwable|Exception|TypeError|Error $exception
-     */
-    private function determineOutputAndStatusCodeForRestMethodException($exception): Throwable
+    private function determineOutputAndStatusCodeForRestMethodException(Throwable $exception): Throwable
     {
         $code = $this->getExceptionCode($exception);
         $output = new HttpException($code, $exception->getMessage(), $exception, [], $code);
 
-        if ($exception instanceof HttpException) {
-            $output = $exception;
-        } elseif ($exception instanceof NoResultException) {
+        if ($exception instanceof NoResultException || $exception instanceof NotFoundHttpException) {
             $code = Response::HTTP_NOT_FOUND;
             $output = new HttpException($code, 'Not found', $exception, [], $code);
         } elseif ($exception instanceof NonUniqueResultException) {
             $code = Response::HTTP_INTERNAL_SERVER_ERROR;
             $output = new HttpException($code, $exception->getMessage(), $exception, [], $code);
+        } elseif ($exception instanceof HttpException) {
+            if ($exception->getCode() === 0) {
+                $output = new HttpException(
+                    $exception->getStatusCode(),
+                    $exception->getMessage(),
+                    $exception->getPrevious(),
+                    $exception->getHeaders(),
+                    $code,
+                );
+            } else {
+                $output = $exception;
+            }
         }
 
         return $output;

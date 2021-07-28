@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/Auth/GetTokenController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\Auth;
 
@@ -13,6 +11,8 @@ use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
+
+use function sprintf;
 
 /**
  * Class GetTokenController
@@ -40,7 +40,7 @@ class GetTokenController
      *      @OA\JsonContent(
      *          type="object",
      *          example={"username": "username", "password": "password"},
-     *          @OA\Property(property="username", ref=@Model(type=App\Entity\User::class, groups={"User.username"})),
+     *          @OA\Property(property="username", ref=@Model(type=\App\Entity\User::class, groups={"User.username"})),
      *          @OA\Property(property="password", type="string"),
      *      )
      *  )
@@ -83,7 +83,7 @@ class GetTokenController
             JSON::encode([
                 'username' => 'username',
                 'password' => 'password',
-            ])
+            ]),
         );
 
         throw new HttpException(Response::HTTP_BAD_REQUEST, $message);

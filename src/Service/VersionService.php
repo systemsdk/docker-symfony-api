@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Service/Version.php
- */
+
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -21,18 +19,11 @@ use Throwable;
  */
 class VersionService
 {
-    private string $projectDir;
-    private CacheInterface $cache;
-    private LoggerInterface $logger;
-
-    /**
-     * Constructor
-     */
-    public function __construct(string $projectDir, CacheInterface $appCache, LoggerInterface $logger)
-    {
-        $this->projectDir = $projectDir;
-        $this->cache = $appCache;
-        $this->logger = $logger;
+    public function __construct(
+        private string $projectDir,
+        private CacheInterface $appCache,
+        private LoggerInterface $logger,
+    ) {
     }
 
     /**
@@ -47,7 +38,7 @@ class VersionService
 
         try {
             /** @noinspection PhpUnhandledExceptionInspection */
-            $output = $this->cache->get('application_version', $this->getClosure());
+            $output = $this->appCache->get('application_version', $this->getClosure());
         } catch (Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }

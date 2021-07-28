@@ -1,16 +1,16 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/EventListener/UserEntityEventListener.php
- */
+
+declare(strict_types=1);
 
 namespace App\EventListener;
 
 use App\Entity\User;
 use App\Security\SecurityUser;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 use LengthException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
+use function strlen;
 
 /**
  * Class UserEntityEventListener
@@ -19,14 +19,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserEntityEventListener
 {
-    private UserPasswordEncoderInterface $userPasswordEncoder;
-
-    /**
-     * Constructor
-     */
-    public function __construct(UserPasswordEncoderInterface $userPasswordEncoder)
-    {
-        $this->userPasswordEncoder = $userPasswordEncoder;
+    public function __construct(
+        private UserPasswordEncoderInterface $userPasswordEncoder,
+    ) {
     }
 
     /**

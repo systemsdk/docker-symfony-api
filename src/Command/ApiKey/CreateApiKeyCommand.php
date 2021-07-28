@@ -1,13 +1,12 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/ApiKey/CreateApiKeyCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\ApiKey;
 
 use App\Command\HelperConfigure;
-use App\Command\Traits\ApiKeyUserManagementHelper;
+use App\Command\Traits\ApiKeyUserManagementHelperTrait;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\DTO\ApiKey\ApiKeyCreate as ApiKey;
 use App\Entity\ApiKey as ApiKeyEntity;
 use App\Form\Type\Console\ApiKeyType;
@@ -31,8 +30,8 @@ use Throwable;
  */
 class CreateApiKeyCommand extends Command
 {
-    // Traits
-    use ApiKeyUserManagementHelper;
+    use ApiKeyUserManagementHelperTrait;
+    use SymfonyStyleTrait;
 
     /**
      * @var array<int, array<string, string>>
@@ -44,36 +43,19 @@ class CreateApiKeyCommand extends Command
         ],
     ];
 
-    private ApiKeyHelper $apiKeyHelper;
-    private ApiKeyResource $apiKeyResource;
-    private UserGroupResource $userGroupResource;
-    private RolesService $rolesService;
-    private RoleRepository $roleRepository;
-
-    /**
-     * @psalm-suppress PropertyNotSetInConstructor
-     */
-    private SymfonyStyle $io;
-
     /**
      * Constructor
      *
      * @throws LogicException
      */
     public function __construct(
-        ApiKeyHelper $apiKeyHelper,
-        ApiKeyResource $apiKeyResource,
-        UserGroupResource $userGroupResource,
-        RolesService $rolesService,
-        RoleRepository $roleRepository
+        private ApiKeyHelper $apiKeyHelper,
+        private ApiKeyResource $apiKeyResource,
+        private UserGroupResource $userGroupResource,
+        private RolesService $rolesService,
+        private RoleRepository $roleRepository,
     ) {
         parent::__construct('api-key:create');
-
-        $this->apiKeyHelper = $apiKeyHelper;
-        $this->apiKeyResource = $apiKeyResource;
-        $this->userGroupResource = $userGroupResource;
-        $this->rolesService = $rolesService;
-        $this->roleRepository = $roleRepository;
 
         $this->setDescription('Command to create new API key');
     }
@@ -98,18 +80,19 @@ class CreateApiKeyCommand extends Command
         HelperConfigure::configure($this, self::$commandParameters);
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      *
      * @throws Throwable
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->io = new SymfonyStyle($input, $output);
-        $this->io->write("\033\143");
+        $io = $this->getSymfonyStyle($input, $output);
+
         // Check that user group(s) exists
-        $this->checkUserGroups($output, $input->isInteractive());
+        $this->checkUserGroups($io, $output, $input->isInteractive());
         /** @var FormHelper $helper */
         $helper = $this->getHelper('form');
         /** @var ApiKey $dto */
@@ -119,7 +102,7 @@ class CreateApiKeyCommand extends Command
         $apiKey = $this->apiKeyResource->create($dto);
 
         if ($input->isInteractive()) {
-            $this->io->success($this->apiKeyHelper->getApiKeyMessage('API key created - have a nice day', $apiKey));
+            $io->success($this->apiKeyHelper->getApiKeyMessage('API key created - have a nice day', $apiKey));
         }
 
         return 0;
@@ -135,14 +118,14 @@ class CreateApiKeyCommand extends Command
      *
      * @throws Throwable
      */
-    private function checkUserGroups(OutputInterface $output, bool $interactive): void
+    private function checkUserGroups(SymfonyStyle $io, OutputInterface $output, bool $interactive): void
     {
         if ($this->userGroupResource->count() !== 0) {
             return;
         }
 
         if ($interactive) {
-            $this->io->block(['User groups are not yet created, creating those now...']);
+            $io->block(['User groups are not yet created, creating those now...']);
         }
 
         // Reset roles

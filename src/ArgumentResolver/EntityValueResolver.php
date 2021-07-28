@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/ArgumentResolver/EntityValueResolver.php
- */
+
+declare(strict_types=1);
 
 namespace App\ArgumentResolver;
 
@@ -14,13 +12,15 @@ use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Throwable;
 
+use function is_string;
+use function is_subclass_of;
+
 /**
  * Class EntityValueResolver
  *
  * Example how to use this within your controller;
- *  /**
- *   * @Symfony\Component\Routing\Annotation\Route(path="some_path_to_your_route/{user}/{apikey}")
- *   *\/
+ *
+ *  #[Route(path: 'some_path_to_your_route/{user}/{apikey}')]
  *  public function someMethod(\App\Entity\User $user, \App\Entity\ApiKey $apikey): Response
  *  {
  *      ...
@@ -37,14 +37,9 @@ use Throwable;
  */
 class EntityValueResolver implements ArgumentValueResolverInterface
 {
-    private ResourceCollection $resourceCollection;
-
-    /**
-     * Constructor
-     */
-    public function __construct(ResourceCollection $resourceCollection)
-    {
-        $this->resourceCollection = $resourceCollection;
+    public function __construct(
+        private ResourceCollection $resourceCollection
+    ) {
     }
 
     /**
@@ -60,11 +55,14 @@ class EntityValueResolver implements ArgumentValueResolverInterface
     /**
      * {@inheritdoc}
      *
+     * @return Generator<EntityInterface|null>
+     *
      * @throws Throwable
      */
     public function resolve(Request $request, ArgumentMetadata $argument): Generator
     {
-        yield $this->resourceCollection->getEntityResource((string)$argument->getType())
+        yield $this->resourceCollection
+            ->getEntityResource((string)$argument->getType())
             ->findOne($request->get($argument->getName()), !$argument->isNullable());
     }
 }

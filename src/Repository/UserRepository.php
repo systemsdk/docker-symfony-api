@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Repository/UserRepository.php
- */
+
+declare(strict_types=1);
 
 namespace App\Repository;
 
@@ -12,19 +10,22 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 
+use function array_key_exists;
+
 /**
  * Class UserRepository
  *
  * @package App\Repository
  *
+ * @psalm-suppress LessSpecificImplementedReturnType
  * @codingStandardsIgnoreStart
  *
- * @method Entity|null find(string $id, ?int $lockMode = null, ?int $lockVersion = null): ?Entity
- * @method array<int, Entity> findAdvanced(string $id, $hydrationMode = null)
- * @method Entity|null findOneBy(array $criteria, ?array $orderBy = null): ?Entity
- * @method array<int, Entity> findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array
- * @method array<int, Entity> findByAdvanced(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null, ?array $search = null): array
- * @method array<int, Entity> findAll(): array
+ * @method Entity|null find(string $id, ?int $lockMode = null, ?int $lockVersion = null)
+ * @method Entity|null findAdvanced(string $id, string | int | null $hydrationMode = null)
+ * @method Entity|null findOneBy(array $criteria, ?array $orderBy = null)
+ * @method Entity[] findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null)
+ * @method Entity[] findByAdvanced(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null, ?array $search = null)
+ * @method Entity[] findAll()
  *
  * @codingStandardsIgnoreEnd
  */
@@ -32,16 +33,11 @@ class UserRepository extends BaseRepository
 {
     protected static string $entityName = Entity::class;
     protected static array $searchColumns = ['username', 'firstName', 'lastName', 'email'];
-    private string $environment;
 
-    /**
-     * Constructor
-     */
-    public function __construct(ManagerRegistry $managerRegistry, string $environment)
-    {
-        parent::__construct($managerRegistry);
-
-        $this->environment = $environment;
+    public function __construct(
+        protected ManagerRegistry $managerRegistry,
+        private string $environment,
+    ) {
     }
 
     /**
@@ -56,6 +52,9 @@ class UserRepository extends BaseRepository
 
     /**
      * Method to check if specified email is available or not.
+     *
+     * @param string $email Email to check
+     * @param string|null $id User id to ignore
      *
      * @throws NonUniqueResultException
      */
@@ -117,6 +116,10 @@ class UserRepository extends BaseRepository
     }
 
     /**
+     * @param string $column Column to check
+     * @param string $value Value of specified column
+     * @param string|null $id User id to ignore
+     *
      * @throws NonUniqueResultException
      */
     private function isUnique(string $column, string $value, ?string $id = null): bool

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/ApiKey/ApiKeyHelper.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\ApiKey;
 
@@ -13,6 +11,10 @@ use Closure;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
+use function array_map;
+use function implode;
+use function sprintf;
+
 /**
  * Class ApiKeyHelper
  *
@@ -20,16 +22,10 @@ use Throwable;
  */
 class ApiKeyHelper
 {
-    private ApiKeyResource $apiKeyResource;
-    private RolesService $rolesService;
-
-    /**
-     * Constructor
-     */
-    public function __construct(ApiKeyResource $apiKeyResource, RolesService $rolesService)
-    {
-        $this->apiKeyResource = $apiKeyResource;
-        $this->rolesService = $rolesService;
+    public function __construct(
+        private ApiKeyResource $apiKeyResource,
+        private RolesService $rolesService,
+    ) {
     }
 
     /**
@@ -40,28 +36,27 @@ class ApiKeyHelper
      */
     public function getApiKey(SymfonyStyle $io, string $question): ?ApiKeyEntity
     {
-        $apiKeyFound = false;
-        $apiKeyEntity = null;
+        $found = false;
+        $apiKey = null;
 
-        while ($apiKeyFound !== true) {
-            /** @var ApiKeyEntity|null $apiKeyEntity */
-            $apiKeyEntity = $this->getApiKeyEntity($io, $question);
+        while ($found !== true) {
+            $apiKey = $this->getApiKeyEntity($io, $question);
 
-            if ($apiKeyEntity === null) {
+            if ($apiKey === null) {
                 break;
             }
 
             $message = sprintf(
                 'Is this the correct API key \'[%s] [%s] %s\'?',
-                $apiKeyEntity->getId(),
-                $apiKeyEntity->getToken(),
-                $apiKeyEntity->getDescription()
+                $apiKey->getId(),
+                $apiKey->getToken(),
+                $apiKey->getDescription(),
             );
 
-            $apiKeyFound = (bool)$io->confirm($message, false);
+            $found = (bool)$io->confirm($message, false);
         }
 
-        return $apiKeyEntity ?? null;
+        return $apiKey ?? null;
     }
 
     /**
@@ -80,7 +75,7 @@ class ApiKeyHelper
             sprintf(
                 "GUID:  %s\nToken: %s",
                 $apiKey->getId(),
-                $apiKey->getToken()
+                $apiKey->getToken(),
             ),
         ];
     }
@@ -93,8 +88,7 @@ class ApiKeyHelper
     private function getApiKeyEntity(SymfonyStyle $io, string $question): ?ApiKeyEntity
     {
         $choices = [];
-        $iterator = $this->getApiKeyIterator($choices);
-        array_map($iterator, $this->apiKeyResource->find(null, ['token' => 'ASC']));
+        array_map($this->getApiKeyIterator($choices), $this->apiKeyResource->find(orderBy: ['token' => 'ASC']));
         $choices['Exit'] = 'Exit command';
 
         return $this->apiKeyResource->findOne((string)$io->choice($question, $choices));
@@ -103,24 +97,17 @@ class ApiKeyHelper
     /**
      * Method to return ApiKeyIterator closure. This will format ApiKey entities for choice list.
      *
-     * @param string[] $choices
+     * @param array<string, string> $choices
      */
     private function getApiKeyIterator(array &$choices): Closure
     {
-        /*
-         * Lambda function create api key choices
-         *
-         * @param ApiKeyEntity $apiKey
-         */
         return function (ApiKeyEntity $apiKey) use (&$choices): void {
-            $value = sprintf(
-                '[%s] %s - Roles: %s',
+            $choices[$apiKey->getId()] = sprintf(
+                '[Token: %s] %s - Roles: %s',
                 $apiKey->getToken(),
                 $apiKey->getDescription(),
-                implode(', ', $this->rolesService->getInheritedRoles($apiKey->getRoles()))
+                implode(', ', $this->rolesService->getInheritedRoles($apiKey->getRoles())),
             );
-
-            $choices[$apiKey->getId()] = $value;
         };
     }
 }

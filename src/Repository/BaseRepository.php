@@ -1,18 +1,26 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Repository/BaseRepository.php
- */
+
+declare(strict_types=1);
 
 namespace App\Repository;
 
 use App\Entity\Interfaces\EntityInterface;
 use App\Repository\Interfaces\BaseRepositoryInterface;
-use App\Repository\Traits\RepositoryMethods;
-use App\Repository\Traits\RepositoryWrappers;
+use App\Repository\Traits\RepositoryMethodsTrait;
+use App\Repository\Traits\RepositoryWrappersTrait;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+
+use function array_map;
+use function array_merge;
+use function array_unshift;
+use function count;
+use function implode;
+use function in_array;
+use function serialize;
+use function sha1;
+use function spl_object_hash;
 
 /**
  * Class BaseRepository
@@ -21,9 +29,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 abstract class BaseRepository implements BaseRepositoryInterface
 {
-    // Traits
-    use RepositoryMethods;
-    use RepositoryWrappers;
+    use RepositoryMethodsTrait;
+    use RepositoryWrappersTrait;
 
     private const INNER_JOIN = 'innerJoin';
     private const LEFT_JOIN = 'leftJoin';
@@ -34,6 +41,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     protected static array $searchColumns = [];
     protected static string $entityName;
     protected static EntityManager $entityManager;
+    protected ManagerRegistry $managerRegistry;
 
     /**
      * Joins that need to attach to queries, this is needed for to prevent duplicate joins on those.
@@ -54,7 +62,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     ];
 
     /**
-     * @var array<int, array<int, callable|mixed>>
+     * @var array<int, array{0: callable, 1: array}>
      */
     private static array $callbacks = [];
 
@@ -62,14 +70,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * @var array<int, string>
      */
     private static array $processedCallbacks = [];
-
-    /**
-     * Constructor
-     */
-    public function __construct(ManagerRegistry $managerRegistry)
-    {
-        $this->managerRegistry = $managerRegistry;
-    }
 
     /**
      * {@inheritdoc}
@@ -148,7 +148,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function addInnerJoin(array $parameters): self
     {
-        if (count($parameters) > 0) {
+        if (!empty($parameters)) {
             $this->addJoinToQuery(self::INNER_JOIN, $parameters);
         }
 
@@ -177,9 +177,10 @@ abstract class BaseRepository implements BaseRepositoryInterface
     protected function processJoins(QueryBuilder $queryBuilder): void
     {
         foreach (self::$joins as $joinType => $joins) {
-            foreach ($joins as $joinParameters) {
-                $queryBuilder->{$joinType}(...$joinParameters);
-            }
+            array_map(
+                static fn (array $joinParameters): QueryBuilder => $queryBuilder->{$joinType}(...$joinParameters),
+                $joins,
+            );
 
             self::$joins[$joinType] = [];
         }
@@ -187,8 +188,6 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
     /**
      * Process defined callbacks for current QueryBuilder instance.
-     *
-     * @psalm-suppress PossiblyInvalidArgument
      */
     protected function processCallbacks(QueryBuilder $queryBuilder): void
     {

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Entity/Traits/LogEntity.php
- */
+
+declare(strict_types=1);
 
 namespace App\Entity\Traits;
 
@@ -15,13 +13,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Throwable;
 
 /**
- * Trait LogEntity
+ * Trait LogEntityTrait
  *
  * @package App\Entity\Traits
  *
  * @property User|null $user
  */
-trait LogEntity
+trait LogEntityTrait
 {
     /**
      * @Groups({
@@ -137,10 +135,9 @@ trait LogEntity
 
     private function processRequestData(Request $request): void
     {
-        $userAgent = $request->headers->get('User-Agent') ?? '';
         $this->clientIp = (string)$request->getClientIp();
         $this->httpHost = $request->getHttpHost();
-        $this->agent = $userAgent;
+        $this->agent = (string)($request->headers->get('User-Agent') ?? '');
     }
 
     /**
@@ -150,7 +147,8 @@ trait LogEntity
      */
     private function processTimeAndDate(): void
     {
-        $now = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        $now = new DateTimeImmutable(timezone: new DateTimeZone('UTC'));
+
         $this->time = $now;
         $this->date = $now;
     }

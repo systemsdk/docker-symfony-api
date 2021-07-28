@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/EventSubscriber/AuthenticationSuccessSubscriber.php
- */
+
+declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
@@ -21,16 +19,10 @@ use Throwable;
  */
 class AuthenticationSuccessSubscriber implements EventSubscriberInterface
 {
-    private LoginLoggerService $loginLoggerService;
-    private UserRepository $userRepository;
-
-    /**
-     * Constructor
-     */
-    public function __construct(LoginLoggerService $loginLoggerService, UserRepository $userRepository)
-    {
-        $this->loginLoggerService = $loginLoggerService;
-        $this->userRepository = $userRepository;
+    public function __construct(
+        private LoginLoggerService $loginLoggerService,
+        private UserRepository $userRepository,
+    ) {
     }
 
     /**
@@ -41,7 +33,7 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            //AuthenticationSuccessEvent::class
+            AuthenticationSuccessEvent::class => 'onAuthenticationSuccess',
             Events::AUTHENTICATION_SUCCESS => 'onAuthenticationSuccess',
         ];
     }

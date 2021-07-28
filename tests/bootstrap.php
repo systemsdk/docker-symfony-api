@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+
 /**
  * /tests/bootstrap.php
  *
@@ -14,6 +14,8 @@ declare(strict_types = 1);
  *
  * @package App\Tests
  */
+
+declare(strict_types=1);
 
 use App\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -40,7 +42,7 @@ if (is_readable($databaseCacheFile) && (string)getenv('ENV_TEST_CHANNEL_READABLE
 }
 
 // Create and boot 'test' kernel
-$kernel = new Kernel(getenv('APP_ENV'), (bool)getenv('APP_DEBUG'));
+$kernel = new Kernel((string)getenv('APP_ENV'), (bool)getenv('APP_DEBUG'));
 $kernel->boot();
 
 // Create new application

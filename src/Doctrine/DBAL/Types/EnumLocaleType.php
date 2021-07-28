@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Doctrine/DBAL/Types/EnumLocaleType.php
- */
+
+declare(strict_types=1);
 
 namespace App\Doctrine\DBAL\Types;
 

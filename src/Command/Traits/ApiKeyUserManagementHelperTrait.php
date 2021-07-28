@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/Traits/ApiKeyUserManagementHelper.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\Traits;
 
@@ -12,14 +10,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 /**
- * Trait ApiKeyUserManagementHelper
+ * Trait ApiKeyUserManagementHelperTrait
  *
  * @package App\Command\Traits
  */
-trait ApiKeyUserManagementHelper
+trait ApiKeyUserManagementHelperTrait
 {
-    // Traits
-    use GetApplication;
+    use GetApplicationTrait;
 
     /**
      * Getter for RolesService

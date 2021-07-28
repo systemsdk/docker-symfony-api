@@ -1,14 +1,14 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Serializer/CollectionNormalizer.php
- */
+
+declare(strict_types=1);
 
 namespace App\Serializer\Normalizer;
 
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+use function is_object;
 
 /**
  * Class CollectionNormalizer
@@ -17,18 +17,17 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
  */
 class CollectionNormalizer implements NormalizerInterface
 {
-    private ObjectNormalizer $normalizer;
-
-    /**
-     * Constructor
-     */
-    public function __construct(ObjectNormalizer $normalizer)
-    {
-        $this->normalizer = $normalizer;
+    public function __construct(
+        private ObjectNormalizer $normalizer,
+    ) {
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @psalm-param mixed $object
+     *
+     * @return array<int, mixed>
      */
     public function normalize($object, $format = null, array $context = []): array
     {

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Actions/Authenticated/FindOneAction.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Actions\Authenticated;
 
@@ -25,7 +23,6 @@ use Throwable;
  */
 trait FindOneAction
 {
-    // Traits
     use FindOneMethod;
 
     /**

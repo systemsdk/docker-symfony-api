@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Controller.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest;
 
@@ -18,10 +16,11 @@ use UnexpectedValueException;
  * Class Controller
  *
  * @package App\Rest
+ *
+ * @property ?RestResourceInterface $resource
  */
 abstract class Controller implements ControllerInterface
 {
-    // Traits
     use RestActionBase;
     use RestMethodHelper;
 
@@ -43,7 +42,6 @@ abstract class Controller implements ControllerInterface
     public const METHOD_PATCH = 'patchMethod';
     public const METHOD_UPDATE = 'updateMethod';
 
-    protected ?RestResourceInterface $resource = null;
     protected ?ResponseHandlerInterface $responseHandler = null;
 
     /**
@@ -51,11 +49,8 @@ abstract class Controller implements ControllerInterface
      */
     public function getResource(): RestResourceInterface
     {
-        if (!$this->resource instanceof RestResourceInterface) {
-            throw new UnexpectedValueException('Resource service not set', Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        return $this->resource;
+        return $this->resource
+               ?? throw new UnexpectedValueException('Resource service not set', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -73,15 +68,19 @@ abstract class Controller implements ControllerInterface
      */
     public function getResponseHandler(): ResponseHandlerInterface
     {
-        if (!$this->responseHandler instanceof ResponseHandlerInterface) {
-            throw new UnexpectedValueException('ResponseHandler service not set', Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        return $this->responseHandler;
+        return $this->responseHandler
+               ?? throw new UnexpectedValueException(
+                   'ResponseHandler service not set',
+                   Response::HTTP_INTERNAL_SERVER_ERROR
+               );
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @see https://symfony.com/doc/current/service_container/autowiring.html#autowiring-other-methods-e-g-setters
+     *
+     * @required
      */
     public function setResponseHandler(ResponseHandler $responseHandler): self
     {

@@ -1,13 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/AutoMapper/ApiKey/AutoMapperConfiguration.php
- */
+
+declare(strict_types=1);
 
 namespace App\AutoMapper\ApiKey;
 
 use App\AutoMapper\RestAutoMapperConfiguration;
-use App\AutoMapper\RestRequestMapper;
 use App\DTO\ApiKey\ApiKeyCreate;
 use App\DTO\ApiKey\ApiKeyPatch;
 use App\DTO\ApiKey\ApiKeyUpdate;
@@ -30,13 +27,8 @@ class AutoMapperConfiguration extends RestAutoMapperConfiguration
         ApiKeyPatch::class,
     ];
 
-    protected RestRequestMapper $requestMapper;
-
-    /**
-     * Constructor
-     */
-    public function __construct(RequestMapper $requestMapper)
-    {
-        $this->requestMapper = $requestMapper;
+    public function __construct(
+        protected RequestMapper $requestMapper,
+    ) {
     }
 }

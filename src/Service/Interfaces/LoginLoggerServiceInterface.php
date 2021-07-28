@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Service/Interfaces/LoginLoggerServiceInterface.php
- */
+
+declare(strict_types=1);
 
 namespace App\Service\Interfaces;
 
@@ -12,15 +10,12 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Throwable;
 
 /**
- * Interface LoginLoggerService
+ * Interface LoginLoggerServiceInterface
  *
  * @package App\Service\Interfaces
  */
 interface LoginLoggerServiceInterface
 {
-    /**
-     * Constructor
-     */
     public function __construct(LogLoginResource $logLoginFailureResource, RequestStack $requestStack);
 
     /**

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Security/Handler/TranslatedAuthenticationFailureHandler.php
- */
+
+declare(strict_types=1);
 
 namespace App\Security\Handler;
 
@@ -22,16 +20,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class TranslatedAuthenticationFailureHandler extends AuthenticationFailureHandler
 {
-    private TranslatorInterface $translator;
-
-    /**
-     * Constructor
-     */
-    public function __construct(EventDispatcherInterface $dispatcher, TranslatorInterface $translator)
-    {
+    public function __construct(
+        EventDispatcherInterface $dispatcher,
+        private TranslatorInterface $translator,
+    ) {
         parent::__construct($dispatcher);
-
-        $this->translator = $translator;
     }
 
     /**

@@ -1,14 +1,16 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Utils/Tests/WebTestCase.php
- */
+
+declare(strict_types=1);
 
 namespace App\Utils\Tests;
 
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Throwable;
+
+use function array_merge;
+use function gc_collect_cycles;
+use function gc_enable;
 
 /**
  * Class WebTestCase

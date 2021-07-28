@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/UserGroup/UserGroupController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\UserGroup;
 
@@ -54,11 +52,8 @@ class UserGroupController extends Controller
         Controller::METHOD_PATCH => UserGroupPatch::class,
     ];
 
-    /**
-     * Constructor
-     */
-    public function __construct(UserGroupResource $resource)
-    {
-        $this->setResource($resource);
+    public function __construct(
+        protected UserGroupResource $resource,
+    ) {
     }
 }

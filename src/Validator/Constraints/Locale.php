@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Validator/Constraints/Locale.php
- */
+
+declare(strict_types=1);
 
 namespace App\Validator\Constraints;
 
@@ -29,7 +27,7 @@ class Locale extends Constraint
     public const MESSAGE = 'This locale "{{ locale }}" is not valid.';
 
     /**
-     * Error names configuration
+     * {@inheritdoc}
      *
      * @var array<string, string>
      */
@@ -37,8 +35,9 @@ class Locale extends Constraint
         self::INVALID_LOCALE => 'INVALID_LOCALE',
     ];
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      */
     public function getTargets(): string

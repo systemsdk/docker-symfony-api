@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/AutoMapper/RestAutoMapperConfiguration.php
- */
+
+declare(strict_types=1);
 
 namespace App\AutoMapper;
 
@@ -14,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
  * Class RestAutoMapperConfiguration
  *
  * @package App\AutoMapper
+ *
+ * @property RestRequestMapper $requestMapper
  */
 abstract class RestAutoMapperConfiguration implements AutoMapperConfiguratorInterface
 {
@@ -24,7 +24,8 @@ abstract class RestAutoMapperConfiguration implements AutoMapperConfiguratorInte
      */
     protected static array $requestMapperClasses = [];
 
-    protected RestRequestMapper $requestMapper;
+    // We cannot define this here if we're using constructor property promotion
+    // protected RestRequestMapper $requestMapper;
 
     /**
      * Use this method to register your mappings.

@@ -1,12 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/ApiKey/ApiKeyManagementCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\ApiKey;
 
-use App\Command\Traits\ExecuteMultipleCommand;
+use App\Command\Traits\ExecuteMultipleCommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 
@@ -17,15 +15,12 @@ use Symfony\Component\Console\Exception\LogicException;
  */
 class ApiKeyManagementCommand extends Command
 {
-    // Traits
-    use ExecuteMultipleCommand;
+    use ExecuteMultipleCommandTrait;
 
     /**
      * Constructor
      *
      * @throws LogicException
-     *
-     * @psalm-suppress InvalidScalarArgument
      */
     public function __construct()
     {
@@ -38,7 +33,7 @@ class ApiKeyManagementCommand extends Command
             'api-key:edit' => 'Edit API key',
             'api-key:change-token' => 'Change API key token',
             'api-key:remove' => 'Remove API key',
-            false => 'Exit',
+            '0' => 'Exit',
         ]);
     }
 }

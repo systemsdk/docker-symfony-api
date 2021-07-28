@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Actions/MethodHelper.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Actions;
 
@@ -11,14 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Throwable;
 
 /**
- * Trait MethodHelper
+ * Trait RestActionBase
  *
  * @package App\Rest\Traits\Methods
  */
 trait RestActionBase
 {
     /**
-     * @param array|array<int, string> $allowedHttpMethods
+     * @param array<int, string> $allowedHttpMethods
      *
      * @throws Throwable
      */

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/EventSubscriber/JWTDecodedSubscriber.php
- */
+
+declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
@@ -13,6 +11,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+use function array_key_exists;
+use function hash;
+use function implode;
+
 /**
  * Class JWTDecodedSubscriber
  *
@@ -20,16 +22,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class JWTDecodedSubscriber implements EventSubscriberInterface
 {
-    private RequestStack $requestStack;
-    private LoggerInterface $logger;
-
-    /**
-     * Constructor
-     */
-    public function __construct(RequestStack $requestStack, LoggerInterface $logger)
-    {
-        $this->requestStack = $requestStack;
-        $this->logger = $logger;
+    public function __construct(
+        private RequestStack $requestStack,
+        private LoggerInterface $logger,
+    ) {
     }
 
     /**

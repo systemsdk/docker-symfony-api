@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/RestResourceFind.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits;
 

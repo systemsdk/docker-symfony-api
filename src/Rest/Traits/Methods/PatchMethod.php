@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Methods/PatchMethod.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Methods;
 
@@ -32,9 +30,9 @@ trait PatchMethod
         Request $request,
         RestDtoInterface $restDto,
         string $id,
-        ?array $allowedHttpMethods = null
+        ?array $allowedHttpMethods = null,
     ): Response {
-        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? ['PATCH']);
+        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? [Request::METHOD_PATCH]);
 
         try {
             $data = $resource->patch($id, $restDto, true);

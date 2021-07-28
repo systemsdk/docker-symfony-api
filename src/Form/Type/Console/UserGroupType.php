@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Form/Type/Console/UserGroupType.php
- */
+
+declare(strict_types=1);
 
 namespace App\Form\Type\Console;
 
@@ -14,7 +12,6 @@ use App\Form\Type\Traits\AddBasicFieldToForm;
 use App\Resource\RoleResource;
 use App\Security\RolesService;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
@@ -28,7 +25,6 @@ use Throwable;
  */
 class UserGroupType extends AbstractType
 {
-    // Traits
     use AddBasicFieldToForm;
 
     /**
@@ -48,27 +44,17 @@ class UserGroupType extends AbstractType
         ],
     ];
 
-    private RolesService $rolesService;
-    private RoleResource $roleResource;
-    private RoleTransformer $roleTransformer;
-
-    /**
-     * Constructor
-     */
     public function __construct(
-        RolesService $rolesService,
-        RoleResource $roleResource,
-        RoleTransformer $roleTransformer
+        private RolesService $rolesService,
+        private RoleResource $roleResource,
+        private RoleTransformer $roleTransformer,
     ) {
-        $this->rolesService = $rolesService;
-        $this->roleResource = $roleResource;
-        $this->roleTransformer = $roleTransformer;
     }
 
     /**
      * {@inheritdoc}
      *
-     * @throws InvalidArgumentException|Throwable
+     * @throws Throwable
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -83,7 +69,7 @@ class UserGroupType extends AbstractType
                     FormTypeLabelInterface::LABEL => 'Role',
                     FormTypeLabelInterface::CHOICES => $this->getRoleChoices(),
                     FormTypeLabelInterface::REQUIRED => true,
-                ]
+                ],
             );
         $builder->get('role')->addModelTransformer($this->roleTransformer);
     }
@@ -114,11 +100,10 @@ class UserGroupType extends AbstractType
         // Initialize output
         $choices = [];
         $iterator = function (RoleEntity $role) use (&$choices): void {
-            $name = $this->rolesService->getRoleLabel($role->getId());
-            $choices[$name] = $role->getId();
+            $choices[$this->rolesService->getRoleLabel($role->getId())] = $role->getId();
         };
-        $roles = $this->roleResource->find();
-        array_map($iterator, $roles);
+
+        array_map($iterator, $this->roleResource->find());
 
         return $choices;
     }

@@ -17,8 +17,8 @@ Docker environment (based on official php and mysql docker hub repositories) req
 Note: OS recommendation - Linux Ubuntu based.
 
 ## Components
-1. Nginx 1.19
-2. PHP 7.4 fpm
+1. Nginx 1.21
+2. PHP 8.0 fpm
 3. MySQL 8
 4. Symfony 4 LTS
 5. RabbitMQ 3
@@ -257,17 +257,16 @@ Notes: Please see more commands in Makefile
 * [Symfony 4](https://symfony.com)
 * [doctrine-migrations-bundle](https://github.com/doctrine/DoctrineMigrationsBundle)
 * [doctrine-fixtures-bundle](https://github.com/doctrine/DoctrineFixturesBundle)
-* [command-scheduler-bundle](https://github.com/j-guyon/CommandSchedulerBundle)
+* [command-scheduler-bundle](https://packagist.org/packages/dukecity/command-scheduler-bundle)
 * [phpunit](https://github.com/sebastianbergmann/phpunit)
 * [phpunit-bridge](https://github.com/symfony/phpunit-bridge)
 * [browser-kit](https://github.com/symfony/browser-kit)
 * [css-selector](https://github.com/symfony/css-selector)
 * [security-checker](https://github.com/fabpot/local-php-security-checker)
 * [messenger](https://symfony.com/doc/current/messenger.html)
-* [serializer-pack](https://packagist.org/packages/symfony/serializer-pack)
 * [composer-bin-plugin](https://github.com/bamarni/composer-bin-plugin)
-* [ergebnis/composer-normalize](https://github.com/ergebnis/composer-normalize)
-* [symfony/requirements-checker](https://github.com/symfony/requirements-checker)
+* [composer-normalize](https://github.com/ergebnis/composer-normalize)
+* [requirements-checker](https://github.com/symfony/requirements-checker)
 * [security-advisories](https://github.com/Roave/SecurityAdvisories)
 * [jwt-authentication-bundle](https://packagist.org/packages/lexik/jwt-authentication-bundle)
 * [automapper-plus-bundle](https://packagist.org/packages/mark-gerarts/automapper-plus-bundle)
@@ -276,7 +275,7 @@ Notes: Please see more commands in Makefile
 * [cors-bundle](https://packagist.org/packages/nelmio/cors-bundle)
 * [device-detector](https://packagist.org/packages/matomo/device-detector)
 * [uuid-doctrine](https://packagist.org/packages/ramsey/uuid-doctrine)
-* [doctrine-extensions-bundle](https://packagist.org/packages/stof/doctrine-extensions-bundle)
+* [doctrine-extensions](https://packagist.org/packages/gedmo/doctrine-extensions)
 * [easy-log-bundle](https://packagist.org/packages/systemsdk/easy-log-bundle)
 * [php-coveralls](https://github.com/php-coveralls/php-coveralls)
 * [easy-coding-standard](https://github.com/Symplify/EasyCodingStandard)

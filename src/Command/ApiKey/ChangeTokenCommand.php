@@ -1,12 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/ApiKey/ChangeTokenCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\ApiKey;
 
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\Entity\ApiKey as ApiKeyEntity;
 use App\Resource\ApiKeyResource;
 use Symfony\Component\Console\Command\Command;
@@ -22,28 +20,25 @@ use Throwable;
  */
 class ChangeTokenCommand extends Command
 {
-    // Traits
-    use StyleSymfony;
-
-    private ApiKeyResource $apiKeyResource;
-    private ApiKeyHelper $apiKeyHelper;
+    use SymfonyStyleTrait;
 
     /**
      * Constructor
      *
      * @throws LogicException
      */
-    public function __construct(ApiKeyResource $apiKeyResource, ApiKeyHelper $apiKeyHelper)
-    {
+    public function __construct(
+        private ApiKeyResource $apiKeyResource,
+        private ApiKeyHelper $apiKeyHelper,
+    ) {
         parent::__construct('api-key:change-token');
 
-        $this->apiKeyResource = $apiKeyResource;
-        $this->apiKeyHelper = $apiKeyHelper;
         $this->setDescription('Command to change token for existing API key');
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      *
      * @throws Throwable
@@ -51,17 +46,11 @@ class ChangeTokenCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);
-        // Get API key entity
         $apiKey = $this->apiKeyHelper->getApiKey($io, 'Which API key token you want to change?');
-        $message = null;
-
-        if ($apiKey instanceof ApiKeyEntity) {
-            $message = $this->changeApiKeyToken($apiKey);
-        }
+        $message = $apiKey instanceof ApiKeyEntity ? $this->changeToken($apiKey) : null;
 
         if ($input->isInteractive()) {
-            $message ??= 'Nothing changed - have a nice day';
-            $io->success($message);
+            $io->success($message ?? ['Nothing changed - have a nice day']);
         }
 
         return 0;
@@ -72,9 +61,9 @@ class ChangeTokenCommand extends Command
      *
      * @throws Throwable
      *
-     * @return mixed[]
+     * @return array<int, string>
      */
-    private function changeApiKeyToken(ApiKeyEntity $apiKey): array
+    private function changeToken(ApiKeyEntity $apiKey): array
     {
         // Generate new token for API key
         $apiKey->generateToken();

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Actions/Admin/IdsAction.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Actions\Admin;
 
@@ -25,7 +23,6 @@ use Throwable;
  */
 trait IdsAction
 {
-    // Traits
     use IdsMethod;
 
     /**

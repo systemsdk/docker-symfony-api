@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/MessageHandler/TestHandler.php
- */
+
+declare(strict_types=1);
 
 namespace App\MessageHandler;
 
@@ -19,14 +17,9 @@ use Throwable;
  */
 class TestHandler implements MessageSubscriberInterface
 {
-    private LoggerInterface $logger;
-
-    /**
-     * Constructor
-     */
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
+    public function __construct(
+        private LoggerInterface $logger,
+    ) {
     }
 
     /**

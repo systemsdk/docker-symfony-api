@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Service/MailerService.php
- */
+
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -17,14 +15,9 @@ use Throwable;
  */
 class MailerService
 {
-    private MailerInterface $mailer;
-
-    /**
-     * Constructor
-     */
-    public function __construct(MailerInterface $mailer)
-    {
-        $this->mailer = $mailer;
+    public function __construct(
+        private MailerInterface $mailer,
+    ) {
     }
 
     /**

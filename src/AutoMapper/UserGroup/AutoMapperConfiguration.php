@@ -1,13 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/AutoMapper/UserGroup/AutoMapperConfiguration.php
- */
+
+declare(strict_types=1);
 
 namespace App\AutoMapper\UserGroup;
 
 use App\AutoMapper\RestAutoMapperConfiguration;
-use App\AutoMapper\RestRequestMapper;
 use App\DTO\UserGroup\UserGroupCreate;
 use App\DTO\UserGroup\UserGroupPatch;
 use App\DTO\UserGroup\UserGroupUpdate;
@@ -30,13 +27,8 @@ class AutoMapperConfiguration extends RestAutoMapperConfiguration
         UserGroupPatch::class,
     ];
 
-    protected RestRequestMapper $requestMapper;
-
-    /**
-     * Constructor
-     */
-    public function __construct(RequestMapper $requestMapper)
-    {
-        $this->requestMapper = $requestMapper;
+    public function __construct(
+        protected RequestMapper $requestMapper,
+    ) {
     }
 }

@@ -1,15 +1,13 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/EventSubscriber/ExceptionSubscriber.php
- */
+
+declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
 use App\Exception\Interfaces\ClientErrorInterface;
 use App\Security\UserTypeIdentification;
 use App\Utils\JSON;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\ORMException;
 use JsonException;
 use Psr\Log\LoggerInterface;
@@ -22,6 +20,14 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Throwable;
 
+use function array_intersect;
+use function array_key_exists;
+use function class_implements;
+use function count;
+use function in_array;
+use function method_exists;
+use function spl_object_hash;
+
 /**
  * Class ExceptionSubscriber
  *
@@ -29,10 +35,6 @@ use Throwable;
  */
 class ExceptionSubscriber implements EventSubscriberInterface
 {
-    private UserTypeIdentification $userService;
-    private LoggerInterface $logger;
-    private string $environment;
-
     /**
      * @var array<string, bool>
      */
@@ -46,14 +48,11 @@ class ExceptionSubscriber implements EventSubscriberInterface
         ClientErrorInterface::class,
     ];
 
-    /**
-     * Constructor
-     */
-    public function __construct(LoggerInterface $logger, UserTypeIdentification $userService, string $environment)
-    {
-        $this->logger = $logger;
-        $this->userService = $userService;
-        $this->environment = $environment;
+    public function __construct(
+        private LoggerInterface $logger,
+        private UserTypeIdentification $userService,
+        private string $environment,
+    ) {
     }
 
     /**
@@ -117,7 +116,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
         if ($this->environment === 'dev') {
             $error += [
                 'debug' => [
-                    'exception' => get_class($exception),
+                    'exception' => $exception::class,
                     'file' => $exception->getFile(),
                     'line' => $exception->getLine(),
                     'message' => $exception->getMessage(),
@@ -151,9 +150,9 @@ class ExceptionSubscriber implements EventSubscriberInterface
             AuthenticationException::class,
         ];
 
-        if (in_array(get_class($exception), $accessDeniedClasses, true)) {
+        if (in_array($exception::class, $accessDeniedClasses, true)) {
             $message = 'Access denied.';
-        } elseif ($exception instanceof DBALException || $exception instanceof ORMException) {
+        } elseif ($exception instanceof Exception || $exception instanceof ORMException) {
             // Database errors
             $message = 'Database error.';
         } elseif (!$this->isClientExceptions($exception)) {

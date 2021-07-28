@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Form/Type/Console/ApiKeyType.php
- */
+
+declare(strict_types=1);
 
 namespace App\Form\Type\Console;
 
@@ -26,7 +24,6 @@ use Throwable;
  */
 class ApiKeyType extends AbstractType
 {
-    // Traits
     use AddBasicFieldToForm;
     use UserGroupChoices;
 
@@ -47,15 +44,10 @@ class ApiKeyType extends AbstractType
         ],
     ];
 
-    private UserGroupTransformer $userGroupTransformer;
-
-    /**
-     * Constructor
-     */
-    public function __construct(UserGroupResource $userGroupResource, UserGroupTransformer $userGroupTransformer)
-    {
-        $this->userGroupResource = $userGroupResource;
-        $this->userGroupTransformer = $userGroupTransformer;
+    public function __construct(
+        private UserGroupResource $userGroupResource,
+        private UserGroupTransformer $userGroupTransformer,
+    ) {
     }
 
     /**
@@ -78,7 +70,7 @@ class ApiKeyType extends AbstractType
                     'multiple' => true,
                     'required' => true,
                     'empty_data' => '',
-                ]
+                ],
             );
 
         $builder->get('userGroups')->addModelTransformer($this->userGroupTransformer);

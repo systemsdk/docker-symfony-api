@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/Role/FindOneRoleController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\Role;
 
@@ -29,16 +27,13 @@ class FindOneRoleController extends Controller
 {
     use Methods\FindOneMethod;
 
-    /**
-     * Constructor
-     */
-    public function __construct(RoleResource $resource)
-    {
-        $this->setResource($resource);
+    public function __construct(
+        protected RoleResource $resource,
+    ) {
     }
 
     /**
-     * Find role entity, accessible only for 'ROLE_ADMIN' users.
+     * Find role entity, accessible for 'IS_AUTHENTICATED_FULLY' users.
      *
      * @Route(
      *      path="/role/{role}",
@@ -48,7 +43,7 @@ class FindOneRoleController extends Controller
      *      methods={"GET"},
      *  )
      *
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @OA\Response(
      *      response=200,

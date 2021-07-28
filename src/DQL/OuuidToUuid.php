@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/DQL/OuuidToUuid.php
- */
+
+declare(strict_types=1);
 
 namespace App\DQL;
 
@@ -12,6 +10,11 @@ use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\QueryException;
 use Doctrine\ORM\Query\SqlWalker;
 
+/**
+ * Class OuuidToUuid
+ *
+ * @package App\DQL
+ */
 class OuuidToUuid extends FunctionNode
 {
     public $value;

@@ -13,15 +13,21 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        public: false       # Allows optimizing the container by removing unused services; this also means
-                            # fetching services directly from the container via $container->get() won't work.
-                            # The best practice is to be explicit about your dependencies anyway.
         bind:
             $projectDir: '%kernel.project_dir%'
             $environment: '%kernel.environment%'
             $uuidV1Regex: '%app.uuid_v1_regex%'
             $uuidV4Regex: '%app.uuid_v4_regex%'
             $locale: '%locale%'
+            $appSenderEmail: '%env(resolve:APP_SENDER_EMAIL)%'
+            $appErrorReceiverEmail: '%env(resolve:APP_ERROR_RECEIVER_EMAIL)%'
+            $appEmailNotificationAboutError: '%env(int:APP_EMAIL_NOTIFICATION_ABOUT_ERROR)%'
+            $databaseHealthHistoryDays: '%env(int:DATABASE_HEALTH_HISTORY_DAYS)%'
+            $databaseLogLoginHistoryDays: '%env(int:DATABASE_LOG_LOGIN_HISTORY_DAYS)%'
+            $databaseLogRequestHistoryDays: '%env(int:DATABASE_LOG_REQUEST_HISTORY_DAYS)%'
+            $elasticNumberOfShards: '%env(int:ELASTICSEARCH_NUMBER_OF_SHARDS)%'
+            $elasticNumberOfReplicas: '%env(int:ELASTICSEARCH_NUMBER_OF_REPLICAS)%'
+            $lockUserOnLoginFailureAttempts: '%env(int:LOCK_USER_ON_LOGIN_FAILURE_ATTEMPTS)%'
     _instanceof:
         App\Rest\Interfaces\ControllerInterface:
             tags: [ 'app.rest.controller' ]
@@ -31,15 +37,22 @@ services:
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
-        resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,EventListener,Migrations,Tests,Kernel.php}'
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/EventListener/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
-        resource: '../src/Controller/*'
+        resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
     App\DataFixtures\:
         resource: '../src/DataFixtures/*'
         tags: [ 'doctrine.fixture.orm' ]
@@ -65,10 +78,6 @@ services:
     App\Security\RolesService:
         arguments: [ '%security.role_hierarchy.roles%' ]
 
-    App\EventSubscriber\BlameableDecorator:
-        class: App\EventSubscriber\BlameableDecorator
-        decorates: stof_doctrine_extensions.listener.blameable
-
     App\Service\Interfaces\MessageServiceInterface:
         class: App\Service\MessageService
         #lazy: true
@@ -80,5 +89,3 @@ services:
             $username: '%env(ELASTICSEARCH_USERNAME)%'
             $password: '%env(ELASTICSEARCH_PASSWORD)%'
         #lazy: true
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones

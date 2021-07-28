@@ -1,5 +1,5 @@
 security:
-    # http://symfony.com/doc/current/cookbook/security/named_encoders.html
+    # http://symfony.com/doc/current/security/named_encoders.html
     encoders:
         App\Security\SecurityUser:
             algorithm: auto

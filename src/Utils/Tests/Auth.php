@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Utils/Tests/Auth.php
- */
+
+declare(strict_types=1);
 
 namespace App\Utils\Tests;
 
@@ -13,6 +11,18 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Throwable;
 use UnexpectedValueException;
 
+use function array_key_exists;
+use function array_merge;
+use function compact;
+use function file_get_contents;
+use function file_put_contents;
+use function getenv;
+use function property_exists;
+use function sha1;
+use function sprintf;
+use function str_pad;
+use function sys_get_temp_dir;
+
 /**
  * Class Auth
  *
@@ -20,14 +30,9 @@ use UnexpectedValueException;
  */
 class Auth
 {
-    private KernelInterface $kernel;
-
-    /**
-     * Constructor
-     */
-    public function __construct(KernelInterface $kernel)
-    {
-        $this->kernel = $kernel;
+    public function __construct(
+        private KernelInterface $kernel,
+    ) {
     }
 
     /**

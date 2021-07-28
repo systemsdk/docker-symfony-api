@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/DataFixtures/ORM/LoadUserData.php
- */
+
+declare(strict_types=1);
 
 namespace App\DataFixtures\ORM;
 
@@ -17,6 +15,8 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Throwable;
+
+use function array_map;
 
 /**
  * Class LoadUserData
@@ -56,8 +56,7 @@ final class LoadUserData extends Fixture implements OrderedFixtureInterface, Con
         $this->roles = $rolesService;
         $this->manager = $manager;
         // Create entities
-        array_map([$this, 'createUser'], $this->roles->getRoles());
-        $this->createUser();
+        array_map(fn (?string $role): bool => $this->createUser($role), [null, ...$this->roles->getRoles()]);
         // Flush database changes
         $this->manager->flush();
     }
@@ -75,16 +74,16 @@ final class LoadUserData extends Fixture implements OrderedFixtureInterface, Con
      *
      * @throws Throwable
      */
-    private function createUser(?string $role = null): void
+    private function createUser(?string $role = null): bool
     {
         $suffix = $role === null ? '' : '-' . $this->roles->getShort($role);
         // Create new entity
-        $entity = new User();
-        $entity->setUsername('john' . $suffix);
-        $entity->setFirstName('John');
-        $entity->setLastName('Doe');
-        $entity->setEmail('john.doe' . $suffix . '@test.com');
-        $entity->setPlainPassword('password' . $suffix);
+        $entity = (new User())
+            ->setUsername('john' . $suffix)
+            ->setFirstName('John')
+            ->setLastName('Doe')
+            ->setEmail('john.doe' . $suffix . '@test.com')
+            ->setPlainPassword('password' . $suffix);
 
         if ($role !== null) {
             /** @var UserGroup $userGroup */
@@ -102,5 +101,7 @@ final class LoadUserData extends Fixture implements OrderedFixtureInterface, Con
         $this->manager->persist($entity);
         // Create reference for later usage
         $this->addReference('User-' . $entity->getUsername(), $entity);
+
+        return true;
     }
 }

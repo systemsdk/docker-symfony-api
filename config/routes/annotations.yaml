@@ -4,7 +4,12 @@ api-controller:
     prefix: /api
     defaults:
         _format: json
+
 web-controller:
     resource: ../../src/Controller/Web/
     type: annotation
     prefix: /web
+
+kernel:
+    resource: ../../src/Kernel.php
+    type: annotation

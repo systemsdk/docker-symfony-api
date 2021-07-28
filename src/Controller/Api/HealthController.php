@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/HealthController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api;
 
@@ -23,16 +21,10 @@ use Throwable;
  */
 class HealthController
 {
-    private ResponseHandler $responseHandler;
-    private HealthService $healthService;
-
-    /**
-     * Constructor
-     */
-    public function __construct(ResponseHandler $responseHandler, HealthService $healthService)
-    {
-        $this->responseHandler = $responseHandler;
-        $this->healthService = $healthService;
+    public function __construct(
+        private ResponseHandler $responseHandler,
+        private HealthService $healthService,
+    ) {
     }
 
     /**
@@ -64,14 +56,12 @@ class HealthController
         return $this->responseHandler->createResponse(
             $request,
             $this->healthService->check(),
-            null,
-            Response::HTTP_OK,
-            ResponseHandler::FORMAT_JSON,
-            [
+            format: ResponseHandler::FORMAT_JSON,
+            context: [
                 'groups' => [
                     'Health.timestamp',
                 ],
-            ]
+            ],
         );
     }
 }

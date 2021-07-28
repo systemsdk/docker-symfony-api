@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Validator/Constraints/UniqueUsername.php
- */
+
+declare(strict_types=1);
 
 namespace App\Validator\Constraints;
 
@@ -29,7 +27,7 @@ class UniqueUsername extends Constraint
     public const MESSAGE = 'This username is already taken.';
 
     /**
-     * Error names configuration
+     * {@inheritdoc}
      *
      * @var array<string, string>
      */
@@ -37,14 +35,10 @@ class UniqueUsername extends Constraint
         self::IS_UNIQUE_USERNAME_ERROR => 'IS_UNIQUE_USERNAME_ERROR',
     ];
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Returns whether the constraint can be put onto classes, properties or both.
+     * @noinspection PhpMissingParentCallCommonInspection
      *
-     * This method should return one or more of the constants
-     * Constraint::CLASS_CONSTRAINT and Constraint::PROPERTY_CONSTRAINT.
-     *
-     * @return string One or more constant values
+     * {@inheritdoc}
      */
     public function getTargets(): string
     {

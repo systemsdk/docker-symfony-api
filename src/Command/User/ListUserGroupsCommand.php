@@ -1,12 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/User/ListUserGroupsCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\User;
 
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\Entity\User;
 use App\Entity\UserGroup;
 use App\Resource\UserGroupResource;
@@ -17,6 +15,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
+use function array_map;
+use function implode;
+use function sprintf;
+
 /**
  * Class ListUserGroupsCommand
  *
@@ -24,27 +26,24 @@ use Throwable;
  */
 class ListUserGroupsCommand extends Command
 {
-    // Traits
-    use StyleSymfony;
-
-    private UserGroupResource $userGroupResource;
+    use SymfonyStyleTrait;
 
     /**
      * Constructor
      *
      * @throws LogicException
      */
-    public function __construct(UserGroupResource $userGroupResource)
-    {
+    public function __construct(
+        private UserGroupResource $userGroupResource,
+    ) {
         parent::__construct('user:list-groups');
-
-        $this->userGroupResource = $userGroupResource;
 
         $this->setDescription('Console command to list user groups');
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      *
      * @throws Throwable
@@ -69,11 +68,11 @@ class ListUserGroupsCommand extends Command
      *
      * @throws Throwable
      *
-     * @return mixed[]
+     * @return array<int, string>
      */
     private function getRows(): array
     {
-        return array_map($this->getFormatterUserGroup(), $this->userGroupResource->find(null, ['name' => 'ASC']));
+        return array_map($this->getFormatterUserGroup(), $this->userGroupResource->find(orderBy: ['name' => 'ASC']));
     }
 
     /**
@@ -86,16 +85,14 @@ class ListUserGroupsCommand extends Command
             '%s %s <%s>',
             $user->getFirstName(),
             $user->getLastName(),
-            $user->getEmail()
+            $user->getEmail(),
         );
 
-        return static function (UserGroup $userGroup) use ($userFormatter): array {
-            return [
-                $userGroup->getId(),
-                $userGroup->getName(),
-                $userGroup->getRole()->getId(),
-                implode(",\n", $userGroup->getUsers()->map($userFormatter)->toArray()),
-            ];
-        };
+        return static fn (UserGroup $userGroup): array => [
+            $userGroup->getId(),
+            $userGroup->getName(),
+            $userGroup->getRole()->getId(),
+            implode(",\n", $userGroup->getUsers()->map($userFormatter)->toArray()),
+        ];
     }
 }

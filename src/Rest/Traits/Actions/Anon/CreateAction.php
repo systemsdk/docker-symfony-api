@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Actions/Anon/CreateAction.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Actions\Anon;
 
@@ -25,7 +23,6 @@ use Throwable;
  */
 trait CreateAction
 {
-    // Traits
     use CreateMethod;
 
     /**

@@ -1,5 +1,7 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
+
 /** @noinspection PhpUndefinedNamespaceInspection */
 /** @noinspection PhpUndefinedClassInspection */
 
@@ -34,7 +36,7 @@ return [
         'docs',
         'public',
         'reports',
-        'src/Migrations',
+        'migrations',
         'templates',
         'tests',
         'tools',
@@ -52,38 +54,27 @@ return [
         NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff::class,
         ObjectCalisthenics\Sniffs\Classes\ForbiddenPublicPropertySniff::class,
         ObjectCalisthenics\Sniffs\NamingConventions\NoSetterSniff::class,
+        PhpCsFixer\Fixer\ArrayNotation\NoMultilineWhitespaceAroundDoubleArrowFixer::class,
         SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff::class,
         SlevomatCodingStandard\Sniffs\Classes\SuperfluousInterfaceNamingSniff::class,
         SlevomatCodingStandard\Sniffs\Classes\SuperfluousTraitNamingSniff::class,
+        SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff::class,
         SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff::class,
         SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff::class,
         SlevomatCodingStandard\Sniffs\Commenting\UselessInheritDocCommentSniff ::class,
         SlevomatCodingStandard\Sniffs\Commenting\UselessFunctionDocCommentSniff::class,
+        SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff::class,
         SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff::class,
         SlevomatCodingStandard\Sniffs\TypeHints\DisallowArrayTypeHintSyntaxSniff::class,
         SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff::class,
         SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff::class,
         SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff::class,
         SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff::class,
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff::class,
     ],
     'config' => [
-        ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff::class => [
-            'maxLength' => 600,
-        ],
-        ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff::class => [
-            'maxLength' => 45,
-        ],
-        ObjectCalisthenics\Sniffs\NamingConventions\ElementNameMinimalLengthSniff::class => [
-            'allowedShortNames' => ['i', 'id', 'to', 'up', 'io', 'em'],
-        ],
-        ObjectCalisthenics\Sniffs\Metrics\MaxNestingLevelSniff::class => [
-            'maxNestingLevel' => 3,
-        ],
-        ObjectCalisthenics\Sniffs\Metrics\MethodPerClassLimitSniff::class => [
-            'maxCount' => 25,
-        ],
-        ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff::class => [
-            'maxCount' => 20,
+        SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff::class => [
+            'maxLinesLength' => 45,
         ],
         PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
             'lineLimit' => 120,
@@ -104,18 +95,54 @@ return [
             'sort_algorithm' => 'alpha', // possible values ['alpha', 'length', 'none']
         ],
         PhpCsFixer\Fixer\LanguageConstruct\DeclareEqualNormalizeFixer::class => [
-            'space' => 'single', // possible values ['none', 'single']
+            'space' => 'none', // possible values ['none', 'single']
+        ],
+        PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class => [
+            'operators' => [
+                '&' => 'align',
+            ],
         ],
         SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff::class => [
-            'exclude' => [],
+            'exclude' => [
+                'src/ArgumentResolver/LoggedInUserValueResolver.php',
+                'src/ArgumentResolver/RestDtoValueResolver.php',
+                'src/AutoMapper/RestRequestMapper.php',
+                'src/Doctrine/DBAL/Types/EnumType.php',
+                'src/Rest/Traits/Methods/RestMethodProcessCriteria.php',
+                'src/Rest/Traits/RestResourceCount.php',
+                'src/Rest/Traits/RestResourceCreate.php',
+                'src/Rest/Traits/RestResourceDelete.php',
+                'src/Rest/Traits/RestResourceFind.php',
+                'src/Rest/Traits/RestResourceFindOne.php',
+                'src/Rest/Traits/RestResourceFindOneBy.php',
+                'src/Rest/Traits/RestResourceIds.php',
+                'src/Rest/Traits/RestResourcePatch.php',
+                'src/Rest/Traits/RestResourceSave.php',
+                'src/Rest/Traits/RestResourceUpdate.php',
+                'src/Security/Authenticator/ApiKeyAuthenticator.php',
+                'src/Security/Handler/TranslatedAuthenticationFailureHandler.php',
+                'src/Security/Provider/ApiKeyUserProvider.php',
+                'src/Security/Voter/IsUserHimselfVoter.php',
+                'src/Validator/Constraints/LanguageValidator.php',
+                'src/Validator/Constraints/LocaleValidator.php',
+                'src/Validator/Constraints/TimezoneValidator.php',
+                'src/Validator/Constraints/UniqueEmailValidator.php',
+                'src/Validator/Constraints/UniqueUsernameValidator.php',
+                'src/MessageHandler/TestHandler.php',
+            ],
         ],
         SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff::class => [
             'searchAnnotations' => true,
         ],
         SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff::class => [
-            'newlinesCountAfterDeclare' => 2,
-            'newlinesCountBetweenOpenTagAndDeclare' => 1,
+            'linesCountBeforeDeclare' => 1,
+            'linesCountAfterDeclare' => 1,
             'spacesCountAroundEqualsSign' => 1,
+        ],
+        SlevomatCodingStandard\Sniffs\Namespaces\UseSpacingSniff::class => [
+            'linesCountBeforeFirstUse' => 1,
+            'linesCountBetweenUseTypes' => 1,
+            'linesCountAfterLastUse' => 1,
         ],
     ],
 ];

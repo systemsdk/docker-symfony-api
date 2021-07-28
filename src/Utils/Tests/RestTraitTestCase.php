@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Utils/Tests/RestTraitTestCase.php
- */
+
+declare(strict_types=1);
 
 namespace App\Utils\Tests;
 
@@ -11,6 +9,8 @@ use Generator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
+
+use function array_merge;
 
 /**
  * Class RestTraitTestCase

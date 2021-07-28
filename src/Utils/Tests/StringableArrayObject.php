@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Utils/Tests/StringableArrayObject.php
- */
+
+declare(strict_types=1);
 
 namespace App\Utils\Tests;
 
@@ -15,6 +13,8 @@ use Stringable;
  * Class StringableArrayObject
  *
  * @package App\Utils\Tests
+ *
+ * @phpstan-ignore-next-line
  */
 class StringableArrayObject extends ArrayObject implements Stringable
 {
@@ -23,15 +23,7 @@ class StringableArrayObject extends ArrayObject implements Stringable
      */
     public function __toString(): string
     {
-        /**
-         * @psalm-suppress MissingClosureParamType
-         * @psalm-suppress MissingClosureReturnType
-         *
-         * @param mixed $input
-         *
-         * @return mixed
-         */
-        $iterator = static fn ($input) => $input instanceof Stringable ? (string)$input : $input;
+        $iterator = static fn (mixed $input): mixed => $input instanceof Stringable ? (string)$input : $input;
 
         return JSON::encode(array_map($iterator, $this->getArrayCopy()));
     }

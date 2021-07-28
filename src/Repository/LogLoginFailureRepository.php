@@ -1,34 +1,39 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Repository/LogLoginFailureRepository.php
- */
+
+declare(strict_types=1);
 
 namespace App\Repository;
 
 use App\Entity\LogLoginFailure as Entity;
 use App\Entity\User;
-use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Class LogLoginFailureRepository
  *
  * @package App\Repository
  *
+ * @psalm-suppress LessSpecificImplementedReturnType
  * @codingStandardsIgnoreStart
  *
- * @method Entity|null find(string $id, ?int $lockMode = null, ?int $lockVersion = null): ?Entity
- * @method array<int, Entity> findAdvanced(string $id, $hydrationMode = null)
- * @method Entity|null findOneBy(array $criteria, ?array $orderBy = null): ?Entity
- * @method array<int, Entity> findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array
- * @method array<int, Entity> findByAdvanced(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null, ?array $search = null): array
- * @method array<int, Entity> findAll(): array
+ * @method Entity|null find(string $id, ?int $lockMode = null, ?int $lockVersion = null)
+ * @method Entity|null findAdvanced(string $id, string | int | null $hydrationMode = null)
+ * @method Entity|null findOneBy(array $criteria, ?array $orderBy = null)
+ * @method Entity[] findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null)
+ * @method Entity[] findByAdvanced(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null, ?array $search = null)
+ * @method Entity[] findAll()
  *
  * @codingStandardsIgnoreEnd
  */
 class LogLoginFailureRepository extends BaseRepository
 {
     protected static string $entityName = Entity::class;
+
+    public function __construct(
+        protected ManagerRegistry $managerRegistry,
+    ) {
+    }
 
     /**
      * Method to clear specified user login failures.
@@ -40,7 +45,7 @@ class LogLoginFailureRepository extends BaseRepository
             ->createQueryBuilder('logLoginFailure')
             ->delete()
             ->where('logLoginFailure.user = :user')
-            ->setParameter('user', $user->getId(), UuidBinaryOrderedTimeType::NAME);
+            ->setParameter('user', $user, Types::OBJECT);
 
         // Return deleted row count
         return (int)$queryBuilder->getQuery()->execute();

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/Role/RoleController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\Role;
 
@@ -37,11 +35,8 @@ class RoleController extends Controller
     use Actions\Admin\FindAction;
     use Actions\Admin\IdsAction;
 
-    /**
-     * Constructor
-     */
-    public function __construct(RoleResource $resource)
-    {
-        $this->setResource($resource);
+    public function __construct(
+        protected RoleResource $resource,
+    ) {
     }
 }

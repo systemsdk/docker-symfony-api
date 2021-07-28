@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Service/HealthService.php
- */
+
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -17,14 +15,9 @@ use Throwable;
  */
 final class HealthService
 {
-    private HealthRepository $repository;
-
-    /**
-     * Constructor
-     */
-    public function __construct(HealthRepository $repository)
-    {
-        $this->repository = $repository;
+    public function __construct(
+        private HealthRepository $repository,
+    ) {
     }
 
     /**

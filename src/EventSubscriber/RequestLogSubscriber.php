@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/EventSubscriber/RequestLogSubscriber.php
- */
+
+declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
@@ -18,40 +16,33 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\TerminateEvent;
 use Throwable;
 
+use function array_filter;
+use function count;
+use function in_array;
+use function str_contains;
+use function substr;
+
 /**
  * Class RequestLogSubscriber
  *
  * @package App\EventSubscriber
+ *
+ * @property array<int, string> $ignoredRoutes
  */
 class RequestLogSubscriber implements EventSubscriberInterface
 {
-    private RequestLoggerService $requestLogger;
-    private UserRepository $userRepository;
-    private LoggerInterface $logger;
-    private UserTypeIdentification $userService;
-
-    /**
-     * @var array<int, string>
-     */
-    private array $ignoredRoutes;
-
     /**
      * Constructor
      *
      * @param array<int, string> $ignoredRoutes
      */
     public function __construct(
-        RequestLoggerService $requestLoggerService,
-        UserRepository $userRepository,
-        LoggerInterface $logger,
-        UserTypeIdentification $userService,
-        array $ignoredRoutes
+        private RequestLoggerService $requestLoggerService,
+        private UserRepository $userRepository,
+        private LoggerInterface $logger,
+        private UserTypeIdentification $userService,
+        private array $ignoredRoutes,
     ) {
-        $this->requestLogger = $requestLoggerService;
-        $this->userRepository = $userRepository;
-        $this->logger = $logger;
-        $this->userService = $userService;
-        $this->ignoredRoutes = $ignoredRoutes;
     }
 
     /**
@@ -79,17 +70,15 @@ class RequestLogSubscriber implements EventSubscriberInterface
         $request = $event->getRequest();
         $path = $request->getPathInfo();
 
+        $filter = static fn (string $route): bool =>
+            str_contains($route, '/*') && str_contains($path, substr($route, 0, -2));
+
         // We don't want to log OPTIONS requests, /_profiler* -path, ignored routes and wildcard ignored routes
-        if ($request->getRealMethod() === Request::METHOD_OPTIONS
-            || strpos($path, '/_profiler') !== false
+        if (
+            $request->getRealMethod() === Request::METHOD_OPTIONS
+            || str_contains($path, '/_profiler')
             || in_array($path, $this->ignoredRoutes, true)
-            || count(
-                array_filter(
-                    $this->ignoredRoutes,
-                    static fn ($route): bool => strpos($route, '/*') !== false
-                        && strpos($path, substr($route, 0, -2)) !== false
-                )
-            ) !== 0
+            || count(array_filter($this->ignoredRoutes, $filter)) !== 0
         ) {
             return;
         }
@@ -106,15 +95,15 @@ class RequestLogSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
         // Set needed data to logger and handle actual log
-        $this->requestLogger->setRequest($request);
-        $this->requestLogger->setResponse($event->getResponse());
+        $this->requestLoggerService->setRequest($request);
+        $this->requestLoggerService->setResponse($event->getResponse());
         $identify = $this->userService->getIdentity();
 
         if ($identify instanceof SecurityUser) {
             $userEntity = $this->userRepository->getReference($identify->getUsername());
 
             if ($userEntity instanceof UserEntity) {
-                $this->requestLogger->setUser($userEntity);
+                $this->requestLoggerService->setUser($userEntity);
             } else {
                 $this->logger->error(
                     sprintf('User not found for UUID: "%s".', $identify->getUsername()),
@@ -122,10 +111,10 @@ class RequestLogSubscriber implements EventSubscriberInterface
                 );
             }
         } elseif ($identify instanceof ApiKeyUser) {
-            $this->requestLogger->setApiKey($identify->getApiKey());
+            $this->requestLoggerService->setApiKey($identify->getApiKey());
         }
 
-        $this->requestLogger->setMasterRequest($event->isMasterRequest());
-        $this->requestLogger->handle();
+        $this->requestLoggerService->setMasterRequest($event->isMasterRequest());
+        $this->requestLoggerService->handle();
     }
 }

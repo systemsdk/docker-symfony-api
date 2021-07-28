@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Service/LoginLoggerService.php
- */
+
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -23,19 +21,13 @@ use Throwable;
  */
 class LoginLoggerService implements LoginLoggerServiceInterface
 {
-    private LogLoginResource $logLoginResource;
-    private RequestStack $requestStack;
     private ?User $user = null;
     private DeviceDetector $deviceDetector;
 
-    /**
-     * Constructor
-     */
-    public function __construct(LogLoginResource $logLoginResource, RequestStack $requestStack)
-    {
-        // Store used services
-        $this->logLoginResource = $logLoginResource;
-        $this->requestStack = $requestStack;
+    public function __construct(
+        private LogLoginResource $logLoginResource,
+        private RequestStack $requestStack,
+    ) {
         $this->deviceDetector = new DeviceDetector();
     }
 
@@ -62,7 +54,7 @@ class LoginLoggerService implements LoginLoggerServiceInterface
         }
 
         // Parse user agent data with device detector
-        $this->deviceDetector = new DeviceDetector((string)$request->headers->get('User-Agent', ''));
+        $this->deviceDetector->setUserAgent($request->headers->get('User-Agent', ''));
         $this->deviceDetector->parse();
         // Create entry
         $this->createEntry($type, $request);

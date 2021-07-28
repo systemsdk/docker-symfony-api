@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/DTO/ApiKey/ApiKeyPatch.php
- */
+
+declare(strict_types=1);
 
 namespace App\DTO\ApiKey;
 

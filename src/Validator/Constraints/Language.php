@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Validator/Constraints/Language.php
- */
+
+declare(strict_types=1);
 
 namespace App\Validator\Constraints;
 
@@ -29,7 +27,7 @@ class Language extends Constraint
     public const MESSAGE = 'This language "{{ language }}" is not valid.';
 
     /**
-     * Error names configuration
+     * {@inheritdoc}
      *
      * @var array<string, string>
      */
@@ -37,8 +35,9 @@ class Language extends Constraint
         self::INVALID_LANGUAGE => 'INVALID_LANGUAGE',
     ];
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      */
     public function getTargets(): string

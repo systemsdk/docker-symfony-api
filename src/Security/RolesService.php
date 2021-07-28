@@ -1,16 +1,21 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Security/Roles.php
- */
+
+declare(strict_types=1);
 
 namespace App\Security;
 
 use App\Security\Interfaces\RolesServiceInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
+use function array_key_exists;
+use function array_unique;
+use function array_values;
+use function mb_strpos;
+use function mb_strtolower;
+use function mb_substr;
+
 /**
- * Class Roles
+ * Class RolesService
  *
  * @package App\Security
  */

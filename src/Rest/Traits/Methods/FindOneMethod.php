@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Methods/FindOneMethod.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Methods;
 
@@ -29,7 +27,7 @@ trait FindOneMethod
      */
     public function findOneMethod(Request $request, string $id, ?array $allowedHttpMethods = null): Response
     {
-        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? ['GET']);
+        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? [Request::METHOD_GET]);
 
         try {
             // Fetch data from database

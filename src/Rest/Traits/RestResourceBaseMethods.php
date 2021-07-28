@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Resource.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits;
 
@@ -12,6 +10,9 @@ use App\Exception\ValidatorException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Throwable;
+use UnexpectedValueException;
+
+use function assert;
 
 /**
  * Trait RestResourceBaseMethods
@@ -20,7 +21,6 @@ use Throwable;
  */
 trait RestResourceBaseMethods
 {
-    // Attach generic life cycle traits
     use RestResourceLifeCycles;
 
     /**
@@ -140,7 +140,7 @@ trait RestResourceBaseMethods
          * Determine used dto class and create new instance of that and load entity to that. And after that patch
          * that dto with given partial OR whole dto class.
          */
-        $restDto = $this->getDtoForEntity($id, get_class($dto), $dto);
+        $restDto = $this->getDtoForEntity($id, $dto::class, $dto);
         // Before callback method call
         $this->beforeUpdate($id, $restDto, $entity);
         // Validate DTO
@@ -170,7 +170,7 @@ trait RestResourceBaseMethods
          * Determine used dto class and create new instance of that and load entity to that. And after that patch
          * that dto with given partial OR whole dto class.
          */
-        $restDto = $this->getDtoForEntity($id, get_class($dto), $dto, true);
+        $restDto = $this->getDtoForEntity($id, $dto::class, $dto, true);
         // Before callback method call
         $this->beforePatch($id, $restDto, $entity);
         // Validate DTO
@@ -282,7 +282,7 @@ trait RestResourceBaseMethods
 
         // Oh noes, we have some errors
         if ($errors !== null && $errors->count() > 0) {
-            throw new ValidatorException(get_class($dto), $errors);
+            throw new ValidatorException($dto::class, $errors);
         }
     }
 
@@ -297,19 +297,22 @@ trait RestResourceBaseMethods
 
         // Oh noes, we have some errors
         if ($errors !== null && $errors->count() > 0) {
-            throw new ValidatorException(get_class($entity), $errors);
+            throw new ValidatorException($entity::class, $errors);
         }
     }
 
-    /**
-     * @psalm-suppress MoreSpecificReturnType
-     */
     private function createEntity(): EntityInterface
     {
         /** @var class-string $entityClass */
         $entityClass = $this->getRepository()->getEntityName();
 
-        return new $entityClass();
+        $entity = new $entityClass();
+
+        $exception = new UnexpectedValueException(
+            sprintf('Given `%s` class does not implement `EntityInterface`', $entityClass),
+        );
+
+        return assert($entity instanceof EntityInterface) ? $entity : throw $exception;
     }
 
     /**

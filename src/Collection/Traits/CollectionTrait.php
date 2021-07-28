@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Collection/Traits/Collection.php
- */
+
+declare(strict_types=1);
 
 namespace App\Collection\Traits;
 
@@ -11,19 +9,17 @@ use Closure;
 use InvalidArgumentException;
 use IteratorAggregate;
 use IteratorIterator;
-use Psr\Log\LoggerInterface;
 use Throwable;
 
+use function iterator_count;
+
 /**
- * Trait Collection
+ * Trait CollectionTrait
  *
  * @package App\Collection\Traits
  */
-trait Collection
+trait CollectionTrait
 {
-    private IteratorAggregate $items;
-    private LoggerInterface $logger;
-
     /**
      * Method to filter current collection.
      */
@@ -34,28 +30,23 @@ trait Collection
      *
      * @throws InvalidArgumentException
      */
-    abstract public function error(string $className): void;
+    abstract public function getErrorMessage(string $className): string;
 
     /**
      * Getter method for given class for current collection.
      *
      * @throws InvalidArgumentException
-     *
-     * @return mixed
      */
-    public function get(string $className)
+    public function get(string $className): mixed
     {
-        $current = $this->getFilteredItem($className);
-
-        if ($current === null) {
-            $this->error($className);
-        }
-
-        return $current;
+        return $this->getFilteredItem($className)
+            ?? throw new InvalidArgumentException($this->getErrorMessage($className));
     }
 
     /**
      * Method to get all items from current collection.
+     *
+     * @return IteratorAggregate<mixed>
      */
     public function getAll(): IteratorAggregate
     {
@@ -78,10 +69,7 @@ trait Collection
         return iterator_count($this->items);
     }
 
-    /**
-     * @return mixed|null
-     */
-    private function getFilteredItem(string $className)
+    private function getFilteredItem(string $className): mixed
     {
         try {
             $iterator = $this->items->getIterator();

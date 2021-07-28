@@ -1,19 +1,16 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Resource.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits;
 
 /**
- * Trait Resource
+ * Trait RestResourceLifeCycles
  *
  * @package App\Rest\Traits
  */
 trait RestResourceLifeCycles
 {
-    // Traits
     use RestResourceFind;
     use RestResourceFindOne;
     use RestResourceFindOneBy;

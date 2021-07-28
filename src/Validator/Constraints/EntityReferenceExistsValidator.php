@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/App/Validator/Constraints/EntityReferenceExistsValidator.php
- */
+
+declare(strict_types=1);
 
 namespace App\Validator\Constraints;
 
@@ -15,6 +13,13 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
+use function array_filter;
+use function array_map;
+use function count;
+use function implode;
+use function is_array;
+use function str_replace;
+
 /**
  * Class EntityReferenceExistsValidator
  *
@@ -22,14 +27,9 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
  */
 class EntityReferenceExistsValidator extends ConstraintValidator
 {
-    private LoggerInterface $logger;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
+    public function __construct(
+        private LoggerInterface $logger,
+    ) {
     }
 
     /**
@@ -52,7 +52,7 @@ class EntityReferenceExistsValidator extends ConstraintValidator
      *
      * @return array<int, EntityInterface>
      */
-    private function normalize(string $target, $input): array
+    private function normalize(string $target, mixed $input): array
     {
         $values = is_array($input) ? $input : [$input];
 
@@ -76,13 +76,14 @@ class EntityReferenceExistsValidator extends ConstraintValidator
     {
         $invalidIds = $this->getInvalidValues($entities);
 
-        if (count($invalidIds) > 0) {
+        if ($invalidIds !== []) {
             $message = count($invalidIds) === 1
                 ? EntityReferenceExists::MESSAGE_SINGLE
                 : EntityReferenceExists::MESSAGE_MULTIPLE;
-            $entity = get_class($entities[0]);
+            $entity = $entities[0]::class;
             $parameterEntity = str_replace('Proxies\\__CG__\\', '', $entity);
-            $parameterId = count($invalidIds) > 1 ? implode('", "', $invalidIds) : (string)$invalidIds[0];
+            $parameterId = count($invalidIds) > 1 ? implode('", "', $invalidIds) : $invalidIds[0];
+
             $this->context
                 ->buildViolation($message)
                 ->setParameter('{{ entity }}', $parameterEntity)

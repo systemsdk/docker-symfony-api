@@ -1,21 +1,18 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Interfaces/RestResourceInterfaces.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Interfaces;
 
 use App\DTO\Interfaces\RestDtoInterface;
 use App\Entity\Interfaces\EntityInterface;
 use App\Repository\Interfaces\BaseRepositoryInterface;
-use Doctrine\ORM\ORMException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Throwable;
 use UnexpectedValueException;
 
 /**
- * Interface ResourceInterface
+ * Interface RestResourceInterface
  *
  * @package App\Rest\Interfaces
  */
@@ -24,12 +21,14 @@ interface RestResourceInterface
     /**
      * Getter method for serializer context.
      *
-     * @return array<int|string, array<int, array<int, string>|string>|bool|string>
+     * @return array<int|string, mixed>
      */
     public function getSerializerContext(): array;
 
     /**
      * Getter method for entity repository.
+     *
+     * @throws Throwable
      */
     public function getRepository(): BaseRepositoryInterface;
 
@@ -45,10 +44,6 @@ interface RestResourceInterface
 
     /**
      * Setter for used validator.
-     *
-     * @see https://symfony.com/doc/current/service_container/autowiring.html#autowiring-other-methods-e-g-setters
-     *
-     * @required
      */
     public function setValidator(ValidatorInterface $validator): self;
 
@@ -66,6 +61,8 @@ interface RestResourceInterface
 
     /**
      * Getter method for current entity name.
+     *
+     * @throws Throwable
      */
     public function getEntityName(): string;
 
@@ -73,16 +70,16 @@ interface RestResourceInterface
      * Gets a reference to the entity identified by the given type and identifier without actually loading it,
      * if the entity is not yet loaded.
      *
-     * @throws ORMException
-     *
-     * @return object|null
+     * @throws Throwable
      */
-    public function getReference(string $id);
+    public function getReference(string $id): ?object;
 
     /**
      * Getter method for all associations that current entity contains.
      *
      * @return array<int, string>
+     *
+     * @throws Throwable
      */
     public function getAssociations(): array;
 

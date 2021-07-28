@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Validator/Constraints/UniqueUsernameValidator.php
- */
+
+declare(strict_types=1);
 
 namespace App\Validator\Constraints;
 
@@ -19,14 +17,9 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class UniqueUsernameValidator extends ConstraintValidator
 {
-    private UserRepository $repository;
-
-    /**
-     * Constructor
-     */
-    public function __construct(UserRepository $repository)
-    {
-        $this->repository = $repository;
+    public function __construct(
+        private UserRepository $repository,
+    ) {
     }
 
     /**
@@ -36,7 +29,8 @@ class UniqueUsernameValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        if ($value instanceof UserInterface
+        if (
+            $value instanceof UserInterface
             && !$this->repository->isUsernameAvailable($value->getUsername(), $value->getId())
         ) {
             $this->context

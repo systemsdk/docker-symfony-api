@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/DTO/Interfaces/RestDtoInterface.php
- */
+
+declare(strict_types=1);
 
 namespace App\DTO\Interfaces;
 

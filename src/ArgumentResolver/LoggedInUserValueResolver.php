@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/ArgumentResolver/LoggedInUserValueResolver.php
- */
+
+declare(strict_types=1);
 
 namespace App\ArgumentResolver;
 
@@ -21,10 +19,9 @@ use Throwable;
  * Class LoggedInUserValueResolver
  *
  * Example how to use this within your controller;
- *  /**
- *   * @Symfony\Component\Routing\Annotation\Route(path="some_path_to_your_route")
- *   * @Sensio\Bundle\FrameworkExtraBundle\Configuration\Security("is_granted('IS_AUTHENTICATED_FULLY')")
- *   *\/
+ *
+ *  #[Route(path: 'some-path')]
+ *  #[Security('is_granted("IS_AUTHENTICATED_FULLY")')]
  *  public function someMethod(\App\Entity\User $loggedInUser): Response
  *  {
  *      ...
@@ -37,16 +34,10 @@ use Throwable;
  */
 class LoggedInUserValueResolver implements ArgumentValueResolverInterface
 {
-    private TokenStorageInterface $tokenStorage;
-    private UserTypeIdentification $userService;
-
-    /**
-     * Constructor
-     */
-    public function __construct(TokenStorageInterface $tokenStorage, UserTypeIdentification $userService)
-    {
-        $this->tokenStorage = $tokenStorage;
-        $this->userService = $userService;
+    public function __construct(
+        private TokenStorageInterface $tokenStorage,
+        private UserTypeIdentification $userService,
+    ) {
     }
 
     /**
@@ -58,7 +49,8 @@ class LoggedInUserValueResolver implements ArgumentValueResolverInterface
         $token = $this->tokenStorage->getToken();
 
         // only security user implementations are supported
-        if ($token instanceof TokenInterface
+        if (
+            $token instanceof TokenInterface
             && $argument->getName() === 'loggedInUser'
             && $argument->getType() === User::class
         ) {
@@ -76,6 +68,8 @@ class LoggedInUserValueResolver implements ArgumentValueResolverInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return Generator<User|null>
      *
      * @throws Throwable
      */

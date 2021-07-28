@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Entity/Interfaces/UserGroupAwareInterface.php
- */
+
+declare(strict_types=1);
 
 namespace App\Entity\Interfaces;
 
@@ -20,20 +18,20 @@ interface UserGroupAwareInterface extends EntityInterface
     /**
      * @return Collection<int, UserGroup>|ArrayCollection<int, UserGroup>
      */
-    public function getUserGroups(): Collection;
+    public function getUserGroups(): Collection | ArrayCollection;
 
     /**
      * Method to attach new userGroup to current user OR api key.
      */
-    public function addUserGroup(UserGroup $userGroup): self;
+    public function addUserGroup(UserGroup $userGroup): mixed;
 
     /**
      * Method to remove specified userGroup from current user OR api key.
      */
-    public function removeUserGroup(UserGroup $userGroup): self;
+    public function removeUserGroup(UserGroup $userGroup): mixed;
 
     /**
      * Method to remove all many-to-many userGroup relations from current user OR api key.
      */
-    public function clearUserGroups(): self;
+    public function clearUserGroups(): mixed;
 }

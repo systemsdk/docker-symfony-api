@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Actions/Authenticated/UpdateAction.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Actions\Authenticated;
 
@@ -26,7 +24,6 @@ use Throwable;
  */
 trait UpdateAction
 {
-    // Traits
     use UpdateMethod;
 
     /**

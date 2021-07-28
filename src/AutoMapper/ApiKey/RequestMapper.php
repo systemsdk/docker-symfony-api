@@ -1,14 +1,15 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/AutoMapper/ApiKey/RequestMapper.php
- */
+
+declare(strict_types=1);
 
 namespace App\AutoMapper\ApiKey;
 
 use App\AutoMapper\RestRequestMapper;
 use App\Entity\UserGroup;
 use App\Resource\UserGroupResource;
+use Throwable;
+
+use function array_map;
 
 /**
  * Class RequestMapper
@@ -27,26 +28,23 @@ class RequestMapper extends RestRequestMapper
         'userGroups',
     ];
 
-    private UserGroupResource $userGroupResource;
-
-    /**
-     * Constructor
-     */
-    public function __construct(UserGroupResource $userGroupResource)
-    {
-        $this->userGroupResource = $userGroupResource;
+    public function __construct(
+        private UserGroupResource $userGroupResource,
+    ) {
     }
 
     /**
      * @param array<int, string> $userGroups
      *
      * @return array<int, UserGroup>
+     *
+     * @throws Throwable
      */
     protected function transformUserGroups(array $userGroups): array
     {
         return array_map(
             fn (string $userGroupUuid): UserGroup => $this->userGroupResource->getReference($userGroupUuid),
-            $userGroups
+            $userGroups,
         );
     }
 }

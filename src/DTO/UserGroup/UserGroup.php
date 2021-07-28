@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/DTO/UserGroup/UserGroup.php
- */
+
+declare(strict_types=1);
 
 namespace App\DTO\UserGroup;
 
@@ -64,13 +62,11 @@ class UserGroup extends RestDto
     }
 
     /**
-     * Method to load DTO data from specified entity.
+     * {@inheritdoc}
      *
      * @param EntityInterface|Entity $entity
-     *
-     * @return RestDtoInterface|UserGroup
      */
-    public function load(EntityInterface $entity): RestDtoInterface
+    public function load(EntityInterface $entity): self
     {
         if ($entity instanceof Entity) {
             $this->name = $entity->getName();

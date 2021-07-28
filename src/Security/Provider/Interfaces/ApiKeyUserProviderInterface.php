@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Security/Provider/Interfaces/ApiKeyUserProviderInterface.php
- */
+
+declare(strict_types=1);
 
 namespace App\Security\Provider\Interfaces;
 
@@ -18,9 +16,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 interface ApiKeyUserProviderInterface extends UserProviderInterface
 {
-    /**
-     * Constructor
-     */
     public function __construct(ApiKeyRepository $apiKeyRepository, RolesService $rolesService);
 
     /**

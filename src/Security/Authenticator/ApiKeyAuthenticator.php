@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Security/Authenticator/ApiKeyAuthenticator.php
- */
+
+declare(strict_types=1);
 
 namespace App\Security\Authenticator;
 
@@ -18,6 +16,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
+use function is_array;
+use function preg_match;
+
 /**
  * Class ApiKeyAuthenticator
  *
@@ -27,14 +28,9 @@ class ApiKeyAuthenticator extends AbstractGuardAuthenticator
 {
     private const CREDENTIAL_KEY = 'token';
 
-    private ApiKeyUserProvider $apiKeyUserProvider;
-
-    /**
-     * Constructor
-     */
-    public function __construct(ApiKeyUserProvider $apiKeyUserProvider)
-    {
-        $this->apiKeyUserProvider = $apiKeyUserProvider;
+    public function __construct(
+        private ApiKeyUserProvider $apiKeyUserProvider,
+    ) {
     }
 
     /**
@@ -42,10 +38,10 @@ class ApiKeyAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request): bool
     {
-        $apiKey = (string)$request->headers->get('Authorization', '');
+        $apiKey = $request->headers->get('Authorization', '');
         preg_match('#^ApiKey (\w+)$#', $apiKey, $matches);
 
-        return count($matches) > 0;
+        return !empty($matches);
     }
 
     /**
@@ -63,13 +59,13 @@ class ApiKeyAuthenticator extends AbstractGuardAuthenticator
     /**
      * {@inheritdoc}
      */
-    public function getCredentials(Request $request)
+    public function getCredentials(Request $request): ?array
     {
         $output = null;
-        $apiKey = (string)$request->headers->get('Authorization', '');
+        $apiKey = $request->headers->get('Authorization', '');
         preg_match('#^ApiKey (\w+)$#', $apiKey, $matches);
 
-        if (count($matches) > 0) {
+        if (!empty($matches)) {
             $output = [
                 self::CREDENTIAL_KEY => $matches[1],
             ];
@@ -93,11 +89,7 @@ class ApiKeyAuthenticator extends AbstractGuardAuthenticator
      */
     public function checkCredentials($credentials, UserInterface $user): bool
     {
-        $apiToken = $this->getApiKeyToken($credentials);
-
-        if ($apiToken === null) {
-            throw new AuthenticationException('Invalid token');
-        }
+        $apiToken = $this->getApiKeyToken($credentials) ?? throw new AuthenticationException('Invalid token');
 
         return $this->apiKeyUserProvider->getApiKeyForToken($apiToken) instanceof ApiKey;
     }
@@ -130,10 +122,7 @@ class ApiKeyAuthenticator extends AbstractGuardAuthenticator
         return false;
     }
 
-    /**
-     * @param mixed $credentials
-     */
-    private function getApiKeyToken($credentials): ?string
+    private function getApiKeyToken(mixed $credentials): ?string
     {
         return is_array($credentials) ? $credentials[self::CREDENTIAL_KEY] ?? null : null;
     }

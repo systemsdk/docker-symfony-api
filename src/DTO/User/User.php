@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/DTO/User/User.php
- */
+
+declare(strict_types=1);
 
 namespace App\DTO\User;
 
@@ -15,6 +13,8 @@ use App\Entity\UserGroup as UserGroupEntity;
 use App\Service\LocalizationService;
 use App\Validator\Constraints as AppAssert;
 use Symfony\Component\Validator\Constraints as Assert;
+
+use function array_map;
 
 /**
  * Class User
@@ -228,13 +228,11 @@ class User extends RestDto
     }
 
     /**
-     * Method to load DTO data from specified entity.
+     * {@inheritdoc}
      *
      * @param EntityInterface|Entity $entity
-     *
-     * @return RestDtoInterface|User
      */
-    public function load(EntityInterface $entity): RestDtoInterface
+    public function load(EntityInterface $entity): self
     {
         if ($entity instanceof Entity) {
             $this->id = $entity->getId();
@@ -268,9 +266,15 @@ class User extends RestDto
      *
      * @param array<int, UserGroupEntity> $value
      */
-    protected function updateUserGroups(UserGroupAwareInterface $entity, array $value): void
+    protected function updateUserGroups(UserGroupAwareInterface $entity, array $value): self
     {
         $entity->clearUserGroups();
-        array_map([$entity, 'addUserGroup'], $value);
+
+        array_map(
+            static fn (UserGroupEntity $userGroup): UserGroupAwareInterface => $entity->addUserGroup($userGroup),
+            $value,
+        );
+
+        return $this;
     }
 }

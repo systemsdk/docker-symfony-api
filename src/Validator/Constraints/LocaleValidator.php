@@ -1,14 +1,14 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Validator/Constraints/LocaleValidator.php
- */
+
+declare(strict_types=1);
 
 namespace App\Validator\Constraints;
 
 use App\Service\LocalizationService;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+
+use function in_array;
 
 /**
  * Class LocaleValidator
@@ -17,14 +17,9 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class LocaleValidator extends ConstraintValidator
 {
-    private LocalizationService $localization;
-
-    /**
-     * Constructor
-     */
-    public function __construct(LocalizationService $localization)
-    {
-        $this->localization = $localization;
+    public function __construct(
+        private LocalizationService $localization,
+    ) {
     }
 
     /**

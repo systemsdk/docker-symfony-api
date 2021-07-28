@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Entity/Role.php
- */
+
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -21,7 +19,7 @@ use Throwable;
  * @ORM\Table(
  *      name="role",
  *      uniqueConstraints={
- * @ORM\UniqueConstraint(name="uq_role", columns={"role"}),
+ *          @ORM\UniqueConstraint(name="uq_role", columns={"role"}),
  *      },
  *  )
  * @ORM\Entity()
@@ -30,20 +28,19 @@ use Throwable;
  */
 class Role implements EntityInterface
 {
-    // Traits
     use Blameable;
     use Timestampable;
 
     /**
      * @Groups({
      *      "Role",
-     *      "Role.role",
+     *      "Role.id",
      *
      *      "UserGroup.role",
      *
-     *      "set.UserProfile",
-     *      "set.UserProfileGroups",
-     *      "set.UserGroupBasic",
+     *      User::SET_USER_BASIC,
+     *      UserGroup::SET_USER_PROFILE_GROUPS,
+     *      UserGroup::SET_USER_GROUP_BASIC,
      *  })
      *
      * @ORM\Column(
@@ -65,7 +62,7 @@ class Role implements EntityInterface
      * @ORM\Column(
      *      name="description",
      *      type="text",
-     *      nullable=false
+     *      nullable=false,
      *  )
      */
     private string $description = '';
@@ -84,12 +81,10 @@ class Role implements EntityInterface
      *      mappedBy="role",
      *  )
      */
-    private Collection $userGroups;
+    private Collection | ArrayCollection $userGroups;
 
     /**
      * Constructor
-     *
-     * @param string $role The role name
      *
      * @throws Throwable
      */
@@ -119,7 +114,7 @@ class Role implements EntityInterface
     /**
      * @return Collection<int, UserGroup>|ArrayCollection<int, UserGroup>
      */
-    public function getUserGroups(): Collection
+    public function getUserGroups(): Collection | ArrayCollection
     {
         return $this->userGroups;
     }

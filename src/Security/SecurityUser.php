@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Security/SecurityUser.php
- */
+
+declare(strict_types=1);
 
 namespace App\Security;
 
@@ -102,6 +100,11 @@ class SecurityUser implements SecurityUserInterface
         return $this->timezone;
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
+     */
     public function eraseCredentials(): void
     {
     }

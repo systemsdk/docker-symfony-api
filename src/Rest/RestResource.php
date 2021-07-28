@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/RestResource.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest;
 
@@ -12,6 +10,9 @@ use App\Rest\Interfaces\RestResourceInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use UnexpectedValueException;
 
+use function array_keys;
+use function sprintf;
+
 /**
  * Class RestResource
  *
@@ -19,10 +20,8 @@ use UnexpectedValueException;
  */
 abstract class RestResource implements RestResourceInterface
 {
-    // Traits
     use Traits\RestResourceBaseMethods;
 
-    private BaseRepositoryInterface $repository;
     private ValidatorInterface $validator;
     private string $dtoClass = '';
 
@@ -39,7 +38,9 @@ abstract class RestResource implements RestResourceInterface
      */
     public function getRepository(): BaseRepositoryInterface
     {
-        return $this->repository;
+        $exception = new UnexpectedValueException('Repository not set on constructor');
+
+        return property_exists($this, 'repository') ? $this->repository ?? throw $exception : throw $exception;
     }
 
     /**
@@ -62,6 +63,10 @@ abstract class RestResource implements RestResourceInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @see https://symfony.com/doc/current/service_container/autowiring.html#autowiring-other-methods-e-g-setters
+     *
+     * @required
      */
     public function setValidator(ValidatorInterface $validator): self
     {
@@ -108,7 +113,7 @@ abstract class RestResource implements RestResourceInterface
     /**
      * {@inheritdoc}
      */
-    public function getReference(string $id)
+    public function getReference(string $id): ?object
     {
         return $this->getRepository()->getReference($id);
     }
@@ -133,10 +138,15 @@ abstract class RestResource implements RestResourceInterface
         $patch ??= false;
         // Fetch entity
         $entity = $this->getEntity($id);
-        // Create new instance of DTO and load entity to that.
-        /** @var RestDtoInterface $restDto */
-        /** @var class-string<RestDtoInterface> $dtoClass */
-        $restDto = (new $dtoClass())->setId($id);
+
+        /**
+         * Create new instance of DTO and load entity to that.
+         *
+         * @var RestDtoInterface $restDto
+         * @var class-string<RestDtoInterface> $dtoClass
+         */
+        $restDto = (new $dtoClass())
+            ->setId($id);
 
         if ($patch === true) {
             $restDto->load($entity);

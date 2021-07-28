@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/EventSubscriber/LockedUserSubscriber.php
- */
+
+declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
@@ -11,7 +9,6 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Resource\LogLoginFailureResource;
 use App\Security\SecurityUser;
-use Doctrine\ORM\ORMException;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
@@ -20,6 +17,9 @@ use Symfony\Component\Security\Core\Exception\LockedException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Throwable;
 
+use function count;
+use function is_string;
+
 /**
  * Class LockedUserSubscriber
  *
@@ -27,16 +27,11 @@ use Throwable;
  */
 class LockedUserSubscriber implements EventSubscriberInterface
 {
-    private UserRepository $userRepository;
-    private LogLoginFailureResource $logLoginFailureResource;
-
-    /**
-     * Constructor
-     */
-    public function __construct(UserRepository $userRepository, LogLoginFailureResource $logLoginFailureResource)
-    {
-        $this->userRepository = $userRepository;
-        $this->logLoginFailureResource = $logLoginFailureResource;
+    public function __construct(
+        private UserRepository $userRepository,
+        private LogLoginFailureResource $logLoginFailureResource,
+        private int $lockUserOnLoginFailureAttempts,
+    ) {
     }
 
     /**
@@ -47,12 +42,16 @@ class LockedUserSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            //AuthenticationSuccessEvent::class
+            AuthenticationSuccessEvent::class => [
+                'onAuthenticationSuccess',
+                128,
+            ],
             Events::AUTHENTICATION_SUCCESS => [
                 'onAuthenticationSuccess',
                 128,
             ],
             AuthenticationFailureEvent::class => 'onAuthenticationFailure',
+            Events::AUTHENTICATION_FAILURE => 'onAuthenticationFailure',
         ];
     }
 
@@ -61,14 +60,12 @@ class LockedUserSubscriber implements EventSubscriberInterface
      */
     public function onAuthenticationSuccess(AuthenticationSuccessEvent $event): void
     {
-        $user = $this->getUser($event->getUser());
+        $user = $this->getUser($event->getUser()) ?? throw new UnsupportedUserException('Unsupported user.');
 
-        if ($user === null) {
-            throw new UnsupportedUserException('Unsupported user.');
-        }
-
-        if ($_ENV['LOCK_USER_ON_LOGIN_FAILURE_ATTEMPTS']
-            && count($user->getLogsLoginFailure()) > $_ENV['LOCK_USER_ON_LOGIN_FAILURE_ATTEMPTS']) {
+        if (
+            $this->lockUserOnLoginFailureAttempts
+            && count($user->getLogsLoginFailure()) > $this->lockUserOnLoginFailureAttempts
+        ) {
             throw new LockedException('Locked account.');
         }
 
@@ -94,20 +91,14 @@ class LockedUserSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param string|object $user
-     *
-     * @throws ORMException
+     * @throws Throwable
      */
-    private function getUser($user): ?User
+    private function getUser(string | object $user): ?User
     {
-        $output = null;
-
-        if (is_string($user)) {
-            $output = $this->userRepository->loadUserByUsername($user, false);
-        } elseif ($user instanceof SecurityUser) {
-            $output = $this->userRepository->loadUserByUsername($user->getUsername(), true);
-        }
-
-        return $output;
+        return match (true) {
+            is_string($user) => $this->userRepository->loadUserByUsername($user, false),
+            $user instanceof SecurityUser => $this->userRepository->loadUserByUsername($user->getUsername(), true),
+            default => null,
+        };
     }
 }

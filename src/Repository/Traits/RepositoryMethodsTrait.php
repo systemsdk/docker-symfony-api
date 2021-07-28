@@ -1,17 +1,12 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Repository/Traits/RepositoryMethods.php
- */
+
+declare(strict_types=1);
 
 namespace App\Repository\Traits;
 
 use App\Entity\Interfaces\EntityInterface;
 use App\Rest\RepositoryHelper;
 use App\Rest\UuidHelper;
-use ArrayIterator;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
@@ -22,18 +17,14 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\ORM\TransactionRequiredException;
 use InvalidArgumentException;
 
+use function array_column;
+
 /**
- * Trait RepositoryMethods
+ * Trait RepositoryMethodsTrait
  *
  * @package App\Repository\Traits
- *
- * @method EntityManager getEntityManager(): EntityManager
- * @method string getEntityName(): string
- * @method array getSearchColumns(): array
- * @method QueryBuilder createQueryBuilder(string $alias = null, string $indexBy = null): QueryBuilder
- * @method void processQueryBuilder(QueryBuilder $queryBuilder): void
  */
-trait RepositoryMethods
+trait RepositoryMethodsTrait
 {
     /**
      * Wrapper for default Doctrine repository find method.
@@ -53,7 +44,7 @@ trait RepositoryMethods
     /**
      * {@inheritdoc}
      */
-    public function findAdvanced(string $id, $hydrationMode = null)
+    public function findAdvanced(string $id, string | int | null $hydrationMode = null): null | array | EntityInterface
     {
         // Get query builder
         $queryBuilder = $this->getQueryBuilder();
@@ -74,26 +65,24 @@ trait RepositoryMethods
     /**
      * {@inheritdoc}
      */
-    public function findOneBy(array $criteria, ?array $orderBy = null)
+    public function findOneBy(array $criteria, ?array $orderBy = null): ?object
     {
         $repository = $this->getEntityManager()->getRepository($this->getEntityName());
 
-        return $repository instanceof EntityRepository ? $repository->findOneBy($criteria, $orderBy) : null;
+        return $repository->findOneBy($criteria, $orderBy);
     }
 
     /**
      * {@inheritdoc}
      *
-     * @return array<int, EntityInterface|object>
+     * @psalm-return list<object|EntityInterface>
      */
     public function findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array
     {
-        return array_values(
-            $this
-                ->getEntityManager()
-                ->getRepository($this->getEntityName())
-                ->findBy($criteria, $orderBy, $limit, $offset)
-        );
+        return $this
+            ->getEntityManager()
+            ->getRepository($this->getEntityName())
+            ->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**
@@ -119,23 +108,23 @@ trait RepositoryMethods
          */
         RepositoryHelper::resetParameterCount();
 
+        /** @psalm-suppress InvalidTemplateParam */
         $iterator = (new Paginator($queryBuilder, true))->getIterator();
 
-        return $iterator instanceof ArrayIterator ? $iterator->getArrayCopy() : iterator_to_array($iterator);
+        return $iterator->getArrayCopy();
     }
 
     /**
      * {@inheritdoc}
      *
-     * @return array<int, EntityInterface|object>
+     * @psalm-return list<object|EntityInterface>
      */
     public function findAll(): array
     {
-        return array_values(
-            $this->getEntityManager()
-                ->getRepository($this->getEntityName())
-                ->findAll()
-        );
+        return $this
+            ->getEntityManager()
+            ->getRepository($this->getEntityName())
+            ->findAll();
     }
 
     /**
@@ -160,7 +149,7 @@ trait RepositoryMethods
          */
         RepositoryHelper::resetParameterCount();
 
-        return array_values(array_map('\strval', array_map('\current', $queryBuilder->getQuery()->getArrayResult())));
+        return array_column($queryBuilder->getQuery()->getArrayResult(), 'id');
     }
 
     /**

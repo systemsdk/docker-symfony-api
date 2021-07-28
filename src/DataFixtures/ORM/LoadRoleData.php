@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/DataFixtures/ORM/LoadRoleData.php
- */
+
+declare(strict_types=1);
 
 namespace App\DataFixtures\ORM;
 
@@ -14,6 +12,8 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Throwable;
+
+use function array_map;
 
 /**
  * Class LoadRoleData
@@ -31,6 +31,8 @@ final class LoadRoleData extends Fixture implements OrderedFixtureInterface, Con
 
     /**
      * Load data fixtures with the passed EntityManager
+     *
+     * @throws Throwable
      */
     public function load(ObjectManager $manager): void
     {
@@ -60,8 +62,8 @@ final class LoadRoleData extends Fixture implements OrderedFixtureInterface, Con
     private function createRole(string $role): bool
     {
         // Create new Role entity
-        $entity = new Role($role);
-        $entity->setDescription('Description - ' . $role);
+        $entity = (new Role($role))
+            ->setDescription('Description - ' . $role);
 
         // Persist entity
         $this->manager->persist($entity);

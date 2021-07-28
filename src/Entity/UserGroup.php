@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Entity/UserGroup.php
- */
+
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -32,10 +30,12 @@ use Throwable;
  */
 class UserGroup implements EntityInterface, Stringable
 {
-    // Traits
     use Blameable;
     use Timestampable;
     use Uuid;
+
+    public const SET_USER_PROFILE_GROUPS = 'set.UserProfileGroups';
+    public const SET_USER_GROUP_BASIC = 'set.UserGroupBasic';
 
     /**
      * @Groups({
@@ -46,9 +46,9 @@ class UserGroup implements EntityInterface, Stringable
      *      "User.userGroups",
      *      "Role.userGroups",
      *
-     *      "set.UserProfile",
-     *      "set.UserProfileGroups",
-     *      "set.UserGroupBasic",
+     *      User::SET_USER_PROFILE,
+     *      self::SET_USER_PROFILE_GROUPS,
+     *      self::SET_USER_GROUP_BASIC,
      *  })
      *
      * @ORM\Column(
@@ -67,9 +67,9 @@ class UserGroup implements EntityInterface, Stringable
      * @Groups({
      *      "UserGroup.role",
      *
-     *      "set.UserProfile",
-     *      "set.UserProfileGroups",
-     *      "set.UserGroupBasic",
+     *      User::SET_USER_PROFILE,
+     *      self::SET_USER_PROFILE_GROUPS,
+     *      self::SET_USER_GROUP_BASIC,
      *  })
      *
      * @Assert\NotBlank()
@@ -81,7 +81,7 @@ class UserGroup implements EntityInterface, Stringable
      *      inversedBy="userGroups",
      *  )
      * @ORM\JoinColumns({
-     * @ORM\JoinColumn(
+     *      @ORM\JoinColumn(
      *          name="role",
      *          referencedColumnName="role",
      *          onDelete="CASCADE",
@@ -95,9 +95,9 @@ class UserGroup implements EntityInterface, Stringable
      *      "UserGroup",
      *      "UserGroup.name",
      *
-     *      "set.UserProfile",
-     *      "set.UserProfileGroups",
-     *      "set.UserGroupBasic",
+     *      User::SET_USER_PROFILE,
+     *      self::SET_USER_PROFILE_GROUPS,
+     *      self::SET_USER_GROUP_BASIC,
      *  })
      *
      * @Assert\NotBlank()
@@ -108,7 +108,7 @@ class UserGroup implements EntityInterface, Stringable
      *      name="name",
      *      type="string",
      *      length=255,
-     *      nullable=false
+     *      nullable=false,
      *  )
      */
     private string $name = '';
@@ -125,10 +125,10 @@ class UserGroup implements EntityInterface, Stringable
      *      mappedBy="userGroups",
      *  )
      * @ORM\JoinTable(
-     *      name="user_has_user_group"
+     *      name="user_has_user_group",
      *  )
      */
-    private Collection $users;
+    private Collection | ArrayCollection $users;
 
     /**
      * @var Collection<int, ApiKey>|ArrayCollection<int, ApiKey>
@@ -142,10 +142,10 @@ class UserGroup implements EntityInterface, Stringable
      *      mappedBy="userGroups",
      *  )
      * @ORM\JoinTable(
-     *      name="api_key_has_user_group"
+     *      name="api_key_has_user_group",
      *  )
      */
-    private Collection $apiKeys;
+    private Collection | ArrayCollection $apiKeys;
 
     /**
      * Constructor
@@ -196,7 +196,7 @@ class UserGroup implements EntityInterface, Stringable
     /**
      * @return Collection<int, User>|ArrayCollection<int, User>
      */
-    public function getUsers(): Collection
+    public function getUsers(): Collection | ArrayCollection
     {
         return $this->users;
     }
@@ -204,7 +204,7 @@ class UserGroup implements EntityInterface, Stringable
     /**
      * @return Collection<int, ApiKey>|ArrayCollection<int, ApiKey>
      */
-    public function getApiKeys(): Collection
+    public function getApiKeys(): Collection | ArrayCollection
     {
         return $this->apiKeys;
     }

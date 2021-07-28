@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Security/Provider/SecurityUserFactory.php
- */
+
+declare(strict_types=1);
 
 namespace App\Security\Provider;
 
@@ -23,18 +21,11 @@ use Throwable;
  */
 class SecurityUserFactory implements UserProviderInterface
 {
-    private UserRepository $userRepository;
-    private RolesService $rolesService;
-    private string $uuidV1Regex;
-
-    /**
-     * Constructor
-     */
-    public function __construct(UserRepository $userRepository, RolesService $rolesService, string $uuidV1Regex)
-    {
-        $this->userRepository = $userRepository;
-        $this->rolesService = $rolesService;
-        $this->uuidV1Regex = $uuidV1Regex;
+    public function __construct(
+        private UserRepository $userRepository,
+        private RolesService $rolesService,
+        private string $uuidV1Regex,
+    ) {
     }
 
     /**
@@ -66,11 +57,13 @@ class SecurityUserFactory implements UserProviderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws Throwable
      */
     public function refreshUser(UserInterface $user): SecurityUser
     {
         if (!($user instanceof SecurityUser)) {
-            throw new UnsupportedUserException(sprintf('Invalid user class "%s".', get_class($user)));
+            throw new UnsupportedUserException(sprintf('Invalid user class "%s".', $user::class));
         }
 
         $userEntity = $this->userRepository->find($user->getUsername());

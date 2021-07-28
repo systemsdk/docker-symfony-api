@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Actions/Admin/PatchAction.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Actions\Admin;
 
@@ -26,7 +24,6 @@ use Throwable;
  */
 trait PatchAction
 {
-    // Traits
     use PatchMethod;
 
     /**

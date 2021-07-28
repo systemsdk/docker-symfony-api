@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Validator/Constraints/Timezone.php
- */
+
+declare(strict_types=1);
 
 namespace App\Validator\Constraints;
 
@@ -29,7 +27,7 @@ class Timezone extends Constraint
     public const MESSAGE = 'This timezone "{{ timezone }}" is not valid.';
 
     /**
-     * Error names configuration
+     * {@inheritdoc}
      *
      * @var array<string, string>
      */
@@ -37,8 +35,9 @@ class Timezone extends Constraint
         self::INVALID_TIMEZONE => 'INVALID_TIMEZONE',
     ];
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      */
     public function getTargets(): string

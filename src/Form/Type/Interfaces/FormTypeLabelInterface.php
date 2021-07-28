@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Form/Type/Interfaces/FormTypeLabelInterface.php
- */
+
+declare(strict_types=1);
 
 namespace App\Form\Type\Interfaces;
 

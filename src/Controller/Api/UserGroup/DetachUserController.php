@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/UserGroup/DetachUserController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\UserGroup;
 
@@ -14,7 +12,6 @@ use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
@@ -28,16 +25,10 @@ use Throwable;
  */
 class DetachUserController
 {
-    private UserGroupResource $userGroupResource;
-    private SerializerInterface $serializer;
-
-    /**
-     * Constructor
-     */
-    public function __construct(UserGroupResource $userGroupResource, SerializerInterface $serializer)
-    {
-        $this->userGroupResource = $userGroupResource;
-        $this->serializer = $serializer;
+    public function __construct(
+        private UserGroupResource $userGroupResource,
+        private SerializerInterface $serializer,
+    ) {
     }
 
     /**
@@ -64,7 +55,7 @@ class DetachUserController
      * @Security("is_granted('ROLE_ROOT')")
      *
      * @OA\Parameter(
-     *     name="userGroup",
+     *     name="userGroupId",
      *     in="path",
      *     required=true,
      *     description="User Group GUID",
@@ -74,7 +65,7 @@ class DetachUserController
      *     )
      * )
      * @OA\Parameter(
-     *     name="user",
+     *     name="userId",
      *     in="path",
      *     required=true,
      *     description="User GUID",
@@ -90,7 +81,7 @@ class DetachUserController
      *         type="array",
      *         @OA\Items(
      *             ref=@Model(
-     *                 type=App\Entity\User::class,
+     *                 type=\App\Entity\User::class,
      *                 groups={"User"},
      *             ),
      *         ),
@@ -124,15 +115,13 @@ class DetachUserController
         $this->userGroupResource->save($userGroup->removeUser($user));
         $groups = [
             'groups' => [
-                'set.UserBasic',
+                User::SET_USER_BASIC,
             ],
         ];
 
         return new JsonResponse(
             $this->serializer->serialize($userGroup->getUsers()->getValues(), 'json', $groups),
-            Response::HTTP_OK,
-            [],
-            true
+            json: true,
         );
     }
 }

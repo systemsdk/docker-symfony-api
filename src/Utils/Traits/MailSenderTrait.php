@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Utils/Traits/MailSender.php
- */
+
+declare(strict_types=1);
 
 namespace App\Utils\Traits;
 
@@ -11,17 +9,32 @@ use Psr\Cache\InvalidArgumentException;
 use Throwable;
 use Twig\Environment as Twig;
 
-trait MailSender
+/**
+ * Trait MailSenderTrait
+ *
+ * @package App\Utils\Traits
+ */
+trait MailSenderTrait
 {
     private MailerService $mailerService;
+    private string $appSenderEmail;
+    private string $appErrorReceiverEmail;
+    private bool $appEmailNotificationAboutError;
     private Twig $twig;
 
     /**
      * @required
      */
-    public function setMailerService(MailerService $mailerService): void
-    {
+    public function setMailerService(
+        MailerService $mailerService,
+        string $appSenderEmail,
+        string $appErrorReceiverEmail,
+        int $appEmailNotificationAboutError
+    ): void {
         $this->mailerService = $mailerService;
+        $this->appSenderEmail = $appSenderEmail;
+        $this->appErrorReceiverEmail = $appErrorReceiverEmail;
+        $this->appEmailNotificationAboutError = (bool)$appEmailNotificationAboutError;
     }
 
     /**
@@ -39,12 +52,12 @@ trait MailSender
      */
     public function sendErrorToMail($exception): void
     {
-        if ((bool)$_ENV['APP_EMAIL_NOTIFICATION_ABOUT_ERROR']) {
+        if ($this->appEmailNotificationAboutError) {
             $body = $this->twig->render('Emails/error.html.twig', ['errorMessage' => $exception->getMessage()]);
             $this->mailerService->sendMail(
                 'An error has occurred.',
-                $_ENV['APP_SENDER_EMAIL'],
-                $_ENV['APP_ERROR_RECEIVER_EMAIL'],
+                $this->appSenderEmail,
+                $this->appErrorReceiverEmail,
                 $body
             );
         }

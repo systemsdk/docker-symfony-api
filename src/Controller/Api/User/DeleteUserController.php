@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/User/DeleteUserController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\User;
 
@@ -31,12 +29,9 @@ class DeleteUserController extends Controller
 {
     use Methods\DeleteMethod;
 
-    /**
-     * Constructor
-     */
-    public function __construct(UserResource $resource)
-    {
-        $this->setResource($resource);
+    public function __construct(
+        protected UserResource $resource,
+    ) {
     }
 
     /**

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Methods/FindOneMethod.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Methods;
 
@@ -30,7 +28,7 @@ trait IdsMethod
      */
     public function idsMethod(Request $request, ?array $allowedHttpMethods = null): Response
     {
-        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? ['GET']);
+        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? [Request::METHOD_GET]);
         // Determine used parameters
         $search = RequestHandler::getSearchTerms($request);
 

@@ -1,15 +1,19 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Form/DataTransformer/UserGroupTransformer.php
- */
+
+declare(strict_types=1);
 
 namespace App\Form\DataTransformer;
 
 use App\Entity\UserGroup;
 use App\Resource\UserGroupResource;
+use Stringable;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
+use Throwable;
+
+use function array_map;
+use function is_array;
+use function sprintf;
 
 /**
  * Class UserGroupTransformer
@@ -18,69 +22,49 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
  */
 class UserGroupTransformer implements DataTransformerInterface
 {
-    private UserGroupResource $resource;
-
-    /**
-     * Constructor
-     */
-    public function __construct(UserGroupResource $resource)
-    {
-        $this->resource = $resource;
+    public function __construct(
+        private UserGroupResource $resource
+    ) {
     }
 
     /**
-     * Transforms an object (Role) to a string (Role id).
+     * {@inheritdoc}
      *
-     * @param array<int, string|UserGroup>|mixed $userGroups
+     * Transforms an array of objects (UserGroup) to an array of strings (UserGroup id).
      *
-     * @return array<int, string>
+     * @psalm-param array<int, string|UserGroup>|mixed $value
      *
-     * @psalm-suppress MissingClosureParamType
+     * @psalm-return array<int, string>
      */
-    public function transform($userGroups): array
+    public function transform($value): array
     {
-        $output = [];
+        $callback = static fn (UserGroup | Stringable $userGroup): string =>
+            $userGroup instanceof UserGroup ? $userGroup->getId() : (string)$userGroup;
 
-        if (is_array($userGroups)) {
-            $iterator = static fn ($group): string => $group instanceof UserGroup ? $group->getId() : (string)$group;
-
-            $output = array_values(array_map('\strval', array_map($iterator, $userGroups)));
-        }
-
-        return $output;
+        return is_array($value) ? array_map($callback, $value) : [];
     }
 
     /**
-     * Transforms a string (Role id) to an object (Role).
+     * {@inheritdoc}
      *
-     * @param array<int, string>|mixed $userGroups
+     * Transforms an array of strings (UserGroup id) to an array of objects (UserGroup).
      *
-     * @throws TransformationFailedException if object (issue) is not found
+     * @psalm-param array<int, string>|mixed $value
      *
-     * @return array<int, UserGroup>|null
+     * @throws Throwable
+     *
+     * @psalm-return array<int, UserGroup>|null
      */
-    public function reverseTransform($userGroups): ?array
+    public function reverseTransform($value): ?array
     {
-        $output = null;
-
-        if (is_array($userGroups)) {
-            $iterator = function (string $groupId): UserGroup {
-                /** @var UserGroup|null $group */
-                $group = $this->resource->findOne($groupId);
-
-                if ($group === null) {
-                    throw new TransformationFailedException(sprintf(
-                        'User group with id "%s" does not exist!',
-                        $groupId
-                    ));
-                }
-
-                return $group;
-            };
-
-            $output = array_values(array_map($iterator, $userGroups));
-        }
-
-        return $output;
+        return is_array($value)
+            ? array_map(
+                fn (string $groupId): UserGroup => $this->resource->findOne($groupId, false) ??
+                    throw new TransformationFailedException(
+                        sprintf('User group with id "%s" does not exist!', $groupId),
+                    ),
+                $value,
+            )
+            : null;
     }
 }

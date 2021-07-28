@@ -17,7 +17,6 @@ return [
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     AutoMapperPlus\AutoMapperPlusBundle\AutoMapperPlusBundle::class => ['all' => true],
-    Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
-    JMose\CommandSchedulerBundle\JMoseCommandSchedulerBundle::class => ['all' => true],
     Systemsdk\Bundle\EasyLogBundle\EasyLogBundle::class => ['all' => true],
+    Dukecity\CommandSchedulerBundle\DukecityCommandSchedulerBundle::class => ['all' => true],
 ];

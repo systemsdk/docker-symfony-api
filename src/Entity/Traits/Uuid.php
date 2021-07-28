@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Entity/Traits/Uuid.php
- */
+
+declare(strict_types=1);
 
 namespace App\Entity\Traits;
 

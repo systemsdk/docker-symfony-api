@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Entity/User.php
- */
+
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -33,8 +31,8 @@ use Throwable;
  * @ORM\Table(
  *      name="user",
  *      uniqueConstraints={
- * @ORM\UniqueConstraint(name="uq_username", columns={"username"}),
- * @ORM\UniqueConstraint(name="uq_email", columns={"email"}),
+ *          @ORM\UniqueConstraint(name="uq_username", columns={"username"}),
+ *          @ORM\UniqueConstraint(name="uq_email", columns={"email"}),
  *      },
  *  )
  * @ORM\Entity()
@@ -43,11 +41,13 @@ use Throwable;
  */
 class User implements EntityInterface, UserInterface, UserGroupAwareInterface
 {
-    // Traits
     use Blameable;
     use Timestampable;
     use UserRelations;
     use Uuid;
+
+    public const SET_USER_PROFILE = 'set.UserProfile';
+    public const SET_USER_BASIC = 'set.UserBasic';
 
     public const PASSWORD_MIN_LENGTH = 8;
 
@@ -62,8 +62,8 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *
      *      "UserGroup.users",
      *
-     *      "set.UserProfile",
-     *      "set.UserBasic",
+     *      self::SET_USER_PROFILE,
+     *      self::SET_USER_BASIC,
      *  })
      *
      * @ORM\Column(
@@ -83,8 +83,8 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      "User",
      *      "User.username",
      *
-     *      "set.UserProfile",
-     *      "set.UserBasic",
+     *      self::SET_USER_PROFILE,
+     *      self::SET_USER_BASIC,
      *  })
      *
      * @Assert\NotBlank()
@@ -105,8 +105,8 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      "User",
      *      "User.firstName",
      *
-     *      "set.UserProfile",
-     *      "set.UserBasic",
+     *      self::SET_USER_PROFILE,
+     *      self::SET_USER_BASIC,
      *  })
      *
      * @Assert\NotBlank()
@@ -127,8 +127,8 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      "User",
      *      "User.lastName",
      *
-     *      "set.UserProfile",
-     *      "set.UserBasic",
+     *      self::SET_USER_PROFILE,
+     *      self::SET_USER_BASIC,
      *  })
      *
      * @Assert\NotBlank()
@@ -149,8 +149,8 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      "User",
      *      "User.email",
      *
-     *      "set.UserProfile",
-     *      "set.UserBasic",
+     *      self::SET_USER_PROFILE,
+     *      self::SET_USER_BASIC,
      *  })
      *
      * @Assert\NotBlank()
@@ -171,8 +171,8 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      "User",
      *      "User.language",
      *
-     *      "set.UserProfile",
-     *      "set.UserBasic",
+     *      self::SET_USER_PROFILE,
+     *      self::SET_USER_BASIC,
      *  })
      *
      * @Assert\NotBlank()
@@ -185,7 +185,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      nullable=false,
      *      options={
      *          "comment": "User language for translations",
-     *      }
+     *      },
      *  )
      */
     private string $language = LocalizationService::DEFAULT_LANGUAGE;
@@ -195,8 +195,8 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      "User",
      *      "User.locale",
      *
-     *      "set.UserProfile",
-     *      "set.UserBasic",
+     *      self::SET_USER_PROFILE,
+     *      self::SET_USER_BASIC,
      *  })
      *
      * @Assert\NotBlank()
@@ -209,7 +209,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      nullable=false,
      *      options={
      *          "comment": "User locale for number, time, date, etc. formatting.",
-     *      }
+     *      },
      *  )
      */
     private string $locale = LocalizationService::DEFAULT_LOCALE;
@@ -219,8 +219,8 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
      *      "User",
      *      "User.timezone",
      *
-     *      "set.UserProfile",
-     *      "set.UserBasic",
+     *      self::SET_USER_PROFILE,
+     *      self::SET_USER_BASIC,
      *  })
      *
      * @Assert\NotBlank()
@@ -385,16 +385,6 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
         }
 
         return $this;
-    }
-
-    /**
-     * Returns the salt that was originally used to encode the password.
-     *
-     * This can return null if the password was not encoded using a salt.
-     */
-    public function getSalt(): ?string
-    {
-        return null;
     }
 
     /**

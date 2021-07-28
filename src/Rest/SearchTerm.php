@@ -1,13 +1,25 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/SearchTerm.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest;
 
 use App\Rest\Interfaces\SearchTermInterface;
 use Closure;
+
+use function array_filter;
+use function array_map;
+use function array_merge;
+use function array_unique;
+use function array_values;
+use function explode;
+use function is_array;
+use function is_string;
+use function preg_match_all;
+use function preg_replace;
+use function str_contains;
+use function str_replace;
+use function trim;
 
 /**
  * Class SearchTerm
@@ -19,8 +31,12 @@ final class SearchTerm implements SearchTermInterface
     /**
      * {@inheritdoc}
      */
-    public static function getCriteria($column, $search, ?string $operand = null, ?int $mode = null): ?array
-    {
+    public static function getCriteria(
+        array | string | null $column,
+        array | string | null $search,
+        ?string $operand = null,
+        ?int $mode = null,
+    ): ?array {
         $operand ??= self::OPERAND_OR;
         $mode ??= self::MODE_FULL;
         $columns = self::getColumns($column);
@@ -55,7 +71,7 @@ final class SearchTerm implements SearchTermInterface
         $output = null;
 
         // We have some generated criteria
-        if (count($criteria) > 0) {
+        if (!empty($criteria)) {
             // Create used criteria array
             $output = [
                 'and' => [
@@ -74,7 +90,7 @@ final class SearchTerm implements SearchTermInterface
      */
     private static function getTermIterator(array $columns, int $mode): Closure
     {
-        return static fn (string $term): ?array => count($columns) > 0
+        return static fn (string $term): ?array => !empty($columns)
             ? array_map(self::getColumnIterator($term, $mode), $columns)
             : null;
     }
@@ -92,7 +108,7 @@ final class SearchTerm implements SearchTermInterface
          * @return array<int, string>
          */
         return static fn (string $column): array => [
-            strpos($column, '.') === false ? 'entity.' . $column : $column, 'like', self::getTerm($mode, $term),
+            !str_contains($column, '.') ? 'entity.' . $column : $column, 'like', self::getTerm($mode, $term),
         ];
     }
 
@@ -101,32 +117,23 @@ final class SearchTerm implements SearchTermInterface
      */
     private static function getTerm(int $mode, string $term): string
     {
-        switch ($mode) {
-            case self::MODE_STARTS_WITH:
-                $term .= '%';
-                break;
-            case self::MODE_ENDS_WITH:
-                $term = '%' . $term;
-                break;
-            case self::MODE_FULL:
-            default:
-                $term = '%' . $term . '%';
-                break;
-        }
-
-        return $term;
+        return match ($mode) {
+            self::MODE_STARTS_WITH => $term . '%',
+            self::MODE_ENDS_WITH => '%' . $term,
+            default => '%' . $term . '%', // self::MODE_FULL
+        };
     }
 
     /**
-     * @param string|array<int, string> $column search column(s), could be a string or an array of strings
+     * @param string|array<int, string>|null $column search column(s), could be a string or an array of strings
      *
      * @return array<int, string>
      */
-    private static function getColumns($column): array
+    private static function getColumns(array | string | null $column): array
     {
         // Normalize column and search parameters
         return array_filter(
-            array_map('trim', (is_array($column) ? $column : (array)$column)),
+            array_map('trim', (is_array($column) ? $column : (array)(string)$column)),
             static fn (string $value): bool => trim($value) !== ''
         );
     }
@@ -138,11 +145,25 @@ final class SearchTerm implements SearchTermInterface
      *
      * @return array<int, string>
      */
-    private static function getSearchTerms($search): array
+    private static function getSearchTerms(array | string | null $search): array
     {
+        if (is_string($search)) {
+            preg_match_all('#([^\"]\S*|\".+?\")\s*#', trim($search), $matches);
+
+            if ($matches[1]) {
+                $search = array_map(
+                    static fn (string $term): string => trim(str_replace('"', '', $term)),
+                    $matches[1],
+                );
+            }
+        }
+
         return array_unique(
             array_filter(
-                array_map('trim', (is_array($search) ? $search : explode(' ', (string)$search))),
+                array_map(
+                    static fn (string $term): string => (string)preg_replace('#\s+#', ' ', $term),
+                    array_map('trim', (is_array($search) ? $search : explode(' ', (string)$search))),
+                ),
                 static fn (string $value): bool => trim($value) !== ''
             )
         );

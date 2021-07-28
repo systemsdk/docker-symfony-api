@@ -1,14 +1,12 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/User/CreateUserGroupCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\User;
 
 use App\Command\HelperConfigure;
-use App\Command\Traits\GetApplication;
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\GetApplicationTrait;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\DTO\UserGroup\UserGroupCreate as UserGroupDto;
 use App\Form\Type\Console\UserGroupType;
 use App\Repository\RoleRepository;
@@ -30,9 +28,8 @@ use Throwable;
  */
 class CreateUserGroupCommand extends Command
 {
-    // Traits
-    use GetApplication;
-    use StyleSymfony;
+    use GetApplicationTrait;
+    use SymfonyStyleTrait;
 
     /**
      * @var array<int, array<string, string>>
@@ -48,20 +45,16 @@ class CreateUserGroupCommand extends Command
         ],
     ];
 
-    private UserGroupResource $userGroupResource;
-    private RoleRepository $roleRepository;
-
     /**
      * Constructor
      *
      * @throws LogicException
      */
-    public function __construct(UserGroupResource $userGroupResource, RoleRepository $roleRepository)
-    {
+    public function __construct(
+        private UserGroupResource $userGroupResource,
+        private RoleRepository $roleRepository,
+    ) {
         parent::__construct('user:create-group');
-
-        $this->userGroupResource = $userGroupResource;
-        $this->roleRepository = $roleRepository;
 
         $this->setDescription('Console command to create user groups');
     }
@@ -78,8 +71,9 @@ class CreateUserGroupCommand extends Command
         HelperConfigure::configure($this, self::$commandParameters);
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      *
      * @throws Throwable

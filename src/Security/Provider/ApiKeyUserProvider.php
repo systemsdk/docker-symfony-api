@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Security/Provider/ApiKeyUserProvider.php
- */
+
+declare(strict_types=1);
 
 namespace App\Security\Provider;
 
@@ -23,16 +21,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class ApiKeyUserProvider implements ApiKeyUserProviderInterface
 {
-    private ApiKeyRepository $apiKeyRepository;
-    private RolesService $rolesService;
-
-    /**
-     * Constructor
-     */
-    public function __construct(ApiKeyRepository $apiKeyRepository, RolesService $rolesService)
-    {
-        $this->apiKeyRepository = $apiKeyRepository;
-        $this->rolesService = $rolesService;
+    public function __construct(
+        private ApiKeyRepository $apiKeyRepository,
+        private RolesService $rolesService,
+    ) {
     }
 
     /**
@@ -46,9 +38,9 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function loadUserByUsername($token): ApiKeyUserInterface
+    public function loadUserByUsername($username): ApiKeyUserInterface
     {
-        $apiKey = $this->getApiKeyForToken($token);
+        $apiKey = $this->getApiKeyForToken($username);
 
         if ($apiKey === null) {
             throw new UsernameNotFoundException('API key is not valid');

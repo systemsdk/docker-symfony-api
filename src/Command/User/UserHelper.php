@@ -1,12 +1,9 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/User/UserHelper.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\User;
 
-use App\Entity\Interfaces\EntityInterface;
 use App\Entity\User as UserEntity;
 use App\Entity\UserGroup as UserGroupEntity;
 use App\Resource\UserGroupResource;
@@ -15,6 +12,9 @@ use Closure;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
+use function array_map;
+use function sprintf;
+
 /**
  * Class UserHelper
  *
@@ -22,16 +22,10 @@ use Throwable;
  */
 class UserHelper
 {
-    private UserResource $userResource;
-    private UserGroupResource $userGroupResource;
-
-    /**
-     * Constructor
-     */
-    public function __construct(UserResource $userResource, UserGroupResource $userGroupResource)
-    {
-        $this->userResource = $userResource;
-        $this->userGroupResource = $userGroupResource;
+    public function __construct(
+        private UserResource $userResource,
+        private UserGroupResource $userGroupResource,
+    ) {
     }
 
     /**
@@ -42,21 +36,20 @@ class UserHelper
      */
     public function getUser(SymfonyStyle $io, string $question): ?UserEntity
     {
-        $userFound = false;
+        $found = false;
         $userEntity = null;
 
-        while ($userFound !== true) {
-            /** @var UserEntity|null $userEntity */
+        while ($found !== true) {
             $userEntity = $this->getUserEntity($io, $question);
 
             if ($userEntity === null) {
                 break;
             }
 
-            $userFound = $this->isCorrectUser($io, $userEntity);
+            $found = $this->isCorrectUser($io, $userEntity);
         }
 
-        return $userEntity ?? null;
+        return $userEntity;
     }
 
     /**
@@ -67,35 +60,32 @@ class UserHelper
      */
     public function getUserGroup(SymfonyStyle $io, string $question): ?UserGroupEntity
     {
-        $userGroupFound = false;
+        $found = false;
         $userGroupEntity = null;
 
-        while ($userGroupFound !== true) {
-            /** @var UserGroupEntity|null $userGroupEntity */
+        while ($found !== true) {
             $userGroupEntity = $this->getUserGroupEntity($io, $question);
 
             if ($userGroupEntity === null) {
                 break;
             }
 
-            $userGroupFound = $this->isCorrectUserGroup($io, $userGroupEntity);
+            $found = $this->isCorrectUserGroup($io, $userGroupEntity);
         }
 
-        return $userGroupEntity ?? null;
+        return $userGroupEntity;
     }
 
     /**
      * Method to get User entity. Within this user will be asked which User entity he/she wants to process with.
      *
      * @throws Throwable
-     *
-     * @return UserEntity|EntityInterface|null
      */
-    private function getUserEntity(SymfonyStyle $io, string $question): ?EntityInterface
+    private function getUserEntity(SymfonyStyle $io, string $question): ?UserEntity
     {
         $choices = [];
         $iterator = $this->getUserIterator($choices);
-        array_map($iterator, $this->userResource->find([], ['username' => 'asc']));
+        array_map($iterator, $this->userResource->find(orderBy: ['username' => 'asc']));
         $choices['Exit'] = 'Exit command';
 
         return $this->userResource->findOne((string)$io->choice($question, $choices));
@@ -106,14 +96,12 @@ class UserHelper
      * with.
      *
      * @throws Throwable
-     *
-     * @return UserGroupEntity|EntityInterface|null
      */
-    private function getUserGroupEntity(SymfonyStyle $io, string $question): ?EntityInterface
+    private function getUserGroupEntity(SymfonyStyle $io, string $question): ?UserGroupEntity
     {
         $choices = [];
         $iterator = $this->getUserGroupIterator($choices);
-        array_map($iterator, $this->userGroupResource->find([], ['name' => 'asc']));
+        array_map($iterator, $this->userGroupResource->find(orderBy: ['name' => 'asc']));
         $choices['Exit'] = 'Exit command';
 
         return $this->userGroupResource->findOne((string)$io->choice($question, $choices));
@@ -122,7 +110,7 @@ class UserHelper
     /**
      * Getter method for user formatter closure. This closure will format single User entity for choice list.
      *
-     * @param array<int, string> $choices
+     * @param array<string, string> $choices
      */
     private function getUserIterator(array &$choices): Closure
     {
@@ -132,7 +120,7 @@ class UserHelper
                 $user->getUsername(),
                 $user->getFirstName(),
                 $user->getLastName(),
-                $user->getEmail()
+                $user->getEmail(),
             );
 
             $choices[$user->getId()] = $message;
@@ -142,7 +130,7 @@ class UserHelper
     /**
      * Getter method for user group formatter closure. This closure will format single UserGroup entity for choice list.
      *
-     * @param mixed[] $choices
+     * @param array<string, string> $choices
      */
     private function getUserGroupIterator(array &$choices): Closure
     {
@@ -162,7 +150,7 @@ class UserHelper
             $userEntity->getUsername(),
             $userEntity->getFirstName(),
             $userEntity->getLastName(),
-            $userEntity->getEmail()
+            $userEntity->getEmail(),
         );
 
         return (bool)$io->confirm($message, false);
@@ -177,7 +165,7 @@ class UserHelper
             'Is this the correct user group [%s - %s (%s)]?',
             $userGroupEntity->getId(),
             $userGroupEntity->getName(),
-            $userGroupEntity->getRole()->getId()
+            $userGroupEntity->getRole()->getId(),
         );
 
         return (bool)$io->confirm($message, false);

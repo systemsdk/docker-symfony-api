@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Actions/Anon/PatchAction.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Actions\Anon;
 
@@ -25,7 +23,6 @@ use Throwable;
  */
 trait PatchAction
 {
-    // Traits
     use PatchMethod;
 
     /**

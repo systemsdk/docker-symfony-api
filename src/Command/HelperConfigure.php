@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/HelperConfigure.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command;
 
@@ -11,6 +9,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
+
+use function array_key_exists;
+use function array_map;
 
 /**
  * Class HelperConfigure
@@ -35,14 +36,12 @@ class HelperConfigure
      */
     private static function getParameterIterator(): Closure
     {
-        return static function (array $input): InputOption {
-            $name = (string)$input['name'];
-            $shortcut = array_key_exists('shortcut', $input) ? (string)$input['shortcut'] : null;
-            $mode = array_key_exists('mode', $input) ? (int)$input['mode'] : InputOption::VALUE_OPTIONAL;
-            $description = array_key_exists('description', $input) ? (string)$input['description'] : '';
-            $default = array_key_exists('default', $input) ? (string)$input['default'] : null;
-
-            return new InputOption($name, $shortcut, $mode, $description, $default);
-        };
+        return static fn (array $input): InputOption => new InputOption(
+            (string)$input['name'],
+            array_key_exists('shortcut', $input) ? (string)$input['shortcut'] : null,
+            array_key_exists('mode', $input) ? (int)$input['mode'] : InputOption::VALUE_OPTIONAL,
+            array_key_exists('description', $input) ? (string)$input['description'] : '',
+            array_key_exists('default', $input) ? (string)$input['default'] : null,
+        );
     }
 }

@@ -1,13 +1,11 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Security/Interfaces/RolesInterface.php
- */
+
+declare(strict_types=1);
 
 namespace App\Security\Interfaces;
 
 /**
- * Interface RolesInterface
+ * Interface RolesServiceInterface
  *
  * @package Security
  */

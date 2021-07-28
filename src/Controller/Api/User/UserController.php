@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/User/UserController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\User;
 
@@ -53,11 +51,8 @@ class UserController extends Controller
         Controller::METHOD_PATCH => UserPatch::class,
     ];
 
-    /**
-     * Constructor
-     */
-    public function __construct(UserResource $resource)
-    {
-        $this->setResource($resource);
+    public function __construct(
+        protected UserResource $resource,
+    ) {
     }
 }

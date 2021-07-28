@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/ApiKeyController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api;
 
@@ -54,11 +52,8 @@ class ApiKeyController extends Controller
         Controller::METHOD_PATCH => ApiKeyPatch::class,
     ];
 
-    /**
-     * Constructor
-     */
-    public function __construct(ApiKeyResource $resource)
-    {
-        $this->setResource($resource);
+    public function __construct(
+        protected ApiKeyResource $resource,
+    ) {
     }
 }

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Actions/Anon/FindAction.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Actions\Anon;
 
@@ -24,7 +22,6 @@ use Throwable;
  */
 trait FindAction
 {
-    // Traits
     use FindMethod;
 
     /**

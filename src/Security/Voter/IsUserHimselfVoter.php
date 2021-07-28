@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Security/Voter/IsUserHimselfVoter.php
- */
+
+declare(strict_types=1);
 
 namespace App\Security\Voter;
 

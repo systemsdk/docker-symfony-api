@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Service/MessageService.php
- */
+
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -18,14 +16,9 @@ use Symfony\Component\Messenger\MessageBusInterface;
  */
 class MessageService implements MessageServiceInterface
 {
-    private MessageBusInterface $bus;
-
-    /**
-     * Constructor
-     */
-    public function __construct(MessageBusInterface $bus)
-    {
-        $this->bus = $bus;
+    public function __construct(
+        private MessageBusInterface $bus,
+    ) {
     }
 
     /**

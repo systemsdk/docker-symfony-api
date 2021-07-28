@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/ApiKey/ListApiKeysCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\ApiKey;
 
@@ -18,6 +16,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
+use function array_map;
+use function implode;
+use function sprintf;
+
 /**
  * Class ListApiKeysCommand
  *
@@ -25,26 +27,23 @@ use Throwable;
  */
 class ListApiKeysCommand extends Command
 {
-    private ApiKeyResource $apiKeyResource;
-    private RolesService $rolesService;
-
     /**
      * Constructor
      *
      * @throws LogicException
      */
-    public function __construct(ApiKeyResource $apiKeyResource, RolesService $rolesService)
-    {
+    public function __construct(
+        private ApiKeyResource $apiKeyResource,
+        private RolesService $rolesService,
+    ) {
         parent::__construct('api-key:list');
-
-        $this->apiKeyResource = $apiKeyResource;
-        $this->rolesService = $rolesService;
 
         $this->setDescription('Console command to list API keys');
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      *
      * @throws Throwable
@@ -71,11 +70,11 @@ class ListApiKeysCommand extends Command
      *
      * @throws Throwable
      *
-     * @return mixed[]
+     * @return array<int, string>
      */
     private function getRows(): array
     {
-        return array_map($this->getFormatterApiKey(), $this->apiKeyResource->find(null, ['token' => 'ASC']));
+        return array_map($this->getFormatterApiKey(), $this->apiKeyResource->find(orderBy: ['token' => 'ASC']));
     }
 
     /**
@@ -86,7 +85,7 @@ class ListApiKeysCommand extends Command
         $userGroupFormatter = static fn (UserGroup $userGroup): string => sprintf(
             '%s (%s)',
             $userGroup->getName(),
-            $userGroup->getRole()->getId()
+            $userGroup->getRole()->getId(),
         );
 
         return fn (ApiKey $apiToken): array => [

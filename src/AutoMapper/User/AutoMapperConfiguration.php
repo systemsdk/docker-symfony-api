@@ -1,13 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/AutoMapper/User/AutoMapperConfiguration.php
- */
+
+declare(strict_types=1);
 
 namespace App\AutoMapper\User;
 
 use App\AutoMapper\RestAutoMapperConfiguration;
-use App\AutoMapper\RestRequestMapper;
 use App\DTO\User\UserCreate;
 use App\DTO\User\UserPatch;
 use App\DTO\User\UserUpdate;
@@ -30,13 +27,8 @@ class AutoMapperConfiguration extends RestAutoMapperConfiguration
         UserPatch::class,
     ];
 
-    protected RestRequestMapper $requestMapper;
-
-    /**
-     * Constructor
-     */
-    public function __construct(RequestMapper $requestMapper)
-    {
-        $this->requestMapper = $requestMapper;
+    public function __construct(
+        protected RequestMapper $requestMapper,
+    ) {
     }
 }

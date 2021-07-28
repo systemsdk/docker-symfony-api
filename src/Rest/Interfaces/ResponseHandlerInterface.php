@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Interfaces/ResponseHandlerInterface.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Interfaces;
 
@@ -25,9 +23,6 @@ interface ResponseHandlerInterface
     public const FORMAT_JSON = 'json';
     public const FORMAT_XML = 'xml';
 
-    /**
-     * Constructor
-     */
     public function __construct(SerializerInterface $serializer);
 
     /**
@@ -38,25 +33,24 @@ interface ResponseHandlerInterface
     /**
      * Helper method to get serialization context for request.
      *
-     * @return array<int|string, array<int, array<int, string>|string>|bool|string>
+     * @return array<int|string, mixed>
      */
     public function getSerializeContext(Request $request, ?RestResourceInterface $restResource = null): array;
 
     /**
      * Helper method to create response for request.
      *
-     * @param mixed $data
      * @param array<int|string, bool|array<int, string>>|null $context
      *
      * @throws HttpException
      */
     public function createResponse(
         Request $request,
-        $data,
+        mixed $data,
         ?RestResourceInterface $restResource = null,
         ?int $httpStatus = null,
         ?string $format = null,
-        ?array $context = null
+        ?array $context = null,
     ): Response;
 
     /**

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/Localization/TimezoneController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\Localization;
 
@@ -28,14 +26,9 @@ use Throwable;
  */
 class TimeZoneController
 {
-    private LocalizationService $localization;
-
-    /**
-     * Constructor
-     */
-    public function __construct(LocalizationService $localization)
-    {
-        $this->localization = $localization;
+    public function __construct(
+        private LocalizationService $localization,
+    ) {
     }
 
     /**

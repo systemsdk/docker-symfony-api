@@ -1,12 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/User/RemoveUserCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\User;
 
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\Entity\User;
 use App\Resource\UserResource;
 use Symfony\Component\Console\Command\Command;
@@ -22,29 +20,25 @@ use Throwable;
  */
 class RemoveUserCommand extends Command
 {
-    // Traits
-    use StyleSymfony;
-
-    private UserResource $userResource;
-    private UserHelper $userHelper;
+    use SymfonyStyleTrait;
 
     /**
      * Constructor
      *
      * @throws LogicException
      */
-    public function __construct(UserResource $userResource, UserHelper $userHelper)
-    {
+    public function __construct(
+        private UserResource $userResource,
+        private UserHelper $userHelper,
+    ) {
         parent::__construct('user:remove');
-
-        $this->userResource = $userResource;
-        $this->userHelper = $userHelper;
 
         $this->setDescription('Console command to remove existing user');
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      *
      * @throws Throwable
@@ -52,21 +46,23 @@ class RemoveUserCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);
-        // Get user entity
         $user = $this->userHelper->getUser($io, 'Which user you want to remove?');
-        $message = null;
-
-        if ($user instanceof User) {
-            // Delete user
-            $this->userResource->delete($user->getId());
-            $message = 'User removed - have a nice day';
-        }
+        $message = $user instanceof User ? $this->delete($user) : null;
 
         if ($input->isInteractive()) {
-            $message ??= 'Nothing changed - have a nice day';
-            $io->success($message);
+            $io->success($message ?? 'Nothing changed - have a nice day');
         }
 
         return 0;
+    }
+
+    /**
+     * @throws Throwable
+     */
+    private function delete(User $user): string
+    {
+        $this->userResource->delete($user->getId());
+
+        return 'User removed - have a nice day';
     }
 }

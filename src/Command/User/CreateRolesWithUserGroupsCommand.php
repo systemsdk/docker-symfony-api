@@ -1,13 +1,11 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/User/CreateRolesWithUserGroupsCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\User;
 
-use App\Command\Traits\ApiKeyUserManagementHelper;
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\ApiKeyUserManagementHelperTrait;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\Repository\RoleRepository;
 use App\Resource\UserGroupResource;
 use App\Security\RolesService;
@@ -26,12 +24,8 @@ use Throwable;
 class CreateRolesWithUserGroupsCommand extends Command
 {
     // Traits
-    use ApiKeyUserManagementHelper;
-    use StyleSymfony;
-
-    private UserGroupResource $userGroupResource;
-    private RolesService $rolesService;
-    private RoleRepository $roleRepository;
+    use ApiKeyUserManagementHelperTrait;
+    use SymfonyStyleTrait;
 
     /**
      * Constructor
@@ -39,15 +33,11 @@ class CreateRolesWithUserGroupsCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        UserGroupResource $userGroupResource,
-        RolesService $rolesService,
-        RoleRepository $roleRepository
+        private UserGroupResource $userGroupResource,
+        private RolesService $rolesService,
+        private RoleRepository $roleRepository,
     ) {
         parent::__construct('user:create-roles-groups');
-
-        $this->userGroupResource = $userGroupResource;
-        $this->rolesService = $rolesService;
-        $this->roleRepository = $roleRepository;
 
         $this->setDescription('Console command to create roles with user groups to database');
     }
@@ -60,9 +50,8 @@ class CreateRolesWithUserGroupsCommand extends Command
         return $this->rolesService;
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
-     * Executes the current command.
+     * @noinspection PhpMissingParentCallCommonInspection
      *
      * {@inheritdoc}
      *

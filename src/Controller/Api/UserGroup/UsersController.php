@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/UserGroup/UsersController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\UserGroup;
 
@@ -28,16 +26,10 @@ use Throwable;
  */
 class UsersController
 {
-    private UserResource $userResource;
-    private ResponseHandler $responseHandler;
-
-    /**
-     * Constructor
-     */
-    public function __construct(UserResource $userResource, ResponseHandler $responseHandler)
-    {
-        $this->userResource = $userResource;
-        $this->responseHandler = $responseHandler;
+    public function __construct(
+        private UserResource $userResource,
+        private ResponseHandler $responseHandler,
+    ) {
     }
 
     /**

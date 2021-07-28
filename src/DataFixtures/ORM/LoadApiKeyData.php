@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/DataFixtures/ORM/LoadApiKeyData.php
- */
+
+declare(strict_types=1);
 
 namespace App\DataFixtures\ORM;
 
@@ -17,6 +15,9 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Throwable;
+
+use function array_map;
+use function str_pad;
 
 /**
  * Class LoadApiKeyData
@@ -56,8 +57,8 @@ final class LoadApiKeyData extends Fixture implements OrderedFixtureInterface, C
         $this->roles = $rolesService;
         $this->manager = $manager;
         // Create entities
-        array_map([$this, 'createApiKey'], $this->roles->getRoles());
-        $this->createApiKey();
+        array_map(fn (?string $role): bool => $this->createApiKey($role), [null, ...$this->roles->getRoles()]);
+
         // Flush database changes
         $this->manager->flush();
     }
@@ -75,14 +76,12 @@ final class LoadApiKeyData extends Fixture implements OrderedFixtureInterface, C
      *
      * @throws Throwable
      */
-    private function createApiKey(?string $role = null): void
+    private function createApiKey(?string $role = null): bool
     {
         // Create new entity
-        $entity = new ApiKey();
-        $entity->setDescription('ApiKey Description: ' . ($role === null ? '' : $this->roles->getShort($role)));
-        $entity->setToken(
-            str_pad($role === null ? '' : $this->roles->getShort($role), 40, '_')
-        );
+        $entity = (new ApiKey())
+            ->setDescription('ApiKey Description: ' . ($role === null ? '' : $this->roles->getShort($role)))
+            ->setToken(str_pad($role === null ? '' : $this->roles->getShort($role), 40, '_'));
         $suffix = '';
 
         if ($role !== null) {
@@ -102,5 +101,7 @@ final class LoadApiKeyData extends Fixture implements OrderedFixtureInterface, C
         $this->manager->persist($entity);
         // Create reference for later usage
         $this->addReference('ApiKey' . $suffix, $entity);
+
+        return true;
     }
 }

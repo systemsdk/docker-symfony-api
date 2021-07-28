@@ -1,18 +1,18 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/EventSubscriber/AuthenticationFailureSubscriber.php
- */
+
+declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
 use App\Doctrine\DBAL\Types\EnumLogLoginType;
 use App\Repository\UserRepository;
 use App\Service\LoginLoggerService;
-use Doctrine\ORM\ORMException;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
+use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Throwable;
+
+use function is_string;
 
 /**
  * Class AuthenticationFailureSubscriber
@@ -21,16 +21,10 @@ use Throwable;
  */
 class AuthenticationFailureSubscriber implements EventSubscriberInterface
 {
-    private LoginLoggerService $loginLoggerService;
-    private UserRepository $userRepository;
-
-    /**
-     * Constructor
-     */
-    public function __construct(LoginLoggerService $loginLoggerService, UserRepository $userRepository)
-    {
-        $this->loginLoggerService = $loginLoggerService;
-        $this->userRepository = $userRepository;
+    public function __construct(
+        private LoginLoggerService $loginLoggerService,
+        private UserRepository $userRepository,
+    ) {
     }
 
     /**
@@ -42,6 +36,7 @@ class AuthenticationFailureSubscriber implements EventSubscriberInterface
     {
         return [
             AuthenticationFailureEvent::class => 'onAuthenticationFailure',
+            Events::AUTHENTICATION_FAILURE => 'onAuthenticationFailure',
         ];
     }
 
@@ -51,7 +46,7 @@ class AuthenticationFailureSubscriber implements EventSubscriberInterface
      * This method is called when following event is broadcast;
      *  - \Lexik\Bundle\JWTAuthenticationBundle\Events::AUTHENTICATION_FAILURE
      *
-     * @throws ORMException|Throwable
+     * @throws Throwable
      */
     public function onAuthenticationFailure(AuthenticationFailureEvent $event): void
     {

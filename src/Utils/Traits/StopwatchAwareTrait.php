@@ -1,24 +1,22 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Utils/Traits/StopwatchAware.php
- */
+
+declare(strict_types=1);
 
 namespace App\Utils\Traits;
 
 use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
- * Trait StopwatchAware
+ * Trait StopwatchAwareTrait
  *
  * NOTE: Do not use this in your services, just inject `Stopwatch` to service where you need it.
  *       This trait is just for quick debug purposes and nothing else.
  *
  * @package App\Utils\Traits
  */
-trait StopwatchAware
+trait StopwatchAwareTrait
 {
-    protected Stopwatch $stopwatch;
+    protected ?Stopwatch $stopwatch;
 
     /**
      * @see https://symfony.com/doc/current/service_container/autowiring.html#autowiring-other-methods-e-g-setters

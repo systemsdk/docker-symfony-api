@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/User/UserRolesController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\User;
 
@@ -23,14 +21,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserRolesController
 {
-    private RolesService $rolesService;
-
-    /**
-     * Constructor
-     */
-    public function __construct(RolesService $rolesService)
-    {
-        $this->rolesService = $rolesService;
+    public function __construct(
+        private RolesService $rolesService,
+    ) {
     }
 
     /**

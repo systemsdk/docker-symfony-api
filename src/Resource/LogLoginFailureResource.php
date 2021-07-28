@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Resource/LogLoginFailureResource.php
- */
+
+declare(strict_types=1);
 
 namespace App\Resource;
 
@@ -12,39 +10,40 @@ use App\Entity\LogLoginFailure as Entity;
 use App\Entity\User;
 use App\Repository\LogLoginFailureRepository as Repository;
 use App\Rest\RestResource;
+use Throwable;
 
 /**
  * Class LogLoginFailureResource
  *
  * @package App\Resource
  *
+ * @psalm-suppress LessSpecificImplementedReturnType
  * @codingStandardsIgnoreStart
  *
- * @method Entity getReference(string $id): Entity
- * @method Repository getRepository(): Repository
- * @method array<int, Entity> find(?array $criteria = null, ?array $orderBy = null, ?int $limit = null, ?int $offset = null, ?array $search = null): array
- * @method Entity|null findOne(string $id, ?bool $throwExceptionIfNotFound = null): ?EntityInterface
- * @method Entity|null findOneBy(array $criteria, ?array $orderBy = null, ?bool $throwExceptionIfNotFound = null): ?EntityInterface
- * @method Entity create(RestDtoInterface $dto, ?bool $flush = null, ?bool $skipValidation = null): EntityInterface
- * @method Entity update(string $id, RestDtoInterface $dto, ?bool $flush = null, ?bool $skipValidation = null): EntityInterface
- * @method Entity patch(string $id, RestDtoInterface $dto, ?bool $flush = null, ?bool $skipValidation = null): EntityInterface
- * @method Entity delete(string $id, ?bool $flush = null): EntityInterface
- * @method Entity save(EntityInterface $entity, ?bool $flush = null, ?bool $skipValidation = null): EntityInterface
+ * @method Entity getReference(string $id)
+ * @method Repository getRepository()
+ * @method Entity[] find(?array $criteria = null, ?array $orderBy = null, ?int $limit = null, ?int $offset = null, ?array $search = null)
+ * @method Entity|null findOne(string $id, ?bool $throwExceptionIfNotFound = null)
+ * @method Entity|null findOneBy(array $criteria, ?array $orderBy = null, ?bool $throwExceptionIfNotFound = null)
+ * @method Entity create(RestDtoInterface $dto, ?bool $flush = null, ?bool $skipValidation = null)
+ * @method Entity update(string $id, RestDtoInterface $dto, ?bool $flush = null, ?bool $skipValidation = null)
+ * @method Entity patch(string $id, RestDtoInterface $dto, ?bool $flush = null, ?bool $skipValidation = null)
+ * @method Entity delete(string $id, ?bool $flush = null)
+ * @method Entity save(EntityInterface $entity, ?bool $flush = null, ?bool $skipValidation = null)
  *
  * @codingStandardsIgnoreEnd
  */
 class LogLoginFailureResource extends RestResource
 {
-    /**
-     * Constructor
-     */
-    public function __construct(Repository $repository)
-    {
-        $this->setRepository($repository);
+    public function __construct(
+        protected Repository $repository,
+    ) {
     }
 
     /**
      * Method to reset specified user log login failures.
+     *
+     * @throws Throwable
      */
     public function reset(User $user): void
     {

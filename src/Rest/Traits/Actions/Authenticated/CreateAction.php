@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Actions/Authenticated/CreateAction.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Actions\Authenticated;
 
@@ -26,7 +24,6 @@ use Throwable;
  */
 trait CreateAction
 {
-    // Traits
     use CreateMethod;
 
     /**

@@ -1,12 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Resource/ResourceCollection.php
- */
+
+declare(strict_types=1);
 
 namespace App\Resource;
 
-use App\Collection\Traits\Collection;
+use App\Collection\Traits\CollectionTrait;
 use App\Rest\Interfaces\RestResourceInterface;
 use CallbackFilterIterator;
 use Closure;
@@ -17,30 +15,29 @@ use IteratorIterator;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
+use function sprintf;
+
 /**
  * Class ResourceCollection
  *
  * @package App\Resource
  *
- * @property IteratorAggregate|IteratorAggregate<int, RestResourceInterface> $items
- *
  * @method RestResourceInterface get(string $className)
- * @method IteratorAggregate<int, RestResourceInterface> getAll(): IteratorAggregate
+ * @method IteratorAggregate<int, RestResourceInterface> getAll()
  */
 class ResourceCollection implements Countable
 {
-    // Traits
-    use Collection;
+    use CollectionTrait;
 
     /**
      * Constructor
      *
-     * @param IteratorAggregate<int, RestResourceInterface> $resources
+     * @param IteratorAggregate<int, RestResourceInterface> $items
      */
-    public function __construct(IteratorAggregate $resources, LoggerInterface $logger)
-    {
-        $this->items = $resources;
-        $this->logger = $logger;
+    public function __construct(
+        private IteratorAggregate $items,
+        private LoggerInterface $logger,
+    ) {
     }
 
     /**
@@ -48,18 +45,9 @@ class ResourceCollection implements Countable
      */
     public function getEntityResource(string $className): RestResourceInterface
     {
-        $current = $this->getFilteredItemByEntity($className);
-
-        if ($current === null) {
-            $message = sprintf(
-                'Resource class does not exist for entity \'%s\'',
-                $className
-            );
-
-            throw new InvalidArgumentException($message);
-        }
-
-        return $current;
+        return $this->getFilteredItemByEntity($className) ?? throw new InvalidArgumentException(
+            sprintf('Resource class does not exist for entity \'%s\'', $className),
+        );
     }
 
     /**
@@ -81,14 +69,9 @@ class ResourceCollection implements Countable
     /**
      * {@inheritdoc}
      */
-    public function error(string $className): void
+    public function getErrorMessage(string $className): string
     {
-        $message = sprintf(
-            'Resource \'%s\' does not exist',
-            $className
-        );
-
-        throw new InvalidArgumentException($message);
+        return sprintf('Resource \'%s\' does not exist', $className);
     }
 
     /**

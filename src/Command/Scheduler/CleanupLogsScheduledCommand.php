@@ -1,15 +1,14 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/Scheduler/CleanupLogsScheduledCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\Scheduler;
 
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\Command\Utils\CleanupLogsCommand;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use JMose\CommandSchedulerBundle\Entity\ScheduledCommand;
+use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,29 +22,26 @@ use Throwable;
  */
 class CleanupLogsScheduledCommand extends Command
 {
-    // Traits
-    use StyleSymfony;
-
-    private EntityManagerInterface $entityManager;
+    use SymfonyStyleTrait;
 
     /**
      * Constructor
      *
      * @throws LogicException
      */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+    ) {
         parent::__construct('scheduler:cleanup-logs');
-
-        $this->entityManager = $entityManager;
 
         $this->setDescription(
             'Command to run a cron job for cleanup logs by schedule.'
         );
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * Executes the current command.
      *
      * {@inheritdoc}
@@ -56,7 +52,7 @@ class CleanupLogsScheduledCommand extends Command
     {
         $io = $this->getSymfonyStyle($input, $output);
 
-        $message = $this->createScheduledCommand($input, $output);
+        $message = $this->createScheduledCommand();
 
         if ($input->isInteractive()) {
             $io->success($message);
@@ -68,10 +64,8 @@ class CleanupLogsScheduledCommand extends Command
     /**
      * @throws Throwable
      */
-    private function createScheduledCommand(
-        InputInterface $input,
-        OutputInterface $output
-    ): string {
+    private function createScheduledCommand(): string
+    {
         $entity = $this->entityManager->getRepository(ScheduledCommand::class)->findOneBy([
             'command' => CleanupLogsCommand::COMMAND_NAME,
         ]);
@@ -96,7 +90,8 @@ class CleanupLogsScheduledCommand extends Command
             // Run once a day, midnight
             ->setCronExpression('0 0 * * *')
             ->setPriority(100)
-            ->setLogFile('cleanup-logs.log')
+            ->setLastExecution(new DateTime())
+            ->setLogFile('/cleanup-logs.log')
             ->setExecuteImmediately(false)
             ->setDisabled(false);
 

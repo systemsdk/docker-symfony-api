@@ -1,14 +1,12 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Entity/LogRequest.php
- */
+
+declare(strict_types=1);
 
 namespace App\Entity;
 
 use App\Entity\Interfaces\EntityInterface;
-use App\Entity\Traits\LogEntity;
-use App\Entity\Traits\LogRequestProcessRequest;
+use App\Entity\Traits\LogEntityTrait;
+use App\Entity\Traits\LogRequestProcessRequestTrait;
 use App\Entity\Traits\Uuid;
 use Doctrine\ORM\Mapping as ORM;
 use OpenApi\Annotations as OA;
@@ -18,19 +16,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Throwable;
 
+use function mb_strlen;
+
 /**
  * Class LogRequest
  *
  * @ORM\Table(
  *      name="log_request",
  *      indexes={
- * @ORM\Index(name="user_id", columns={"user_id"}),
- * @ORM\Index(name="api_key_id", columns={"api_key_id"}),
- * @ORM\Index(name="request_date", columns={"date"}),
- *      }
+ *          @ORM\Index(name="user_id", columns={"user_id"}),
+ *          @ORM\Index(name="api_key_id", columns={"api_key_id"}),
+ *          @ORM\Index(name="request_date", columns={"date"}),
+ *      },
  *  )
  * @ORM\Entity(
- *      readOnly=true
+ *      readOnly=true,
  *  )
  * @ORM\HasLifecycleCallbacks()
  *
@@ -38,9 +38,8 @@ use Throwable;
  */
 class LogRequest implements EntityInterface
 {
-    // Traits
-    use LogEntity;
-    use LogRequestProcessRequest;
+    use LogEntityTrait;
+    use LogRequestProcessRequestTrait;
     use Uuid;
 
     /**
@@ -74,7 +73,7 @@ class LogRequest implements EntityInterface
      *      inversedBy="logsRequest",
      *  )
      * @ORM\JoinColumns({
-     * @ORM\JoinColumn(
+     *      @ORM\JoinColumn(
      *          name="user_id",
      *          referencedColumnName="id",
      *          nullable=true,
@@ -82,7 +81,7 @@ class LogRequest implements EntityInterface
      *      ),
      *  })
      */
-    private ?User $user = null;
+    private ?User $user;
 
     /**
      * @Groups({
@@ -94,7 +93,7 @@ class LogRequest implements EntityInterface
      *      inversedBy="logsRequest",
      *  )
      * @ORM\JoinColumns({
-     * @ORM\JoinColumn(
+     *      @ORM\JoinColumn(
      *          name="api_key_id",
      *          referencedColumnName="id",
      *          nullable=true,
@@ -102,7 +101,7 @@ class LogRequest implements EntityInterface
      *      ),
      *  })
      */
-    private ?ApiKey $apiKey = null;
+    private ?ApiKey $apiKey;
 
     /**
      * @Groups({
@@ -147,11 +146,6 @@ class LogRequest implements EntityInterface
     private bool $masterRequest;
 
     /**
-     * @var array<int, string>
-     */
-    private array $sensitiveProperties;
-
-    /**
      * Constructor
      *
      * @param array<int, string> $sensitiveProperties
@@ -159,14 +153,13 @@ class LogRequest implements EntityInterface
      * @throws Throwable
      */
     public function __construct(
-        array $sensitiveProperties,
+        private array $sensitiveProperties,
         ?Request $request = null,
         ?Response $response = null,
         ?User $user = null,
         ?ApiKey $apiKey = null,
         ?bool $masterRequest = null
     ) {
-        $this->sensitiveProperties = $sensitiveProperties;
         $this->id = $this->createUuid();
         $this->user = $user;
         $this->apiKey = $apiKey;
@@ -213,6 +206,9 @@ class LogRequest implements EntityInterface
         return $this->masterRequest;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getSensitiveProperties(): array
     {
         return $this->sensitiveProperties;

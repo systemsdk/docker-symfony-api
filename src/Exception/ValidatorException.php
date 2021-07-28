@@ -1,18 +1,20 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Exception/ValidatorException.php
- */
+
+declare(strict_types=1);
 
 namespace App\Exception;
 
 use App\Exception\Interfaces\ClientErrorInterface;
+use App\Exception\Models\ValidatorError;
 use App\Utils\JSON;
 use JsonException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Exception\ValidatorException as BaseValidatorException;
+
+use function array_map;
+use function iterator_to_array;
 
 /**
  * Class ValidatorException
@@ -28,19 +30,15 @@ class ValidatorException extends BaseValidatorException implements ClientErrorIn
      */
     public function __construct(string $target, ConstraintViolationListInterface $errors)
     {
-        $output = [];
-
-        /** @var ConstraintViolationInterface $error */
-        foreach ($errors as $error) {
-            $output[] = [
-                'message' => $error->getMessage(),
-                'propertyPath' => $error->getPropertyPath(),
-                'target' => str_replace('\\', '.', $target),
-                'code' => $error->getCode(),
-            ];
-        }
-
-        parent::__construct(JSON::encode($output));
+        parent::__construct(
+            JSON::encode(
+                array_map(
+                    static fn (ConstraintViolationInterface $error): ValidatorError =>
+                        new ValidatorError($error, $target),
+                    iterator_to_array($errors),
+                ),
+            ),
+        );
     }
 
     /**

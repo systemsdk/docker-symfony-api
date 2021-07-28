@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Service/RequestLoggerService.php
- */
+
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -23,8 +21,6 @@ use Throwable;
  */
 class RequestLoggerService implements RequestLoggerServiceInterface
 {
-    private LogRequestResource $resource;
-    private LoggerInterface $logger;
     private ?Response $response = null;
     private ?Request $request = null;
     private ?User $user = null;
@@ -32,20 +28,15 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     private bool $masterRequest = false;
 
     /**
-     * @var array<int, string>
-     */
-    private array $sensitiveProperties;
-
-    /**
      * Constructor
      *
      * @param array<int, string> $sensitiveProperties
      */
-    public function __construct(LogRequestResource $resource, LoggerInterface $logger, array $sensitiveProperties)
-    {
-        $this->resource = $resource;
-        $this->logger = $logger;
-        $this->sensitiveProperties = $sensitiveProperties;
+    public function __construct(
+        private LogRequestResource $resource,
+        private LoggerInterface $logger,
+        private array $sensitiveProperties,
+    ) {
     }
 
     /**
@@ -116,7 +107,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     }
 
     /**
-     * Store request log.
+     * Store request log to database.
      *
      * @throws Throwable
      */

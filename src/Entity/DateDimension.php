@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Entity/DateDimension.php
- */
+
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -17,24 +15,25 @@ use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Throwable;
 
+use function floor;
+
 /**
  * Class DateDimension
  *
  * @ORM\Table(
  *      name="date_dimension",
  *      indexes={
- * @ORM\Index(name="date", columns={"date"}),
- *      }
+ *          @ORM\Index(name="date", columns={"date"}),
+ *      },
  *  )
  * @ORM\Entity(
- *      readOnly=true
+ *      readOnly=true,
  *  )
  *
  * @package App\Entity
  */
 class DateDimension implements EntityInterface
 {
-    // Traits
     use Uuid;
 
     /**
@@ -224,7 +223,6 @@ class DateDimension implements EntityInterface
 
     /**
      * @Groups({
-     *      "Default",
      *      "DateDimension",
      *      "DateDimension.unixTime",
      *  })
@@ -329,6 +327,6 @@ class DateDimension implements EntityInterface
     {
         $output = DateTimeImmutable::createFromFormat('U', (string)$this->getUnixTime(), new DateTimeZone('UTC'));
 
-        return $output === false ? new DateTimeImmutable('now', new DateTimeZone('UTC')) : $output;
+        return $output === false ? new DateTimeImmutable(timezone: new DateTimeZone('UTC')) : $output;
     }
 }

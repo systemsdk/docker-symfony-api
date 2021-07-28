@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Form/Type/Console/UserType.php
- */
+
+declare(strict_types=1);
 
 namespace App\Form\Type\Console;
 
@@ -20,6 +18,9 @@ use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Throwable;
 
+use function array_combine;
+use function array_map;
+
 /**
  * Class UserType
  *
@@ -27,7 +28,6 @@ use Throwable;
  */
 class UserType extends AbstractType
 {
-    // Traits
     use AddBasicFieldToForm;
     use UserGroupChoices;
 
@@ -91,20 +91,11 @@ class UserType extends AbstractType
         ],
     ];
 
-    private UserGroupTransformer $userGroupTransformer;
-    private LocalizationService $localization;
-
-    /**
-     * Constructor
-     */
     public function __construct(
-        UserGroupResource $userGroupResource,
-        UserGroupTransformer $userGroupTransformer,
-        LocalizationService $localization
+        private UserGroupResource $userGroupResource,
+        private UserGroupTransformer $userGroupTransformer,
+        private LocalizationService $localization,
     ) {
-        $this->userGroupTransformer = $userGroupTransformer;
-        $this->userGroupResource = $userGroupResource;
-        $this->localization = $localization;
     }
 
     /**

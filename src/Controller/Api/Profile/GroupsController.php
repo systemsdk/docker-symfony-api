@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/Profile/GroupsController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\Profile;
 
@@ -12,7 +10,6 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -25,14 +22,9 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class GroupsController
 {
-    private SerializerInterface $serializer;
-
-    /**
-     * Constructor
-     */
-    public function __construct(SerializerInterface $serializer)
-    {
-        $this->serializer = $serializer;
+    public function __construct(
+        private SerializerInterface $serializer,
+    ) {
     }
 
     /**
@@ -85,11 +77,9 @@ class GroupsController
             $this->serializer->serialize(
                 $loggedInUser->getUserGroups()->toArray(),
                 'json',
-                ['groups' => 'set.UserProfileGroups']
+                ['groups' => UserGroup::SET_USER_PROFILE_GROUPS],
             ),
-            Response::HTTP_OK,
-            [],
-            true
+            json: true,
         );
     }
 }

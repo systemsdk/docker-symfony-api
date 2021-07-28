@@ -1,12 +1,11 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/DTO/UserGroup/UserGroupCreate.php
- */
+
+declare(strict_types=1);
 
 namespace App\DTO\UserGroup;
 
-use App\Entity\Role;
+use App\Entity\Role as RoleEntity;
+use App\Validator\Constraints as AppAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -19,6 +18,7 @@ class UserGroupCreate extends UserGroup
     /**
      * @Assert\NotBlank()
      * @Assert\NotNull()
+     * @AppAssert\EntityReferenceExists(entityClass=RoleEntity::class)
      */
-    protected ?Role $role = null;
+    protected ?RoleEntity $role = null;
 }

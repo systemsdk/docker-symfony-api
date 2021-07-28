@@ -1,8 +1,10 @@
 {
+	"name": "dimadeush/docker-symfony-api-tools",
+	"description": "",
 	"require": {},
 	"require-dev": {
-		"nunomaduro/phpinsights": "1.14.*",
-		"roave/security-advisories": "dev-master"
+		"nunomaduro/phpinsights": "2.0.*",
+		"roave/security-advisories": "dev-latest"
 	},
 	"config": {
 		"platform": {

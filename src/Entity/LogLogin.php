@@ -1,13 +1,11 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Entity/LogLogin.php
- */
+
+declare(strict_types=1);
 
 namespace App\Entity;
 
 use App\Entity\Interfaces\EntityInterface;
-use App\Entity\Traits\LogEntity;
+use App\Entity\Traits\LogEntityTrait;
 use App\Entity\Traits\Uuid;
 use DeviceDetector\DeviceDetector;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,18 +15,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Throwable;
 
+use function implode;
+use function is_array;
+
 /**
  * Class LogLogin
  *
  * @ORM\Table(
  *      name="log_login",
  *      indexes={
- * @ORM\Index(name="user_id", columns={"user_id"}),
- * @ORM\Index(name="date", columns={"date"}),
- *      }
+ *          @ORM\Index(name="user_id", columns={"user_id"}),
+ *          @ORM\Index(name="date", columns={"date"}),
+ *      },
  *  )
  * @ORM\Entity(
- *      readOnly=true
+ *      readOnly=true,
  *  )
  * @ORM\HasLifecycleCallbacks()
  *
@@ -36,8 +37,7 @@ use Throwable;
  */
 class LogLogin implements EntityInterface
 {
-    // Traits
-    use LogEntity;
+    use LogEntityTrait;
     use Uuid;
 
     /**
@@ -69,7 +69,7 @@ class LogLogin implements EntityInterface
      *      inversedBy="logsLogin",
      *  )
      * @ORM\JoinColumns({
-     * @ORM\JoinColumn(
+     *      @ORM\JoinColumn(
      *          name="user_id",
      *          referencedColumnName="id",
      *          onDelete="SET NULL",

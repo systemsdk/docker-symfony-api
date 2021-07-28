@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/UuidHelper.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest;
 
@@ -15,7 +13,6 @@ use Ramsey\Uuid\Rfc4122\FieldsInterface;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidFactory;
 use Ramsey\Uuid\UuidInterface;
-use Throwable;
 
 /**
  * Class UuidHelper
@@ -56,7 +53,7 @@ class UuidHelper
             }
         } catch (InvalidUuidStringException $exception) {
             // ok, so now we know that value isn't uuid
-            (static fn (Throwable $exception): Throwable => $exception)($exception);
+            syslog(LOG_INFO, $exception->getMessage());
         }
 
         return $output;

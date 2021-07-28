@@ -1,12 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/User/ListUsersCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\User;
 
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\Entity\User;
 use App\Entity\UserGroup;
 use App\Resource\UserResource;
@@ -18,6 +16,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
+use function array_map;
+use function implode;
+use function sprintf;
+
 /**
  * Class ListUsersCommand
  *
@@ -25,29 +27,25 @@ use Throwable;
  */
 class ListUsersCommand extends Command
 {
-    // Traits
-    use StyleSymfony;
-
-    private UserResource $userResource;
-    private RolesService $roles;
+    use SymfonyStyleTrait;
 
     /**
      * Constructor
      *
      * @throws LogicException
      */
-    public function __construct(UserResource $userResource, RolesService $roles)
-    {
+    public function __construct(
+        private UserResource $userResource,
+        private RolesService $roles,
+    ) {
         parent::__construct('user:list');
-
-        $this->userResource = $userResource;
-        $this->roles = $roles;
 
         $this->setDescription('Console command to list users');
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     *
      * {@inheritdoc}
      *
      * @throws Throwable
@@ -74,11 +72,11 @@ class ListUsersCommand extends Command
      *
      * @throws Throwable
      *
-     * @return mixed[]
+     * @return array<int, string>
      */
     private function getRows(): array
     {
-        return array_map($this->getFormatterUser(), $this->userResource->find(null, ['username' => 'ASC']));
+        return array_map($this->getFormatterUser(), $this->userResource->find(orderBy: ['username' => 'ASC']));
     }
 
     /**
@@ -89,7 +87,7 @@ class ListUsersCommand extends Command
         $userGroupFormatter = static fn (UserGroup $userGroup): string => sprintf(
             '%s (%s)',
             $userGroup->getName(),
-            $userGroup->getRole()->getId()
+            $userGroup->getRole()->getId(),
         );
 
         return fn (User $user): array => [

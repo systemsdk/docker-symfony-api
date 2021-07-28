@@ -1,20 +1,22 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Service/LocalizationService.php
- */
+
+declare(strict_types=1);
 
 namespace App\Service;
 
 use App\Doctrine\DBAL\Types\EnumLanguageType;
 use App\Doctrine\DBAL\Types\EnumLocaleType;
 use Closure;
-use DateTime;
+use DateTimeImmutable;
 use DateTimeZone;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Throwable;
+
+use function explode;
+use function floor;
+use function str_replace;
 
 /**
  * Class LocalizationService
@@ -27,16 +29,10 @@ class LocalizationService
     public const DEFAULT_LOCALE = EnumLocaleType::LOCALE_EN;
     public const DEFAULT_TIMEZONE = 'Europe/Kiev';
 
-    private CacheInterface $cache;
-    private LoggerInterface $logger;
-
-    /**
-     * Constructor
-     */
-    public function __construct(CacheInterface $appCache, LoggerInterface $logger)
-    {
-        $this->cache = $appCache;
-        $this->logger = $logger;
+    public function __construct(
+        private CacheInterface $appCache,
+        private LoggerInterface $logger,
+    ) {
     }
 
     /**
@@ -66,7 +62,7 @@ class LocalizationService
 
         try {
             /** @noinspection PhpUnhandledExceptionInspection */
-            $output = $this->cache->get('application_timezone', $this->getClosure());
+            $output = $this->appCache->get('application_timezone', $this->getClosure());
         } catch (Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
@@ -83,11 +79,13 @@ class LocalizationService
     {
         $output = [];
 
-        foreach ((array)DateTimeZone::listIdentifiers() as $identifier) {
+        $identifiers = DateTimeZone::listIdentifiers();
+
+        foreach ($identifiers as $identifier) {
             $dateTimeZone = new DateTimeZone($identifier);
 
             /** @noinspection PhpUnhandledExceptionInspection */
-            $dateTime = new DateTime('now', $dateTimeZone);
+            $dateTime = new DateTimeImmutable(timezone: $dateTimeZone);
 
             $hours = floor($dateTimeZone->getOffset($dateTime) / 3600);
             $minutes = floor(($dateTimeZone->getOffset($dateTime) - ($hours * 3600)) / 60);

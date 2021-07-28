@@ -1,12 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/User/CreateRolesCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\User;
 
-use App\Command\Traits\StyleSymfony;
+use App\Command\Traits\SymfonyStyleTrait;
 use App\Entity\Role;
 use App\Repository\RoleRepository;
 use App\Security\RolesService;
@@ -17,6 +15,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
+use function array_map;
+use function array_sum;
+use function sprintf;
+
 /**
  * Class CreateRolesCommand
  *
@@ -24,12 +26,7 @@ use Throwable;
  */
 class CreateRolesCommand extends Command
 {
-    // Traits
-    use StyleSymfony;
-
-    private EntityManagerInterface $entityManager;
-    private RoleRepository $roleRepository;
-    private RolesService $rolesService;
+    use SymfonyStyleTrait;
 
     /**
      * Constructor
@@ -37,21 +34,21 @@ class CreateRolesCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
-        RoleRepository $roleRepository,
-        RolesService $rolesService
+        private EntityManagerInterface $entityManager,
+        private RoleRepository $roleRepository,
+        private RolesService $rolesService,
     ) {
         parent::__construct('user:create-roles');
-
-        $this->entityManager = $entityManager;
-        $this->roleRepository = $roleRepository;
-        $this->rolesService = $rolesService;
 
         $this->setDescription('Console command to create roles to database');
     }
 
     /**
      * @noinspection PhpMissingParentCallCommonInspection
+     *
+     * {@inheritdoc}
+     *
+     * @throws Throwable
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -59,8 +56,8 @@ class CreateRolesCommand extends Command
         $created = array_sum(
             array_map(
                 fn (string $role): int => $this->createRole($role),
-                $this->rolesService->getRoles()
-            )
+                $this->rolesService->getRoles(),
+            ),
         );
         $this->entityManager->flush();
         $removed = $this->clearRoles($this->rolesService->getRoles());
@@ -69,7 +66,7 @@ class CreateRolesCommand extends Command
             $message = sprintf(
                 'Created total of %d role(s) and removed %d role(s) - have a nice day',
                 $created,
-                $removed
+                $removed,
             );
             $io->success($message);
         }

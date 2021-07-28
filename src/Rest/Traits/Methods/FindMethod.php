@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Methods/FindMethod.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Methods;
 
@@ -30,7 +28,7 @@ trait FindMethod
      */
     public function findMethod(Request $request, ?array $allowedHttpMethods = null): Response
     {
-        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? ['GET']);
+        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? [Request::METHOD_GET]);
         // Determine used parameters
         $orderBy = RequestHandler::getOrderBy($request);
         $limit = RequestHandler::getLimit($request);

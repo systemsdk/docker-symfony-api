@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Interfaces/ControllerInterface.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Interfaces;
 
@@ -44,10 +42,6 @@ interface ControllerInterface
 
     /**
      * Setter method for `ResponseHandler` service, this is called by Symfony DI.
-     *
-     * @see https://symfony.com/doc/current/service_container/autowiring.html#autowiring-other-methods-e-g-setters
-     *
-     * @required
      */
     public function setResponseHandler(ResponseHandler $responseHandler): self;
 
@@ -70,8 +64,6 @@ interface ControllerInterface
 
     /**
      * Method to handle possible REST method trait exception.
-     *
-     * @throws Throwable
      */
     public function handleRestMethodException(Throwable $exception, ?string $id = null): Throwable;
 

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/RequestHandler.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest;
 
@@ -13,7 +11,20 @@ use LogicException;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Throwable;
+
+use function abs;
+use function array_filter;
+use function array_key_exists;
+use function array_unique;
+use function array_values;
+use function array_walk;
+use function explode;
+use function in_array;
+use function is_array;
+use function is_string;
+use function mb_strtoupper;
+use function mb_substr;
+use function strncmp;
 
 /**
  * Class RequestHandler
@@ -40,20 +51,20 @@ final class RequestHandler
      *
      * @throws HttpException
      *
-     * @return array<string, string|array<string|int, string|int>>
+     * @return array<string, mixed>
      */
     public static function getCriteria(HttpFoundationRequest $request): array
     {
         try {
             $where = array_filter(
                 (array)JSON::decode((string)$request->get('where', '{}'), true),
-                static fn ($value): bool => $value !== null
+                static fn ($value): bool => $value !== null,
             );
         } catch (JsonException $error) {
             throw new HttpException(
                 HttpFoundationResponse::HTTP_BAD_REQUEST,
                 'Current \'where\' parameter is not valid JSON.',
-                $error
+                $error,
             );
         }
 
@@ -103,7 +114,7 @@ final class RequestHandler
     {
         $limit = $request->get('limit');
 
-        return $limit !== null ? (int)abs($limit) : null;
+        return $limit !== null ? (int)abs((float)$limit) : null;
     }
 
     /**
@@ -116,7 +127,7 @@ final class RequestHandler
     {
         $offset = $request->get('offset');
 
-        return $offset !== null ? (int)abs($offset) : null;
+        return $offset !== null ? (int)abs((float)$offset) : null;
     }
 
     /**
@@ -146,7 +157,7 @@ final class RequestHandler
      *
      * @throws HttpException
      *
-     * @return array<string|int, array<int, string>|string>
+     * @return array<int|string, array<int, string>>
      */
     private static function getSearchTermCriteria(string $search): array
     {
@@ -169,7 +180,7 @@ final class RequestHandler
      *
      * @throws HttpException
      *
-     * @return array<int, array<int, string>|string>|null
+     * @return array<int|string, array<int, string>>|null
      */
     private static function determineSearchTerms(string $search): ?array
     {
@@ -177,9 +188,7 @@ final class RequestHandler
             $searchTerms = JSON::decode($search, true);
 
             self::checkSearchTerms($searchTerms);
-        } catch (JsonException | LogicException $exception) {
-            (static fn (Throwable $exception): string => (string)$exception)($exception);
-
+        } catch (JsonException | LogicException) {
             $searchTerms = null;
         }
 
@@ -187,12 +196,10 @@ final class RequestHandler
     }
 
     /**
-     * @param mixed $searchTerms
-     *
      * @throws LogicException
      * @throws HttpException
      */
-    private static function checkSearchTerms($searchTerms): void
+    private static function checkSearchTerms(mixed $searchTerms): void
     {
         if (!is_array($searchTerms)) {
             throw new LogicException('Search term is not an array, fallback to string handling');
@@ -210,9 +217,9 @@ final class RequestHandler
      * Method to normalize specified search terms. Within this we will just filter out any "empty" values and return
      * unique terms after that.
      *
-     * @param array<int, array<int, string>|string> $searchTerms
+     * @param array<int|string, array<int, string>> $searchTerms
      *
-     * @return array<int, array<int, string>|string>
+     * @return array<int|string, array<int, string>>
      */
     private static function normalizeSearchTerms(array $searchTerms): array
     {
@@ -224,12 +231,10 @@ final class RequestHandler
 
     /**
      * @param array<string, string> $output
-     *
-     * @psalm-suppress MissingClosureParamType
      */
     private static function getIterator(array &$output): Closure
     {
-        return static function (string $value, $key) use (&$output): void {
+        return static function (string $value, string | int $key) use (&$output): void {
             $order = in_array(mb_strtoupper($value), ['ASC', 'DESC'], true) ? mb_strtoupper($value) : 'ASC';
             $column = is_string($key) ? $key : $value;
 

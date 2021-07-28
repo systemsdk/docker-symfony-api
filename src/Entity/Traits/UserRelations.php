@@ -1,14 +1,13 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Entity/Traits/UserRelations.php
- */
+
+declare(strict_types=1);
 
 namespace App\Entity\Traits;
 
 use App\Entity\LogLogin;
 use App\Entity\LogLoginFailure;
 use App\Entity\LogRequest;
+use App\Entity\User;
 use App\Entity\UserGroup;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -27,8 +26,6 @@ trait UserRelations
      *
      * @Groups({
      *      "User.userGroups",
-     *
-     *      "set.UserProfile",
      *  })
      *
      * @ORM\ManyToMany(
@@ -36,10 +33,10 @@ trait UserRelations
      *      inversedBy="users",
      *  )
      * @ORM\JoinTable(
-     *      name="user_has_user_group"
+     *      name="user_has_user_group",
      *  )
      */
-    protected Collection $userGroups;
+    protected Collection | ArrayCollection $userGroups;
 
     /**
      * @var Collection<int, LogRequest>|ArrayCollection<int, LogRequest>
@@ -53,7 +50,7 @@ trait UserRelations
      *      mappedBy="user",
      *  )
      */
-    protected Collection $logsRequest;
+    protected Collection | ArrayCollection $logsRequest;
 
     /**
      * @var Collection<int, LogLogin>|ArrayCollection<int, LogLogin>
@@ -67,7 +64,7 @@ trait UserRelations
      *      mappedBy="user",
      *  )
      */
-    protected Collection $logsLogin;
+    protected Collection | ArrayCollection $logsLogin;
 
     /**
      * @var Collection<int, LogLoginFailure>|ArrayCollection<int, LogLoginFailure>
@@ -81,7 +78,7 @@ trait UserRelations
      *      mappedBy="user",
      *  )
      */
-    protected Collection $logsLoginFailure;
+    protected Collection | ArrayCollection $logsLoginFailure;
 
     /**
      * Getter for roles.
@@ -92,13 +89,13 @@ trait UserRelations
      * If you want to get user inherited roles you need to implement that
      * logic by yourself OR use eg. `/user/{uuid}/roles` API endpoint.
      *
+     * @return string[]
+     *
      * @Groups({
      *      "User.roles",
      *
-     *      "set.UserProfile",
+     *      User::SET_USER_PROFILE,
      *  })
-     *
-     * @return string[]
      */
     public function getRoles(): array
     {
@@ -112,7 +109,7 @@ trait UserRelations
      *
      * @return Collection<int, UserGroup>|ArrayCollection<int, UserGroup>
      */
-    public function getUserGroups(): Collection
+    public function getUserGroups(): Collection | ArrayCollection
     {
         return $this->userGroups;
     }
@@ -122,7 +119,7 @@ trait UserRelations
      *
      * @return Collection<int, LogRequest>|ArrayCollection<int, LogRequest>
      */
-    public function getLogsRequest()
+    public function getLogsRequest(): Collection | ArrayCollection
     {
         return $this->logsRequest;
     }
@@ -132,7 +129,7 @@ trait UserRelations
      *
      * @return Collection<int, LogLogin>|ArrayCollection<int, LogLogin>
      */
-    public function getLogsLogin()
+    public function getLogsLogin(): Collection | ArrayCollection
     {
         return $this->logsLogin;
     }
@@ -142,7 +139,7 @@ trait UserRelations
      *
      * @return Collection<int, LogLoginFailure>|ArrayCollection<int, LogLoginFailure>
      */
-    public function getLogsLoginFailure()
+    public function getLogsLoginFailure(): Collection | ArrayCollection
     {
         return $this->logsLoginFailure;
     }

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Entity/Traits/LogRequestProcessRequest.php
- */
+
+declare(strict_types=1);
 
 namespace App\Entity\Traits;
 
@@ -12,16 +10,26 @@ use JsonException;
 use LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Throwable;
+
+use function array_key_exists;
+use function array_map;
+use function array_walk;
+use function basename;
+use function explode;
+use function is_array;
+use function mb_strtolower;
+use function parse_str;
+use function preg_replace;
+use function strpos;
 
 /**
- * Trait LogRequestProcessRequest
+ * Trait LogRequestProcessRequestTrait
  *
  * @package App\Entity\Traits
  *
  * @method array getSensitiveProperties();
  */
-trait LogRequestProcessRequest
+trait LogRequestProcessRequestTrait
 {
     private string $replaceValue = '*** REPLACED ***';
 
@@ -272,7 +280,7 @@ trait LogRequestProcessRequest
     }
 
     /**
-     * @return mixed[]
+     * @return array<string, string>
      */
     public function getHeaders(): array
     {
@@ -280,7 +288,7 @@ trait LogRequestProcessRequest
     }
 
     /**
-     * @return mixed[]
+     * @return array<string, string>
      */
     public function getParameters(): array
     {
@@ -347,24 +355,14 @@ trait LogRequestProcessRequest
         // Clean possible sensitive data from parameters
         array_walk(
             $rawHeaders,
-            /**
-             * @param mixed $value
-             */
-            function (&$value, string $key): void {
-                $this->cleanParameters($value, $key);
-            }
+            fn (mixed &$value, string $key) => $this->cleanParameters($value, $key),
         );
         $this->headers = $rawHeaders;
         $rawParameters = $this->determineParameters($request);
         // Clean possible sensitive data from parameters
         array_walk(
             $rawParameters,
-            /**
-             * @param mixed $value
-             */
-            function (&$value, string $key): void {
-                $this->cleanParameters($value, $key);
-            }
+            fn (mixed &$value, string $key) => $this->cleanParameters($value, $key),
         );
 
         $this->parameters = $rawParameters;
@@ -396,7 +394,7 @@ trait LogRequestProcessRequest
     /**
      * Getter method to convert current request parameters to array.
      *
-     * @return mixed[]
+     * @return array<mixed>
      *
      * @throws LogicException
      */
@@ -412,9 +410,7 @@ trait LogRequestProcessRequest
             try {
                 /** @var array<string, mixed> $output */
                 $output = JSON::decode($rawContent, true);
-            } catch (JsonException $error) {
-                (static fn (Throwable $error): Throwable => $error)($error);
-
+            } catch (JsonException) {
                 // Oh noes content isn't JSON so just parse it
                 $output = [];
 
@@ -427,10 +423,8 @@ trait LogRequestProcessRequest
 
     /**
      * Helper method to clean parameters / header array of any sensitive data.
-     *
-     * @param mixed $value
      */
-    private function cleanParameters(&$value, string $key): void
+    private function cleanParameters(mixed &$value, string $key): void
     {
         // What keys we should replace so that any sensitive data is not logged
         $replacements = array_fill_keys($this->sensitiveProperties, $this->replaceValue);
@@ -446,12 +440,7 @@ trait LogRequestProcessRequest
         if (is_array($value)) {
             array_walk(
                 $value,
-                /**
-                 * @param mixed $value
-                 */
-                function (&$value, string $key): void {
-                    $this->cleanParameters($value, $key);
-                }
+                fn (mixed &$value, string $key) => $this->cleanParameters($value, $key),
             );
         }
     }

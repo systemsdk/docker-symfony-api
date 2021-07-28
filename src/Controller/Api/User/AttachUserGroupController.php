@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/User/AttachUserGroupController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\User;
 
@@ -28,16 +26,10 @@ use Throwable;
  */
 class AttachUserGroupController
 {
-    private SerializerInterface $serializer;
-    private UserResource $userResource;
-
-    /**
-     * Constructor
-     */
-    public function __construct(SerializerInterface $serializer, UserResource $userResource)
-    {
-        $this->serializer = $serializer;
-        $this->userResource = $userResource;
+    public function __construct(
+        private SerializerInterface $serializer,
+        private UserResource $userResource,
+    ) {
     }
 
     /**
@@ -64,24 +56,24 @@ class AttachUserGroupController
      * @Security("is_granted('ROLE_ROOT')")
      *
      * @OA\Parameter(
-     *      name="user",
+     *      name="userId",
      *      in="path",
      *      required=true,
      *      description="User GUID",
      *      @OA\Schema(
      *          type="string",
      *          default="User GUID",
-     *      )
+     *      ),
      *  )
      * @OA\Parameter(
-     *      name="userGroup",
+     *      name="userGroupId",
      *      in="path",
      *      required=true,
      *      description="User Group GUID",
      *      @OA\Schema(
      *          type="string",
      *          default="User Group GUID",
-     *      )
+     *      ),
      *  )
      * @OA\Response(
      *      response=200,
@@ -90,7 +82,7 @@ class AttachUserGroupController
      *          type="array",
      *          @OA\Items(
      *              ref=@Model(
-     *                  type=App\Entity\UserGroup::class,
+     *                  type=\App\Entity\UserGroup::class,
      *                  groups={"UserGroup", "UserGroup.role"},
      *              ),
      *          ),
@@ -103,7 +95,7 @@ class AttachUserGroupController
      *          type="array",
      *          @OA\Items(
      *              ref=@Model(
-     *                  type=App\Entity\UserGroup::class,
+     *                  type=\App\Entity\UserGroup::class,
      *                  groups={"UserGroup", "UserGroup.role"},
      *              ),
      *          ),
@@ -138,15 +130,14 @@ class AttachUserGroupController
         $this->userResource->save($user->addUserGroup($userGroup));
         $groups = [
             'groups' => [
-                'set.UserGroupBasic',
+                UserGroup::SET_USER_GROUP_BASIC,
             ],
         ];
 
         return new JsonResponse(
             $this->serializer->serialize($user->getUserGroups()->getValues(), 'json', $groups),
             $status,
-            [],
-            true
+            json: true
         );
     }
 }

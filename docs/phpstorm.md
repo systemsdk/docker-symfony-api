@@ -6,7 +6,7 @@ This document describing how you can configure your IDE [PhpStorm](https://www.j
 * Go to `Settings -> Plugins` and install next plugins:
     - .env files support
     - .ignore
-    - Elasticsearch Plugin ([download](https://plugins.jetbrains.com/plugin/download?rel=true&updateId=108584) free version 0.7.2 but don't update it in order to use for free)
+    - Elasticsearch Plugin
     - Makefile support
     - Php Annotations
     - Php Inspections ​(EA Extended)
@@ -66,7 +66,7 @@ Note: In order to use it - right click on the necessary file/folder in PhpStorm 
 
 ![Path mappings](images/phpstorm_13.png)
 
-Note: Arguments value should be `exec-bash cmd="./vendor/bin/phpcs --version && ./vendor/bin/phpcs --standard=PSR2 --colors -p $FilePathRelativeToProjectRoot$"`.
+Note: Arguments value should be `exec-bash cmd="./vendor/bin/phpcs --version && ./vendor/bin/phpcs --standard=PSR12 --colors -p $FilePathRelativeToProjectRoot$"`.
 
 Note: In order to use it - right click on the necessary file/folder in PhpStorm and select context menu `External Tools -> phpcs`.
 

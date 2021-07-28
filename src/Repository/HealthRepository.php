@@ -1,16 +1,16 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Repository/HealthRepository.php
- */
+
+declare(strict_types=1);
 
 namespace App\Repository;
 
 use App\Entity\Health as Entity;
 use DateInterval;
-use DateTime;
+use DateTimeImmutable;
 use DateTimeZone;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Throwable;
 
@@ -19,20 +19,27 @@ use Throwable;
  *
  * @package App\Repository
  *
+ * @psalm-suppress LessSpecificImplementedReturnType
  * @codingStandardsIgnoreStart
  *
- * @method Entity|null find(string $id, ?int $lockMode = null, ?int $lockVersion = null): ?Entity
- * @method array<int, Entity> findAdvanced(string $id, $hydrationMode = null)
- * @method Entity|null findOneBy(array $criteria, ?array $orderBy = null): ?Entity
- * @method array<int, Entity> findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null): array
- * @method array<int, Entity> findByAdvanced(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null, ?array $search = null): array
- * @method array<int, Entity> findAll(): array
+ * @method Entity|null find(string $id, ?int $lockMode = null, ?int $lockVersion = null)
+ * @method Entity|null findAdvanced(string $id, string | int | null $hydrationMode = null)
+ * @method Entity|null findOneBy(array $criteria, ?array $orderBy = null)
+ * @method Entity[] findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null)
+ * @method Entity[] findByAdvanced(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null, ?array $search = null)
+ * @method Entity[] findAll()
  *
  * @codingStandardsIgnoreEnd
  */
 class HealthRepository extends BaseRepository
 {
     protected static string $entityName = Entity::class;
+
+    public function __construct(
+        protected ManagerRegistry $managerRegistry,
+        private int $databaseHealthHistoryDays,
+    ) {
+    }
 
     /**
      * Method to read value from database
@@ -74,14 +81,14 @@ class HealthRepository extends BaseRepository
     public function cleanup(): int
     {
         // Determine date
-        $date = new DateTime('NOW', new DateTimeZone('UTC'));
-        $date->sub(new DateInterval('P' . (int)$_ENV['DATABASE_HEALTH_HISTORY_DAYS'] . 'D'));
+        $date = (new DateTimeImmutable('NOW', new DateTimeZone('UTC')))
+            ->sub(new DateInterval('P' . $this->databaseHealthHistoryDays . 'D'));
         // Create query builder
         $queryBuilder = $this
             ->createQueryBuilder('h')
             ->delete()
             ->where('h.timestamp < :timestamp')
-            ->setParameter('timestamp', $date);
+            ->setParameter('timestamp', $date, Types::DATETIME_IMMUTABLE);
 
         // Return deleted row count
         return (int)$queryBuilder->getQuery()->execute();

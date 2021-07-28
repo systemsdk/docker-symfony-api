@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Methods/CreateMethod.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Methods;
 
@@ -31,9 +29,9 @@ trait CreateMethod
     public function createMethod(
         Request $request,
         RestDtoInterface $restDto,
-        ?array $allowedHttpMethods = null
+        ?array $allowedHttpMethods = null,
     ): Response {
-        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? ['POST']);
+        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? [Request::METHOD_POST]);
 
         try {
             $data = $resource->create($restDto, true);

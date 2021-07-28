@@ -1,14 +1,15 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Security/ApiKeyUser.php
- */
+
+declare(strict_types=1);
 
 namespace App\Security;
 
 use App\Entity\ApiKey;
 use App\Security\Interfaces\ApiKeyUserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+
+use function array_merge;
+use function array_unique;
 
 /**
  * Class ApiKeyUser

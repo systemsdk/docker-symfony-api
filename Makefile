@@ -200,7 +200,7 @@ report-code-coverage: ## update code coverage on coveralls.io. Note: COVERALLS_R
 
 ###> phpcs ###
 phpcs: ## Run PHP CodeSniffer
-	@make exec-bash cmd="./vendor/bin/phpcs --version && ./vendor/bin/phpcs --standard=PSR2 --colors -p src tests"
+	@make exec-bash cmd="./vendor/bin/phpcs --version && ./vendor/bin/phpcs --standard=PSR12 --colors -p src tests"
 ###< phpcs ###
 
 ###> ecs ###
@@ -233,7 +233,7 @@ phpcpd:
 
 ###> php mess detector ###
 phpmd:
-	@make exec cmd="php ./vendor/bin/phpmd src text phpmd_ruleset.xml --suffixes php --exclude *src/Migrations/*"
+	@make exec cmd="php ./vendor/bin/phpmd src text phpmd_ruleset.xml --suffixes php"
 ###< php mess detector ###
 
 ###> PHPStan static analysis tool ###

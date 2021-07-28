@@ -1,14 +1,11 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/Role/RoleController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\Role;
 
 use App\Entity\Role;
 use App\Security\RolesService;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -24,14 +21,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class InheritedRolesController
 {
-    private RolesService $rolesService;
-
-    /**
-     * Constructor
-     */
-    public function __construct(RolesService $rolesService)
-    {
-        $this->rolesService = $rolesService;
+    public function __construct(
+        private RolesService $rolesService,
+    ) {
     }
 
     /**
@@ -57,12 +49,7 @@ class InheritedRolesController
      *     description="Inherited roles",
      *     @OA\JsonContent(
      *         type="array",
-     *         @OA\Items(
-     *             ref=@Model(
-     *                 type=Role::class,
-     *                 groups={"Role"},
-     *             ),
-     *         ),
+     *         @OA\Items(type="string"),
      *     ),
      * )
      * @OA\Response(

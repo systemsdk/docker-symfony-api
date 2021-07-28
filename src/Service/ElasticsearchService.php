@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Service/ElasticsearchService.php
- */
+
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -22,19 +20,16 @@ class ElasticsearchService implements ElasticsearchServiceInterface
     public const INDEX_DATE_FORMAT = 'Y_m_d';
     public const TEMPLATE_NAME = 'template_1';
 
-    private string $host;
-    private string $username;
-    private string $password;
     private Client $client;
 
     /**
      * Constructor
      */
-    public function __construct(string $host, string $username, string $password)
-    {
-        $this->host = $host;
-        $this->username = $username;
-        $this->password = $password;
+    public function __construct(
+        private string $host,
+        private string $username,
+        private string $password,
+    ) {
         $this->instantiate();
     }
 

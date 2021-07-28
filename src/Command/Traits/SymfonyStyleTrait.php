@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/Traits/StyleSymfony.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\Traits;
 
@@ -11,11 +9,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Trait StyleSymfony
+ * Trait SymfonyStyleTrait
  *
  * @package App\Command\Traits
  */
-trait StyleSymfony
+trait SymfonyStyleTrait
 {
     /**
      * Method to get SymfonyStyle object for console commands.
@@ -23,7 +21,7 @@ trait StyleSymfony
     protected function getSymfonyStyle(
         InputInterface $input,
         OutputInterface $output,
-        ?bool $clearScreen = null
+        ?bool $clearScreen = null,
     ): SymfonyStyle {
         $clearScreen ??= true;
         $io = new SymfonyStyle($input, $output);

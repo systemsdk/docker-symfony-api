@@ -1,16 +1,16 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/EventSubscriber/LocaleSubscriber.php
- */
+
+declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
+use function in_array;
+
 /**
- * Class LocaleSubscriber
+ * Class AcceptLanguageSubscriber
  *
  * @package App\EventSubscriber
  */
@@ -25,14 +25,9 @@ class AcceptLanguageSubscriber implements EventSubscriberInterface
         self::LOCALE_RU,
     ];
 
-    private string $defaultLocale;
-
-    /**
-     * Constructor
-     */
-    public function __construct(string $locale)
-    {
-        $this->defaultLocale = $locale;
+    public function __construct(
+        private string $locale,
+    ) {
     }
 
     /**
@@ -57,11 +52,11 @@ class AcceptLanguageSubscriber implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-        $locale = $request->headers->get('Accept-Language', $this->defaultLocale);
+        $locale = $request->headers->get('Accept-Language', $this->locale);
 
         // Ensure that given locale is supported, if not fallback to default.
         if (!in_array($locale, self::SUPPORTED_LOCALES, true)) {
-            $locale = $this->defaultLocale;
+            $locale = $this->locale;
         }
 
         $request->setLocale($locale);

@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/VersionController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api;
 
@@ -21,14 +19,9 @@ use Throwable;
  */
 class VersionController
 {
-    private VersionService $versionService;
-
-    /**
-     * Constructor
-     */
-    public function __construct(VersionService $versionService)
-    {
-        $this->versionService = $versionService;
+    public function __construct(
+        private VersionService $versionService,
+    ) {
     }
 
     /**

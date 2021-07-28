@@ -1,14 +1,18 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Doctrine/DBAL/Types/EnumType.php
- */
+
+declare(strict_types=1);
 
 namespace App\Doctrine\DBAL\Types;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use InvalidArgumentException;
+
+use function array_map;
+use function implode;
+use function in_array;
+use function is_string;
+use function sprintf;
 
 /**
  * Class EnumType
@@ -24,6 +28,9 @@ abstract class EnumType extends Type
      */
     protected static array $values = [];
 
+    /**
+     * @return array<int, string>
+     */
     public static function getValues(): array
     {
         return static::$values;

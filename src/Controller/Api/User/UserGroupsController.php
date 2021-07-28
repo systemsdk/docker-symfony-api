@@ -1,18 +1,16 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/User/UserGroupsController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\User;
 
 use App\Entity\User;
+use App\Entity\UserGroup;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -25,14 +23,9 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class UserGroupsController
 {
-    private SerializerInterface $serializer;
-
-    /**
-     * Constructor
-     */
-    public function __construct(SerializerInterface $serializer)
-    {
-        $this->serializer = $serializer;
+    public function __construct(
+        private SerializerInterface $serializer,
+    ) {
     }
 
     /**
@@ -60,7 +53,7 @@ class UserGroupsController
      *         type="array",
      *         @OA\Items(
      *             ref=@Model(
-     *                 type=App\Entity\UserGroup::class,
+     *                 type=\App\Entity\UserGroup::class,
      *                 groups={"UserGroup", "UserGroup.role"},
      *             ),
      *         ),
@@ -91,15 +84,13 @@ class UserGroupsController
     {
         $groups = [
             'groups' => [
-                'set.UserGroupBasic',
+                UserGroup::SET_USER_GROUP_BASIC,
             ],
         ];
 
         return new JsonResponse(
             $this->serializer->serialize($requestUser->getUserGroups()->getValues(), 'json', $groups),
-            Response::HTTP_OK,
-            [],
-            true
+            json: true
         );
     }
 }

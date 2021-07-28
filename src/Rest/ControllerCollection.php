@@ -1,18 +1,17 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/ControllerCollection.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest;
 
-use App\Collection\Traits\Collection;
+use App\Collection\Traits\CollectionTrait;
 use App\Rest\Interfaces\ControllerInterface;
 use Closure;
 use Countable;
-use InvalidArgumentException;
 use IteratorAggregate;
 use Psr\Log\LoggerInterface;
+
+use function sprintf;
 
 /**
  * Class ControllerCollection
@@ -22,35 +21,29 @@ use Psr\Log\LoggerInterface;
  * @property IteratorAggregate|IteratorAggregate<int, ControllerInterface> $items
  *
  * @method ControllerInterface get(string $className)
- * @method IteratorAggregate<int, ControllerInterface> getAll(): IteratorAggregate
+ * @method IteratorAggregate<int, ControllerInterface> getAll()
  */
 class ControllerCollection implements Countable
 {
-    // Traits
-    use Collection;
+    use CollectionTrait;
 
     /**
      * Constructor
      *
-     * @param IteratorAggregate<int, ControllerInterface> $controllers
+     * @param IteratorAggregate<int, ControllerInterface> $items
      */
-    public function __construct(IteratorAggregate $controllers, LoggerInterface $logger)
-    {
-        $this->items = $controllers;
-        $this->logger = $logger;
+    public function __construct(
+        private IteratorAggregate $items,
+        private LoggerInterface $logger,
+    ) {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function error(string $className): void
+    public function getErrorMessage(string $className): string
     {
-        $message = sprintf(
-            'REST controller \'%s\' does not exist',
-            $className
-        );
-
-        throw new InvalidArgumentException($message);
+        return sprintf('REST controller \'%s\' does not exist', $className);
     }
 
     /**

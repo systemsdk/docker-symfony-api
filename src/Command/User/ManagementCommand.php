@@ -1,12 +1,10 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Command/User/ManagementCommand.php
- */
+
+declare(strict_types=1);
 
 namespace App\Command\User;
 
-use App\Command\Traits\ExecuteMultipleCommand;
+use App\Command\Traits\ExecuteMultipleCommandTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 
@@ -17,15 +15,12 @@ use Symfony\Component\Console\Exception\LogicException;
  */
 class ManagementCommand extends Command
 {
-    // Traits
-    use ExecuteMultipleCommand;
+    use ExecuteMultipleCommandTrait;
 
     /**
      * Constructor
      *
      * @throws LogicException
-     *
-     * @psalm-suppress InvalidScalarArgument
      */
     public function __construct()
     {
@@ -41,7 +36,7 @@ class ManagementCommand extends Command
             'user:edit-group' => 'Edit user group',
             'user:remove' => 'Remove user',
             'user:remove-group' => 'Remove user group',
-            false => 'Exit',
+            '0' => 'Exit',
         ]);
     }
 }

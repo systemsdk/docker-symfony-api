@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Rest/Traits/Methods/DeleteMethod.php
- */
+
+declare(strict_types=1);
 
 namespace App\Rest\Traits\Methods;
 
@@ -29,7 +27,7 @@ trait DeleteMethod
      */
     public function deleteMethod(Request $request, string $id, ?array $allowedHttpMethods = null): Response
     {
-        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? ['DELETE']);
+        $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? [Request::METHOD_DELETE]);
 
         try {
             // Fetch data from database

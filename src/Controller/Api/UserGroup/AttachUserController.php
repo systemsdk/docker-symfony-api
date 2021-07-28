@@ -1,8 +1,6 @@
 <?php
-declare(strict_types = 1);
-/**
- * /src/Controller/Api/UserGroup/AttachUserController.php
- */
+
+declare(strict_types=1);
 
 namespace App\Controller\Api\UserGroup;
 
@@ -28,16 +26,10 @@ use Throwable;
  */
 class AttachUserController
 {
-    private UserGroupResource $userGroupResource;
-    private SerializerInterface $serializer;
-
-    /**
-     * Constructor
-     */
-    public function __construct(UserGroupResource $userGroupResource, SerializerInterface $serializer)
-    {
-        $this->userGroupResource = $userGroupResource;
-        $this->serializer = $serializer;
+    public function __construct(
+        private UserGroupResource $userGroupResource,
+        private SerializerInterface $serializer,
+    ) {
     }
 
     /**
@@ -64,7 +56,7 @@ class AttachUserController
      * @Security("is_granted('ROLE_ROOT')")
      *
      * @OA\Parameter(
-     *     name="userGroup",
+     *     name="userGroupId",
      *     in="path",
      *     required=true,
      *     description="User Group GUID",
@@ -74,7 +66,7 @@ class AttachUserController
      *     )
      * )
      * @OA\Parameter(
-     *     name="user",
+     *     name="userId",
      *     in="path",
      *     required=true,
      *     description="User GUID",
@@ -90,7 +82,7 @@ class AttachUserController
      *         type="array",
      *         @OA\Items(
      *             ref=@Model(
-     *                 type=App\Entity\User::class,
+     *                 type=\App\Entity\User::class,
      *                 groups={"User"},
      *             ),
      *         ),
@@ -103,7 +95,7 @@ class AttachUserController
      *         type="array",
      *         @OA\Items(
      *             ref=@Model(
-     *                 type=App\Entity\User::class,
+     *                 type=\App\Entity\User::class,
      *                 groups={"User"},
      *             ),
      *         ),
@@ -138,15 +130,14 @@ class AttachUserController
         $this->userGroupResource->save($userGroup->addUser($user));
         $groups = [
             'groups' => [
-                'set.UserBasic',
+                User::SET_USER_BASIC,
             ],
         ];
 
         return new JsonResponse(
             $this->serializer->serialize($userGroup->getUsers()->getValues(), 'json', $groups),
             $status,
-            [],
-            true
+            json: true,
         );
     }
 }
