@@ -18,9 +18,6 @@ trait ApiKeyUserManagementHelperTrait
 {
     use GetApplicationTrait;
 
-    /**
-     * Getter for RolesService
-     */
     abstract public function getRolesService(): RolesService;
 
     /**

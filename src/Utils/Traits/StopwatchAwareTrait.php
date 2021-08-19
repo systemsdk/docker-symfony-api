@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Utils\Traits;
 
 use Symfony\Component\Stopwatch\Stopwatch;
+use Symfony\Contracts\Service\Attribute\Required;
 
 /**
  * Trait StopwatchAwareTrait
@@ -18,11 +19,7 @@ trait StopwatchAwareTrait
 {
     protected ?Stopwatch $stopwatch;
 
-    /**
-     * @see https://symfony.com/doc/current/service_container/autowiring.html#autowiring-other-methods-e-g-setters
-     *
-     * @required
-     */
+    #[Required]
     public function setStopwatch(Stopwatch $stopwatch): self
     {
         $this->stopwatch = $stopwatch;

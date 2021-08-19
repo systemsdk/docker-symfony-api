@@ -11,8 +11,6 @@ use Lexik\Bundle\JWTAuthenticationBundle\Exception\MissingTokenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Throwable;
 
 /**
@@ -21,7 +19,7 @@ use Throwable;
  * Example how to use this within your controller;
  *
  *  #[Route(path: 'some-path')]
- *  #[Security('is_granted("IS_AUTHENTICATED_FULLY")')]
+ *  #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
  *  public function someMethod(\App\Entity\User $loggedInUser): Response
  *  {
  *      ...
@@ -35,7 +33,6 @@ use Throwable;
 class LoggedInUserValueResolver implements ArgumentValueResolverInterface
 {
     public function __construct(
-        private TokenStorageInterface $tokenStorage,
         private UserTypeIdentification $userService,
     ) {
     }
@@ -46,14 +43,9 @@ class LoggedInUserValueResolver implements ArgumentValueResolverInterface
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
         $output = false;
-        $token = $this->tokenStorage->getToken();
 
         // only security user implementations are supported
-        if (
-            $token instanceof TokenInterface
-            && $argument->getName() === 'loggedInUser'
-            && $argument->getType() === User::class
-        ) {
+        if ($argument->getName() === 'loggedInUser' && $argument->getType() === User::class) {
             $securityUser = $this->userService->getSecurityUser();
 
             if ($securityUser === null && $argument->isNullable() === false) {
@@ -75,12 +67,6 @@ class LoggedInUserValueResolver implements ArgumentValueResolverInterface
      */
     public function resolve(Request $request, ArgumentMetadata $argument): Generator
     {
-        $token = $this->tokenStorage->getToken();
-
-        if ($token === null) {
-            throw new MissingTokenException('JWT Token not found');
-        }
-
         yield $this->userService->getUser();
     }
 }

@@ -13,8 +13,6 @@ use Stringable;
  * Class StringableArrayObject
  *
  * @package App\Utils\Tests
- *
- * @phpstan-ignore-next-line
  */
 class StringableArrayObject extends ArrayObject implements Stringable
 {

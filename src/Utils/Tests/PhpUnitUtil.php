@@ -25,9 +25,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Throwable;
 
 use function array_key_exists;
-use function count;
 use function explode;
-use function get_class;
 use function sprintf;
 use function str_contains;
 use function substr_count;
@@ -140,7 +138,7 @@ class PhpUnitUtil
      */
     public static function getProperty(string $property, object $object): mixed
     {
-        $clazz = new ReflectionClass(get_class($object));
+        $clazz = new ReflectionClass($object::class);
         $property = $clazz->getProperty($property);
         $property->setAccessible(true);
 
@@ -173,7 +171,7 @@ class PhpUnitUtil
      */
     public static function setProperty(string $property, UuidInterface | array | null $value, object $object): void
     {
-        $clazz = new ReflectionClass(get_class($object));
+        $clazz = new ReflectionClass($object::class);
         $property = $clazz->getProperty($property);
         $property->setAccessible(true);
         $property->setValue($object, $value);
@@ -247,7 +245,7 @@ class PhpUnitUtil
 
         if (substr_count($type, '\\') > 1 && !str_contains($type, '|')) {
             /** @var class-string $class */
-            $class = count($meta) ? $meta['targetEntity'] : $type;
+            $class = $meta !== [] ? $meta['targetEntity'] : $type;
 
             $type = self::TYPE_CUSTOM_CLASS;
 

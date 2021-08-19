@@ -7,15 +7,11 @@ namespace App\Controller\Api\Localization;
 use App\Service\LocalizationService;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class LocaleController
- *
- * @Route(
- *     path="/localization/locale",
- *     methods={"GET"}
- *  )
  *
  * @OA\Get(security={})
  *
@@ -45,6 +41,10 @@ class LocaleController
      *      ),
      *  )
      */
+    #[Route(
+        path: '/localization/locale',
+        methods: [Request::METHOD_GET],
+    )]
     public function __invoke(): JsonResponse
     {
         return new JsonResponse($this->localization->getLocales());

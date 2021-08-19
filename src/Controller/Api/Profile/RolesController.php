@@ -7,9 +7,11 @@ namespace App\Controller\Api\Profile;
 use App\Entity\User;
 use App\Security\RolesService;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 
 /**
  * Class RolesController
@@ -27,13 +29,6 @@ class RolesController
 
     /**
      * Get current user roles as an array, accessible only for 'IS_AUTHENTICATED_FULLY' users.
-     *
-     * @Route(
-     *     path="/profile/roles",
-     *     methods={"GET"},
-     *  );
-     *
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @OA\Response(
      *     response=200,
@@ -54,6 +49,11 @@ class RolesController
      *     ),
      *  )
      */
+    #[Route(
+        path: '/profile/roles',
+        methods: [Request::METHOD_GET],
+    )]
+    #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
     public function __invoke(User $loggedInUser): JsonResponse
     {
         return new JsonResponse($this->rolesService->getInheritedRoles($loggedInUser->getRoles()));

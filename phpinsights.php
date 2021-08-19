@@ -107,6 +107,7 @@ return [
                 'src/ArgumentResolver/LoggedInUserValueResolver.php',
                 'src/ArgumentResolver/RestDtoValueResolver.php',
                 'src/AutoMapper/RestRequestMapper.php',
+                'src/Decorator/StopwatchDecorator.php',
                 'src/Doctrine/DBAL/Types/EnumType.php',
                 'src/Rest/Traits/Methods/RestMethodProcessCriteria.php',
                 'src/Rest/Traits/RestResourceCount.php',

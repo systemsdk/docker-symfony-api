@@ -42,7 +42,7 @@ class ApiKeyHelper
         while ($found !== true) {
             $apiKey = $this->getApiKeyEntity($io, $question);
 
-            if ($apiKey === null) {
+            if (!$apiKey instanceof ApiKeyEntity) {
                 break;
             }
 
@@ -53,7 +53,7 @@ class ApiKeyHelper
                 $apiKey->getDescription(),
             );
 
-            $found = (bool)$io->confirm($message, false);
+            $found = $io->confirm($message, false);
         }
 
         return $apiKey ?? null;

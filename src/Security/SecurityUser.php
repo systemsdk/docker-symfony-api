@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace App\Security;
 
 use App\Entity\User;
-use App\Security\Interfaces\SecurityUserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class SecurityUser
  *
  * @package App\Security
  */
-class SecurityUser implements SecurityUserInterface
+class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    private string $username;
-    private string $password;
+    private string $identifier;
+    private string | null $password;
     private string $language;
     private string $locale;
     private string $timezone;
@@ -32,7 +33,7 @@ class SecurityUser implements SecurityUserInterface
      */
     public function __construct(User $user, array $roles = [])
     {
-        $this->username = $user->getId();
+        $this->identifier = $user->getId();
         $this->password = $user->getPassword();
         $this->language = $user->getLanguage();
         $this->locale = $user->getLocale();
@@ -42,7 +43,7 @@ class SecurityUser implements SecurityUserInterface
 
     public function getUuid(): string
     {
-        return $this->getUsername();
+        return $this->getUserIdentifier();
     }
 
     /**
@@ -60,7 +61,7 @@ class SecurityUser implements SecurityUserInterface
      *
      * @codeCoverageIgnore
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -80,9 +81,13 @@ class SecurityUser implements SecurityUserInterface
      *
      * @codeCoverageIgnore
      */
-    public function getUsername(): string
+    public function eraseCredentials(): void
     {
-        return $this->username;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->identifier;
     }
 
     public function getLanguage(): string
@@ -101,11 +106,14 @@ class SecurityUser implements SecurityUserInterface
     }
 
     /**
+     * @reminder Remove this method when Symfony 6.0.0 is released
+     *
      * {@inheritdoc}
      *
      * @codeCoverageIgnore
      */
-    public function eraseCredentials(): void
+    public function getUsername(): string
     {
+        return $this->getUserIdentifier();
     }
 }

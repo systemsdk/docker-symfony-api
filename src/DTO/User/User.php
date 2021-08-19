@@ -19,15 +19,14 @@ use function array_map;
 /**
  * Class User
  *
- * @AppAssert\UniqueEmail()
- * @AppAssert\UniqueUsername()
- *
  * @package App\DTO\User
  *
  * @method self|RestDtoInterface get(string $id)
  * @method self|RestDtoInterface patch(RestDtoInterface $dto)
  * @method Entity|EntityInterface update(EntityInterface $entity)
  */
+#[AppAssert\UniqueEmail]
+#[AppAssert\UniqueUsername]
 class User extends RestDto
 {
     /**
@@ -38,65 +37,49 @@ class User extends RestDto
         'userGroups' => 'updateUserGroups',
     ];
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Length(min = 2, max = 255, allowEmptyString="false")
-     */
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 255)]
     protected string $username = '';
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Length(min = 2, max = 255, allowEmptyString="false")
-     */
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 255)]
     protected string $firstName = '';
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Length(min = 2, max = 255, allowEmptyString="false")
-     */
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 255)]
     protected string $lastName = '';
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Email()
-     */
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Email]
     protected string $email = '';
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @AppAssert\Language()
-     */
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[AppAssert\Language]
     protected string $language = LocalizationService::DEFAULT_LANGUAGE;
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @AppAssert\Locale()
-     */
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[AppAssert\Locale]
     protected string $locale = LocalizationService::DEFAULT_LOCALE;
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @AppAssert\Timezone()
-     */
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[AppAssert\Timezone]
     protected string $timezone = LocalizationService::DEFAULT_TIMEZONE;
 
     /**
      * @var UserGroupEntity[]|array<int, UserGroupEntity>
-     *
-     * @AppAssert\EntityReferenceExists(entityClass=UserGroupEntity::class)
      */
+    #[AppAssert\EntityReferenceExists(entityClass: UserGroupEntity::class)]
     protected array $userGroups = [];
 
-    /**
-     * @Assert\Length(min = Entity::PASSWORD_MIN_LENGTH, max = 255, allowEmptyString="false")
-     */
+    #[Assert\NotBlank]
+    #[Assert\Length(min: Entity::PASSWORD_MIN_LENGTH, max: 255)]
     protected string $password = '';
 
     public function getUsername(): string

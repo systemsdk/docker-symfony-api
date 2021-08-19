@@ -33,19 +33,16 @@ class ApiKey extends RestDto
         'userGroups' => 'updateUserGroups',
     ];
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     */
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
     protected string $description = '';
 
     protected string $token = '';
 
     /**
      * @var UserGroupEntity[]|array<int, UserGroupEntity>
-     *
-     * @AppAssert\EntityReferenceExists(entityClass=UserGroupEntity::class)
      */
+    #[AppAssert\EntityReferenceExists(UserGroupEntity::class)]
     protected array $userGroups = [];
 
     public function getToken(): string

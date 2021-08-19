@@ -10,10 +10,11 @@ use App\Rest\Controller;
 use App\Rest\Traits\Methods;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Throwable;
 
 /**
@@ -34,16 +35,6 @@ class FindOneRoleController extends Controller
 
     /**
      * Find role entity, accessible for 'IS_AUTHENTICATED_FULLY' users.
-     *
-     * @Route(
-     *      path="/role/{role}",
-     *      requirements={
-     *          "role" = "^ROLE_\w+$",
-     *      },
-     *      methods={"GET"},
-     *  )
-     *
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @OA\Response(
      *      response=200,
@@ -69,6 +60,12 @@ class FindOneRoleController extends Controller
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/role/{role}',
+        requirements: ['role' => '^ROLE_\w+$'],
+        methods: [Request::METHOD_GET],
+    )]
+    #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
     public function __invoke(Request $request, string $role): Response
     {
         return $this->findOneMethod($request, $role);

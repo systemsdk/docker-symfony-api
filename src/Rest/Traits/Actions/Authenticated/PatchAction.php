@@ -7,10 +7,11 @@ namespace App\Rest\Traits\Actions\Authenticated;
 use App\DTO\Interfaces\RestDtoInterface;
 use App\Rest\Traits\Methods\PatchMethod;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Throwable;
 
 /**
@@ -28,16 +29,6 @@ trait PatchAction
 
     /**
      * Patch entity with new data, accessible only for 'IS_AUTHENTICATED_FULLY' users.
-     *
-     * @Route(
-     *      "/{id}",
-     *      requirements={
-     *          "id" = "%app.uuid_v1_regex%",
-     *      },
-     *      methods={"PATCH"},
-     *  )
-     *
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @OA\RequestBody(
      *      request="body",
@@ -69,6 +60,14 @@ trait PatchAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/{id}',
+        requirements: [
+            'id' => '%app.uuid_v1_regex%',
+        ],
+        methods: [Request::METHOD_PATCH],
+    )]
+    #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
     public function patchAction(Request $request, RestDtoInterface $restDto, string $id): Response
     {
         return $this->patchMethod($request, $restDto, $id);

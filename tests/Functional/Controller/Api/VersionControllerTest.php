@@ -10,6 +10,8 @@ use App\Utils\Tests\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
+use function file_get_contents;
+
 /**
  * Class VersionControllerTest
  *
@@ -40,10 +42,8 @@ class VersionControllerTest extends WebTestCase
      */
     public function testThatVersionRouteDoesNotMakeRequestLog(): void
     {
-        static::bootKernel();
-
         /** @var LogRequestResource $resource */
-        $resource = static::$container->get(LogRequestResource::class);
+        $resource = static::getContainer()->get(LogRequestResource::class);
         $expectedLogCount = $resource->count();
         $client = $this->getTestClient();
         $client->request('GET', $this->baseUrl);
@@ -66,7 +66,7 @@ class VersionControllerTest extends WebTestCase
         static::assertNotNull($version);
         static::assertSame(
             JSON::decode((string)file_get_contents(__DIR__ . '/../../../../composer.json'))->version,
-            $version
+            $version,
         );
     }
 }

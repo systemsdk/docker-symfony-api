@@ -9,17 +9,12 @@ use App\Rest\Controller;
 use App\Rest\ResponseHandler;
 use App\Rest\Traits\Actions;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 
 /**
  * Class RoleController
- *
- * @Route(
- *     path="/role",
- * )
- *
- * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  *
  * @OA\Tag(name="Role Management")
  *
@@ -28,6 +23,10 @@ use Symfony\Component\Routing\Annotation\Route;
  * @method RoleResource getResource()
  * @method ResponseHandler getResponseHandler()
  */
+#[Route(
+    path: '/role',
+)]
+#[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
 class RoleController extends Controller
 {
     // Traits for REST actions

@@ -4,26 +4,24 @@ declare(strict_types=1);
 
 namespace App\Validator\Constraints;
 
+use Attribute;
 use Symfony\Component\Validator\Constraint;
 
 /**
  * Class Language
+ *
+ * Usage example;
+ *  App\Validator\Constraints\Language()
  *
  * @Annotation
  * @Target({"PROPERTY"})
  *
  * @package App\Validator\Constraints
  */
+#[Attribute(Attribute::TARGET_PROPERTY | Attribute::IS_REPEATABLE)]
 class Language extends Constraint
 {
-    /**
-     * Unique constant for validator constrain
-     */
     public const INVALID_LANGUAGE = '08bd61cf-ba27-45a3-9916-78c39253833a';
-
-    /**
-     * Message for validation error
-     */
     public const MESSAGE = 'This language "{{ language }}" is not valid.';
 
     /**

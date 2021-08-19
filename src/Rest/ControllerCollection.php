@@ -22,6 +22,8 @@ use function sprintf;
  *
  * @method ControllerInterface get(string $className)
  * @method IteratorAggregate<int, ControllerInterface> getAll()
+ *
+ * @template T<ControllerInterface>
  */
 class ControllerCollection implements Countable
 {
@@ -33,8 +35,8 @@ class ControllerCollection implements Countable
      * @param IteratorAggregate<int, ControllerInterface> $items
      */
     public function __construct(
-        private IteratorAggregate $items,
-        private LoggerInterface $logger,
+        protected IteratorAggregate $items,
+        protected LoggerInterface $logger,
     ) {
     }
 

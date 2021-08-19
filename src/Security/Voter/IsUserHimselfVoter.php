@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Security\Voter;
 
 use App\Entity\User;
-use App\Security\Interfaces\SecurityUserInterface;
+use App\Security\SecurityUser;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
@@ -21,7 +21,7 @@ class IsUserHimselfVoter extends Voter
     /**
      * {@inheritdoc}
      */
-    protected function supports($attribute, $subject): bool
+    protected function supports(string $attribute, mixed $subject): bool
     {
         return $attribute === self::ATTRIBUTE && $subject instanceof User;
     }
@@ -29,12 +29,12 @@ class IsUserHimselfVoter extends Voter
     /**
      * {@inheritdoc}
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 
         return $token->isAuthenticated()
-            && $user instanceof SecurityUserInterface
+            && $user instanceof SecurityUser
             && $user->getUuid() === $subject->getId();
     }
 }

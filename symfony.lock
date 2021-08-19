@@ -243,6 +243,9 @@
     "psr/container": {
         "version": "1.1.1"
     },
+    "psr/event-dispatcher": {
+        "version": "1.0.0"
+    },
     "psr/link": {
         "version": "1.1.1"
     },
@@ -284,6 +287,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "symfony/amqp-messenger": {
+        "version": "v5.3.4"
     },
     "symfony/asset": {
         "version": "v4.4.25"
@@ -336,6 +342,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v4.4.25"
+    },
+    "symfony/doctrine-messenger": {
+        "version": "v5.3.4"
     },
     "symfony/dom-crawler": {
         "version": "v4.4.25"
@@ -481,11 +490,29 @@
             "config/packages/test/monolog.yaml"
         ]
     },
+    "symfony/notifier": {
+        "version": "5.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.0",
+            "ref": "c31585e252b32fe0e1f30b1f256af553f4a06eb9"
+        },
+        "files": [
+            "config/packages/notifier.yaml"
+        ]
+    },
     "symfony/options-resolver": {
         "version": "v4.4.25"
     },
+    "symfony/password-hasher": {
+        "version": "v5.3.4"
+    },
     "symfony/polyfill-ctype": {
         "version": "v1.23.0"
+    },
+    "symfony/polyfill-intl-grapheme": {
+        "version": "v1.23.1"
     },
     "symfony/polyfill-intl-icu": {
         "version": "v1.23.0"
@@ -526,6 +553,9 @@
     "symfony/proxy-manager-bridge": {
         "version": "v4.4.25"
     },
+    "symfony/redis-messenger": {
+        "version": "v5.3.4"
+    },
     "symfony/requirements-checker": {
         "version": "2.0",
         "recipe": {
@@ -548,6 +578,9 @@
             "config/packages/routing.yaml",
             "config/routes.yaml"
         ]
+    },
+    "symfony/runtime": {
+        "version": "v5.3.4"
     },
     "symfony/security-bundle": {
         "version": "4.4",
@@ -581,6 +614,9 @@
     },
     "symfony/stopwatch": {
         "version": "v4.4.25"
+    },
+    "symfony/string": {
+        "version": "v5.3.3"
     },
     "symfony/translation": {
         "version": "3.3",
@@ -666,6 +702,9 @@
             "config/packages/dev/systemsdk_easy_log.yaml",
             "config/packages/test/systemsdk_easy_log.yaml"
         ]
+    },
+    "twig/extra-bundle": {
+        "version": "v3.3.1"
     },
     "twig/twig": {
         "version": "v3.3.2"

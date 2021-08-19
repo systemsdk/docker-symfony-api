@@ -28,14 +28,6 @@ trait PatchAction
     /**
      * Patch entity with new data, accessible for anonymous users.
      *
-     * @Route(
-     *      "/{id}",
-     *      requirements={
-     *          "id" = "%app.uuid_v1_regex%",
-     *      },
-     *      methods={"PATCH"},
-     *  )
-     *
      * @OA\RequestBody(
      *      request="body",
      *      description="object",
@@ -56,6 +48,13 @@ trait PatchAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/{id}',
+        requirements: [
+            'id' => '%app.uuid_v1_regex%',
+        ],
+        methods: [Request::METHOD_PATCH],
+    )]
     public function patchAction(Request $request, RestDtoInterface $restDto, string $id): Response
     {
         return $this->patchMethod($request, $restDto, $id);

@@ -17,6 +17,7 @@ return [
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     AutoMapperPlus\AutoMapperPlusBundle\AutoMapperPlusBundle::class => ['all' => true],
-    Systemsdk\Bundle\EasyLogBundle\EasyLogBundle::class => ['all' => true],
+    Systemsdk\Bundle\EasyLogBundle\EasyLogBundle::class => ['dev' => true, 'test' => true],
     Dukecity\CommandSchedulerBundle\DukecityCommandSchedulerBundle::class => ['all' => true],
+    Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
 ];

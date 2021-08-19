@@ -28,11 +28,6 @@ trait CreateAction
     /**
      * Create entity, accessible for anonymous users.
      *
-     * @Route(
-     *     path="",
-     *     methods={"POST"},
-     *  )
-     *
      * @OA\RequestBody(
      *      request="body",
      *      description="object",
@@ -53,6 +48,10 @@ trait CreateAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '',
+        methods: [Request::METHOD_POST],
+    )]
     public function createAction(Request $request, RestDtoInterface $restDto): Response
     {
         return $this->createMethod($request, $restDto);

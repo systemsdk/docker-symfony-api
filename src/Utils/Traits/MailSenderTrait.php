@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Utils\Traits;
 
 use App\Service\MailerService;
-use Psr\Cache\InvalidArgumentException;
+use Symfony\Contracts\Service\Attribute\Required;
 use Throwable;
 use Twig\Environment as Twig;
 
@@ -22,9 +22,7 @@ trait MailSenderTrait
     private bool $appEmailNotificationAboutError;
     private Twig $twig;
 
-    /**
-     * @required
-     */
+    #[Required]
     public function setMailerService(
         MailerService $mailerService,
         string $appSenderEmail,
@@ -37,20 +35,16 @@ trait MailSenderTrait
         $this->appEmailNotificationAboutError = (bool)$appEmailNotificationAboutError;
     }
 
-    /**
-     * @required
-     */
+    #[Required]
     public function setTwig(Twig $twig): void
     {
         $this->twig = $twig;
     }
 
     /**
-     * @param Throwable|InvalidArgumentException $exception
-     *
      * @throws Throwable
      */
-    public function sendErrorToMail($exception): void
+    public function sendErrorToMail(Throwable $exception): void
     {
         if ($this->appEmailNotificationAboutError) {
             $body = $this->twig->render('Emails/error.html.twig', ['errorMessage' => $exception->getMessage()]);

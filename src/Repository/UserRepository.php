@@ -78,7 +78,7 @@ class UserRepository extends BaseRepository
      *
      * @throws NonUniqueResultException
      */
-    public function loadUserByUsername(string $username, bool $uuid): ?Entity
+    public function loadUserByIdentifier(string $username, bool $uuid): ?Entity
     {
         /** @var array<string, Entity|null> $cache */
         static $cache = [];

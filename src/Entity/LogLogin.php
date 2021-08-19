@@ -21,256 +21,197 @@ use function is_array;
 /**
  * Class LogLogin
  *
- * @ORM\Table(
- *      name="log_login",
- *      indexes={
- *          @ORM\Index(name="user_id", columns={"user_id"}),
- *          @ORM\Index(name="date", columns={"date"}),
- *      },
- *  )
- * @ORM\Entity(
- *      readOnly=true,
- *  )
- * @ORM\HasLifecycleCallbacks()
- *
  * @package App\Entity
  */
+#[ORM\Entity(readOnly: true)]
+#[ORM\Table(name: 'log_login')]
+#[ORM\Index(
+    columns: ['user_id'],
+    name: 'user_id',
+)]
+#[ORM\Index(
+    columns: ['date'],
+    name: 'date',
+)]
+#[ORM\HasLifecycleCallbacks]
 class LogLogin implements EntityInterface
 {
     use LogEntityTrait;
     use Uuid;
 
     /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.id",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="id",
-     *      type="uuid_binary_ordered_time",
-     *      unique=true,
-     *      nullable=false,
-     *  )
-     * @ORM\Id()
-     *
      * @OA\Property(type="string", format="uuid")
      */
+    #[ORM\Id]
+    #[ORM\Column(
+        name: 'id',
+        type: 'uuid_binary_ordered_time',
+        unique: true,
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.id',
+    ])]
     private UuidInterface $id;
 
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.user",
-     *  })
-     *
-     * @ORM\ManyToOne(
-     *      targetEntity="App\Entity\User",
-     *      inversedBy="logsLogin",
-     *  )
-     * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(
-     *          name="user_id",
-     *          referencedColumnName="id",
-     *          onDelete="SET NULL",
-     *          nullable=true,
-     *      ),
-     *  })
-     */
+    /*
+    #[ORM\ManyToOne(
+        targetEntity: User::class,
+        inversedBy: 'logsLogin',
+    )]
+    #[ORM\JoinColumn(
+        name: 'user_id',
+        onDelete: 'SET NULL',
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.user',
+    ])]
     private ?User $user;
+    */
 
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.type",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="type",
-     *      type="EnumLogLogin",
-     *      nullable=false,
-     *  )
-     */
-    private string $type;
-
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.clientType",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="client_type",
-     *      type="string",
-     *      length=255,
-     *      nullable=true,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'client_type',
+        type: 'string',
+        length: 255,
+        nullable: true,
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.clientType',
+    ])]
     private ?string $clientType = null;
 
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.clientName",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="client_name",
-     *      type="string",
-     *      length=255,
-     *      nullable=true,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'client_name',
+        type: 'string',
+        length: 255,
+        nullable: true,
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.clientName',
+    ])]
     private ?string $clientName = null;
 
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.clientShortName",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="client_short_name",
-     *      type="string",
-     *      length=255,
-     *      nullable=true,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'client_short_name',
+        type: 'string',
+        length: 255,
+        nullable: true,
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.clientShortName',
+    ])]
     private ?string $clientShortName = null;
 
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.clientVersion",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="client_version",
-     *      type="string",
-     *      length=255,
-     *      nullable=true,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'client_version',
+        type: 'string',
+        length: 255,
+        nullable: true,
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.clientVersion',
+    ])]
     private ?string $clientVersion = null;
 
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.clientEngine",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="client_engine",
-     *      type="string",
-     *      length=255,
-     *      nullable=true,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'client_engine',
+        type: 'string',
+        length: 255,
+        nullable: true,
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.clientEngine',
+    ])]
     private ?string $clientEngine = null;
 
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.osName",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="os_name",
-     *      type="string",
-     *      length=255,
-     *      nullable=true,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'os_name',
+        type: 'string',
+        length: 255,
+        nullable: true,
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.osName',
+    ])]
     private ?string $osName = null;
 
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.osShortName",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="os_short_name",
-     *      type="string",
-     *      length=255,
-     *      nullable=true,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'os_short_name',
+        type: 'string',
+        length: 255,
+        nullable: true,
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.osShortName',
+    ])]
     private ?string $osShortName = null;
 
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.osVersion",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="os_version",
-     *      type="string",
-     *      length=255,
-     *      nullable=true,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'os_version',
+        type: 'string',
+        length: 255,
+        nullable: true
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.osVersion',
+    ])]
     private ?string $osVersion = null;
 
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.osPlatform",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="os_platform",
-     *      type="string",
-     *      length=255,
-     *      nullable=true,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'os_platform',
+        type: 'string',
+        length: 255,
+        nullable: true,
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.osPlatform',
+    ])]
     private ?string $osPlatform = null;
 
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.deviceName",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="device_name",
-     *      type="string",
-     *      length=255,
-     *      nullable=true,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'device_name',
+        type: 'string',
+        length: 255,
+        nullable: true,
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.deviceName',
+    ])]
     private ?string $deviceName = null;
 
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.brandName",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="brand_name",
-     *      type="string",
-     *      length=255,
-     *      nullable=true,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'brand_name',
+        type: 'string',
+        length: 255,
+        nullable: true,
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.brandName',
+    ])]
     private ?string $brandName = null;
 
-    /**
-     * @Groups({
-     *      "LogLogin",
-     *      "LogLogin.model",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="model",
-     *      type="string",
-     *      length=255,
-     *      nullable=true,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'model',
+        type: 'string',
+        length: 255,
+        nullable: true,
+    )]
+    #[Groups([
+        'LogLogin',
+        'LogLogin.model',
+    ])]
     private ?string $model = null;
 
     private DeviceDetector $deviceDetector;
@@ -280,12 +221,25 @@ class LogLogin implements EntityInterface
      *
      * @throws Throwable
      */
-    public function __construct(string $type, Request $request, DeviceDetector $deviceDetector, ?User $user = null)
-    {
+    public function __construct(
+        #[ORM\Column(name: 'type', type: 'EnumLogLogin')]
+        #[Groups([
+            'LogLogin',
+            'LogLogin.type',
+        ])]
+        private string $type,
+        Request $request,
+        DeviceDetector $deviceDetector,
+        #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'logsLogin')]
+        #[ORM\JoinColumn(name: 'user_id', onDelete: 'SET NULL')]
+        #[Groups([
+            'LogLogin',
+            'LogLogin.user',
+        ])]
+        private ?User $user = null
+    ) {
         $this->id = $this->createUuid();
-        $this->type = $type;
         $this->deviceDetector = $deviceDetector;
-        $this->user = $user;
         $this->processTimeAndDate();
         $this->processRequestData($request);
         $this->processClientData();

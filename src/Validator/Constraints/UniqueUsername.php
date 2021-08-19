@@ -4,26 +4,24 @@ declare(strict_types=1);
 
 namespace App\Validator\Constraints;
 
+use Attribute;
 use Symfony\Component\Validator\Constraint;
 
 /**
  * Class UniqueUsername
+ *
+ * Usage example;
+ *  App\Validator\Constraints\UniqueUsername()
  *
  * @Annotation
  * @Target({"CLASS"})
  *
  * @package App\Validator\Constraints
  */
+#[Attribute(Attribute::TARGET_CLASS | Attribute::IS_REPEATABLE)]
 class UniqueUsername extends Constraint
 {
-    /**
-     * Unique constant for validator constrain
-     */
     public const IS_UNIQUE_USERNAME_ERROR = 'ea62740a-4d9b-4a25-9a56-46fb4c3d5fea';
-
-    /**
-     * Message for validation error
-     */
     public const MESSAGE = 'This username is already taken.';
 
     /**

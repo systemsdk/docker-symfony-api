@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Event\TerminateEvent;
 use Throwable;
 
 use function array_filter;
-use function count;
+use function array_values;
 use function in_array;
 use function str_contains;
 use function substr;
@@ -78,7 +78,7 @@ class RequestLogSubscriber implements EventSubscriberInterface
             $request->getRealMethod() === Request::METHOD_OPTIONS
             || str_contains($path, '/_profiler')
             || in_array($path, $this->ignoredRoutes, true)
-            || count(array_filter($this->ignoredRoutes, $filter)) !== 0
+            || array_values(array_filter($this->ignoredRoutes, $filter)) !== []
         ) {
             return;
         }
@@ -100,13 +100,13 @@ class RequestLogSubscriber implements EventSubscriberInterface
         $identify = $this->userService->getIdentity();
 
         if ($identify instanceof SecurityUser) {
-            $userEntity = $this->userRepository->getReference($identify->getUsername());
+            $userEntity = $this->userRepository->getReference($identify->getUserIdentifier());
 
             if ($userEntity instanceof UserEntity) {
                 $this->requestLoggerService->setUser($userEntity);
             } else {
                 $this->logger->error(
-                    sprintf('User not found for UUID: "%s".', $identify->getUsername()),
+                    sprintf('User not found for UUID: "%s".', $identify->getUserIdentifier()),
                     self::getSubscribedEvents()
                 );
             }
@@ -114,7 +114,7 @@ class RequestLogSubscriber implements EventSubscriberInterface
             $this->requestLoggerService->setApiKey($identify->getApiKey());
         }
 
-        $this->requestLoggerService->setMasterRequest($event->isMasterRequest());
+        $this->requestLoggerService->setMainRequest($event->isMainRequest());
         $this->requestLoggerService->handle();
     }
 }

@@ -25,7 +25,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     private ?Request $request = null;
     private ?User $user = null;
     private ?ApiKey $apiKey = null;
-    private bool $masterRequest = false;
+    private bool $mainRequest = false;
 
     /**
      * Constructor
@@ -82,9 +82,9 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function setMasterRequest(bool $masterRequest): self
+    public function setMainRequest(bool $mainRequest): self
     {
-        $this->masterRequest = $masterRequest;
+        $this->mainRequest = $mainRequest;
 
         return $this;
     }
@@ -113,6 +113,13 @@ class RequestLoggerService implements RequestLoggerServiceInterface
      */
     private function createRequestLogEntry(): void
     {
+        /**
+         * We want to clear possible existing managements entities before we
+         * flush this new `LogRequest` entity to database. This is to prevent
+         * not wanted entity state changes to be flushed.
+         */
+        //$this->resource->getRepository()->getEntityManager()->clear();
+
         // Create new request log entity
         $entity = new LogRequest(
             $this->sensitiveProperties,
@@ -120,7 +127,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
             $this->response,
             $this->user,
             $this->apiKey,
-            $this->masterRequest
+            $this->mainRequest
         );
         $this->resource->save($entity, true, true);
     }

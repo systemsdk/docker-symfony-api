@@ -17,73 +17,41 @@ use Throwable;
 /**
  * Class LogLoginFailure
  *
- * @ORM\Table(
- *      name="log_login_failure",
- *      indexes={
- *          @ORM\Index(name="user_id", columns={"user_id"}),
- *      },
- *  )
- * @ORM\Entity(
- *      readOnly=true,
- *  )
- *
  * @package App\Entity
  */
+#[ORM\Entity(readOnly: true)]
+#[ORM\Table(name: 'log_login_failure')]
+#[ORM\Index(
+    columns: ['user_id'],
+    name: 'user_id',
+)]
 class LogLoginFailure implements EntityInterface
 {
     use Uuid;
 
     /**
-     * @Groups({
-     *      "LogLoginFailure",
-     *      "LogLoginFailure.id",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="id",
-     *      type="uuid_binary_ordered_time",
-     *      unique=true,
-     *      nullable=false,
-     *  )
-     * @ORM\Id()
-     *
      * @OA\Property(type="string", format="uuid")
      */
+    #[ORM\Id]
+    #[ORM\Column(
+        name: 'id',
+        type: 'uuid_binary_ordered_time',
+        unique: true,
+    )]
+    #[Groups([
+        'LogLoginFailure',
+        'LogLoginFailure.id',
+    ])]
     private UuidInterface $id;
 
-    /**
-     * @Groups({
-     *      "LogLoginFailure",
-     *      "LogLoginFailure.user",
-     *  })
-     *
-     * @ORM\ManyToOne(
-     *      targetEntity="App\Entity\User",
-     *      inversedBy="logsLoginFailure",
-     *  )
-     * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(
-     *          name="user_id",
-     *          referencedColumnName="id",
-     *          nullable=false,
-     *          onDelete="CASCADE",
-     *      ),
-     *  })
-     */
-    private User $user;
-
-    /**
-     * @Groups({
-     *      "LogLoginFailure",
-     *      "LogLoginFailure.timestamp",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="timestamp",
-     *      type="datetime_immutable",
-     *      nullable=false,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'timestamp',
+        type: 'datetime_immutable',
+    )]
+    #[Groups([
+        'LogLoginFailure',
+        'LogLoginFailure.timestamp',
+    ])]
     private DateTimeImmutable $timestamp;
 
     /**
@@ -91,10 +59,16 @@ class LogLoginFailure implements EntityInterface
      *
      * @throws Throwable
      */
-    public function __construct(User $user)
-    {
+    public function __construct(
+        #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'logsLoginFailure')]
+        #[ORM\JoinColumn(name: 'user_id', nullable: false)]
+        #[Groups([
+            'LogLoginFailure',
+            'LogLoginFailure.user',
+        ])]
+        private User $user
+    ) {
         $this->id = $this->createUuid();
-        $this->user = $user;
         $this->timestamp = new DateTimeImmutable(timezone: new DateTimeZone('UTC'));
     }
 

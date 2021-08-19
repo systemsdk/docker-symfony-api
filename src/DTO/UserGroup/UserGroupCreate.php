@@ -15,10 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class UserGroupCreate extends UserGroup
 {
-    /**
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @AppAssert\EntityReferenceExists(entityClass=RoleEntity::class)
-     */
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[AppAssert\EntityReferenceExists(entityClass: RoleEntity::class)]
     protected ?RoleEntity $role = null;
 }

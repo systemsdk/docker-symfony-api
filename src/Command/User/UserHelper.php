@@ -39,10 +39,10 @@ class UserHelper
         $found = false;
         $userEntity = null;
 
-        while ($found !== true) {
+        while (!$found) {
             $userEntity = $this->getUserEntity($io, $question);
 
-            if ($userEntity === null) {
+            if (!$userEntity instanceof UserEntity) {
                 break;
             }
 
@@ -63,10 +63,10 @@ class UserHelper
         $found = false;
         $userGroupEntity = null;
 
-        while ($found !== true) {
+        while (!$found) {
             $userGroupEntity = $this->getUserGroupEntity($io, $question);
 
-            if ($userGroupEntity === null) {
+            if (!$userGroupEntity instanceof UserGroupEntity) {
                 break;
             }
 
@@ -153,7 +153,7 @@ class UserHelper
             $userEntity->getEmail(),
         );
 
-        return (bool)$io->confirm($message, false);
+        return $io->confirm($message, false);
     }
 
     /**
@@ -168,6 +168,6 @@ class UserHelper
             $userGroupEntity->getRole()->getId(),
         );
 
-        return (bool)$io->confirm($message, false);
+        return $io->confirm($message, false);
     }
 }

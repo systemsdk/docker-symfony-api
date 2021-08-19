@@ -8,10 +8,11 @@ use App\Entity\User;
 use App\Resource\UserResource;
 use App\Rest\Controller;
 use App\Rest\Traits\Methods;
+use App\Security\RolesService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -37,21 +38,6 @@ class DeleteUserController extends Controller
     /**
      * Delete user entity, accessible only for 'ROLE_ROOT' users.
      *
-     * @Route(
-     *      "/user/{requestUser}",
-     *      requirements={
-     *          "requestUser" = "%app.uuid_v1_regex%",
-     *      },
-     *      methods={"DELETE"},
-     *  )
-     *
-     * @ParamConverter(
-     *     "requestUser",
-     *     class="App\Resource\UserResource"
-     *  )
-     *
-     * @Security("is_granted('ROLE_ROOT')")
-     *
      * @OA\Response(
      *     response=200,
      *     description="deleted",
@@ -75,6 +61,18 @@ class DeleteUserController extends Controller
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/user/{requestUser}',
+        requirements: [
+            'requestUser' => '%app.uuid_v1_regex%',
+        ],
+        methods: [Request::METHOD_DELETE],
+    )]
+    #[IsGranted(RolesService::ROLE_ROOT)]
+    #[ParamConverter(
+        data: 'requestUser',
+        class: UserResource::class,
+    )]
     public function __invoke(Request $request, User $requestUser, User $loggedInUser): Response
     {
         if ($loggedInUser === $requestUser) {

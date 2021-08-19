@@ -7,6 +7,11 @@ namespace App\Tests\Unit;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Throwable;
 
+/**
+ * Class ExampleTest
+ *
+ * @package App\Tests\Unit
+ */
 class ExampleTest extends KernelTestCase
 {
     /**
@@ -16,6 +21,6 @@ class ExampleTest extends KernelTestCase
      */
     public function testBasicTest(): void
     {
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 }

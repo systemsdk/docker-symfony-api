@@ -1,13 +1,15 @@
 security:
-    # http://symfony.com/doc/current/security/named_encoders.html
-    encoders:
+    # https://symfony.com/doc/current/security/experimental_authenticators.html
+    enable_authenticator_manager: true
+
+    # https://symfony.com/doc/current/security.html#c-hashing-passwords
+    password_hashers:
         App\Security\SecurityUser:
             algorithm: auto
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: null }
-        chain_provider:
+        chain_user_provider:
             chain:
                 providers: [security_user_provider, api_key_user_provider]
         security_user_provider:
@@ -23,7 +25,7 @@ security:
         login:
             pattern: ^/api/auth/getToken$
             stateless: true
-            anonymous: true
+            #anonymous: true
             json_login:
                 provider: security_user_provider
                 check_path: /api/auth/getToken
@@ -32,23 +34,22 @@ security:
         root:
             pattern: ^/($|command-scheduler)
             stateless: true
-            anonymous: true
+            #anonymous: true
         api:
             pattern: ^/api
             stateless: true
-            anonymous: true
-            guard:
-                provider: security_user_provider
-                authenticators:
-                    - App\Security\Authenticator\ApiKeyAuthenticator
-                    - lexik_jwt_authentication.jwt_token_authenticator
-                entry_point: lexik_jwt_authentication.jwt_token_authenticator
+            #anonymous: true
+            lazy: true
+            provider: chain_user_provider
+            jwt: ~
+            custom_authenticators:
+                - App\Security\Authenticator\ApiKeyAuthenticator
 
     role_hierarchy:
-        ROLE_API:   [ROLE_LOGGED]
-        ROLE_USER:  [ROLE_LOGGED]
+        ROLE_API: [ROLE_LOGGED]
+        ROLE_USER: [ROLE_LOGGED]
         ROLE_ADMIN: [ROLE_USER]
-        ROLE_ROOT:  [ROLE_ADMIN]
+        ROLE_ROOT: [ROLE_ADMIN]
 
     access_decision_manager:
         strategy: unanimous

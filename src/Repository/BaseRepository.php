@@ -15,7 +15,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use function array_map;
 use function array_merge;
 use function array_unshift;
-use function count;
 use function implode;
 use function in_array;
 use function serialize;
@@ -46,7 +45,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Joins that need to attach to queries, this is needed for to prevent duplicate joins on those.
      *
-     * @var array<string, array<int, array<int, array<int, string>>>>
+     * @var array<string, array<array<int, scalar>>>
      */
     private static array $joins = [
         self::INNER_JOIN => [],
@@ -62,7 +61,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     ];
 
     /**
-     * @var array<int, array{0: callable, 1: array}>
+     * @var array<int, array{0: callable, 1: array<mixed>}>
      */
     private static array $callbacks = [];
 
@@ -136,7 +135,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function addLeftJoin(array $parameters): self
     {
-        if (count($parameters) > 1) {
+        if ($parameters !== []) {
             $this->addJoinToQuery(self::LEFT_JOIN, $parameters);
         }
 
@@ -148,7 +147,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     public function addInnerJoin(array $parameters): self
     {
-        if (!empty($parameters)) {
+        if ($parameters !== []) {
             $this->addJoinToQuery(self::INNER_JOIN, $parameters);
         }
 
@@ -210,7 +209,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * @see QueryBuilder::innerJoin()
      *
      * @param string $type Join type; leftJoin, innerJoin or join
-     * @param array<int, array<int, string>> $parameters Query builder join parameters
+     * @param array<int, scalar> $parameters Query builder join parameters
      */
     private function addJoinToQuery(string $type, array $parameters): void
     {

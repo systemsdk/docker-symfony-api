@@ -6,10 +6,11 @@ namespace App\Rest\Traits\Actions\Authenticated;
 
 use App\Rest\Traits\Methods\CountMethod;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Throwable;
 
 /**
@@ -27,13 +28,6 @@ trait CountAction
 
     /**
      * Count entities, accessible only for 'IS_AUTHENTICATED_FULLY' users.
-     *
-     * @Route(
-     *     path="/count",
-     *     methods={"GET"},
-     *  )
-     *
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @OA\Response(
      *     response=200,
@@ -57,6 +51,11 @@ trait CountAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/count',
+        methods: [Request::METHOD_GET],
+    )]
+    #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
     public function countAction(Request $request): Response
     {
         return $this->countMethod($request);

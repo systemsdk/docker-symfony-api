@@ -46,9 +46,9 @@ interface RequestLoggerServiceInterface
     public function setApiKey(?ApiKey $apiKey = null): self;
 
     /**
-     * Setter method for 'master request' info.
+     * Setter method for 'main request' info.
      */
-    public function setMasterRequest(bool $masterRequest): self;
+    public function setMainRequest(bool $mainRequest): self;
 
     /**
      * Method to handle current response and log it to database.

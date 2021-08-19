@@ -11,86 +11,62 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Throwable;
 
 /**
  * Class Role
  *
- * @ORM\Table(
- *      name="role",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(name="uq_role", columns={"role"}),
- *      },
- *  )
- * @ORM\Entity()
- *
  * @package App\Entity
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'role')]
+#[ORM\UniqueConstraint(
+    name: 'uq_role',
+    columns: ['role'],
+)]
 class Role implements EntityInterface
 {
     use Blameable;
     use Timestampable;
 
-    /**
-     * @Groups({
-     *      "Role",
-     *      "Role.id",
-     *
-     *      "UserGroup.role",
-     *
-     *      User::SET_USER_BASIC,
-     *      UserGroup::SET_USER_PROFILE_GROUPS,
-     *      UserGroup::SET_USER_GROUP_BASIC,
-     *  })
-     *
-     * @ORM\Column(
-     *      name="role",
-     *      type="string",
-     *      unique=true,
-     *      nullable=false,
-     *  )
-     * @ORM\Id()
-     */
-    private string $id;
-
-    /**
-     * @Groups({
-     *      "Role",
-     *      "Role.description",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="description",
-     *      type="text",
-     *      nullable=false,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'description',
+        type: 'text',
+    )]
+    #[Groups([
+        'Role',
+        'Role.description',
+    ])]
     private string $description = '';
 
     /**
      * User groups that belongs to this role.
      *
      * @var Collection<int, UserGroup>|ArrayCollection<int, UserGroup>
-     *
-     * @Groups({
-     *      "Role.userGroups",
-     *  })
-     *
-     * @ORM\OneToMany(
-     *      targetEntity="App\Entity\UserGroup",
-     *      mappedBy="role",
-     *  )
      */
+    #[ORM\OneToMany(
+        mappedBy: 'role',
+        targetEntity: UserGroup::class,
+    )]
+    #[Groups([
+        'Role.userGroups',
+    ])]
     private Collection | ArrayCollection $userGroups;
 
-    /**
-     * Constructor
-     *
-     * @throws Throwable
-     */
-    public function __construct(string $role)
-    {
-        $this->id = $role;
+    public function __construct(
+        #[ORM\Id]
+        #[ORM\Column(name: 'role', type: 'string', unique: true, nullable: false)]
+        #[Groups([
+            'Role',
+            'Role.id',
+
+            'UserGroup.role',
+
+            User::SET_USER_BASIC,
+            UserGroup::SET_USER_PROFILE_GROUPS,
+            UserGroup::SET_USER_GROUP_BASIC,
+        ])]
+        private string $id
+    ) {
         $this->userGroups = new ArrayCollection();
     }
 

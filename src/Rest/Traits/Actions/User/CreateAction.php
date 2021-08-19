@@ -6,8 +6,9 @@ namespace App\Rest\Traits\Actions\User;
 
 use App\DTO\Interfaces\RestDtoInterface;
 use App\Rest\Traits\Methods\CreateMethod;
+use App\Security\RolesService;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,13 +29,6 @@ trait CreateAction
 
     /**
      * Create entity, accessible only for 'ROLE_USER' users.
-     *
-     * @Route(
-     *      path="",
-     *      methods={"POST"},
-     *  )
-     *
-     * @Security("is_granted('ROLE_USER')")
      *
      * @OA\RequestBody(
      *      request="body",
@@ -66,6 +60,11 @@ trait CreateAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '',
+        methods: [Request::METHOD_POST],
+    )]
+    #[IsGranted(RolesService::ROLE_USER)]
     public function createAction(Request $request, RestDtoInterface $restDto): Response
     {
         return $this->createMethod($request, $restDto);

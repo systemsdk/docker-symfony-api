@@ -14,6 +14,8 @@ use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidFactory;
 use Ramsey\Uuid\UuidInterface;
 
+use function syslog;
+
 /**
  * Class UuidHelper
  *

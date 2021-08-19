@@ -11,7 +11,6 @@ use LengthException;
 use Symfony\Component\HttpFoundation\Request;
 
 use function array_filter;
-use function count;
 use function gettype;
 use function is_object;
 use function method_exists;
@@ -35,12 +34,12 @@ abstract class RestRequestMapper implements MapperInterface
     /**
      * {@inheritdoc}
      *
-     * @param array<array-key, mixed>|object $source
-     * @param array<int, mixed> $context
+     * @psalm-param array<array-key, mixed>|object $source
+     * @psalm-param array<int, mixed> $context
      */
     public function map($source, string $targetClass, array $context = []): RestDtoInterface
     {
-        /** @var class-string $targetClass */
+        /** @psalm-var class-string $targetClass */
         $destination = new $targetClass();
 
         return $this->mapToObject($source, $destination, $context);
@@ -49,9 +48,9 @@ abstract class RestRequestMapper implements MapperInterface
     /**
      * {@inheritdoc}
      *
-     * @param array<array-key, mixed>|object $source
-     * @param object $destination
-     * @param array<int, mixed> $context
+     * @psalm-param array<array-key, mixed>|object $source
+     * @psalm-param object $destination
+     * @psalm-param array<int, mixed> $context
      *
      * @throws InvalidArgumentException|LengthException
      */
@@ -84,7 +83,7 @@ abstract class RestRequestMapper implements MapperInterface
             );
         }
 
-        if (count(static::$properties) === 0) {
+        if (static::$properties === []) {
             throw new LengthException(
                 sprintf(
                     'RestRequestMapper expects that mapper "%s::$properties" contains properties to convert',

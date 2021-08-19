@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Controller\Api\User;
 
 use App\Entity\User;
+use App\Resource\UserResource;
 use App\Security\RolesService;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -28,21 +30,6 @@ class UserRolesController
 
     /**
      * Fetch specified user roles, accessible only for 'IS_USER_HIMSELF' or 'ROLE_ROOT' users.
-     *
-     * @Route(
-     *      "/user/{requestUser}/roles",
-     *      requirements={
-     *          "requestUser" = "%app.uuid_v1_regex%",
-     *      },
-     *      methods={"GET"},
-     *  )
-     *
-     * @ParamConverter(
-     *     "requestUser",
-     *     class="App\Resource\UserResource"
-     *  )
-     *
-     * @Security("is_granted('IS_USER_HIMSELF', requestUser) or is_granted('ROLE_ROOT')")
      *
      * @OA\Response(
      *     response=200,
@@ -73,6 +60,18 @@ class UserRolesController
      *     ),
      * )
      */
+    #[Route(
+        path: '/user/{requestUser}/roles',
+        requirements: [
+            'requestUser' => '%app.uuid_v1_regex%',
+        ],
+        methods: [Request::METHOD_GET],
+    )]
+    #[Security('is_granted("IS_USER_HIMSELF", requestUser) or is_granted("ROLE_ROOT")')]
+    #[ParamConverter(
+        data: 'requestUser',
+        class: UserResource::class,
+    )]
     public function __invoke(User $requestUser): JsonResponse
     {
         return new JsonResponse($this->rolesService->getInheritedRoles($requestUser->getRoles()));

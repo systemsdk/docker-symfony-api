@@ -25,20 +25,20 @@ use Throwable;
 /**
  * Class User
  *
- * @AssertCollection\UniqueEntity("email")
- * @AssertCollection\UniqueEntity("username")
- *
- * @ORM\Table(
- *      name="user",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(name="uq_username", columns={"username"}),
- *          @ORM\UniqueConstraint(name="uq_email", columns={"email"}),
- *      },
- *  )
- * @ORM\Entity()
- *
  * @package App\Entity
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'user')]
+#[ORM\UniqueConstraint(
+    name: 'uq_username',
+    columns: ['username'],
+)]
+#[ORM\UniqueConstraint(
+    name: 'uq_email',
+    columns: ['email'],
+)]
+#[AssertCollection\UniqueEntity('email')]
+#[AssertCollection\UniqueEntity('username')]
 class User implements EntityInterface, UserInterface, UserGroupAwareInterface
 {
     use Blameable;
@@ -52,202 +52,166 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
     public const PASSWORD_MIN_LENGTH = 8;
 
     /**
-     * @Groups({
-     *      "User",
-     *      "User.id",
-     *
-     *      "LogLogin.user",
-     *      "LogLoginFailure.user",
-     *      "LogRequest.user",
-     *
-     *      "UserGroup.users",
-     *
-     *      self::SET_USER_PROFILE,
-     *      self::SET_USER_BASIC,
-     *  })
-     *
-     * @ORM\Column(
-     *      name="id",
-     *      type="uuid_binary_ordered_time",
-     *      unique=true,
-     *      nullable=false,
-     *  )
-     * @ORM\Id()
-     *
      * @OA\Property(type="string", format="uuid")
      */
+    #[ORM\Id]
+    #[ORM\Column(
+        name: 'id',
+        type: 'uuid_binary_ordered_time',
+        unique: true,
+        nullable: false,
+    )]
+    #[Groups([
+        'User',
+        'User.id',
+
+        'LogLogin.user',
+        'LogLoginFailure.user',
+        'LogRequest.user',
+
+        'UserGroup.users',
+
+        self::SET_USER_PROFILE,
+        self::SET_USER_BASIC,
+    ])]
     private UuidInterface $id;
 
-    /**
-     * @Groups({
-     *      "User",
-     *      "User.username",
-     *
-     *      self::SET_USER_PROFILE,
-     *      self::SET_USER_BASIC,
-     *  })
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Length(min = 2, max = 255, allowEmptyString="false")
-     *
-     * @ORM\Column(
-     *      name="username",
-     *      type="string",
-     *      length=255,
-     *      nullable=false,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'username',
+        type: 'string',
+        length: 255,
+        nullable: false,
+    )]
+    #[Groups([
+        'User',
+        'User.username',
+
+        self::SET_USER_PROFILE,
+        self::SET_USER_BASIC,
+    ])]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 255)]
     private string $username = '';
 
-    /**
-     * @Groups({
-     *      "User",
-     *      "User.firstName",
-     *
-     *      self::SET_USER_PROFILE,
-     *      self::SET_USER_BASIC,
-     *  })
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Length(min = 2, max = 255, allowEmptyString="false")
-     *
-     * @ORM\Column(
-     *      name="first_name",
-     *      type="string",
-     *      length=255,
-     *      nullable=false,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'first_name',
+        type: 'string',
+        length: 255,
+        nullable: false,
+    )]
+    #[Groups([
+        'User',
+        'User.firstName',
+
+        self::SET_USER_PROFILE,
+        self::SET_USER_BASIC,
+    ])]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 255)]
     private string $firstName = '';
 
-    /**
-     * @Groups({
-     *      "User",
-     *      "User.lastName",
-     *
-     *      self::SET_USER_PROFILE,
-     *      self::SET_USER_BASIC,
-     *  })
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Length(min = 2, max = 255, allowEmptyString="false")
-     *
-     * @ORM\Column(
-     *      name="last_name",
-     *      type="string",
-     *      length=255,
-     *      nullable=false,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'last_name',
+        type: 'string',
+        length: 255,
+        nullable: false,
+    )]
+    #[Groups([
+        'User',
+        'User.lastName',
+
+        self::SET_USER_PROFILE,
+        self::SET_USER_BASIC,
+    ])]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 255)]
     private string $lastName = '';
 
-    /**
-     * @Groups({
-     *      "User",
-     *      "User.email",
-     *
-     *      self::SET_USER_PROFILE,
-     *      self::SET_USER_BASIC,
-     *  })
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Email()
-     *
-     * @ORM\Column(
-     *      name="email",
-     *      type="string",
-     *      length=255,
-     *      nullable=false,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'email',
+        type: 'string',
+        length: 255,
+        nullable: false,
+    )]
+    #[Groups([
+        'User',
+        'User.email',
+
+        self::SET_USER_PROFILE,
+        self::SET_USER_BASIC,
+    ])]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Email]
     private string $email = '';
 
-    /**
-     * @Groups({
-     *      "User",
-     *      "User.language",
-     *
-     *      self::SET_USER_PROFILE,
-     *      self::SET_USER_BASIC,
-     *  })
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @AppAssert\Language()
-     *
-     * @ORM\Column(
-     *      name="language",
-     *      type="EnumLanguage",
-     *      nullable=false,
-     *      options={
-     *          "comment": "User language for translations",
-     *      },
-     *  )
-     */
+    #[ORM\Column(
+        name: 'language',
+        type: 'EnumLanguage',
+        nullable: false,
+        options: ['comment' => 'User language for translations'],
+    )]
+    #[Groups([
+        'User',
+        'User.language',
+
+        self::SET_USER_PROFILE,
+        self::SET_USER_BASIC,
+    ])]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[AppAssert\Language]
     private string $language = LocalizationService::DEFAULT_LANGUAGE;
 
-    /**
-     * @Groups({
-     *      "User",
-     *      "User.locale",
-     *
-     *      self::SET_USER_PROFILE,
-     *      self::SET_USER_BASIC,
-     *  })
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @AppAssert\Locale()
-     *
-     * @ORM\Column(
-     *      name="locale",
-     *      type="EnumLocale",
-     *      nullable=false,
-     *      options={
-     *          "comment": "User locale for number, time, date, etc. formatting.",
-     *      },
-     *  )
-     */
+    #[ORM\Column(
+        name: 'locale',
+        type: 'EnumLocale',
+        nullable: false,
+        options: ['comment' => 'User locale for number, time, date, etc. formatting.'],
+    )]
+    #[Groups([
+        'User',
+        'User.locale',
+
+        self::SET_USER_PROFILE,
+        self::SET_USER_BASIC,
+    ])]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[AppAssert\Locale]
     private string $locale = LocalizationService::DEFAULT_LOCALE;
 
-    /**
-     * @Groups({
-     *      "User",
-     *      "User.timezone",
-     *
-     *      self::SET_USER_PROFILE,
-     *      self::SET_USER_BASIC,
-     *  })
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @AppAssert\Timezone()
-     *
-     * @ORM\Column(
-     *      name="timezone",
-     *      type="string",
-     *      length=255,
-     *      nullable=false,
-     *      options={
-     *          "comment": "User timezone which should be used to display time, date, etc.",
-     *          "default": "Europe/Kiev",
-     *      },
-     *  )
-     */
+    #[ORM\Column(
+        name: 'timezone',
+        type: 'string',
+        length: 255,
+        nullable: false,
+        options: [
+            'comment' => 'User timezone which should be used to display time, date, etc.',
+            'default' => 'Europe/Helsinki',
+        ],
+    )]
+    #[Groups([
+        'User',
+        'User.timezone',
+
+        self::SET_USER_PROFILE,
+        self::SET_USER_BASIC,
+    ])]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[AppAssert\Timezone]
     private string $timezone = LocalizationService::DEFAULT_TIMEZONE;
 
-    /**
-     * @ORM\Column(
-     *      name="password",
-     *      type="string",
-     *      length=255,
-     *      nullable=false,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'password',
+        type: 'string',
+        length: 255,
+        nullable: false,
+    )]
     private string $password = '';
 
     /**

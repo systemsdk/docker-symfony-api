@@ -7,16 +7,12 @@ namespace App\Controller\Api\Localization;
 use App\Service\LocalizationService;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
 /**
  * Class TimezoneController
- *
- * @Route(
- *     path="/localization/timezone",
- *     methods={"GET"}
- *  )
  *
  * @OA\Get(security={})
  *
@@ -73,6 +69,10 @@ class TimeZoneController
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/localization/timezone',
+        methods: [Request::METHOD_GET],
+    )]
     public function __invoke(): JsonResponse
     {
         return new JsonResponse($this->localization->getTimezones());

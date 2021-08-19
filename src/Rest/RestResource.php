@@ -8,6 +8,7 @@ use App\DTO\Interfaces\RestDtoInterface;
 use App\Repository\Interfaces\BaseRepositoryInterface;
 use App\Rest\Interfaces\RestResourceInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Service\Attribute\Required;
 use UnexpectedValueException;
 
 use function array_keys;
@@ -48,6 +49,10 @@ abstract class RestResource implements RestResourceInterface
      */
     public function setRepository(BaseRepositoryInterface $repository): self
     {
+        if (!property_exists($this, 'repository')) {
+            throw new UnexpectedValueException('Repository not set on constructor');
+        }
+
         $this->repository = $repository;
 
         return $this;
@@ -63,11 +68,8 @@ abstract class RestResource implements RestResourceInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @see https://symfony.com/doc/current/service_container/autowiring.html#autowiring-other-methods-e-g-setters
-     *
-     * @required
      */
+    #[Required]
     public function setValidator(ValidatorInterface $validator): self
     {
         $this->validator = $validator;

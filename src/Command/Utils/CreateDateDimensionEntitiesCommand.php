@@ -29,7 +29,7 @@ use function sprintf;
 class CreateDateDimensionEntitiesCommand extends Command
 {
     private const YEAR_MIN = 1970;
-    private const YEAR_MAX = 2070;
+    private const YEAR_MAX = 2999;
 
     /**
      * Constructor

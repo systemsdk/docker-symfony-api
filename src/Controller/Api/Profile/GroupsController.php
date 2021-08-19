@@ -8,9 +8,11 @@ use App\Entity\User;
 use App\Entity\UserGroup;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
@@ -29,13 +31,6 @@ class GroupsController
 
     /**
      * Get current user user groups, accessible only for 'IS_AUTHENTICATED_FULLY' users.
-     *
-     * @Route(
-     *     path="/profile/groups",
-     *     methods={"GET"}
-     *  );
-     *
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @OA\Response(
      *     response=200,
@@ -71,6 +66,11 @@ class GroupsController
      *     ),
      * )
      */
+    #[Route(
+        path: '/profile/groups',
+        methods: [Request::METHOD_GET],
+    )]
+    #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
     public function __invoke(User $loggedInUser): JsonResponse
     {
         return new JsonResponse(

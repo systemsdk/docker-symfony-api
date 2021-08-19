@@ -7,11 +7,14 @@ namespace App\Controller\Api\UserGroup;
 use App\Entity\User;
 use App\Entity\UserGroup;
 use App\Resource\UserGroupResource;
+use App\Resource\UserResource;
+use App\Security\RolesService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
@@ -33,26 +36,6 @@ class DetachUserController
 
     /**
      * Detach specified user from specified user group, accessible only for 'ROLE_ROOT' users.
-     *
-     * @Route(
-     *      "/user_group/{userGroup}/user/{user}",
-     *      requirements={
-     *          "userGroupId" = "%app.uuid_v1_regex%",
-     *          "userId" = "%app.uuid_v1_regex%",
-     *      },
-     *      methods={"DELETE"},
-     *  )
-     *
-     * @ParamConverter(
-     *     "userGroup",
-     *     class="App\Resource\UserGroupResource",
-     *  )
-     * @ParamConverter(
-     *     "user",
-     *     class="App\Resource\UserResource",
-     *  )
-     *
-     * @Security("is_granted('ROLE_ROOT')")
      *
      * @OA\Parameter(
      *     name="userGroupId",
@@ -110,6 +93,23 @@ class DetachUserController
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/user_group/{userGroup}/user/{user}',
+        requirements: [
+            'userGroup' => '%app.uuid_v1_regex%',
+            'user' => '%app.uuid_v1_regex%',
+        ],
+        methods: [Request::METHOD_DELETE],
+    )]
+    #[IsGranted(RolesService::ROLE_ROOT)]
+    #[ParamConverter(
+        data: 'userGroup',
+        class: UserGroupResource::class,
+    )]
+    #[ParamConverter(
+        data: 'user',
+        class: UserResource::class,
+    )]
     public function __invoke(UserGroup $userGroup, User $user): JsonResponse
     {
         $this->userGroupResource->save($userGroup->removeUser($user));

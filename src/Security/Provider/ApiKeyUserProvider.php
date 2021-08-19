@@ -7,19 +7,19 @@ namespace App\Security\Provider;
 use App\Entity\ApiKey;
 use App\Repository\ApiKeyRepository;
 use App\Security\ApiKeyUser;
-use App\Security\Interfaces\ApiKeyUserInterface;
 use App\Security\Provider\Interfaces\ApiKeyUserProviderInterface;
 use App\Security\RolesService;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * Class ApiKeyUserProvider
  *
  * @package App\Security\Provider
  */
-class ApiKeyUserProvider implements ApiKeyUserProviderInterface
+class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInterface
 {
     public function __construct(
         private ApiKeyRepository $apiKeyRepository,
@@ -30,20 +30,17 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getApiKeyForToken(string $token): ?ApiKey
+    public function supportsClass(string $class): bool
     {
-        return $this->apiKeyRepository->findOneBy(['token' => $token]);
+        return $class === ApiKeyUser::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function loadUserByUsername($username): ApiKeyUserInterface
+    public function loadUserByIdentifier(string $identifier): ApiKeyUser
     {
-        $apiKey = $this->getApiKeyForToken($username);
+        $apiKey = $this->getApiKeyForToken($identifier);
 
         if ($apiKey === null) {
-            throw new UsernameNotFoundException('API key is not valid');
+            throw new UserNotFoundException('API key is not valid');
         }
 
         return new ApiKeyUser($apiKey, $this->rolesService->getInheritedRoles($apiKey->getRoles()));
@@ -60,8 +57,20 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsClass($class): bool
+    public function getApiKeyForToken(string $token): ?ApiKey
     {
-        return $class === ApiKeyUser::class;
+        return $this->apiKeyRepository->findOneBy(['token' => $token]);
+    }
+
+    /**
+     * @reminder Remove this method when Symfony 6.0.0 is released
+     *
+     * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
+     */
+    public function loadUserByUsername(string $username): ApiKeyUser
+    {
+        return $this->loadUserByIdentifier($username);
     }
 }

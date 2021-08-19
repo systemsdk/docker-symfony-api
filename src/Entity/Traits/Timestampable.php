@@ -18,38 +18,34 @@ trait Timestampable
 {
     /**
      * @Gedmo\Timestampable(on="create")
-     *
-     * @Groups({
-     *     "ApiKey.createdAt",
-     *     "Role.createdAt",
-     *     "User.createdAt",
-     *     "UserGroup.createdAt",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="created_at",
-     *      type="datetime_immutable",
-     *      nullable=true,
-     *  )
      */
+    #[ORM\Column(
+        name: 'created_at',
+        type: 'datetime_immutable',
+        nullable: true,
+    )]
+    #[Groups([
+        'ApiKey.createdAt',
+        'Role.createdAt',
+        'User.createdAt',
+        'UserGroup.createdAt',
+    ])]
     protected ?DateTimeImmutable $createdAt = null;
 
     /**
      * @Gedmo\Timestampable(on="update")
-     *
-     * @Groups({
-     *     "ApiKey.updatedAt",
-     *     "Role.updatedAt",
-     *     "User.updatedAt",
-     *     "UserGroup.updatedAt",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="updated_at",
-     *      type="datetime_immutable",
-     *      nullable=true,
-     *  )
      */
+    #[ORM\Column(
+        name: 'updated_at',
+        type: 'datetime_immutable',
+        nullable: true,
+    )]
+    #[Groups([
+        'ApiKey.updatedAt',
+        'Role.updatedAt',
+        'User.updatedAt',
+        'UserGroup.updatedAt',
+    ])]
     protected ?DateTimeImmutable $updatedAt = null;
 
     public function setCreatedAt(DateTimeImmutable $createdAt): self

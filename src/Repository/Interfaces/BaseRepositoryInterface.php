@@ -107,7 +107,7 @@ interface BaseRepositoryInterface
     /**
      * Generic replacement for basic 'findBy' method if/when you want to use generic LIKE search.
      *
-     * @param array<int|string, string|array> $criteria
+     * @param array<int|string, mixed> $criteria
      * @param array<string, string>|null $orderBy
      * @param array<string, string>|null $search
      *
@@ -133,7 +133,7 @@ interface BaseRepositoryInterface
     /**
      * Repository method to fetch current entity id values from database and return those as an array.
      *
-     * @param array<int|string, string|array>|null $criteria
+     * @param array<int|string, mixed>|null $criteria
      * @param array<string, string>|null $search
      *
      * @return array<int, string>
@@ -145,7 +145,7 @@ interface BaseRepositoryInterface
     /**
      * Generic count method to determine count of entities for specified criteria and search term(s).
      *
-     * @param array<int|string, string|array>|null $criteria
+     * @param array<int|string, mixed>|null $criteria
      * @param array<string, string>|null $search
      *
      * @throws InvalidArgumentException
@@ -188,7 +188,7 @@ interface BaseRepositoryInterface
      *
      * @see QueryBuilder::leftJoin() for parameters
      *
-     * @param array<int, array<int, string>> $parameters
+     * @param array<int, scalar> $parameters
      *
      * @throws InvalidArgumentException
      */
@@ -201,7 +201,7 @@ interface BaseRepositoryInterface
      *
      * @see QueryBuilder::innerJoin() for parameters
      *
-     * @param array<int, array<int, string>> $parameters
+     * @param array<int, scalar> $parameters
      *
      * @throws InvalidArgumentException
      */

@@ -23,6 +23,7 @@ use Symfony\Component\Process\Process;
 use Throwable;
 use Traversable;
 
+use function array_filter;
 use function array_map;
 use function array_unshift;
 use function count;
@@ -33,6 +34,7 @@ use function iterator_to_array;
 use function sort;
 use function sprintf;
 use function str_replace;
+use function strlen;
 
 /**
  * Class CheckDependencies
@@ -59,31 +61,33 @@ class CheckDependencies extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);
+        $io->info('Starting to check dependencies...');
         $directories = $this->getNamespaceDirectories();
         array_unshift($directories, $this->projectDir);
         $rows = $this->determineTableRows($io, $directories);
-        $headers = [
-            'Path',
-            'Dependency',
-            'Description',
-            'Version',
-            'New version',
-        ];
+
+        /**
+         * @psalm-suppress RedundantCastGivenDocblockType
+         * @psalm-suppress ArgumentTypeCoercion
+         */
+        $packageNameLength = (int)max(
+            array_map(
+                static fn (array $row): int => isset($row[1]) ? strlen($row[1]) : 0,
+                array_filter($rows, static fn (mixed $row): bool => !$row instanceof TableSeparator)
+            ) + [0]
+        );
 
         $style = clone Table::getStyleDefinition('box');
         $style->setCellHeaderFormat('<info>%s</info>');
 
         $table = new Table($output);
-        $table->setHeaders($headers);
+        $table->setHeaders($this->getHeaders());
         $table->setRows($rows);
         $table->setStyle($style);
-        $table->setColumnMaxWidth(2, 80);
-        $table->setColumnMaxWidth(3, 10);
-        $table->setColumnMaxWidth(4, 11);
-
-        count($rows)
-            ? $table->render()
-            : $io->success('Good news, there is not any vendor dependency to update at this time!');
+        $this->setTableColumnWidths($packageNameLength, $table);
+        $rows === []
+            ? $io->success('Good news, there is no any vendor dependency to update at this time!')
+            : $table->render();
 
         return 0;
     }
@@ -134,14 +138,14 @@ class CheckDependencies extends Command
          *
          * @param string $directory
          */
-        $iterator = function (string $directory) use ($progressBar, &$rows): void {
+        $iterator = function (string $directory) use ($io, $progressBar, &$rows): void {
             foreach ($this->processNamespacePath($directory) as $row => $data) {
                 $relativePath = '';
 
                 // First row of current library
                 if ($row === 0) {
                     // We want to add table separator between different libraries
-                    if (!empty($rows)) {
+                    if ($rows !== []) {
                         $rows[] = new TableSeparator();
                     }
 
@@ -156,6 +160,10 @@ class CheckDependencies extends Command
                     $rows[] = [''];
                     $rows[] = ['', '', '<fg=red>' . $data->warning . '</>'];
                 }
+            }
+
+            if (count($rows) === 1) {
+                $io->write("\033\143");
             }
 
             $progressBar->advance();
@@ -223,5 +231,35 @@ class CheckDependencies extends Command
         $progress->setMessage($message);
 
         return $progress;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function getHeaders(): array
+    {
+        return [
+            'Path',
+            'Dependency',
+            'Description',
+            'Version',
+            'New version',
+        ];
+    }
+
+    private function setTableColumnWidths(int $packageNameLength, Table $table): void
+    {
+        $widths = [
+            23,
+            $packageNameLength,
+            95 - $packageNameLength,
+            10,
+            11,
+        ];
+
+        foreach ($widths as $columnIndex => $width) {
+            $table->setColumnWidth($columnIndex, $width);
+            $table->setColumnMaxWidth($columnIndex, $width);
+        }
     }
 }

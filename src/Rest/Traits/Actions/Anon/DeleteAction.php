@@ -27,14 +27,6 @@ trait DeleteAction
     /**
      * Delete entity, accessible for anonymous users.
      *
-     * @Route(
-     *      "/{id}",
-     *      requirements={
-     *          "id" = "%app.uuid_v1_regex%",
-     *      },
-     *      methods={"DELETE"},
-     *  )
-     *
      * @OA\Response(
      *     response=200,
      *     description="deleted",
@@ -46,6 +38,13 @@ trait DeleteAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/{id}',
+        requirements: [
+            'id' => '%app.uuid_v1_regex%',
+        ],
+        methods: [Request::METHOD_DELETE],
+    )]
     public function deleteAction(Request $request, string $id): Response
     {
         return $this->deleteMethod($request, $id);

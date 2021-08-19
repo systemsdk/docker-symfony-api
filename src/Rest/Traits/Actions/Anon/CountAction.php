@@ -27,11 +27,6 @@ trait CountAction
     /**
      * Count entities, accessible for anonymous users.
      *
-     * @Route(
-     *     path="/count",
-     *     methods={"GET"},
-     *  )
-     *
      * @OA\Response(
      *     response=200,
      *     description="success",
@@ -44,6 +39,10 @@ trait CountAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/count',
+        methods: [Request::METHOD_GET],
+    )]
     public function countAction(Request $request): Response
     {
         return $this->countMethod($request);

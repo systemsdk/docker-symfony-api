@@ -23,61 +23,51 @@ trait UserRelations
 {
     /**
      * @var Collection<int, UserGroup>|ArrayCollection<int, UserGroup>
-     *
-     * @Groups({
-     *      "User.userGroups",
-     *  })
-     *
-     * @ORM\ManyToMany(
-     *      targetEntity="App\Entity\UserGroup",
-     *      inversedBy="users",
-     *  )
-     * @ORM\JoinTable(
-     *      name="user_has_user_group",
-     *  )
      */
+    #[ORM\ManyToMany(
+        targetEntity: UserGroup::class,
+        inversedBy: 'users',
+    )]
+    #[ORM\JoinTable(name: 'user_has_user_group')]
+    #[Groups([
+        'User.userGroups',
+    ])]
     protected Collection | ArrayCollection $userGroups;
 
     /**
      * @var Collection<int, LogRequest>|ArrayCollection<int, LogRequest>
-     *
-     * @Groups({
-     *      "User.logsRequest",
-     *  })
-     *
-     * @ORM\OneToMany(
-     *      targetEntity="App\Entity\LogRequest",
-     *      mappedBy="user",
-     *  )
      */
+    #[ORM\OneToMany(
+        mappedBy: 'user',
+        targetEntity: LogRequest::class,
+    )]
+    #[Groups([
+        'User.logsRequest',
+    ])]
     protected Collection | ArrayCollection $logsRequest;
 
     /**
      * @var Collection<int, LogLogin>|ArrayCollection<int, LogLogin>
-     *
-     * @Groups({
-     *      "User.logsLogin",
-     *  })
-     *
-     * @ORM\OneToMany(
-     *      targetEntity="App\Entity\LogLogin",
-     *      mappedBy="user",
-     *  )
      */
+    #[ORM\OneToMany(
+        mappedBy: 'user',
+        targetEntity: LogLogin::class,
+    )]
+    #[Groups([
+        'User.logsLogin',
+    ])]
     protected Collection | ArrayCollection $logsLogin;
 
     /**
      * @var Collection<int, LogLoginFailure>|ArrayCollection<int, LogLoginFailure>
-     *
-     * @Groups({
-     *      "User.logsLoginFailure",
-     *  })
-     *
-     * @ORM\OneToMany(
-     *      targetEntity="App\Entity\LogLoginFailure",
-     *      mappedBy="user",
-     *  )
      */
+    #[ORM\OneToMany(
+        mappedBy: 'user',
+        targetEntity: LogLoginFailure::class,
+    )]
+    #[Groups([
+        'User.logsLoginFailure',
+    ])]
     protected Collection | ArrayCollection $logsLoginFailure;
 
     /**
@@ -89,14 +79,13 @@ trait UserRelations
      * If you want to get user inherited roles you need to implement that
      * logic by yourself OR use eg. `/user/{uuid}/roles` API endpoint.
      *
-     * @return string[]
-     *
-     * @Groups({
-     *      "User.roles",
-     *
-     *      User::SET_USER_PROFILE,
-     *  })
+     * @return array<int, string>
      */
+    #[Groups([
+        'User.roles',
+
+        User::SET_USER_PROFILE,
+    ])]
     public function getRoles(): array
     {
         return $this->userGroups
@@ -149,7 +138,9 @@ trait UserRelations
      */
     public function addUserGroup(UserGroup $userGroup): self
     {
-        if (!$this->userGroups->contains($userGroup)) {
+        $contains = $this->userGroups->contains($userGroup);
+
+        if (!$contains) {
             $this->userGroups->add($userGroup);
 
             /* @noinspection PhpParamsInspection */
@@ -164,7 +155,9 @@ trait UserRelations
      */
     public function removeUserGroup(UserGroup $userGroup): self
     {
-        if ($this->userGroups->removeElement($userGroup)) {
+        $removed = $this->userGroups->removeElement($userGroup);
+
+        if ($removed) {
             /* @noinspection PhpParamsInspection */
             $userGroup->removeUser($this);
         }

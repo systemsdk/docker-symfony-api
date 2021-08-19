@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Rest\Traits\Actions\Logged;
 
 use App\Rest\Traits\Methods\CountMethod;
+use App\Security\RolesService;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,13 +28,6 @@ trait CountAction
 
     /**
      * Count entities, accessible only for 'ROLE_LOGGED' users.
-     *
-     * @Route(
-     *     path="/count",
-     *     methods={"GET"},
-     *  )
-     *
-     * @Security("is_granted('ROLE_LOGGED')")
      *
      * @OA\Response(
      *     response=200,
@@ -57,6 +51,11 @@ trait CountAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/count',
+        methods: [Request::METHOD_GET],
+    )]
+    #[IsGranted(RolesService::ROLE_LOGGED)]
     public function countAction(Request $request): Response
     {
         return $this->countMethod($request);

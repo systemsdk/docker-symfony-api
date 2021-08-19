@@ -13,7 +13,6 @@ use UnexpectedValueException;
 
 use function array_key_exists;
 use function array_merge;
-use function compact;
 use function file_get_contents;
 use function file_put_contents;
 use function getenv;
@@ -129,7 +128,7 @@ class Auth
                         'HTTP_X-Requested-With' => 'XMLHttpRequest',
                     ]
                 ),
-                JSON::encode(compact('username', 'password'))
+                JSON::encode(['username' => $username, 'password' => $password])
             );
 
             $response = $client->getResponse();

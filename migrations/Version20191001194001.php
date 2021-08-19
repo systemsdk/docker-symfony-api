@@ -191,7 +191,7 @@ CREATE TABLE log_request (
     content LONGTEXT DEFAULT NULL,
     content_type VARCHAR(255) DEFAULT NULL,
     content_type_short VARCHAR(255) DEFAULT NULL,
-    is_master_request TINYINT(1) NOT NULL,
+    is_main_request TINYINT(1) NOT NULL,
     is_xml_http_request TINYINT(1) NOT NULL,
     `date` DATE NOT NULL COMMENT '(DC2Type:date_immutable)',
     time DATETIME NOT NULL COMMENT '(DC2Type:datetime_immutable)',

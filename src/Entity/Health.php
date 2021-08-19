@@ -17,48 +17,38 @@ use Throwable;
 /**
  * Class Health
  *
- * @ORM\Table(
- *      name="health",
- *  )
- * @ORM\Entity()
- *
  * @package App\Entity
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'health')]
 class Health implements EntityInterface
 {
     // Traits
     use Uuid;
 
     /**
-     * @Groups({
-     *      "Health",
-     *      "Health.id",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="id",
-     *      type="uuid_binary_ordered_time",
-     *      unique=true,
-     *      nullable=false,
-     *  )
-     * @ORM\Id()
-     *
      * @OA\Property(type="string", format="uuid")
      */
+    #[ORM\Id]
+    #[ORM\Column(
+        name: 'id',
+        type: 'uuid_binary_ordered_time',
+        unique: true,
+    )]
+    #[Groups([
+        'Health',
+        'Health.id',
+    ])]
     private UuidInterface $id;
 
-    /**
-     * @Groups({
-     *      "Health",
-     *      "Health.timestamp",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="timestamp",
-     *      type="datetime_immutable",
-     *      nullable=false,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'timestamp',
+        type: 'datetime_immutable',
+    )]
+    #[Groups([
+        'Health',
+        'Health.timestamp',
+    ])]
     private DateTimeImmutable $timestamp;
 
     /**

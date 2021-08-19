@@ -39,10 +39,8 @@ class HealthControllerTest extends WebTestCase
      */
     public function testThatHealthRouteDoesNotMakeRequestLog(): void
     {
-        static::bootKernel();
-
         /** @var LogRequestResource $resource */
-        $resource = static::$container->get(LogRequestResource::class);
+        $resource = static::getContainer()->get(LogRequestResource::class);
         $expectedLogCount = $resource->count();
         $client = $this->getTestClient();
         $client->request('GET', $this->baseUrl);

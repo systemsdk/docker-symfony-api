@@ -12,17 +12,12 @@ use App\Rest\Controller;
 use App\Rest\ResponseHandler;
 use App\Rest\Traits\Actions;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 
 /**
  * Class ApiKeyController
- *
- * @Route(
- *     path="/api_key",
- *  )
- *
- * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  *
  * @OA\Tag(name="ApiKey Management")
  *
@@ -31,6 +26,10 @@ use Symfony\Component\Routing\Annotation\Route;
  * @method ApiKeyResource getResource()
  * @method ResponseHandler getResponseHandler()
  */
+#[Route(
+    path: '/api_key',
+)]
+#[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
 class ApiKeyController extends Controller
 {
     // Traits for REST actions

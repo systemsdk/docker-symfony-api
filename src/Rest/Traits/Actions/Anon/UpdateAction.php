@@ -28,14 +28,6 @@ trait UpdateAction
     /**
      * Update entity with new data, accessible for anonymous users.
      *
-     * @Route(
-     *      "/{id}",
-     *      requirements={
-     *          "id" = "%app.uuid_v1_regex%",
-     *      },
-     *      methods={"PUT"},
-     *  )
-     *
      * @OA\RequestBody(
      *      request="body",
      *      description="object",
@@ -56,6 +48,13 @@ trait UpdateAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/{id}',
+        requirements: [
+            'id' => '%app.uuid_v1_regex%',
+        ],
+        methods: [Request::METHOD_PUT],
+    )]
     public function updateAction(Request $request, RestDtoInterface $restDto, string $id): Response
     {
         return $this->updateMethod($request, $restDto, $id);

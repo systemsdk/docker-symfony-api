@@ -4,26 +4,24 @@ declare(strict_types=1);
 
 namespace App\Validator\Constraints;
 
+use Attribute;
 use Symfony\Component\Validator\Constraint;
 
 /**
  * Class Timezone
+ *
+ * Usage example;
+ *  App\Validator\Constraints\Timezone()
  *
  * @Annotation
  * @Target({"PROPERTY"})
  *
  * @package App\Validator\Constraints
  */
+#[Attribute(Attribute::TARGET_PROPERTY | Attribute::IS_REPEATABLE)]
 class Timezone extends Constraint
 {
-    /**
-     * Unique constant for validator constrain
-     */
     public const INVALID_TIMEZONE = '1f8dd2a3-5b61-43ca-a6b2-af553f86ac17';
-
-    /**
-     * Message for validation error
-     */
     public const MESSAGE = 'This timezone "{{ timezone }}" is not valid.';
 
     /**

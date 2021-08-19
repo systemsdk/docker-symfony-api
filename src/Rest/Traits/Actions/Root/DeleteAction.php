@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Rest\Traits\Actions\Root;
 
 use App\Rest\Traits\Methods\DeleteMethod;
+use App\Security\RolesService;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,16 +28,6 @@ trait DeleteAction
 
     /**
      * Delete entity, accessible only for 'ROLE_ROOT' users.
-     *
-     * @Route(
-     *      "/{id}",
-     *      requirements={
-     *          "id" = "%app.uuid_v1_regex%",
-     *      },
-     *      methods={"DELETE"},
-     *  )
-     *
-     * @Security("is_granted('ROLE_ROOT')")
      *
      * @OA\Response(
      *     response=200,
@@ -59,6 +50,14 @@ trait DeleteAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/{id}',
+        requirements: [
+            'id' => '%app.uuid_v1_regex%',
+        ],
+        methods: [Request::METHOD_DELETE],
+    )]
+    #[IsGranted(RolesService::ROLE_ROOT)]
     public function deleteAction(Request $request, string $id): Response
     {
         return $this->deleteMethod($request, $id);

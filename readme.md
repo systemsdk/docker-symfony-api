@@ -20,7 +20,7 @@ Note: OS recommendation - Linux Ubuntu based.
 1. Nginx 1.21
 2. PHP 8.0 fpm
 3. MySQL 8
-4. Symfony 4 LTS
+4. Symfony 5
 5. RabbitMQ 3
 6. Elasticsearch 7
 7. Kibana 7
@@ -254,7 +254,7 @@ etc....
 Notes: Please see more commands in Makefile
 
 ## Architecture & packages
-* [Symfony 4](https://symfony.com)
+* [Symfony 5](https://symfony.com)
 * [doctrine-migrations-bundle](https://github.com/doctrine/DoctrineMigrationsBundle)
 * [doctrine-fixtures-bundle](https://github.com/doctrine/DoctrineFixturesBundle)
 * [command-scheduler-bundle](https://packagist.org/packages/dukecity/command-scheduler-bundle)

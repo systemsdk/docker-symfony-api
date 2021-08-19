@@ -17,7 +17,7 @@ use Doctrine\ORM\Query\SqlWalker;
  */
 class UuidToOuuid extends FunctionNode
 {
-    public $value;
+    public mixed $value;
 
     /**
      * @throws QueryException

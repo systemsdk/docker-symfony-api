@@ -27,11 +27,6 @@ trait IdsAction
     /**
      * Find ids list, accessible for anonymous users.
      *
-     * @Route(
-     *     path="/ids",
-     *     methods={"GET"},
-     *  )
-     *
      * @OA\Response(
      *     response=200,
      *     description="success",
@@ -43,6 +38,10 @@ trait IdsAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/ids',
+        methods: [Request::METHOD_GET],
+    )]
     public function idsAction(Request $request): Response
     {
         return $this->idsMethod($request);

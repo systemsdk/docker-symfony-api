@@ -39,7 +39,7 @@ make ssh-rabbitmq                       # Enter rabbitmq container shell
 make ssh-elasticsearch                  # Enter elasticsearch container shell
 make ssh-kibana                         # Enter kibana container shell
 
-make exec                               # Exucute some command defined in cmd="..." variable inside symfony container shell
+make exec                               # Execute some command defined in cmd="..." variable inside symfony container shell
 make exec-bash                          # Execute several commands defined in cmd="..." variable inside symfony container shell
 
 make report-prepare                     # Create /reports/coverage folder, will be used for report after running tests

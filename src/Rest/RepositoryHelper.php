@@ -22,6 +22,7 @@ use function is_numeric;
 use function str_contains;
 use function strcmp;
 use function strtolower;
+use function syslog;
 
 /**
  * Class RepositoryHelper
@@ -73,7 +74,7 @@ class RepositoryHelper
      *
      * @see \App\Repository\Traits\RepositoryMethodsTrait::getQueryBuilder()
      *
-     * @param array<int|string, string|array>|null $criteria
+     * @param array<int|string, mixed>|null $criteria
      *
      * @throws InvalidArgumentException
      */
@@ -81,7 +82,7 @@ class RepositoryHelper
     {
         $criteria ??= [];
 
-        if (empty($criteria)) {
+        if ($criteria === []) {
             return;
         }
 
@@ -108,7 +109,7 @@ class RepositoryHelper
     {
         $terms ??= [];
 
-        if (empty($columns)) {
+        if ($columns === []) {
             return;
         }
 
@@ -212,7 +213,7 @@ class RepositoryHelper
      *
      * @see https://gist.github.com/jgornick/8671644
      *
-     * @param array<int|string, string|array> $criteria
+     * @param array<int|string, mixed> $criteria
      *
      * @throws InvalidArgumentException
      */
@@ -227,13 +228,13 @@ class RepositoryHelper
     }
 
     /**
-     * @param array<int|string, string|array> $criteria
+     * @param array<int|string, mixed> $criteria
      *
      * @throws InvalidArgumentException
      */
     private static function processExpression(QueryBuilder $queryBuilder, Composite $expression, array $criteria): void
     {
-        $iterator = static function (array $comparison, string $key) use ($queryBuilder, $expression): void {
+        $iterator = static function (array $comparison, string | int $key) use ($queryBuilder, $expression): void {
             $expressionAnd = ($key === 'and' || array_key_exists('and', $comparison));
             $expressionOr = ($key === 'or' || array_key_exists('or', $comparison));
 
@@ -244,7 +245,7 @@ class RepositoryHelper
     }
 
     /**
-     * @param array<int|string, string|array> $comparison
+     * @param array<int|string, mixed> $comparison
      *
      * @throws InvalidArgumentException
      */
@@ -273,7 +274,7 @@ class RepositoryHelper
      *
      * @param string|array<int, string> $value
      *
-     * @return array{0: string, 1: string, 2: string|array}
+     * @return array{0: string, 1: string, 2: string|array<int, string>}
      */
     private static function createCriteria(string $column, string | array $value): array
     {
@@ -287,7 +288,7 @@ class RepositoryHelper
     }
 
     /**
-     * @param array<int|string, string|array> $comparison
+     * @param array<int|string, string|array<mixed>> $comparison
      *
      * @return array<int, mixed>
      */
@@ -300,7 +301,7 @@ class RepositoryHelper
         $parameters = [$comparisonObject->field];
         $lowercaseOperator = strtolower($comparisonObject->operator);
 
-        if (!($lowercaseOperator === 'isnull' || $lowercaseOperator === 'isnotnull')) {
+        if ($lowercaseOperator !== 'isnull' && $lowercaseOperator !== 'isnotnull') {
             $parameters = self::getComparisonParameters(
                 $queryBuilder,
                 $comparisonObject,
@@ -334,7 +335,7 @@ class RepositoryHelper
         } else {
             // Otherwise this must be IN or NOT IN expression
             try {
-                $value = array_map([UuidHelper::class, 'getBytes'], $value);
+                $value = array_map(static fn (string $value): string => UuidHelper::getBytes($value), $value);
             } catch (InvalidUuidStringException $exception) {
                 // Ok so value isn't list of UUIDs
                 syslog(LOG_INFO, $exception->getMessage());
@@ -352,7 +353,7 @@ class RepositoryHelper
     }
 
     /**
-     * @param array<int|string, string|array> $condition
+     * @param array<int|string, string|array<int|string, string>> $condition
      */
     private static function getIterator(array &$condition): Closure
     {

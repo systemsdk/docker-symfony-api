@@ -21,21 +21,23 @@ use function mb_strlen;
 /**
  * Class LogRequest
  *
- * @ORM\Table(
- *      name="log_request",
- *      indexes={
- *          @ORM\Index(name="user_id", columns={"user_id"}),
- *          @ORM\Index(name="api_key_id", columns={"api_key_id"}),
- *          @ORM\Index(name="request_date", columns={"date"}),
- *      },
- *  )
- * @ORM\Entity(
- *      readOnly=true,
- *  )
- * @ORM\HasLifecycleCallbacks()
- *
  * @package App\Entity
  */
+#[ORM\Entity(readOnly: true)]
+#[ORM\Table(name: 'log_request')]
+#[ORM\Index(
+    columns: ['user_id'],
+    name: 'user_id',
+)]
+#[ORM\Index(
+    columns: ['api_key_id'],
+    name: 'api_key_id',
+)]
+#[ORM\Index(
+    columns: ['date'],
+    name: 'request_date',
+)]
+#[ORM\HasLifecycleCallbacks]
 class LogRequest implements EntityInterface
 {
     use LogEntityTrait;
@@ -43,107 +45,52 @@ class LogRequest implements EntityInterface
     use Uuid;
 
     /**
-     * @Groups({
-     *     "LogRequest",
-     *     "LogRequest.id",
-     *
-     *     "ApiKey.logsRequest",
-     *     "User.logRequest",
-     *  })
-     *
-     * @ORM\Column(
-     *     name="id",
-     *     type="uuid_binary_ordered_time",
-     *     unique=true,
-     *     nullable=false,
-     *  )
-     * @ORM\Id()
-     *
      * @OA\Property(type="string", format="uuid")
      */
+    #[ORM\Id]
+    #[ORM\Column(
+        name: 'id',
+        type: 'uuid_binary_ordered_time',
+        unique: true,
+    )]
+    #[Groups([
+        'LogRequest',
+        'LogRequest.id',
+
+        'ApiKey.logsRequest',
+        'User.logsRequest',
+    ])]
     private UuidInterface $id;
 
-    /**
-     * @Groups({
-     *      "LogRequest.user",
-     *  })
-     *
-     * @ORM\ManyToOne(
-     *      targetEntity="App\Entity\User",
-     *      inversedBy="logsRequest",
-     *  )
-     * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(
-     *          name="user_id",
-     *          referencedColumnName="id",
-     *          nullable=true,
-     *          onDelete="SET NULL",
-     *      ),
-     *  })
-     */
-    private ?User $user;
-
-    /**
-     * @Groups({
-     *      "LogRequest.apiKey",
-     *  })
-     *
-     * @ORM\ManyToOne(
-     *      targetEntity="App\Entity\ApiKey",
-     *      inversedBy="logsRequest",
-     *  )
-     * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(
-     *          name="api_key_id",
-     *          referencedColumnName="id",
-     *          nullable=true,
-     *          onDelete="SET NULL",
-     *      ),
-     *  })
-     */
-    private ?ApiKey $apiKey;
-
-    /**
-     * @Groups({
-     *      "LogRequest",
-     *      "LogRequest.statusCode",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="status_code",
-     *      type="integer",
-     *      nullable=false,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'status_code',
+        type: 'integer',
+    )]
+    #[Groups([
+        'LogRequest',
+        'LogRequest.statusCode',
+    ])]
     private int $statusCode = 0;
 
-    /**
-     * @Groups({
-     *      "LogRequest",
-     *      "LogRequest.responseContentLength",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="response_content_length",
-     *      type="integer",
-     *      nullable=false,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'response_content_length',
+        type: 'integer',
+    )]
+    #[Groups([
+        'LogRequest',
+        'LogRequest.responseContentLength',
+    ])]
     private int $responseContentLength = 0;
 
-    /**
-     * @Groups({
-     *      "LogRequest",
-     *      "LogRequest.isMasterRequest",
-     *  })
-     *
-     * @ORM\Column(
-     *      name="is_master_request",
-     *      type="boolean",
-     *      nullable=false,
-     *  )
-     */
-    private bool $masterRequest;
+    #[ORM\Column(
+        name: 'is_main_request',
+        type: 'boolean',
+    )]
+    #[Groups([
+        'LogRequest',
+        'LogRequest.isMainRequest',
+    ])]
+    private bool $mainRequest;
 
     /**
      * Constructor
@@ -156,14 +103,23 @@ class LogRequest implements EntityInterface
         private array $sensitiveProperties,
         ?Request $request = null,
         ?Response $response = null,
-        ?User $user = null,
-        ?ApiKey $apiKey = null,
-        ?bool $masterRequest = null
+        #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'logsRequest')]
+        #[ORM\JoinColumn(name: 'user_id', onDelete: 'SET NULL')]
+        #[Groups([
+            'LogRequest.user',
+        ])]
+        private ?User $user = null,
+        #[ORM\ManyToOne(targetEntity: ApiKey::class, inversedBy: 'logsRequest')]
+        #[ORM\JoinColumn(name: 'api_key_id', onDelete: 'SET NULL')]
+        #[Groups([
+            'LogRequest.apiKey',
+        ])]
+        private ?ApiKey $apiKey = null,
+        ?bool $mainRequest = null
     ) {
         $this->id = $this->createUuid();
-        $this->user = $user;
-        $this->apiKey = $apiKey;
-        $this->masterRequest = $masterRequest ?? true;
+        $this->mainRequest = $mainRequest ?? true;
+
         $this->processTimeAndDate();
 
         if ($request !== null) {
@@ -201,9 +157,9 @@ class LogRequest implements EntityInterface
         return $this->apiKey;
     }
 
-    public function isMasterRequest(): bool
+    public function isMainRequest(): bool
     {
-        return $this->masterRequest;
+        return $this->mainRequest;
     }
 
     /**

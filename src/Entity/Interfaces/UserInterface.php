@@ -12,8 +12,6 @@ namespace App\Entity\Interfaces;
 interface UserInterface
 {
     public function getId(): string;
-
     public function getUsername(): string;
-
     public function getEmail(): string;
 }

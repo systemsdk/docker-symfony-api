@@ -27,11 +27,6 @@ trait FindAction
     /**
      * Get list of entities, accessible for anonymous users.
      *
-     * @Route(
-     *     path="",
-     *     methods={"GET"},
-     *  )
-     *
      * @OA\Response(
      *     response=200,
      *     description="success",
@@ -43,6 +38,10 @@ trait FindAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '',
+        methods: [Request::METHOD_GET],
+    )]
     public function findAction(Request $request): Response
     {
         return $this->findMethod($request);

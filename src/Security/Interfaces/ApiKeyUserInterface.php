@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace App\Security\Interfaces;
 
 use App\Entity\ApiKey;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Interface ApiKeyUserInterface
  *
  * @package App\Security\Interfaces
  */
-interface ApiKeyUserInterface extends UserInterface
+interface ApiKeyUserInterface
 {
     /**
      * Constructor

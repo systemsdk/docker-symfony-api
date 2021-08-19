@@ -80,17 +80,11 @@ class CreateUserCommand extends Command
         $this->setDescription('Console command to create user to database');
     }
 
-    /**
-     * Getter for RolesService
-     */
     public function getRolesService(): RolesService
     {
         return $this->rolesService;
     }
 
-    /**
-     * Configures the current command.
-     */
     protected function configure(): void
     {
         parent::configure();

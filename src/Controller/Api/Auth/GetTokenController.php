@@ -8,6 +8,7 @@ use App\Utils\JSON;
 use JsonException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,11 +26,6 @@ class GetTokenController
 {
     /**
      * Get user Json Web Token (JWT) for authentication.
-     *
-     * @Route(
-     *      path="/auth/getToken",
-     *      methods={"POST"},
-     *  );
      *
      * @OA\Post(security={})
      *
@@ -76,6 +72,10 @@ class GetTokenController
      *
      * @throws HttpException|JsonException
      */
+    #[Route(
+        path: '/auth/getToken',
+        methods: [Request::METHOD_POST],
+    )]
     public function __invoke(): void
     {
         $message = sprintf(

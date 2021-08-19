@@ -21,13 +21,10 @@ use Throwable;
 /**
  * Class UserGroup
  *
- * @ORM\Table(
- *      name="user_group",
- *  )
- * @ORM\Entity()
- *
  * @package App\Entity
  */
+#[ORM\Entity]
+#[ORM\Table(name: 'user_group')]
 class UserGroup implements EntityInterface, Stringable
 {
     use Blameable;
@@ -38,113 +35,91 @@ class UserGroup implements EntityInterface, Stringable
     public const SET_USER_GROUP_BASIC = 'set.UserGroupBasic';
 
     /**
-     * @Groups({
-     *      "UserGroup",
-     *      "UserGroup.id",
-     *
-     *      "ApiKey.userGroups",
-     *      "User.userGroups",
-     *      "Role.userGroups",
-     *
-     *      User::SET_USER_PROFILE,
-     *      self::SET_USER_PROFILE_GROUPS,
-     *      self::SET_USER_GROUP_BASIC,
-     *  })
-     *
-     * @ORM\Column(
-     *      name="id",
-     *      type="uuid_binary_ordered_time",
-     *      unique=true,
-     *      nullable=false,
-     *  )
-     * @ORM\Id()
-     *
      * @OA\Property(type="string", format="uuid")
      */
+    #[ORM\Id]
+    #[ORM\Column(
+        name: 'id',
+        type: 'uuid_binary_ordered_time',
+        unique: true,
+    )]
+    #[Groups([
+        'UserGroup',
+        'UserGroup.id',
+
+        'ApiKey.userGroups',
+        'User.userGroups',
+        'Role.userGroups',
+
+        User::SET_USER_PROFILE,
+        self::SET_USER_PROFILE_GROUPS,
+        self::SET_USER_GROUP_BASIC,
+    ])]
     private UuidInterface $id;
 
-    /**
-     * @Groups({
-     *      "UserGroup.role",
-     *
-     *      User::SET_USER_PROFILE,
-     *      self::SET_USER_PROFILE_GROUPS,
-     *      self::SET_USER_GROUP_BASIC,
-     *  })
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Valid()
-     *
-     * @ORM\ManyToOne(
-     *      targetEntity="App\Entity\Role",
-     *      inversedBy="userGroups",
-     *  )
-     * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(
-     *          name="role",
-     *          referencedColumnName="role",
-     *          onDelete="CASCADE",
-     *      ),
-     *  })
-     */
+    #[ORM\ManyToOne(
+        targetEntity: Role::class,
+        inversedBy: 'userGroups',
+    )]
+    #[ORM\JoinColumn(
+        name: 'role',
+        referencedColumnName: 'role',
+        onDelete: 'CASCADE',
+    )]
+    #[Groups([
+        'UserGroup.role',
+
+        User::SET_USER_PROFILE,
+        self::SET_USER_PROFILE_GROUPS,
+        self::SET_USER_GROUP_BASIC,
+    ])]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Valid]
     private Role $role;
 
-    /**
-     * @Groups({
-     *      "UserGroup",
-     *      "UserGroup.name",
-     *
-     *      User::SET_USER_PROFILE,
-     *      self::SET_USER_PROFILE_GROUPS,
-     *      self::SET_USER_GROUP_BASIC,
-     *  })
-     *
-     * @Assert\NotBlank()
-     * @Assert\NotNull()
-     * @Assert\Length(min = 2, max = 255)
-     *
-     * @ORM\Column(
-     *      name="name",
-     *      type="string",
-     *      length=255,
-     *      nullable=false,
-     *  )
-     */
+    #[ORM\Column(
+        name: 'name',
+        type: 'string',
+        length: 255,
+    )]
+    #[Groups([
+        'UserGroup',
+        'UserGroup.name',
+
+        User::SET_USER_PROFILE,
+        self::SET_USER_PROFILE_GROUPS,
+        self::SET_USER_GROUP_BASIC,
+    ])]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 255)]
     private string $name = '';
 
     /**
      * @var Collection<int, User>|ArrayCollection<int, User>
-     *
-     * @Groups({
-     *      "UserGroup.users",
-     *  })
-     *
-     * @ORM\ManyToMany(
-     *      targetEntity="User",
-     *      mappedBy="userGroups",
-     *  )
-     * @ORM\JoinTable(
-     *      name="user_has_user_group",
-     *  )
      */
+    #[ORM\ManyToMany(
+        targetEntity: 'User',
+        mappedBy: 'userGroups',
+    )]
+    #[ORM\JoinTable(name: 'user_has_user_group')]
+    #[Groups([
+        'UserGroup.users',
+    ])]
     private Collection | ArrayCollection $users;
 
     /**
      * @var Collection<int, ApiKey>|ArrayCollection<int, ApiKey>
-     *
-     * @Groups({
-     *      "UserGroup.apiKeys",
-     *  })
-     *
-     * @ORM\ManyToMany(
-     *      targetEntity="ApiKey",
-     *      mappedBy="userGroups",
-     *  )
-     * @ORM\JoinTable(
-     *      name="api_key_has_user_group",
-     *  )
      */
+    #[ORM\ManyToMany(
+        targetEntity: 'ApiKey',
+        mappedBy: 'userGroups',
+    )]
+    #[ORM\JoinTable(name: 'api_key_has_user_group')]
+    #[Groups([
+        'UserGroup.apiKeys',
+    ])]
     private Collection | ArrayCollection $apiKeys;
 
     /**
@@ -214,7 +189,9 @@ class UserGroup implements EntityInterface, Stringable
      */
     public function addUser(User $user): self
     {
-        if (!$this->users->contains($user)) {
+        $contains = $this->users->contains($user);
+
+        if (!$contains) {
             $this->users->add($user);
             $user->addUserGroup($this);
         }
@@ -227,7 +204,9 @@ class UserGroup implements EntityInterface, Stringable
      */
     public function removeUser(User $user): self
     {
-        if ($this->users->removeElement($user)) {
+        $removed = $this->users->removeElement($user);
+
+        if ($removed) {
             $user->removeUserGroup($this);
         }
 
@@ -249,7 +228,9 @@ class UserGroup implements EntityInterface, Stringable
      */
     public function addApiKey(ApiKey $apiKey): self
     {
-        if (!$this->apiKeys->contains($apiKey)) {
+        $contains = $this->apiKeys->contains($apiKey);
+
+        if (!$contains) {
             $this->apiKeys->add($apiKey);
             $apiKey->addUserGroup($this);
         }
@@ -262,7 +243,9 @@ class UserGroup implements EntityInterface, Stringable
      */
     public function removeApiKey(ApiKey $apiKey): self
     {
-        if ($this->apiKeys->removeElement($apiKey)) {
+        $removed = $this->apiKeys->removeElement($apiKey);
+
+        if ($removed) {
             $apiKey->removeUserGroup($this);
         }
 

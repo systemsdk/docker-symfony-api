@@ -14,6 +14,5 @@ use DateTimeImmutable;
 interface EntityInterface
 {
     public function getId(): string;
-
     public function getCreatedAt(): ?DateTimeImmutable;
 }

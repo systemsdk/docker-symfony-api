@@ -29,7 +29,7 @@ class CollectionNormalizer implements NormalizerInterface
      *
      * @return array<int, mixed>
      */
-    public function normalize($object, $format = null, array $context = []): array
+    public function normalize($object, ?string $format = null, array $context = []): array
     {
         $output = [];
 
@@ -43,7 +43,7 @@ class CollectionNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsNormalization($data, $format = null): bool
+    public function supportsNormalization($data, ?string $format = null): bool
     {
         return $format === 'json' && is_object($data) && $data instanceof Collection && is_object($data->first());
     }

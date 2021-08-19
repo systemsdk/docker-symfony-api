@@ -7,10 +7,11 @@ namespace App\Rest\Traits\Actions\Authenticated;
 use App\DTO\Interfaces\RestDtoInterface;
 use App\Rest\Traits\Methods\CreateMethod;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Throwable;
 
 /**
@@ -28,13 +29,6 @@ trait CreateAction
 
     /**
      * Create entity, accessible only for 'IS_AUTHENTICATED_FULLY' users.
-     *
-     * @Route(
-     *     path="",
-     *     methods={"POST"},
-     *  )
-     *
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @OA\RequestBody(
      *      request="body",
@@ -66,6 +60,11 @@ trait CreateAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '',
+        methods: [Request::METHOD_POST],
+    )]
+    #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
     public function createAction(Request $request, RestDtoInterface $restDto): Response
     {
         return $this->createMethod($request, $restDto);

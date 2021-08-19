@@ -6,7 +6,7 @@ namespace App\Security;
 
 use App\Entity\ApiKey;
 use App\Security\Interfaces\ApiKeyUserInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 use function array_merge;
 use function array_unique;
@@ -16,30 +16,13 @@ use function array_unique;
  *
  * @package App\Security
  */
-class ApiKeyUser implements ApiKeyUserInterface
+class ApiKeyUser implements ApiKeyUserInterface, UserInterface
 {
-    /**
-     * @Groups({
-     *      "ApiKeyUser",
-     *      "ApiKeyUser.apiKey",
-     *  })
-     */
-    private string $username;
-
-    /**
-     * @Groups({
-     *      "ApiKeyUser.apiKey",
-     *  })
-     */
+    private string $identifier;
     private ApiKey $apiKey;
 
     /**
      * @var array<int, string>
-     *
-     * @Groups({
-     *      "ApiKeyUser",
-     *      "ApiKeyUser.roles",
-     *  })
      */
     private array $roles;
 
@@ -49,10 +32,13 @@ class ApiKeyUser implements ApiKeyUserInterface
     public function __construct(ApiKey $apiKey, array $roles)
     {
         $this->apiKey = $apiKey;
-        $this->username = $this->apiKey->getToken();
+        $this->identifier = $this->apiKey->getToken();
         $this->roles = array_unique(array_merge($roles, [RolesService::ROLE_API]));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getApiKey(): ApiKey
     {
         return $this->apiKey;
@@ -73,9 +59,9 @@ class ApiKeyUser implements ApiKeyUserInterface
      *
      * @codeCoverageIgnore
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
-        return '';
+        return null;
     }
 
     /**
@@ -93,17 +79,24 @@ class ApiKeyUser implements ApiKeyUserInterface
      *
      * @codeCoverageIgnore
      */
-    public function getUsername(): string
+    public function eraseCredentials(): void
     {
-        return $this->username;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->identifier;
     }
 
     /**
+     * @remimder Remove this method when Symfony 6.0.0 is released
+     *
      * {@inheritdoc}
      *
      * @codeCoverageIgnore
      */
-    public function eraseCredentials(): void
+    public function getUsername(): string
     {
+        return $this->getUserIdentifier();
     }
 }

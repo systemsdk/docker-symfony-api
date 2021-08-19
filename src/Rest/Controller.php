@@ -10,6 +10,7 @@ use App\Rest\Interfaces\RestResourceInterface;
 use App\Rest\Traits\Actions\RestActionBase;
 use App\Rest\Traits\RestMethodHelper;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Service\Attribute\Required;
 use UnexpectedValueException;
 
 /**
@@ -77,11 +78,8 @@ abstract class Controller implements ControllerInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @see https://symfony.com/doc/current/service_container/autowiring.html#autowiring-other-methods-e-g-setters
-     *
-     * @required
      */
+    #[Required]
     public function setResponseHandler(ResponseHandler $responseHandler): self
     {
         $this->responseHandler = $responseHandler;

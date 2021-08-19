@@ -9,7 +9,7 @@ use App\Repository\UserRepository;
 use App\Security\RolesService;
 use App\Security\SecurityUser;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Throwable;
@@ -30,29 +30,29 @@ class SecurityUserFactory implements UserProviderInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @throws Throwable
      */
-    public function loadUserByUsername($username): UserInterface
+    public function supportsClass(string $class): bool
     {
-        $user = $this->userRepository->loadUserByUsername(
-            $username,
-            (bool)preg_match('#' . $this->uuidV1Regex . '#', $username)
-        );
-
-        if (!($user instanceof User)) {
-            throw new UsernameNotFoundException(sprintf('User not found for UUID: "%s".', $username));
-        }
-
-        return new SecurityUser($user, $this->rolesService->getInheritedRoles($user->getRoles()));
+        return $class === SecurityUser::class;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @throws Throwable
      */
-    public function supportsClass($class): bool
+    public function loadUserByIdentifier(string $identifier): SecurityUser
     {
-        return $class === SecurityUser::class;
+        $user = $this->userRepository->loadUserByIdentifier(
+            $identifier,
+            (bool)preg_match('#' . $this->uuidV1Regex . '#', $identifier)
+        );
+
+        if (!($user instanceof User)) {
+            throw new UserNotFoundException(sprintf('User not found for UUID: "%s".', $identifier));
+        }
+
+        return new SecurityUser($user, $this->rolesService->getInheritedRoles($user->getRoles()));
     }
 
     /**
@@ -66,12 +66,26 @@ class SecurityUserFactory implements UserProviderInterface
             throw new UnsupportedUserException(sprintf('Invalid user class "%s".', $user::class));
         }
 
-        $userEntity = $this->userRepository->find($user->getUsername());
+        $userEntity = $this->userRepository->find($user->getUserIdentifier());
 
         if (!($userEntity instanceof User)) {
-            throw new UsernameNotFoundException(sprintf('User not found for UUID: "%s".', $user->getUsername()));
+            throw new UserNotFoundException(sprintf('User not found for UUID: "%s".', $user->getUserIdentifier()));
         }
 
         return new SecurityUser($userEntity, $this->rolesService->getInheritedRoles($userEntity->getRoles()));
+    }
+
+    /**
+     * @reminder Remove this method when Symfony 6.0.0 is released
+     *
+     * {@inheritDoc}
+     *
+     * @throws Throwable
+     *
+     * @codeCoverageIgnore
+     */
+    public function loadUserByUsername(string $username): SecurityUser
+    {
+        return $this->loadUserByIdentifier($username);
     }
 }

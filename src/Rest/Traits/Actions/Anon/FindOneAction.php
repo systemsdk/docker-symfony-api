@@ -27,14 +27,6 @@ trait FindOneAction
     /**
      * Find entity, accessible for anonymous users.
      *
-     * @Route(
-     *      "/{id}",
-     *      requirements={
-     *          "id" = "%app.uuid_v1_regex%",
-     *      },
-     *      methods={"GET"},
-     *  )
-     *
      * @OA\Response(
      *     response=200,
      *     description="success",
@@ -46,6 +38,13 @@ trait FindOneAction
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/{id}',
+        requirements: [
+            'id' => '%app.uuid_v1_regex%',
+        ],
+        methods: [Request::METHOD_GET],
+    )]
     public function findOneAction(Request $request, string $id): Response
     {
         return $this->findOneMethod($request, $id);

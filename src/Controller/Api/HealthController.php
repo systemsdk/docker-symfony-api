@@ -32,11 +32,6 @@ class HealthController
      *
      * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
      *
-     * @Route(
-     *     path="/health",
-     *     methods={"GET"}
-     *  )
-     *
      * @OA\Get(security={})
      *
      * @OA\Response(
@@ -51,6 +46,10 @@ class HealthController
      *
      * @throws Throwable
      */
+    #[Route(
+        path: '/health',
+        methods: [Request::METHOD_GET],
+    )]
     public function __invoke(Request $request): Response
     {
         return $this->responseHandler->createResponse(
