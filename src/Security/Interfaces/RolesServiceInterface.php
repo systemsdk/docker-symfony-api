@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Security\Interfaces;
 
+use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
+
 /**
  * Interface RolesServiceInterface
  *
@@ -18,19 +20,9 @@ interface RolesServiceInterface
     public const ROLE_ROOT = 'ROLE_ROOT';
     public const ROLE_API = 'ROLE_API';
 
-    /**
-     * Constructor
-     *
-     * @param array<string, array<int, string>> $rolesHierarchy
-     */
-    public function __construct(array $rolesHierarchy);
-
-    /**
-     * Getter for role hierarchy.
-     *
-     * @return array<string, array<int, string>>
-     */
-    public function getHierarchy(): array;
+    public function __construct(
+        RoleHierarchyInterface $roleHierarchy,
+    );
 
     /**
      * Getter method to return all roles in single dimensional array.

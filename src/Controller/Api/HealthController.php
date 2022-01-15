@@ -28,7 +28,8 @@ class HealthController
     }
 
     /**
-     * Some simple tasks to ensure that application is up and running like expected.
+     * Route for application health check. This action will make some simple tasks to ensure that application is up
+     * and running like expected.
      *
      * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
      *

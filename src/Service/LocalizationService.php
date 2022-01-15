@@ -52,7 +52,7 @@ class LocalizationService
     }
 
     /**
-     * @return array<int, array<string, string>>
+     * @return array<int, array{timezone: string, identifier: string,  offset: string, value: string}>
      *
      * @noinspection PhpDocMissingThrowsInspection
      */
@@ -73,7 +73,7 @@ class LocalizationService
     /**
      * @noinspection PhpDocMissingThrowsInspection
      *
-     * @return array<int, array<string, string>>
+     * @return array<int, array{timezone: string, identifier: string,  offset: string, value: string}>
      */
     public function getFormattedTimezones(): array
     {

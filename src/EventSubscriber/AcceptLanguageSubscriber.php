@@ -19,10 +19,12 @@ class AcceptLanguageSubscriber implements EventSubscriberInterface
     // Supported locales
     public const LOCALE_EN = 'en';
     public const LOCALE_RU = 'ru';
+    public const LOCALE_FI = 'fi';
 
     public const SUPPORTED_LOCALES = [
         self::LOCALE_EN,
         self::LOCALE_RU,
+        self::LOCALE_FI,
     ];
 
     public function __construct(

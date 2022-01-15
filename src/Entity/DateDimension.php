@@ -9,8 +9,10 @@ use App\Entity\Traits\Uuid;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use OpenApi\Annotations as OA;
+use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Throwable;
@@ -28,6 +30,7 @@ use function floor;
     columns: ['date'],
     name: 'date',
 )]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class DateDimension implements EntityInterface
 {
     use Uuid;
@@ -38,7 +41,7 @@ class DateDimension implements EntityInterface
     #[ORM\Id]
     #[ORM\Column(
         name: 'id',
-        type: 'uuid_binary_ordered_time',
+        type: UuidBinaryOrderedTimeType::NAME,
         unique: true,
     )]
     #[Groups([
@@ -49,8 +52,10 @@ class DateDimension implements EntityInterface
 
     #[ORM\Column(
         name: 'year',
-        type: 'integer',
-        options: ['comment' => 'A full numeric representation of a year, 4 digits'],
+        type: Types::INTEGER,
+        options: [
+            'comment' => 'A full numeric representation of a year, 4 digits',
+        ],
     )]
     #[Groups([
         'DateDimension',
@@ -60,8 +65,10 @@ class DateDimension implements EntityInterface
 
     #[ORM\Column(
         name: 'month',
-        type: 'integer',
-        options: ['comment' => 'Day of the month without leading zeros; 1 to 12'],
+        type: Types::INTEGER,
+        options: [
+            'comment' => 'Day of the month without leading zeros; 1 to 12',
+        ],
     )]
     #[Groups([
         'DateDimension',
@@ -71,8 +78,10 @@ class DateDimension implements EntityInterface
 
     #[ORM\Column(
         name: 'day',
-        type: 'integer',
-        options: ['comment' => 'Day of the month without leading zeros; 1 to 31'],
+        type: Types::INTEGER,
+        options: [
+            'comment' => 'Day of the month without leading zeros; 1 to 31',
+        ],
     )]
     #[Groups([
         'DateDimension',
@@ -82,8 +91,10 @@ class DateDimension implements EntityInterface
 
     #[ORM\Column(
         name: 'quarter',
-        type: 'integer',
-        options: ['comment' => 'Calendar quarter; 1, 2, 3 or 4'],
+        type: Types::INTEGER,
+        options: [
+            'comment' => 'Calendar quarter; 1, 2, 3 or 4',
+        ],
     )]
     #[Groups([
         'DateDimension',
@@ -93,8 +104,10 @@ class DateDimension implements EntityInterface
 
     #[ORM\Column(
         name: 'week_number',
-        type: 'integer',
-        options: ['comment' => 'ISO-8601 week number of year, weeks starting on Monday'],
+        type: Types::INTEGER,
+        options: [
+            'comment' => 'ISO-8601 week number of year, weeks starting on Monday',
+        ],
     )]
     #[Groups([
         'DateDimension',
@@ -104,7 +117,7 @@ class DateDimension implements EntityInterface
 
     #[ORM\Column(
         name: 'day_number_of_week',
-        type: 'integer',
+        type: Types::INTEGER,
         options: [
             'comment' => 'ISO-8601 numeric representation of the day of the week; 1 (for Monday) to 7 (for Sunday)',
         ],
@@ -117,8 +130,10 @@ class DateDimension implements EntityInterface
 
     #[ORM\Column(
         name: 'day_number_of_year',
-        type: 'integer',
-        options: ['comment' => 'The day of the year (starting from 0); 0 through 365'],
+        type: Types::INTEGER,
+        options: [
+            'comment' => 'The day of the year (starting from 0); 0 through 365',
+        ],
     )]
     #[Groups([
         'DateDimension',
@@ -128,8 +143,10 @@ class DateDimension implements EntityInterface
 
     #[ORM\Column(
         name: 'leap_year',
-        type: 'boolean',
-        options: ['comment' => 'Whether it\'s a leap year'],
+        type: Types::BOOLEAN,
+        options: [
+            'comment' => 'Whether it\'s a leap year or not',
+        ],
     )]
     #[Groups([
         'DateDimension',
@@ -139,8 +156,10 @@ class DateDimension implements EntityInterface
 
     #[ORM\Column(
         name: 'week_numbering_year',
-        type: 'integer',
-        options: ['comment' => 'ISO-8601 week-numbering year.'],
+        type: Types::INTEGER,
+        options: [
+            'comment' => 'ISO-8601 week-numbering year.',
+        ],
     )]
     #[Groups([
         'DateDimension',
@@ -150,8 +169,10 @@ class DateDimension implements EntityInterface
 
     #[ORM\Column(
         name: 'unix_time',
-        type: 'bigint',
-        options: ['comment' => 'Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)'],
+        type: Types::BIGINT,
+        options: [
+            'comment' => 'Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)',
+        ],
     )]
     #[Groups([
         'DateDimension',
@@ -160,12 +181,15 @@ class DateDimension implements EntityInterface
     private int $unixTime;
 
     public function __construct(
-        #[ORM\Column(name: 'date', type: 'date')]
+        #[ORM\Column(
+            name: 'date',
+            type: Types::DATE_IMMUTABLE,
+        )]
         #[Groups([
             'DateDimension',
             'DateDimension.date',
         ])]
-        private DateTimeInterface $date
+        private DateTimeImmutable $date
     ) {
         $this->id = $this->createUuid();
 

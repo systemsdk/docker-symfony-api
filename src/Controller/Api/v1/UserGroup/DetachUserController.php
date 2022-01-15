@@ -2,46 +2,71 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\User;
+namespace App\Controller\Api\v1\UserGroup;
 
 use App\Entity\User;
 use App\Entity\UserGroup;
+use App\Resource\UserGroupResource;
 use App\Resource\UserResource;
+use App\Security\RolesService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Throwable;
 
 /**
- * Class UserGroupsController
+ * Class DetachUserController
  *
- * @OA\Tag(name="User Management")
+ * @OA\Tag(name="UserGroup Management")
  *
- * @package App\Controller\Api\User
+ * @package App\Controller\Api\v1\UserGroup
  */
-class UserGroupsController
+class DetachUserController
 {
     public function __construct(
+        private UserResource $userResource,
+        private UserGroupResource $userGroupResource,
         private SerializerInterface $serializer,
     ) {
     }
 
     /**
-     * Fetch specified user user groups, accessible only for 'IS_USER_HIMSELF' or 'ROLE_ROOT' users.
+     * Detach specified user from specified user group, accessible only for 'ROLE_ROOT' users.
      *
+     * @OA\Parameter(
+     *     name="userGroupId",
+     *     in="path",
+     *     required=true,
+     *     description="User Group GUID",
+     *     @OA\Schema(
+     *         type="string",
+     *         default="User Group GUID",
+     *     )
+     * )
+     * @OA\Parameter(
+     *     name="userId",
+     *     in="path",
+     *     required=true,
+     *     description="User GUID",
+     *     @OA\Schema(
+     *         type="string",
+     *         default="User GUID",
+     *     )
+     * )
      * @OA\Response(
      *     response=200,
-     *     description="User groups",
+     *     description="Users",
      *     @OA\JsonContent(
      *         type="array",
      *         @OA\Items(
      *             ref=@Model(
-     *                 type=\App\Entity\UserGroup::class,
-     *                 groups={"UserGroup", "UserGroup.role"},
+     *                 type=\App\Entity\User::class,
+     *                 groups={"User"},
      *             ),
      *         ),
      *     ),
@@ -55,7 +80,7 @@ class UserGroupsController
      *         @OA\Property(property="code", type="integer", description="Error code"),
      *         @OA\Property(property="message", type="string", description="Error description"),
      *     ),
-     *  )
+     * )
      * @OA\Response(
      *     response=403,
      *     description="Access denied",
@@ -66,30 +91,39 @@ class UserGroupsController
      *         @OA\Property(property="message", type="string", description="Error description"),
      *     ),
      *  )
+     *
+     * @throws Throwable
      */
     #[Route(
-        path: '/user/{requestUser}/groups',
+        path: '/v1/user_group/{userGroup}/user/{user}',
         requirements: [
-            'requestUser' => '%app.uuid_v1_regex%',
+            'userGroup' => '%app.uuid_v1_regex%',
+            'user' => '%app.uuid_v1_regex%',
         ],
-        methods: [Request::METHOD_GET],
+        methods: [Request::METHOD_DELETE],
     )]
-    #[Security('is_granted("IS_USER_HIMSELF", requestUser) or is_granted("ROLE_ROOT")')]
+    #[IsGranted(RolesService::ROLE_ROOT)]
     #[ParamConverter(
-        data: 'requestUser',
+        data: 'userGroup',
+        class: UserGroupResource::class,
+    )]
+    #[ParamConverter(
+        data: 'user',
         class: UserResource::class,
     )]
-    public function __invoke(User $requestUser): JsonResponse
+    public function __invoke(UserGroup $userGroup, User $user): JsonResponse
     {
+        $this->userGroupResource->save($userGroup->removeUser($user), false);
+        $this->userResource->save($user, true, true);
         $groups = [
             'groups' => [
-                UserGroup::SET_USER_GROUP_BASIC,
+                User::SET_USER_BASIC,
             ],
         ];
 
         return new JsonResponse(
-            $this->serializer->serialize($requestUser->getUserGroups()->getValues(), 'json', $groups),
-            json: true
+            $this->serializer->serialize($userGroup->getUsers()->getValues(), 'json', $groups),
+            json: true,
         );
     }
 }

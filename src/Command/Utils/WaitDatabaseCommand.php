@@ -43,8 +43,6 @@ class WaitDatabaseCommand extends Command
     /**
      * @noinspection PhpMissingParentCallCommonInspection
      *
-     * Execute the console command.
-     *
      * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output): int

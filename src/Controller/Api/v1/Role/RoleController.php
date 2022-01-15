@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\Role;
+namespace App\Controller\Api\v1\Role;
 
 use App\Resource\RoleResource;
 use App\Rest\Controller;
@@ -18,18 +18,17 @@ use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
  *
  * @OA\Tag(name="Role Management")
  *
- * @package App\Controller\Api\Role
+ * @package App\Controller\Api\v1\Role
  *
  * @method RoleResource getResource()
  * @method ResponseHandler getResponseHandler()
  */
 #[Route(
-    path: '/role',
+    path: '/v1/role',
 )]
 #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
 class RoleController extends Controller
 {
-    // Traits for REST actions
     use Actions\Admin\CountAction;
     use Actions\Admin\FindAction;
     use Actions\Admin\IdsAction;

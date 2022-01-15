@@ -29,6 +29,8 @@ trait RepositoryMethodsTrait
     /**
      * Wrapper for default Doctrine repository find method.
      *
+     * @phpstan-param 0|1|2|4|null $lockMode
+     *
      * @throws TransactionRequiredException
      * @throws OptimisticLockException
      * @throws ORMInvalidArgumentException
@@ -43,6 +45,8 @@ trait RepositoryMethodsTrait
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-param 1|2|3|4|5|6|string|null $hydrationMode
      */
     public function findAdvanced(string $id, string | int | null $hydrationMode = null): null | array | EntityInterface
     {

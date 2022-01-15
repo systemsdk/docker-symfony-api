@@ -13,6 +13,8 @@ use Symfony\Component\Validator\Constraint;
  * Usage example;
  *  App\Validator\Constraints\Timezone()
  *
+ * Just add that to your property as an annotation and you're good to go.
+ *
  * @Annotation
  * @Target({"PROPERTY"})
  *

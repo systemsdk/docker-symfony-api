@@ -74,7 +74,7 @@ return [
     ],
     'config' => [
         SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff::class => [
-            'maxLinesLength' => 45,
+            'maxLinesLength' => 50,
         ],
         PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
             'lineLimit' => 120,

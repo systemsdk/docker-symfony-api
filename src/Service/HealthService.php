@@ -13,7 +13,7 @@ use Throwable;
  *
  * @package App\Service
  */
-final class HealthService
+class HealthService
 {
     public function __construct(
         private HealthRepository $repository,

@@ -18,8 +18,6 @@ use function sprintf;
  *
  * @package App\Rest
  *
- * @property IteratorAggregate|IteratorAggregate<int, ControllerInterface> $items
- *
  * @method ControllerInterface get(string $className)
  * @method IteratorAggregate<int, ControllerInterface> getAll()
  *
@@ -32,7 +30,7 @@ class ControllerCollection implements Countable
     /**
      * Constructor
      *
-     * @param IteratorAggregate<int, ControllerInterface> $items
+     * @phpstan-param IteratorAggregate<int, ControllerInterface> $items
      */
     public function __construct(
         protected IteratorAggregate $items,

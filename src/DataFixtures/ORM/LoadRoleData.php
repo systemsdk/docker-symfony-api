@@ -9,8 +9,6 @@ use App\Security\Interfaces\RolesServiceInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Throwable;
 
 use function array_map;
@@ -21,13 +19,14 @@ use function array_map;
  * @package App\DataFixtures\ORM
  *
  * @psalm-suppress MissingConstructor
+ * @psalm-suppress PropertyNotSetInConstructor
  */
-final class LoadRoleData extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
+final class LoadRoleData extends Fixture implements OrderedFixtureInterface
 {
-    use ContainerAwareTrait;
-
-    private ObjectManager $manager;
-    private RolesServiceInterface $roles;
+    public function __construct(
+        private RolesServiceInterface $rolesService,
+    ) {
+    }
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -36,14 +35,10 @@ final class LoadRoleData extends Fixture implements OrderedFixtureInterface, Con
      */
     public function load(ObjectManager $manager): void
     {
-        /** @var RolesServiceInterface $rolesService */
-        $rolesService = $this->container->get('test.app.security.roles_service');
-        $this->roles = $rolesService;
-        $this->manager = $manager;
         // Create entities
-        array_map(fn (string $role): bool => $this->createRole($role), $this->roles->getRoles());
+        array_map(fn (string $role): bool => $this->createRole($manager, $role), $this->rolesService->getRoles());
         // Flush database changes
-        $this->manager->flush();
+        $manager->flush();
     }
 
     /**
@@ -55,21 +50,21 @@ final class LoadRoleData extends Fixture implements OrderedFixtureInterface, Con
     }
 
     /**
-     * Method to create, persist and flush Role entity to database.
+     * Method to create and persist role entity to database.
      *
      * @throws Throwable
      */
-    private function createRole(string $role): bool
+    private function createRole(ObjectManager $manager, string $role): bool
     {
         // Create new Role entity
         $entity = (new Role($role))
             ->setDescription('Description - ' . $role);
 
         // Persist entity
-        $this->manager->persist($entity);
+        $manager->persist($entity);
 
         // Create reference for later usage
-        $this->addReference('Role-' . $this->roles->getShort($role), $entity);
+        $this->addReference('Role-' . $this->rolesService->getShort($role), $entity);
 
         return true;
     }

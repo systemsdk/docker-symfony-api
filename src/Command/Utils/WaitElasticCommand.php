@@ -43,8 +43,6 @@ class WaitElasticCommand extends Command
     /**
      * @noinspection PhpMissingParentCallCommonInspection
      *
-     * Execute the console command.
-     *
      * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -52,6 +50,7 @@ class WaitElasticCommand extends Command
         $io = $this->getSymfonyStyle($input, $output);
         for ($i = 0; $i < 120; $i += self::WAIT_SLEEP_TIME) {
             try {
+                /** @var array<string, mixed> $data */
                 $data = $this->elasticsearchService->info();
                 $io->success('Connection to elastic ' . $data['version']['number'] . ' is ok!');
 

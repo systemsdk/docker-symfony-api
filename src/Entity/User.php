@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Doctrine\DBAL\Types\Types as AppTypes;
 use App\Entity\Interfaces\EntityInterface;
 use App\Entity\Interfaces\UserGroupAwareInterface;
 use App\Entity\Interfaces\UserInterface;
@@ -14,8 +15,10 @@ use App\Entity\Traits\Uuid;
 use App\Service\LocalizationService;
 use App\Validator\Constraints as AppAssert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use OpenApi\Annotations as OA;
+use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints as AssertCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -37,6 +40,7 @@ use Throwable;
     name: 'uq_email',
     columns: ['email'],
 )]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[AssertCollection\UniqueEntity('email')]
 #[AssertCollection\UniqueEntity('username')]
 class User implements EntityInterface, UserInterface, UserGroupAwareInterface
@@ -57,7 +61,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
     #[ORM\Id]
     #[ORM\Column(
         name: 'id',
-        type: 'uuid_binary_ordered_time',
+        type: UuidBinaryOrderedTimeType::NAME,
         unique: true,
         nullable: false,
     )]
@@ -78,7 +82,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
 
     #[ORM\Column(
         name: 'username',
-        type: 'string',
+        type: Types::STRING,
         length: 255,
         nullable: false,
     )]
@@ -91,12 +95,15 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
     ])]
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    #[Assert\Length(min: 2, max: 255)]
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+    )]
     private string $username = '';
 
     #[ORM\Column(
         name: 'first_name',
-        type: 'string',
+        type: Types::STRING,
         length: 255,
         nullable: false,
     )]
@@ -109,12 +116,15 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
     ])]
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    #[Assert\Length(min: 2, max: 255)]
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+    )]
     private string $firstName = '';
 
     #[ORM\Column(
         name: 'last_name',
-        type: 'string',
+        type: Types::STRING,
         length: 255,
         nullable: false,
     )]
@@ -127,12 +137,15 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
     ])]
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    #[Assert\Length(min: 2, max: 255)]
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+    )]
     private string $lastName = '';
 
     #[ORM\Column(
         name: 'email',
-        type: 'string',
+        type: Types::STRING,
         length: 255,
         nullable: false,
     )]
@@ -150,9 +163,11 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
 
     #[ORM\Column(
         name: 'language',
-        type: 'EnumLanguage',
+        type: AppTypes::ENUM_LANGUAGE,
         nullable: false,
-        options: ['comment' => 'User language for translations'],
+        options: [
+            'comment' => 'User language for translations',
+        ],
     )]
     #[Groups([
         'User',
@@ -168,9 +183,11 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
 
     #[ORM\Column(
         name: 'locale',
-        type: 'EnumLocale',
+        type: AppTypes::ENUM_LOCALE,
         nullable: false,
-        options: ['comment' => 'User locale for number, time, date, etc. formatting.'],
+        options: [
+            'comment' => 'User locale for number, time, date, etc. formatting.',
+        ],
     )]
     #[Groups([
         'User',
@@ -186,12 +203,12 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
 
     #[ORM\Column(
         name: 'timezone',
-        type: 'string',
+        type: Types::STRING,
         length: 255,
         nullable: false,
         options: [
             'comment' => 'User timezone which should be used to display time, date, etc.',
-            'default' => 'Europe/Helsinki',
+            'default' => LocalizationService::DEFAULT_TIMEZONE,
         ],
     )]
     #[Groups([
@@ -208,14 +225,19 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
 
     #[ORM\Column(
         name: 'password',
-        type: 'string',
+        type: Types::STRING,
         length: 255,
         nullable: false,
+        options: [
+            'comment' => 'Hashed password',
+        ],
     )]
     private string $password = '';
 
     /**
      * Plain password. Used for model validation. Must not be persisted.
+     *
+     * @see UserEntityEventListener
      */
     private string $plainPassword = '';
 

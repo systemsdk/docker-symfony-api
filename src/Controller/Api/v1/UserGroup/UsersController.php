@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\UserGroup;
+namespace App\Controller\Api\v1\UserGroup;
 
 use App\Entity\User;
 use App\Entity\UserGroup;
@@ -24,7 +24,7 @@ use Throwable;
  *
  * @OA\Tag(name="UserGroup Management")
  *
- * @package App\Controller\Api\UserGroup
+ * @package App\Controller\Api\v1\UserGroup
  */
 class UsersController
 {
@@ -36,11 +36,6 @@ class UsersController
 
     /**
      * List specified user group users, accessible only for 'ROLE_ADMIN' users.
-     *
-     * @ParamConverter(
-     *      "userGroup",
-     *      class="App\Resource\UserGroupResource",
-     *  )
      *
      * @OA\Response(
      *     response=200,
@@ -70,7 +65,7 @@ class UsersController
      * @throws Throwable
      */
     #[Route(
-        path: '/user_group/{userGroup}/users',
+        path: '/v1/user_group/{userGroup}/users',
         requirements: [
             'userGroup' => '%app.uuid_v1_regex%',
         ],

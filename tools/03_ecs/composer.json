@@ -1,14 +1,15 @@
 {
-	"name": "dimadeush/docker-symfony-api-tools",
+	"name": "systemsdk/docker-symfony-api-tools",
 	"description": "",
 	"require": {},
 	"require-dev": {
-		"symplify/easy-coding-standard": "9.4.*",
+		"friendsofphp/php-cs-fixer": "3.4.*",
+		"symplify/easy-coding-standard": "10.0.*",
 		"roave/security-advisories": "dev-latest"
 	},
 	"config": {
 		"platform": {
-			"php": "8.0.0"
+			"php": "8.1.0"
 		},
 		"preferred-install": {
 			"*": "dist"

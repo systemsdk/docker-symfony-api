@@ -50,5 +50,11 @@ jobs:
               run: make ecs
             - name: Run codeSniffer
               run: make phpcs
+            - name: Run PHPStan
+              run: make phpstan
+            - name: Run PHPInsights
+              run: make phpinsights
+            - name: Run php copy past detector
+              run: make phpcpd
             - name: Stop the docker images
               run: make stop-test

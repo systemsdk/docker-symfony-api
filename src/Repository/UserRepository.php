@@ -31,8 +31,15 @@ use function array_key_exists;
  */
 class UserRepository extends BaseRepository
 {
-    protected static string $entityName = Entity::class;
+    /**
+     * @var array<int, string>
+     */
     protected static array $searchColumns = ['username', 'firstName', 'lastName', 'email'];
+
+    /**
+     * @psalm-var class-string
+     */
+    protected static string $entityName = Entity::class;
 
     public function __construct(
         protected ManagerRegistry $managerRegistry,

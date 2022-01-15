@@ -8,6 +8,8 @@ use App\DTO\Interfaces\RestDtoInterface;
 use AutoMapperPlus\MapperInterface;
 use InvalidArgumentException;
 use LengthException;
+use ReflectionClass;
+use ReflectionNamedType;
 use Symfony\Component\HttpFoundation\Request;
 
 use function array_filter;
@@ -97,12 +99,16 @@ abstract class RestRequestMapper implements MapperInterface
 
     private function getObject(Request $request, RestDtoInterface $restDto): RestDtoInterface
     {
+        $reflectionClass = new ReflectionClass($restDto::class);
+
         foreach ($this->getValidProperties($request) as $property) {
             $setter = 'set' . ucfirst($property);
             $transformer = 'transform' . ucfirst($property);
+            $type = $reflectionClass->getProperty($property)->getType();
 
-            /** @var int|string|array<mixed>|null $value */
-            $value = $request->get($property);
+            $value = $type instanceof ReflectionNamedType && $type->getName() === 'array'
+                ? $request->request->all($property)
+                : $request->request->get($property);
 
             if (method_exists($this, $transformer)) {
                 /** @var int|string|object|array<mixed>|null $value */

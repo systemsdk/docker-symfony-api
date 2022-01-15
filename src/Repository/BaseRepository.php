@@ -35,10 +35,14 @@ abstract class BaseRepository implements BaseRepositoryInterface
     private const LEFT_JOIN = 'leftJoin';
 
     /**
+     * @psalm-var class-string
+     */
+    protected static string $entityName;
+
+    /**
      * @var array<int, string>
      */
     protected static array $searchColumns = [];
-    protected static string $entityName;
     protected static EntityManager $entityManager;
     protected ManagerRegistry $managerRegistry;
 
@@ -72,6 +76,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @psalm-return class-string
      */
     public function getEntityName(): string
     {
@@ -124,7 +130,10 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function processQueryBuilder(QueryBuilder $queryBuilder): void
     {
         // Reset processed joins and callbacks
-        self::$processedJoins = [self::INNER_JOIN => [], self::LEFT_JOIN => []];
+        self::$processedJoins = [
+            self::INNER_JOIN => [],
+            self::LEFT_JOIN => [],
+        ];
         self::$processedCallbacks = [];
         $this->processJoins($queryBuilder);
         $this->processCallbacks($queryBuilder);

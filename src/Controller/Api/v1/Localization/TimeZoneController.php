@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\Localization;
+namespace App\Controller\Api\v1\Localization;
 
 use App\Service\LocalizationService;
 use OpenApi\Annotations as OA;
@@ -18,7 +18,7 @@ use Throwable;
  *
  * @OA\Tag(name="Localization")
  *
- * @package App\Controller\Api\Localization
+ * @package App\Controller\Api\v1\Localization
  */
 class TimeZoneController
 {
@@ -43,7 +43,7 @@ class TimeZoneController
      *                 property="timezone",
      *                 type="string",
      *                 example="Europe",
-     *                 description="Africa,America,Antarctica,Arctic,Asia,Atlantic,Australia,Europe,Pacific,UTC."
+     *                 description="Africa,America,Antarctica,Arctic,Asia,Atlantic,Australia,Europe,Indian,Pacific,UTC."
      *             ),
      *             @OA\Property(
      *                 property="identier",
@@ -70,7 +70,7 @@ class TimeZoneController
      * @throws Throwable
      */
     #[Route(
-        path: '/localization/timezone',
+        path: '/v1/localization/timezone',
         methods: [Request::METHOD_GET],
     )]
     public function __invoke(): JsonResponse

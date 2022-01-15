@@ -74,7 +74,9 @@ class ListApiKeysCommand extends Command
      */
     private function getRows(): array
     {
-        return array_map($this->getFormatterApiKey(), $this->apiKeyResource->find(orderBy: ['token' => 'ASC']));
+        return array_map($this->getFormatterApiKey(), $this->apiKeyResource->find(orderBy: [
+            'token' => 'ASC',
+        ]));
     }
 
     /**

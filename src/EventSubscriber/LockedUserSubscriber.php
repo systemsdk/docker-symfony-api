@@ -13,10 +13,13 @@ use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Exception\LockedException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Throwable;
 
+use function assert;
 use function count;
 use function is_string;
 
@@ -30,6 +33,7 @@ class LockedUserSubscriber implements EventSubscriberInterface
     public function __construct(
         private UserRepository $userRepository,
         private LogLoginFailureResource $logLoginFailureResource,
+        private RequestStack $requestStack,
         private int $lockUserOnLoginFailureAttempts,
     ) {
     }
@@ -75,18 +79,16 @@ class LockedUserSubscriber implements EventSubscriberInterface
     /**
      * @throws Throwable
      */
-    public function onAuthenticationFailure(AuthenticationFailureEvent $event): void
+    public function onAuthenticationFailure(): void
     {
-        $token = $event->getException()->getToken();
+        $request = $this->requestStack->getCurrentRequest();
+        assert($request instanceof Request);
+        $user = $this->getUser(
+            (string)($request->query->get('username') ?? $request->request->get('username', ''))
+        );
 
-        if ($token !== null) {
-            $user = $this->getUser($token->getUser());
-
-            if ($user !== null) {
-                $this->logLoginFailureResource->save(new LogLoginFailure($user), true);
-            }
-
-            $token->setAuthenticated(false);
+        if ($user !== null) {
+            $this->logLoginFailureResource->save(new LogLoginFailure($user), true);
         }
     }
 

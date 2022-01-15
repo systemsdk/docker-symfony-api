@@ -26,6 +26,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class DateDimensionRepository extends BaseRepository
 {
+    /**
+     * @psalm-var class-string
+     */
     protected static string $entityName = Entity::class;
 
     public function __construct(

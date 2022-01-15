@@ -37,19 +37,19 @@ class UserHelper
     public function getUser(SymfonyStyle $io, string $question): ?UserEntity
     {
         $found = false;
-        $userEntity = null;
+        $user = null;
 
         while (!$found) {
-            $userEntity = $this->getUserEntity($io, $question);
+            $user = $this->getUserEntity($io, $question);
 
-            if (!$userEntity instanceof UserEntity) {
+            if (!$user instanceof UserEntity) {
                 break;
             }
 
-            $found = $this->isCorrectUser($io, $userEntity);
+            $found = $this->isCorrectUser($io, $user);
         }
 
-        return $userEntity;
+        return $user;
     }
 
     /**
@@ -61,19 +61,19 @@ class UserHelper
     public function getUserGroup(SymfonyStyle $io, string $question): ?UserGroupEntity
     {
         $found = false;
-        $userGroupEntity = null;
+        $userGroup = null;
 
         while (!$found) {
-            $userGroupEntity = $this->getUserGroupEntity($io, $question);
+            $userGroup = $this->getUserGroupEntity($io, $question);
 
-            if (!$userGroupEntity instanceof UserGroupEntity) {
+            if (!$userGroup instanceof UserGroupEntity) {
                 break;
             }
 
-            $found = $this->isCorrectUserGroup($io, $userGroupEntity);
+            $found = $this->isCorrectUserGroup($io, $userGroup);
         }
 
-        return $userGroupEntity;
+        return $userGroup;
     }
 
     /**
@@ -85,7 +85,9 @@ class UserHelper
     {
         $choices = [];
         $iterator = $this->getUserIterator($choices);
-        array_map($iterator, $this->userResource->find(orderBy: ['username' => 'asc']));
+        array_map($iterator, $this->userResource->find(orderBy: [
+            'username' => 'asc',
+        ]));
         $choices['Exit'] = 'Exit command';
 
         return $this->userResource->findOne((string)$io->choice($question, $choices));
@@ -101,7 +103,9 @@ class UserHelper
     {
         $choices = [];
         $iterator = $this->getUserGroupIterator($choices);
-        array_map($iterator, $this->userGroupResource->find(orderBy: ['name' => 'asc']));
+        array_map($iterator, $this->userGroupResource->find(orderBy: [
+            'name' => 'asc',
+        ]));
         $choices['Exit'] = 'Exit command';
 
         return $this->userGroupResource->findOne((string)$io->choice($question, $choices));

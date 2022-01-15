@@ -72,7 +72,9 @@ class EditUserCommand extends Command
         /** @var FormHelper $helper */
         $helper = $this->getHelper('form');
         /** @var UserDto $dtoEdit */
-        $dtoEdit = $helper->interactUsingForm(UserType::class, $input, $output, ['data' => $dtoLoaded]);
+        $dtoEdit = $helper->interactUsingForm(UserType::class, $input, $output, [
+            'data' => $dtoLoaded,
+        ]);
         // Patch user
         $this->userResource->patch($user->getId(), $dtoEdit);
 

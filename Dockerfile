@@ -1,4 +1,4 @@
-FROM php:8.0-fpm
+FROM php:8.1-fpm
 
 # set main params
 ARG BUILD_ARGUMENT_DEBUG_ENABLED=false
@@ -9,7 +9,6 @@ ENV APP_HOME /var/www/html
 ARG UID=1000
 ARG GID=1000
 ENV USERNAME=www-data
-
 
 # check environment
 RUN if [ "$BUILD_ARGUMENT_ENV" = "default" ]; then echo "Set BUILD_ARGUMENT_ENV in docker build-args like --build-arg BUILD_ARGUMENT_ENV=dev" && exit 2; \
@@ -37,7 +36,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
       libzip-dev \
       wget \
       librabbitmq-dev \
-    && pecl install amqp-1.11.0beta \
+    && pecl install amqp \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
     && docker-php-ext-configure intl \
     && yes '' | pecl install -o -f redis && docker-php-ext-enable redis \

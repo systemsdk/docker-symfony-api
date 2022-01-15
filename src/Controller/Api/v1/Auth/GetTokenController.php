@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\Auth;
+namespace App\Controller\Api\v1\Auth;
 
 use App\Utils\JSON;
 use JsonException;
@@ -20,7 +20,7 @@ use function sprintf;
  *
  * @OA\Tag(name="Authentication")
  *
- * @package App\Controller\Api\Auth
+ * @package App\Controller\Api\v1\Auth
  */
 class GetTokenController
 {
@@ -70,10 +70,11 @@ class GetTokenController
      *      ),
      *  )
      *
-     * @throws HttpException|JsonException
+     * @throws HttpException
+     * @throws JsonException
      */
     #[Route(
-        path: '/auth/getToken',
+        path: '/v1/auth/get_token',
         methods: [Request::METHOD_POST],
     )]
     public function __invoke(): void

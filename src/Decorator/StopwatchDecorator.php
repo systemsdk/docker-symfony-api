@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Decorator;
 
+use App\DTO\Interfaces\RestDtoInterface;
 use App\Entity\Interfaces\EntityInterface;
 use ProxyManager\Factory\AccessInterceptorValueHolderFactory;
 use ReflectionClass;
@@ -34,7 +35,11 @@ class StopwatchDecorator
         $className = $class->getName();
 
         // Do not process core or extensions or already wrapped services
-        if ($class->getFileName() === false || str_starts_with($class->getName(), 'ProxyManagerGeneratedProxy')) {
+        if (
+            $class->getFileName() === false
+            || $class->isFinal()
+            || str_starts_with($class->getName(), 'ProxyManagerGeneratedProxy')
+        ) {
             return $service;
         }
 
@@ -80,7 +85,11 @@ class StopwatchDecorator
                  * Note that this might cause some weird errors on some edge
                  * cases - we should fix those when those happens...
                  */
-                if (is_object($returnValue) && !$returnValue instanceof EntityInterface) {
+                if (
+                    is_object($returnValue)
+                    && !$returnValue instanceof EntityInterface
+                    && !$returnValue instanceof RestDtoInterface
+                ) {
                     $returnValue = $this->decorate($returnValue);
                 }
             };

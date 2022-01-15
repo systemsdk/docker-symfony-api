@@ -11,6 +11,8 @@ use Doctrine\ORM\QueryBuilder;
 use Ramsey\Uuid\Exception\InvalidUuidStringException;
 use UnexpectedValueException;
 
+use function preg_replace;
+
 /**
  * Class RepositoryWrappersTrait
  *
@@ -77,6 +79,8 @@ trait RepositoryWrappersTrait
     public function createQueryBuilder(?string $alias = null, ?string $indexBy = null): QueryBuilder
     {
         $alias ??= 'entity';
+        $alias = (string)preg_replace('#[\W]#', '', $alias);
+        $indexBy = $indexBy !== null ? (string)preg_replace('#[\W]#', '', $indexBy) : null;
 
         // Create new query builder
         return $this

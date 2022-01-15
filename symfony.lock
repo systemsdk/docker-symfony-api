@@ -134,6 +134,9 @@
     "ergebnis/json-printer": {
         "version": "3.1.1"
     },
+    "ergebnis/json-schema-validator": {
+        "version": "2.0.0"
+    },
     "ezimuel/guzzlestreams": {
         "version": "3.0.1"
     },
@@ -551,7 +554,7 @@
         "version": "v4.4.25"
     },
     "symfony/proxy-manager-bridge": {
-        "version": "v4.4.25"
+        "version": "v5.4.2"
     },
     "symfony/redis-messenger": {
         "version": "v5.3.4"

@@ -1,12 +1,13 @@
 # PHP symfony environment with JSON REST API example
 Docker environment (based on official php and mysql docker hub repositories) required to run Symfony with JSON REST API example.
 
+[![Actions Status](https://github.com/systemsdk/docker-symfony-api/workflows/Symfony%20Rest%20API/badge.svg)](https://github.com/systemsdk/docker-symfony-api/actions)
+[![CircleCI](https://circleci.com/gh/systemsdk/docker-symfony-api.svg?style=svg)](https://circleci.com/gh/systemsdk/docker-symfony-api)
+[![Coverage Status](https://coveralls.io/repos/github/systemsdk/docker-symfony-api/badge.svg)](https://coveralls.io/github/systemsdk/docker-symfony-api)
+[![Latest Stable Version](https://poser.pugx.org/systemsdk/docker-symfony-api/v)](https://packagist.org/packages/systemsdk/docker-symfony-api)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Actions Status](https://github.com/dimadeush/docker-symfony-api/workflows/Symfony%20Rest%20API/badge.svg)](https://github.com/dimadeush/docker-symfony-api/actions)
-[![CircleCI](https://circleci.com/gh/dimadeush/docker-symfony-api.svg?style=svg)](https://circleci.com/gh/dimadeush/docker-symfony-api)
-[![Coverage Status](https://coveralls.io/repos/github/dimadeush/docker-symfony-api/badge.svg)](https://coveralls.io/github/dimadeush/docker-symfony-api)
 
-[Source code](https://github.com/dimadeush/docker-symfony-api.git)
+[Source code](https://github.com/systemsdk/docker-symfony-api.git)
 
 ## Requirements
 * Docker version 18.06 or later
@@ -18,7 +19,7 @@ Note: OS recommendation - Linux Ubuntu based.
 
 ## Components
 1. Nginx 1.21
-2. PHP 8.0 fpm
+2. PHP 8 fpm
 3. MySQL 8
 4. Symfony 5
 5. RabbitMQ 3
@@ -26,66 +27,13 @@ Note: OS recommendation - Linux Ubuntu based.
 7. Kibana 7
 8. Redis 6
 
-## Setting up PROD environment
-1.Clone this repository from GitHub.
-
-2.Edit docker-compose-prod.yml and set necessary user/password for MySQL and RabbitMQ.
-
-Note: Delete var/mysql-data folder if it is exist.
-
-3.Edit env.prod and set necessary user/password for MySQL and RabbitMQ.
-
-4.Elasticsearch is pre-configured with the following privileged bootstrap user:
-```bash
-user: elastic
-password: ********
-```
-
-5.Build, start and install the docker images from your terminal:
-```bash
-make build-prod
-make start-prod
-make generate-jwt-keys
-```
-
-6.Make sure that you have installed migrations / created roles and groups / messenger transports / elastic template:
-```bash
-make migrate-no-test
-make create-roles-groups
-make migrate-cron-jobs
-make messenger-setup-transports
-make elastic-create-or-update-template
-```
-
-## Setting up STAGING environment
-1.Clone this repository from GitHub.
-
-Note: Delete var/mysql-data folder if it is exist.
-
-2.Elasticsearch is pre-configured with the following privileged bootstrap user:
-```bash
-user: elastic
-password: ********
-```
-
-3.Build, start and install the docker images from your terminal:
-```bash
-make build-staging
-make start-staging
-make generate-jwt-keys
-```
-
-4.Make sure that you have installed migrations / created roles and groups / messenger transports / elastic template:
-```bash
-make migrate-no-test
-make create-roles-groups
-make migrate-cron-jobs
-make messenger-setup-transports
-make elastic-create-or-update-template
-```
-
 ## Setting up DEV environment
-1.Clone this repository from GitHub.
+1.You can clone this repository from GitHub or install via composer.
+
+If you have installed composer and want to install environment via composer you can use next cmd command:
+```bash
+composer create-project systemsdk/docker-symfony-api api-example-app
+```
 
 2.Set another APP_SECRET for application in .env.prod and .env.staging files.
 
@@ -138,9 +86,77 @@ make messenger-setup-transports
 make elastic-create-or-update-template
 ```
 
-8.In order to use this application, please open in your browser next urls: 
+8.In order to use this application, please open in your browser next urls:
 - [http://localhost/api/doc](http://localhost/api/doc)
 - [http://localhost:5601 (Kibana)](http://localhost:5601)
+
+## Setting up STAGING environment locally
+1.You can clone this repository from GitHub or install via composer.
+
+Note: Delete var/mysql-data folder if it is exist.
+
+If you have installed composer and want to install environment via composer you can use next cmd command:
+```bash
+composer create-project systemsdk/docker-symfony-api api-example-app
+```
+
+2.Elasticsearch is pre-configured with the following privileged bootstrap user:
+```bash
+user: elastic
+password: ********
+```
+
+3.Build, start and install the docker images from your terminal:
+```bash
+make build-staging
+make start-staging
+make generate-jwt-keys
+```
+
+4.Make sure that you have installed migrations / created roles and groups / messenger transports / elastic template:
+```bash
+make migrate-no-test
+make create-roles-groups
+make migrate-cron-jobs
+make messenger-setup-transports
+make elastic-create-or-update-template
+```
+
+## Setting up PROD environment locally
+1.You can clone this repository from GitHub or install via composer.
+
+If you have installed composer and want to install environment via composer you can use next cmd command:
+```bash
+composer create-project systemsdk/docker-symfony-api api-example-app
+```
+
+2.Edit docker-compose-prod.yml and set necessary user/password for MySQL and RabbitMQ.
+
+Note: Delete var/mysql-data folder if it is exist.
+
+3.Edit env.prod and set necessary user/password for MySQL and RabbitMQ.
+
+4.Elasticsearch is pre-configured with the following privileged bootstrap user:
+```bash
+user: elastic
+password: ********
+```
+
+5.Build, start and install the docker images from your terminal:
+```bash
+make build-prod
+make start-prod
+make generate-jwt-keys
+```
+
+6.Make sure that you have installed migrations / created roles and groups / messenger transports / elastic template:
+```bash
+make migrate-no-test
+make create-roles-groups
+make migrate-cron-jobs
+make messenger-setup-transports
+make elastic-create-or-update-template
+```
 
 ## How to enable paid features for Elasticsearch
 Switch the value of Elasticsearch's `xpack.license.self_generated.type` option from `basic` to `trial` (`/docker/elasticsearch/config/elasticsearch.yml`).
@@ -309,3 +325,8 @@ Notes: Please see more commands in Makefile
 4. Iterate as needed.
 5. Make sure that "All checks have passed" on CircleCI(or another one in case you are not using CircleCI) and status is green.
 6. When PR is approved, it will be squashed & merged, into `develop` and later merged into `release/{No}` for deployment.
+
+Note: You can find git flow detail example [here](https://danielkummer.github.io/git-flow-cheatsheet).
+
+## License
+[The MIT License (MIT)](LICENSE)

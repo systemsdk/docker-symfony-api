@@ -20,7 +20,7 @@ abstract class RestAutoMapperConfiguration implements AutoMapperConfiguratorInte
     /**
      * Classes to use specified request mapper.
      *
-     * @var array<int, string>
+     * @var array<int, class-string>
      */
     protected static array $requestMapperClasses = [];
 
@@ -29,6 +29,8 @@ abstract class RestAutoMapperConfiguration implements AutoMapperConfiguratorInte
 
     /**
      * Use this method to register your mappings.
+     *
+     * @psalm-suppress UndefinedThisPropertyFetch
      */
     public function configure(AutoMapperConfigInterface $config): void
     {

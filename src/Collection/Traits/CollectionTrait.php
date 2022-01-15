@@ -22,11 +22,15 @@ trait CollectionTrait
 {
     /**
      * Method to filter current collection.
+     *
+     * @psalm-var class-string $className
      */
     abstract public function filter(string $className): Closure;
 
     /**
      * Method to process error message for current collection.
+     *
+     * @psalm-var class-string $className
      *
      * @throws InvalidArgumentException
      */

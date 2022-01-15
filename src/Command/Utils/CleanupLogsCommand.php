@@ -41,7 +41,7 @@ class CleanupLogsCommand extends Command
     /**
      * @noinspection PhpMissingParentCallCommonInspection
      *
-     * Executes the current command.
+     * {@inheritdoc}
      *
      * @throws Throwable
      */

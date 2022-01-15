@@ -44,6 +44,21 @@ jobs:
             make ecs
             make phpcs
 
+      - run:
+          name: Run PHPStan
+          command: |
+            make phpstan
+
+      - run:
+          name: Run PHPInsights
+          command: |
+            make phpinsights
+
+      - run:
+          name: Run PHP copy past detector
+          command: |
+            make phpcpd
+
       - store_artifacts:
           path: reports
 

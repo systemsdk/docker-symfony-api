@@ -21,8 +21,8 @@ use Throwable;
  */
 class LoginLoggerService implements LoginLoggerServiceInterface
 {
-    private ?User $user = null;
     private DeviceDetector $deviceDetector;
+    private ?User $user = null;
 
     public function __construct(
         private LogLoginResource $logLoginResource,

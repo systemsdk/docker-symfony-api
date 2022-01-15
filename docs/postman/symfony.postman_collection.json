@@ -25,23 +25,23 @@
 							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"test1234\"\n}"
 						},
 						"url": {
-							"raw": "https://{{host}}/api/auth/getToken",
+							"raw": "https://{{host}}/api/v1/auth/get_token",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"auth",
-								"getToken"
+								"get_token"
 							]
 						},
 						"description": "Get user Json Web Token (JWT) for authentication."
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Profile",
@@ -58,13 +58,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/profile",
+							"raw": "https://{{host}}/api/v1/profile",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"profile"
 							]
 						},
@@ -84,13 +85,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/profile/roles",
+							"raw": "https://{{host}}/api/v1/profile/roles",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"profile",
 								"roles"
 							]
@@ -111,13 +113,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/profile/groups",
+							"raw": "https://{{host}}/api/v1/profile/groups",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"profile",
 								"groups"
 							]
@@ -126,8 +129,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Tools",
@@ -172,8 +174,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "ApiKey Management",
@@ -190,13 +191,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/api_key/count",
+							"raw": "https://{{host}}/api/v1/api_key/count",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"api_key",
 								"count"
 							]
@@ -217,13 +219,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/api_key",
+							"raw": "https://{{host}}/api/v1/api_key",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"api_key"
 							]
 						},
@@ -244,7 +247,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"description\": \"test api key\",\n    \"userGroups\": [\n        \"3b4e8d1c-08e1-11eb-9e18-0242ac120007\"\n    ]\n}",
+							"raw": "{\n    \"description\": \"test api key\",\n    \"userGroups\": [\n        \"f99a6c90-70e7-11ec-b886-0242ac120008\"\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -252,13 +255,14 @@
 							}
 						},
 						"url": {
-							"raw": "https://{{host}}/api/api_key",
+							"raw": "https://{{host}}/api/v1/api_key",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"api_key"
 							]
 						},
@@ -278,13 +282,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/api_key/5ce02838-08e5-11eb-a845-0242ac120007",
+							"raw": "https://{{host}}/api/v1/api_key/5ce02838-08e5-11eb-a845-0242ac120007",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"api_key",
 								"5ce02838-08e5-11eb-a845-0242ac120007"
 							]
@@ -306,7 +311,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"description\": \"test api key #2\",\n    \"userGroups\": [\n        \"3b4e8d1c-08e1-11eb-9e18-0242ac120007\"\n    ]\n}",
+							"raw": "{\n    \"description\": \"test api key #2\",\n    \"userGroups\": [\n        \"f99a6c90-70e7-11ec-b886-0242ac120008\"\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -314,15 +319,16 @@
 							}
 						},
 						"url": {
-							"raw": "https://{{host}}/api/api_key/5ce02838-08e5-11eb-a845-0242ac120007",
+							"raw": "https://{{host}}/api/v1/api_key/27245cee-7579-11ec-bdae-0242ac120007",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"api_key",
-								"5ce02838-08e5-11eb-a845-0242ac120007"
+								"27245cee-7579-11ec-bdae-0242ac120007"
 							]
 						},
 						"description": "/api/api_key/{id}"
@@ -342,7 +348,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"description\": \"test api key 2\"\n}",
+							"raw": "{\n    \"description\": \"test api key 22\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -350,15 +356,16 @@
 							}
 						},
 						"url": {
-							"raw": "https://{{host}}/api/api_key/5ce02838-08e5-11eb-a845-0242ac120007",
+							"raw": "https://{{host}}/api/v1/api_key/27245cee-7579-11ec-bdae-0242ac120007",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"api_key",
-								"5ce02838-08e5-11eb-a845-0242ac120007"
+								"27245cee-7579-11ec-bdae-0242ac120007"
 							]
 						},
 						"description": "Patch entity with new data, accessible only for 'ROLE_ROOT' users."
@@ -377,15 +384,16 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/api_key/5ce02838-08e5-11eb-a845-0242ac120007",
+							"raw": "https://{{host}}/api/v1/api_key/27245cee-7579-11ec-bdae-0242ac120007",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"api_key",
-								"5ce02838-08e5-11eb-a845-0242ac120007"
+								"27245cee-7579-11ec-bdae-0242ac120007"
 							]
 						},
 						"description": "/api/api_key/{id}"
@@ -404,13 +412,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/api_key/ids",
+							"raw": "https://{{host}}/api/v1/api_key/ids",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"api_key",
 								"ids"
 							]
@@ -419,8 +428,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Localization",
@@ -431,13 +439,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://{{host}}/api/localization/language",
+							"raw": "https://{{host}}/api/v1/localization/language",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"localization",
 								"language"
 							]
@@ -452,13 +461,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://{{host}}/api/localization/locale",
+							"raw": "https://{{host}}/api/v1/localization/locale",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"localization",
 								"locale"
 							]
@@ -473,13 +483,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://{{host}}/api/localization/timezone",
+							"raw": "https://{{host}}/api/v1/localization/timezone",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"localization",
 								"timezone"
 							]
@@ -488,8 +499,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Role Management",
@@ -506,13 +516,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/role/ROLE_ADMIN",
+							"raw": "https://{{host}}/api/v1/role/ROLE_ADMIN",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"role",
 								"ROLE_ADMIN"
 							]
@@ -533,13 +544,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/role/ROLE_ROOT/inherited",
+							"raw": "https://{{host}}/api/v1/role/ROLE_ROOT/inherited",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"role",
 								"ROLE_ROOT",
 								"inherited"
@@ -561,13 +573,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/role/count",
+							"raw": "https://{{host}}/api/v1/role/count",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"role",
 								"count"
 							]
@@ -588,13 +601,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/role",
+							"raw": "https://{{host}}/api/v1/role",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"role"
 							]
 						},
@@ -614,13 +628,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/role/ids",
+							"raw": "https://{{host}}/api/v1/role/ids",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"role",
 								"ids"
 							]
@@ -629,8 +644,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "User Management",
@@ -647,17 +661,18 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user/64863022-08e1-11eb-8207-0242ac120007/group/3b505b88-08e1-11eb-ad26-0242ac120007",
+							"raw": "https://{{host}}/api/v1/user/28cb3460-719f-11ec-8841-0242ac120008/group/f99a6c90-70e7-11ec-b886-0242ac120008",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user",
-								"64863022-08e1-11eb-8207-0242ac120007",
+								"28cb3460-719f-11ec-8841-0242ac120008",
 								"group",
-								"3b505b88-08e1-11eb-ad26-0242ac120007"
+								"f99a6c90-70e7-11ec-b886-0242ac120008"
 							]
 						},
 						"description": "Attach specified user group to specified user, accessible only for 'ROLE_ROOT' users."
@@ -676,13 +691,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user/64863022-08e1-11eb-8207-0242ac120007/group/3b505b88-08e1-11eb-ad26-0242ac120007",
+							"raw": "https://{{host}}/api/v1/user/64863022-08e1-11eb-8207-0242ac120007/group/3b505b88-08e1-11eb-ad26-0242ac120007",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user",
 								"64863022-08e1-11eb-8207-0242ac120007",
 								"group",
@@ -705,13 +721,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user/3c8e841c-0c0a-11eb-94ad-0242ac120006",
+							"raw": "https://{{host}}/api/v1/user/3c8e841c-0c0a-11eb-94ad-0242ac120006",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user",
 								"3c8e841c-0c0a-11eb-94ad-0242ac120006"
 							]
@@ -732,13 +749,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user/count",
+							"raw": "https://{{host}}/api/v1/user/count",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user",
 								"count"
 							]
@@ -759,13 +777,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user",
+							"raw": "https://{{host}}/api/v1/user",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user"
 							]
 						},
@@ -792,16 +811,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"admin\",\n    \"firstName\": \"Admin\",\n    \"lastName\": \"Adminovich\",\n    \"email\": \"admin@test.com\",\n    \"userGroups\": [\n        \"3b4e8d1c-08e1-11eb-9e18-0242ac120007\"\n    ],\n    \"password\": \"test1234\",\n    \"language\": \"en\",\n    \"locale\": \"en\",\n    \"timezone\": \"UTC\"\n}"
+							"raw": "{\n    \"username\": \"admin\",\n    \"firstName\": \"Admin\",\n    \"lastName\": \"Adminovich\",\n    \"email\": \"admin@test.com\",\n    \"userGroups\": [\n        \"f9951aa6-70e7-11ec-b811-0242ac120008\"\n    ],\n    \"password\": \"test1234\",\n    \"language\": \"en\",\n    \"locale\": \"en\",\n    \"timezone\": \"UTC\"\n}"
 						},
 						"url": {
-							"raw": "https://{{host}}/api/user",
+							"raw": "https://{{host}}/api/v1/user",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user"
 							]
 						},
@@ -821,15 +841,16 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user/64863022-08e1-11eb-8207-0242ac120007",
+							"raw": "https://{{host}}/api/v1/user/8fca6fcc-7583-11ec-9117-0242ac120007",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user",
-								"64863022-08e1-11eb-8207-0242ac120007"
+								"8fca6fcc-7583-11ec-9117-0242ac120007"
 							]
 						},
 						"description": "Find entity, accessible only for 'ROLE_ADMIN' users."
@@ -858,13 +879,14 @@
 							"raw": "{\n    \"username\": \"admin\",\n    \"firstName\": \"Admin\",\n    \"lastName\": \"Adminovich\",\n    \"email\": \"admin@test.com\",\n    \"userGroups\": [\n        \"3b4e8d1c-08e1-11eb-9e18-0242ac120007\"\n    ],\n    \"password\": \"test1234\",\n    \"language\": \"en\",\n    \"locale\": \"en\",\n    \"timezone\": \"UTC\"\n}"
 						},
 						"url": {
-							"raw": "https://{{host}}/api/user/d878a4a0-0c0c-11eb-b06d-0242ac120006",
+							"raw": "https://{{host}}/api/v1/user/d878a4a0-0c0c-11eb-b06d-0242ac120006",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user",
 								"d878a4a0-0c0c-11eb-b06d-0242ac120006"
 							]
@@ -895,13 +917,14 @@
 							"raw": "{\n    \"username\": \"admin\",\n    \"firstName\": \"Admin\",\n    \"lastName\": \"Adminovich\",\n    \"email\": \"admin@test.com\",\n    \"userGroups\": [\n        \"3b4e8d1c-08e1-11eb-9e18-0242ac120007\"\n    ],\n    \"password\": \"test1234\",\n    \"language\": \"en\",\n    \"locale\": \"en\",\n    \"timezone\": \"UTC\"\n}"
 						},
 						"url": {
-							"raw": "https://{{host}}/api/user/d878a4a0-0c0c-11eb-b06d-0242ac120006",
+							"raw": "https://{{host}}/api/v1/user/d878a4a0-0c0c-11eb-b06d-0242ac120006",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user",
 								"d878a4a0-0c0c-11eb-b06d-0242ac120006"
 							]
@@ -922,13 +945,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user/ids",
+							"raw": "https://{{host}}/api/v1/user/ids",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user",
 								"ids"
 							]
@@ -949,13 +973,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user/64863022-08e1-11eb-8207-0242ac120007/groups",
+							"raw": "https://{{host}}/api/v1/user/64863022-08e1-11eb-8207-0242ac120007/groups",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user",
 								"64863022-08e1-11eb-8207-0242ac120007",
 								"groups"
@@ -976,13 +1001,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user/64863022-08e1-11eb-8207-0242ac120007/roles",
+							"raw": "https://{{host}}/api/v1/user/64863022-08e1-11eb-8207-0242ac120007/roles",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user",
 								"64863022-08e1-11eb-8207-0242ac120007",
 								"roles"
@@ -992,8 +1018,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "UserGroup Management",
@@ -1010,13 +1035,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user_group/3b505b88-08e1-11eb-ad26-0242ac120007/user/64863022-08e1-11eb-8207-0242ac120007",
+							"raw": "https://{{host}}/api/v1/user_group/3b505b88-08e1-11eb-ad26-0242ac120007/user/64863022-08e1-11eb-8207-0242ac120007",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user_group",
 								"3b505b88-08e1-11eb-ad26-0242ac120007",
 								"user",
@@ -1039,17 +1065,18 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user_group/3b505b88-08e1-11eb-ad26-0242ac120007/user/64863022-08e1-11eb-8207-0242ac120007",
+							"raw": "https://{{host}}/api/v1/user_group/f99a6c90-70e7-11ec-b886-0242ac120008/user/28cb3460-719f-11ec-8841-0242ac120008",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user_group",
-								"3b505b88-08e1-11eb-ad26-0242ac120007",
+								"f99a6c90-70e7-11ec-b886-0242ac120008",
 								"user",
-								"64863022-08e1-11eb-8207-0242ac120007"
+								"28cb3460-719f-11ec-8841-0242ac120008"
 							]
 						},
 						"description": "Detach specified user from specified user group, accessible only for 'ROLE_ROOT' users."
@@ -1068,13 +1095,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user_group/count",
+							"raw": "https://{{host}}/api/v1/user_group/count",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user_group",
 								"count"
 							]
@@ -1095,13 +1123,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user_group",
+							"raw": "https://{{host}}/api/v1/user_group",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user_group"
 							]
 						},
@@ -1131,13 +1160,14 @@
 							"raw": "{\n    \"name\": \"Admin users\",\n    \"role\": \"ROLE_ADMIN\"\n}"
 						},
 						"url": {
-							"raw": "https://{{host}}/api/user_group",
+							"raw": "https://{{host}}/api/v1/user_group",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user_group"
 							]
 						},
@@ -1157,13 +1187,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user_group/8278f380-0c15-11eb-8ab7-0242ac120006",
+							"raw": "https://{{host}}/api/v1/user_group/8278f380-0c15-11eb-8ab7-0242ac120006",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user_group",
 								"8278f380-0c15-11eb-8ab7-0242ac120006"
 							]
@@ -1191,16 +1222,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Admin users 1\",\n    \"role\": \"ROLE_ADMIN\"\n}"
+							"raw": "{\n    \"name\": \"Admin users\",\n    \"role\": \"ROLE_ADMIN\"\n}"
 						},
 						"url": {
-							"raw": "https://{{host}}/api/user_group/8278f380-0c15-11eb-8ab7-0242ac120006",
+							"raw": "https://{{host}}/api/v1/user_group/8278f380-0c15-11eb-8ab7-0242ac120006",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user_group",
 								"8278f380-0c15-11eb-8ab7-0242ac120006"
 							]
@@ -1231,13 +1263,14 @@
 							"raw": "{\n    \"name\": \"Admin users\",\n    \"role\": \"ROLE_ADMIN\"\n}"
 						},
 						"url": {
-							"raw": "https://{{host}}/api/user_group/8278f380-0c15-11eb-8ab7-0242ac120006",
+							"raw": "https://{{host}}/api/v1/user_group/8278f380-0c15-11eb-8ab7-0242ac120006",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user_group",
 								"8278f380-0c15-11eb-8ab7-0242ac120006"
 							]
@@ -1258,13 +1291,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user_group/8278f380-0c15-11eb-8ab7-0242ac120006",
+							"raw": "https://{{host}}/api/v1/user_group/8278f380-0c15-11eb-8ab7-0242ac120006",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user_group",
 								"8278f380-0c15-11eb-8ab7-0242ac120006"
 							]
@@ -1285,13 +1319,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user_group/ids",
+							"raw": "https://{{host}}/api/v1/user_group/ids",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user_group",
 								"ids"
 							]
@@ -1312,13 +1347,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{host}}/api/user_group/3b4e8d1c-08e1-11eb-9e18-0242ac120007/users",
+							"raw": "https://{{host}}/api/v1/user_group/3b4e8d1c-08e1-11eb-9e18-0242ac120007/users",
 							"protocol": "https",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
+								"v1",
 								"user_group",
 								"3b4e8d1c-08e1-11eb-9e18-0242ac120007",
 								"users"
@@ -1328,9 +1364,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

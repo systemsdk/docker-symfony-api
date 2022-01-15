@@ -74,16 +74,9 @@ services:
     App\Rest\ControllerCollection:
         arguments: [ !tagged app.rest.controller ]
 
-    App\Security\RolesService:
-        arguments: [ '%security.role_hierarchy.roles%' ]
-
     App\EventSubscriber\RequestLogSubscriber:
         arguments:
             $ignoredRoutes: '%env(json:REQUEST_LOG_IGNORED_ROUTES)%'
-
-    App\Service\Interfaces\MessageServiceInterface:
-        class: App\Service\MessageService
-        #lazy: true
 
     App\Service\Interfaces\ElasticsearchServiceInterface:
         class: App\Service\ElasticsearchService
@@ -134,5 +127,4 @@ when@test:
         App\Utils\Tests\:
             resource: '../src/Utils/Tests'
 
-        test.app.security.roles_service: '@App\Security\RolesService'
         test.app.utils.tests.auth: '@App\Utils\Tests\Auth'

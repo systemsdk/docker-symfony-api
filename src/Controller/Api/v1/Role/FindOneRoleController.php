@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\Role;
+namespace App\Controller\Api\v1\Role;
 
 use App\Entity\Role;
 use App\Resource\RoleResource;
 use App\Rest\Controller;
 use App\Rest\Traits\Methods;
+use App\Security\Interfaces\RolesServiceInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Throwable;
 
 /**
@@ -22,7 +22,7 @@ use Throwable;
  *
  * @OA\Tag(name="Role Management")
  *
- * @package App\Controller\Api\Role
+ * @package App\Controller\Api\v1\Role
  */
 class FindOneRoleController extends Controller
 {
@@ -34,18 +34,18 @@ class FindOneRoleController extends Controller
     }
 
     /**
-     * Find role entity, accessible for 'IS_AUTHENTICATED_FULLY' users.
+     * Find role entity, accessible for 'ROLE_ADMIN' users.
      *
      * @OA\Response(
-     *      response=200,
-     *      description="success",
-     *      @OA\JsonContent(
-     *          example={"id": "ROLE_ROOT", "description": "role root description"},
-     *          ref=@Model(
-     *              type=Role::class,
-     *              groups={"Role"},
-     *          ),
-     *      ),
+     *     response=200,
+     *     description="success",
+     *     @OA\JsonContent(
+     *         example={"id": "ROLE_ROOT", "description": "role root description"},
+     *         ref=@Model(
+     *             type=Role::class,
+     *             groups={"Role"},
+     *         ),
+     *     ),
      * )
      * @OA\Response(
      *     response=403,
@@ -61,11 +61,13 @@ class FindOneRoleController extends Controller
      * @throws Throwable
      */
     #[Route(
-        path: '/role/{role}',
-        requirements: ['role' => '^ROLE_\w+$'],
+        path: '/v1/role/{role}',
+        requirements: [
+            'role' => '^ROLE_\w+$',
+        ],
         methods: [Request::METHOD_GET],
     )]
-    #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
+    #[IsGranted(RolesServiceInterface::ROLE_ADMIN)]
     public function __invoke(Request $request, string $role): Response
     {
         return $this->findOneMethod($request, $role);

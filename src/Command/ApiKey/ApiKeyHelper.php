@@ -88,7 +88,9 @@ class ApiKeyHelper
     private function getApiKeyEntity(SymfonyStyle $io, string $question): ?ApiKeyEntity
     {
         $choices = [];
-        array_map($this->getApiKeyIterator($choices), $this->apiKeyResource->find(orderBy: ['token' => 'ASC']));
+        array_map($this->getApiKeyIterator($choices), $this->apiKeyResource->find(orderBy: [
+            'token' => 'ASC',
+        ]));
         $choices['Exit'] = 'Exit command';
 
         return $this->apiKeyResource->findOne((string)$io->choice($question, $choices));

@@ -9,6 +9,7 @@ use App\Entity\Traits\Blameable;
 use App\Entity\Traits\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -23,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     name: 'uq_role',
     columns: ['role'],
 )]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class Role implements EntityInterface
 {
     use Blameable;
@@ -30,7 +32,7 @@ class Role implements EntityInterface
 
     #[ORM\Column(
         name: 'description',
-        type: 'text',
+        type: Types::TEXT,
     )]
     #[Groups([
         'Role',
@@ -54,7 +56,12 @@ class Role implements EntityInterface
 
     public function __construct(
         #[ORM\Id]
-        #[ORM\Column(name: 'role', type: 'string', unique: true, nullable: false)]
+        #[ORM\Column(
+            name: 'role',
+            type: Types::STRING,
+            unique: true,
+            nullable: false,
+        )]
         #[Groups([
             'Role',
             'Role.id',

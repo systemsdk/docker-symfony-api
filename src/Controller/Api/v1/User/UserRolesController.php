@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\User;
+namespace App\Controller\Api\v1\User;
 
 use App\Entity\User;
 use App\Resource\UserResource;
@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @OA\Tag(name="User Management")
  *
- * @package App\Controller\Api\User
+ * @package App\Controller\Api\v1\User
  */
 class UserRolesController
 {
@@ -61,7 +61,7 @@ class UserRolesController
      * )
      */
     #[Route(
-        path: '/user/{requestUser}/roles',
+        path: '/v1/user/{requestUser}/roles',
         requirements: [
             'requestUser' => '%app.uuid_v1_regex%',
         ],

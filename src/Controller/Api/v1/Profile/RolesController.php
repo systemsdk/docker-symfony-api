@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\Profile;
+namespace App\Controller\Api\v1\Profile;
 
 use App\Entity\User;
 use App\Security\RolesService;
@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
  *
  * @OA\Tag(name="Profile")
  *
- * @package App\Controller\Api\Profile
+ * @package App\Controller\Api\v1\Profile
  */
 class RolesController
 {
@@ -50,7 +50,7 @@ class RolesController
      *  )
      */
     #[Route(
-        path: '/profile/roles',
+        path: '/v1/profile/roles',
         methods: [Request::METHOD_GET],
     )]
     #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]

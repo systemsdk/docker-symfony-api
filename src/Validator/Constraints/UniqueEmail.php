@@ -13,6 +13,8 @@ use Symfony\Component\Validator\Constraint;
  * Usage example;
  *  App\Validator\Constraints\UniqueEmail()
  *
+ * Just add that to your class as an annotation and you're good to go.
+ *
  * @Annotation
  * @Target({"CLASS"})
  *

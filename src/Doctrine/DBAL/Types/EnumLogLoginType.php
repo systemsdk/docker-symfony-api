@@ -14,7 +14,7 @@ class EnumLogLoginType extends EnumType
     public const TYPE_FAILURE = 'failure';
     public const TYPE_SUCCESS = 'success';
 
-    protected static string $name = 'EnumLogLogin';
+    protected static string $name = Types::ENUM_LOG_LOGIN;
 
     /**
      * @var array<int, string>

@@ -19,7 +19,7 @@ class AutoMapperConfiguration extends RestAutoMapperConfiguration
     /**
      * Classes to use specified request mapper.
      *
-     * @var array<int, string>
+     * @var array<int, class-string>
      */
     protected static array $requestMapperClasses = [
         UserCreate::class,

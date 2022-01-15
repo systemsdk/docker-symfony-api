@@ -15,6 +15,8 @@ trait RestMethodProcessCriteria
 {
     /**
      * {@inheritdoc}
+     *
+     * @param array<int|string, string|array<mixed>> $criteria
      */
     public function processCriteria(array &$criteria, Request $request, string $method): void
     {

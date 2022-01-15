@@ -32,6 +32,8 @@ class TestHandler implements MessageSubscriberInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @phpstan-return iterable<string>
      */
     public static function getHandledMessages(): iterable
     {

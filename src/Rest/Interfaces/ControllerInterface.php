@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Rest\Interfaces;
 
-use App\Rest\Controller;
 use App\Rest\ResponseHandler;
 use LogicException;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,10 +20,8 @@ interface ControllerInterface
 {
     /**
      * Setter method for `resource` service.
-     *
-     * @return ControllerInterface|Controller|self
      */
-    public function setResource(RestResourceInterface $resource);
+    public function setResource(RestResourceInterface $resource): static;
 
     /**
      * Getter method for `resource` service.
@@ -43,7 +40,7 @@ interface ControllerInterface
     /**
      * Setter method for `ResponseHandler` service, this is called by Symfony DI.
      */
-    public function setResponseHandler(ResponseHandler $responseHandler): self;
+    public function setResponseHandler(ResponseHandler $responseHandler): static;
 
     /**
      * Getter method for used DTO class for current controller.

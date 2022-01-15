@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\v1\ApiKey;
 
 use App\DTO\ApiKey\ApiKeyCreate;
 use App\DTO\ApiKey\ApiKeyPatch;
@@ -21,18 +21,17 @@ use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
  *
  * @OA\Tag(name="ApiKey Management")
  *
- * @package App\Controller\Api
+ * @package App\Controller\Api\v1\ApiKey
  *
  * @method ApiKeyResource getResource()
  * @method ResponseHandler getResponseHandler()
  */
 #[Route(
-    path: '/api_key',
+    path: '/v1/api_key',
 )]
 #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
 class ApiKeyController extends Controller
 {
-    // Traits for REST actions
     use Actions\Root\CountAction;
     use Actions\Root\FindAction;
     use Actions\Root\FindOneAction;

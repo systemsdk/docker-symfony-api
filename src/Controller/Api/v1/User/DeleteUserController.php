@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\User;
+namespace App\Controller\Api\v1\User;
 
 use App\Entity\User;
 use App\Resource\UserResource;
@@ -24,7 +24,7 @@ use Throwable;
  *
  * @OA\Tag(name="User Management")
  *
- * @package App\Controller\Api\User
+ * @package App\Controller\Api\v1\User
  */
 class DeleteUserController extends Controller
 {
@@ -62,7 +62,7 @@ class DeleteUserController extends Controller
      * @throws Throwable
      */
     #[Route(
-        path: '/user/{requestUser}',
+        path: '/v1/user/{requestUser}',
         requirements: [
             'requestUser' => '%app.uuid_v1_regex%',
         ],

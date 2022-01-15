@@ -60,9 +60,6 @@ class CreateApiKeyCommand extends Command
         $this->setDescription('Command to create new API key');
     }
 
-    /**
-     * Getter for RolesService
-     */
     public function getRolesService(): RolesService
     {
         return $this->rolesService;

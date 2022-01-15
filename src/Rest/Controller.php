@@ -57,7 +57,7 @@ abstract class Controller implements ControllerInterface
     /**
      * {@inheritdoc}
      */
-    public function setResource(RestResourceInterface $resource): self
+    public function setResource(RestResourceInterface $resource): static
     {
         $this->resource = $resource;
 
@@ -80,7 +80,7 @@ abstract class Controller implements ControllerInterface
      * {@inheritdoc}
      */
     #[Required]
-    public function setResponseHandler(ResponseHandler $responseHandler): self
+    public function setResponseHandler(ResponseHandler $responseHandler): static
     {
         $this->responseHandler = $responseHandler;
 

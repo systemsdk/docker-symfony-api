@@ -10,9 +10,10 @@ use App\Service\LoginLoggerService;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Throwable;
 
-use function is_string;
+use function assert;
 
 /**
  * Class AuthenticationFailureSubscriber
@@ -53,10 +54,11 @@ class AuthenticationFailureSubscriber implements EventSubscriberInterface
         $token = $event->getException()->getToken();
 
         // Fetch user entity
-        if ($token !== null && is_string($token->getUser())) {
-            /** @var string $username */
-            $username = $token->getUser();
-            $this->loginLoggerService->setUser($this->userRepository->loadUserByIdentifier($username, false));
+        if ($token !== null && $token->getUser() !== null) {
+            $user = $token->getUser();
+            assert($user instanceof UserInterface);
+            $identifier = $user->getUserIdentifier();
+            $this->loginLoggerService->setUser($this->userRepository->loadUserByIdentifier($identifier, false));
         }
 
         $this->loginLoggerService->process(EnumLogLoginType::TYPE_FAILURE);

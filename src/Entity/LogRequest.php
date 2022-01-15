@@ -8,8 +8,10 @@ use App\Entity\Interfaces\EntityInterface;
 use App\Entity\Traits\LogEntityTrait;
 use App\Entity\Traits\LogRequestProcessRequestTrait;
 use App\Entity\Traits\Uuid;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use OpenApi\Annotations as OA;
+use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +40,7 @@ use function mb_strlen;
     name: 'request_date',
 )]
 #[ORM\HasLifecycleCallbacks]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class LogRequest implements EntityInterface
 {
     use LogEntityTrait;
@@ -50,7 +53,7 @@ class LogRequest implements EntityInterface
     #[ORM\Id]
     #[ORM\Column(
         name: 'id',
-        type: 'uuid_binary_ordered_time',
+        type: UuidBinaryOrderedTimeType::NAME,
         unique: true,
     )]
     #[Groups([
@@ -64,7 +67,7 @@ class LogRequest implements EntityInterface
 
     #[ORM\Column(
         name: 'status_code',
-        type: 'integer',
+        type: Types::INTEGER,
     )]
     #[Groups([
         'LogRequest',
@@ -74,7 +77,7 @@ class LogRequest implements EntityInterface
 
     #[ORM\Column(
         name: 'response_content_length',
-        type: 'integer',
+        type: Types::INTEGER,
     )]
     #[Groups([
         'LogRequest',
@@ -84,7 +87,7 @@ class LogRequest implements EntityInterface
 
     #[ORM\Column(
         name: 'is_main_request',
-        type: 'boolean',
+        type: Types::BOOLEAN,
     )]
     #[Groups([
         'LogRequest',
@@ -103,14 +106,26 @@ class LogRequest implements EntityInterface
         private array $sensitiveProperties,
         ?Request $request = null,
         ?Response $response = null,
-        #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'logsRequest')]
-        #[ORM\JoinColumn(name: 'user_id', onDelete: 'SET NULL')]
+        #[ORM\ManyToOne(
+            targetEntity: User::class,
+            inversedBy: 'logsRequest',
+        )]
+        #[ORM\JoinColumn(
+            name: 'user_id',
+            onDelete: 'SET NULL',
+        )]
         #[Groups([
             'LogRequest.user',
         ])]
         private ?User $user = null,
-        #[ORM\ManyToOne(targetEntity: ApiKey::class, inversedBy: 'logsRequest')]
-        #[ORM\JoinColumn(name: 'api_key_id', onDelete: 'SET NULL')]
+        #[ORM\ManyToOne(
+            targetEntity: ApiKey::class,
+            inversedBy: 'logsRequest',
+        )]
+        #[ORM\JoinColumn(
+            name: 'api_key_id',
+            onDelete: 'SET NULL',
+        )]
         #[Groups([
             'LogRequest.apiKey',
         ])]

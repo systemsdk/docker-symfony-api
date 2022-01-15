@@ -8,8 +8,10 @@ use App\Entity\Interfaces\EntityInterface;
 use App\Entity\Traits\Uuid;
 use DateTimeImmutable;
 use DateTimeZone;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use OpenApi\Annotations as OA;
+use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Throwable;
@@ -25,6 +27,7 @@ use Throwable;
     columns: ['user_id'],
     name: 'user_id',
 )]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class LogLoginFailure implements EntityInterface
 {
     use Uuid;
@@ -35,7 +38,7 @@ class LogLoginFailure implements EntityInterface
     #[ORM\Id]
     #[ORM\Column(
         name: 'id',
-        type: 'uuid_binary_ordered_time',
+        type: UuidBinaryOrderedTimeType::NAME,
         unique: true,
     )]
     #[Groups([
@@ -46,7 +49,7 @@ class LogLoginFailure implements EntityInterface
 
     #[ORM\Column(
         name: 'timestamp',
-        type: 'datetime_immutable',
+        type: Types::DATETIME_IMMUTABLE,
     )]
     #[Groups([
         'LogLoginFailure',
@@ -60,8 +63,14 @@ class LogLoginFailure implements EntityInterface
      * @throws Throwable
      */
     public function __construct(
-        #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'logsLoginFailure')]
-        #[ORM\JoinColumn(name: 'user_id', nullable: false)]
+        #[ORM\ManyToOne(
+            targetEntity: User::class,
+            inversedBy: 'logsLoginFailure',
+        )]
+        #[ORM\JoinColumn(
+            name: 'user_id',
+            nullable: false,
+        )]
         #[Groups([
             'LogLoginFailure',
             'LogLoginFailure.user',

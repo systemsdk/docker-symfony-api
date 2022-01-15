@@ -34,15 +34,11 @@ class CleanupLogsScheduledCommand extends Command
     ) {
         parent::__construct('scheduler:cleanup-logs');
 
-        $this->setDescription(
-            'Command to run a cron job for cleanup logs by schedule.'
-        );
+        $this->setDescription('Command to run a cron job for cleanup logs by schedule.');
     }
 
     /**
      * @noinspection PhpMissingParentCallCommonInspection
-     *
-     * Executes the current command.
      *
      * {@inheritdoc}
      *

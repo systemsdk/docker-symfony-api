@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\Role;
+namespace App\Controller\Api\v1\Role;
 
 use App\Entity\Role;
 use App\Resource\RoleResource;
+use App\Security\Interfaces\RolesServiceInterface;
 use App\Security\RolesService;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -13,14 +14,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 
 /**
  * Class InheritedRolesController
  *
  * @OA\Tag(name="Role Management")
  *
- * @package App\Controller\Api\Role
+ * @package App\Controller\Api\v1\Role
  */
 class InheritedRolesController
 {
@@ -30,7 +30,7 @@ class InheritedRolesController
     }
 
     /**
-     * Return all inherited roles as an array for specified Role, accessible for 'IS_AUTHENTICATED_FULLY' users.
+     * Return all inherited roles as an array for specified Role, accessible for 'ROLE_ADMIN' users.
      *
      * @OA\Response(
      *     response=200,
@@ -52,11 +52,13 @@ class InheritedRolesController
      * )
      */
     #[Route(
-        path: '/role/{role}/inherited',
-        requirements: ['role' => '^ROLE_\w+$'],
+        path: '/v1/role/{role}/inherited',
+        requirements: [
+            'role' => '^ROLE_\w+$',
+        ],
         methods: [Request::METHOD_GET],
     )]
-    #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
+    #[IsGranted(RolesServiceInterface::ROLE_ADMIN)]
     #[ParamConverter(
         data: 'role',
         class: RoleResource::class,

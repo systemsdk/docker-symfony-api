@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Command\Elastic;
 
 use App\Command\Traits\SymfonyStyleTrait;
+use App\Service\ElasticsearchService;
 use App\Service\Interfaces\ElasticsearchServiceInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
@@ -31,6 +32,7 @@ class CreateOrUpdateTemplateCommand extends Command
      * @throws LogicException
      */
     public function __construct(
+        /** @var ElasticsearchService $elasticsearchService */
         private ElasticsearchServiceInterface $elasticsearchService,
         private int $elasticNumberOfShards,
         private int $elasticNumberOfReplicas,
@@ -42,8 +44,6 @@ class CreateOrUpdateTemplateCommand extends Command
 
     /**
      * @noinspection PhpMissingParentCallCommonInspection
-     *
-     * Executes the current command.
      *
      * {@inheritdoc}
      *

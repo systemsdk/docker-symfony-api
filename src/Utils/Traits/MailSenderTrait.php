@@ -47,7 +47,9 @@ trait MailSenderTrait
     public function sendErrorToMail(Throwable $exception): void
     {
         if ($this->appEmailNotificationAboutError) {
-            $body = $this->twig->render('Emails/error.html.twig', ['errorMessage' => $exception->getMessage()]);
+            $body = $this->twig->render('Emails/error.html.twig', [
+                'errorMessage' => $exception->getMessage(),
+            ]);
             $this->mailerService->sendMail(
                 'An error has occurred.',
                 $this->appSenderEmail,

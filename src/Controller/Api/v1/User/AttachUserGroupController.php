@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\User;
+namespace App\Controller\Api\v1\User;
 
 use App\Entity\User;
 use App\Entity\UserGroup;
@@ -15,27 +15,29 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
 
 /**
- * Class DetachUserGroupController
+ * Class AttachUserGroupController
  *
  * @OA\Tag(name="User Management")
  *
- * @package App\Controller\Api\User
+ * @package App\Controller\Api\v1\User
  */
-class DetachUserGroupController
+class AttachUserGroupController
 {
     public function __construct(
-        private SerializerInterface $serializer,
         private UserResource $userResource,
+        private UserGroupResource $userGroupResource,
+        private SerializerInterface $serializer,
     ) {
     }
 
     /**
-     * Detach specified user group from specified user, accessible only for 'ROLE_ROOT' users.
+     * Attach specified user group to specified user, accessible only for 'ROLE_ROOT' users.
      *
      * @OA\Parameter(
      *      name="userId",
@@ -59,7 +61,7 @@ class DetachUserGroupController
      *  )
      * @OA\Response(
      *      response=200,
-     *      description="User groups",
+     *      description="User groups (user already belongs to this group)",
      *      @OA\JsonContent(
      *          type="array",
      *          @OA\Items(
@@ -71,35 +73,48 @@ class DetachUserGroupController
      *      ),
      *  )
      * @OA\Response(
-     *      response=401,
-     *      description="Invalid token (not found or expired)",
+     *      response=201,
+     *      description="User groups (user added to this group)",
      *      @OA\JsonContent(
-     *          type="object",
-     *          example={"code": 401, "message": "JWT Token not found"},
-     *          @OA\Property(property="code", type="integer", description="Error code"),
-     *          @OA\Property(property="message", type="string", description="Error description"),
+     *          type="array",
+     *          @OA\Items(
+     *              ref=@Model(
+     *                  type=\App\Entity\UserGroup::class,
+     *                  groups={"UserGroup", "UserGroup.role"},
+     *              ),
+     *          ),
      *      ),
      *  )
      * @OA\Response(
-     *      response=403,
-     *      description="Forbidden",
-     *      @OA\JsonContent(
-     *          type="object",
-     *          example={"code": 403, "message": "Access denied"},
-     *          @OA\Property(property="code", type="integer", description="Error code"),
-     *          @OA\Property(property="message", type="string", description="Error description"),
-     *      ),
+     *     response=401,
+     *     description="Invalid token (not found or expired)",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         example={"code": 401, "message": "JWT Token not found"},
+     *         @OA\Property(property="code", type="integer", description="Error code"),
+     *         @OA\Property(property="message", type="string", description="Error description"),
+     *     ),
      *  )
+     * @OA\Response(
+     *     response=403,
+     *     description="Access denied",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         example={"code": 403, "message": "Access denied"},
+     *         @OA\Property(property="code", type="integer", description="Error code"),
+     *         @OA\Property(property="message", type="string", description="Error description"),
+     *     ),
+     * )
      *
      * @throws Throwable
      */
     #[Route(
-        path: '/user/{user}/group/{userGroup}',
+        path: '/v1/user/{user}/group/{userGroup}',
         requirements: [
             'user' => '%app.uuid_v1_regex%',
             'userGroup' => '%app.uuid_v1_regex%',
         ],
-        methods: [Request::METHOD_DELETE],
+        methods: [Request::METHOD_POST],
     )]
     #[IsGranted(RolesService::ROLE_ROOT)]
     #[ParamConverter(
@@ -112,7 +127,9 @@ class DetachUserGroupController
     )]
     public function __invoke(User $user, UserGroup $userGroup): JsonResponse
     {
-        $this->userResource->save($user->removeUserGroup($userGroup));
+        $status = $user->getUserGroups()->contains($userGroup) ? Response::HTTP_OK : Response::HTTP_CREATED;
+        $this->userResource->save($user->addUserGroup($userGroup), false);
+        $this->userGroupResource->save($userGroup, true, true);
         $groups = [
             'groups' => [
                 UserGroup::SET_USER_GROUP_BASIC,
@@ -121,6 +138,7 @@ class DetachUserGroupController
 
         return new JsonResponse(
             $this->serializer->serialize($user->getUserGroups()->getValues(), 'json', $groups),
+            $status,
             json: true
         );
     }

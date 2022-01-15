@@ -10,8 +10,10 @@ use App\Entity\Traits\Timestampable;
 use App\Entity\Traits\Uuid;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use OpenApi\Annotations as OA;
+use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\UuidInterface;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -25,6 +27,7 @@ use Throwable;
  */
 #[ORM\Entity]
 #[ORM\Table(name: 'user_group')]
+#[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class UserGroup implements EntityInterface, Stringable
 {
     use Blameable;
@@ -40,7 +43,7 @@ class UserGroup implements EntityInterface, Stringable
     #[ORM\Id]
     #[ORM\Column(
         name: 'id',
-        type: 'uuid_binary_ordered_time',
+        type: UuidBinaryOrderedTimeType::NAME,
         unique: true,
     )]
     #[Groups([
@@ -80,7 +83,7 @@ class UserGroup implements EntityInterface, Stringable
 
     #[ORM\Column(
         name: 'name',
-        type: 'string',
+        type: Types::STRING,
         length: 255,
     )]
     #[Groups([
@@ -93,7 +96,10 @@ class UserGroup implements EntityInterface, Stringable
     ])]
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    #[Assert\Length(min: 2, max: 255)]
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+    )]
     private string $name = '';
 
     /**
@@ -103,7 +109,9 @@ class UserGroup implements EntityInterface, Stringable
         targetEntity: 'User',
         mappedBy: 'userGroups',
     )]
-    #[ORM\JoinTable(name: 'user_has_user_group')]
+    #[ORM\JoinTable(
+        name: 'user_has_user_group',
+    )]
     #[Groups([
         'UserGroup.users',
     ])]
@@ -116,7 +124,9 @@ class UserGroup implements EntityInterface, Stringable
         targetEntity: 'ApiKey',
         mappedBy: 'userGroups',
     )]
-    #[ORM\JoinTable(name: 'api_key_has_user_group')]
+    #[ORM\JoinTable(
+        name: 'api_key_has_user_group',
+    )]
     #[Groups([
         'UserGroup.apiKeys',
     ])]
@@ -189,9 +199,7 @@ class UserGroup implements EntityInterface, Stringable
      */
     public function addUser(User $user): self
     {
-        $contains = $this->users->contains($user);
-
-        if (!$contains) {
+        if ($this->users->contains($user) === false) {
             $this->users->add($user);
             $user->addUserGroup($this);
         }
@@ -204,9 +212,7 @@ class UserGroup implements EntityInterface, Stringable
      */
     public function removeUser(User $user): self
     {
-        $removed = $this->users->removeElement($user);
-
-        if ($removed) {
+        if ($this->users->removeElement($user)) {
             $user->removeUserGroup($this);
         }
 
@@ -228,9 +234,7 @@ class UserGroup implements EntityInterface, Stringable
      */
     public function addApiKey(ApiKey $apiKey): self
     {
-        $contains = $this->apiKeys->contains($apiKey);
-
-        if (!$contains) {
+        if ($this->apiKeys->contains($apiKey) === false) {
             $this->apiKeys->add($apiKey);
             $apiKey->addUserGroup($this);
         }
@@ -243,9 +247,7 @@ class UserGroup implements EntityInterface, Stringable
      */
     public function removeApiKey(ApiKey $apiKey): self
     {
-        $removed = $this->apiKeys->removeElement($apiKey);
-
-        if ($removed) {
+        if ($this->apiKeys->removeElement($apiKey)) {
             $apiKey->removeUserGroup($this);
         }
 

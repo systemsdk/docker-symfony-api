@@ -46,15 +46,19 @@ class ElasticsearchService implements ElasticsearchServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function index(string $index, string $documentId, array $body)
+    public function index(string $index, string $documentId, array $body): mixed
     {
-        return $this->client->index(['index' => $index, 'id' => $documentId, 'body' => $body]);
+        return $this->client->index([
+            'index' => $index,
+            'id' => $documentId,
+            'body' => $body,
+        ]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function info(array $params = [])
+    public function info(array $params = []): mixed
     {
         return $this->client->info($params);
     }
@@ -78,9 +82,16 @@ class ElasticsearchService implements ElasticsearchServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function search(string $index, array $body, int $from = 0, int $size = 100)
+    public function search(string $index, array $body, int $from = 0, int $size = 100): mixed
     {
-        return $this->client->search(['index' => $index, 'from' => $from, 'size' => $size, 'body' => $body]);
+        return $this->client->search(
+            [
+                'index' => $index,
+                'from' => $from,
+                'size' => $size,
+                'body' => $body,
+            ]
+        );
     }
 
     /**

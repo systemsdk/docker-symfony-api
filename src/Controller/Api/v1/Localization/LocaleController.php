@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\Localization;
+namespace App\Controller\Api\v1\Localization;
 
 use App\Service\LocalizationService;
 use OpenApi\Annotations as OA;
@@ -11,15 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class LanguageController
+ * Class LocaleController
  *
  * @OA\Get(security={})
  *
  * @OA\Tag(name="Localization")
  *
- * @package App\Controller\Api\Localization
+ * @package App\Controller\Api\v1\Localization
  */
-class LanguageController
+class LocaleController
 {
     public function __construct(
         private LocalizationService $localization,
@@ -27,25 +27,26 @@ class LanguageController
     }
 
     /**
-     * Endpoint action to get supported languages. This is for use to choose
-     * what language your frontend application can use within its translations.
+     * Endpoint action to get supported locales. This is for use to choose what
+     * locale your frontend application can use within its number, time, date,
+     * datetime, etc. formatting.
      *
      * @OA\Response(
      *      response=200,
-     *      description="List of language strings.",
+     *      description="List of locale strings.",
      *      @OA\JsonContent(
      *          type="array",
-     *          example={"en","ru"},
+     *          example={"en","ru","fi"},
      *          @OA\Items(type="string"),
      *      ),
      *  )
      */
     #[Route(
-        path: '/localization/language',
+        path: '/v1/localization/locale',
         methods: [Request::METHOD_GET],
     )]
     public function __invoke(): JsonResponse
     {
-        return new JsonResponse($this->localization->getLanguages());
+        return new JsonResponse($this->localization->getLocales());
     }
 }

@@ -138,9 +138,7 @@ trait UserRelations
      */
     public function addUserGroup(UserGroup $userGroup): self
     {
-        $contains = $this->userGroups->contains($userGroup);
-
-        if (!$contains) {
+        if ($this->userGroups->contains($userGroup) === false) {
             $this->userGroups->add($userGroup);
 
             /* @noinspection PhpParamsInspection */
@@ -155,10 +153,7 @@ trait UserRelations
      */
     public function removeUserGroup(UserGroup $userGroup): self
     {
-        $removed = $this->userGroups->removeElement($userGroup);
-
-        if ($removed) {
-            /* @noinspection PhpParamsInspection */
+        if ($this->userGroups->removeElement($userGroup)) {
             $userGroup->removeUser($this);
         }
 

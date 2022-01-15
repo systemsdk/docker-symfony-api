@@ -76,7 +76,9 @@ class ListUsersCommand extends Command
      */
     private function getRows(): array
     {
-        return array_map($this->getFormatterUser(), $this->userResource->find(orderBy: ['username' => 'ASC']));
+        return array_map($this->getFormatterUser(), $this->userResource->find(orderBy: [
+            'username' => 'ASC',
+        ]));
     }
 
     /**

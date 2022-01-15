@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\UserGroup;
+namespace App\Controller\Api\v1\User;
 
-use App\DTO\UserGroup\UserGroupCreate;
-use App\DTO\UserGroup\UserGroupPatch;
-use App\DTO\UserGroup\UserGroupUpdate;
-use App\Resource\UserGroupResource;
+use App\DTO\User\UserCreate;
+use App\DTO\User\UserPatch;
+use App\DTO\User\UserUpdate;
+use App\Resource\UserResource;
 use App\Rest\Controller;
 use App\Rest\ResponseHandler;
 use App\Rest\Traits\Actions;
@@ -17,28 +17,26 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 
 /**
- * Class UserGroupController
+ * Class UserController
  *
- * @OA\Tag(name="UserGroup Management")
+ * @OA\Tag(name="User Management")
  *
- * @package App\Controller\Api\UserGroup
+ * @package App\Controller\Api\v1\User
  *
- * @method UserGroupResource getResource()
+ * @method UserResource getResource()
  * @method ResponseHandler getResponseHandler()
  */
 #[Route(
-    path: '/user_group',
+    path: '/v1/user',
 )]
 #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
-class UserGroupController extends Controller
+class UserController extends Controller
 {
-    // Traits for REST actions
     use Actions\Admin\CountAction;
     use Actions\Admin\FindAction;
     use Actions\Admin\FindOneAction;
     use Actions\Admin\IdsAction;
     use Actions\Root\CreateAction;
-    use Actions\Root\DeleteAction;
     use Actions\Root\PatchAction;
     use Actions\Root\UpdateAction;
 
@@ -46,13 +44,13 @@ class UserGroupController extends Controller
      * @var array<string, string>
      */
     protected static array $dtoClasses = [
-        Controller::METHOD_CREATE => UserGroupCreate::class,
-        Controller::METHOD_UPDATE => UserGroupUpdate::class,
-        Controller::METHOD_PATCH => UserGroupPatch::class,
+        Controller::METHOD_CREATE => UserCreate::class,
+        Controller::METHOD_UPDATE => UserUpdate::class,
+        Controller::METHOD_PATCH => UserPatch::class,
     ];
 
     public function __construct(
-        protected UserGroupResource $resource,
+        protected UserResource $resource,
     ) {
     }
 }

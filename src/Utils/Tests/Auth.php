@@ -16,11 +16,14 @@ use function array_merge;
 use function file_get_contents;
 use function file_put_contents;
 use function getenv;
+use function is_string;
 use function property_exists;
 use function sha1;
 use function sprintf;
 use function str_pad;
 use function sys_get_temp_dir;
+
+use const DIRECTORY_SEPARATOR;
 
 /**
  * Class Auth
@@ -98,12 +101,14 @@ class Auth
      */
     private function getToken(string $username, string $password): string
     {
+        $testChannel = getenv('ENV_TEST_CHANNEL_READABLE');
+
         // Specify used cache file
         $filename = sprintf(
             '%s%stest_jwt_auth_cache%s.json',
             sys_get_temp_dir(),
             DIRECTORY_SEPARATOR,
-            (string)getenv('ENV_TEST_CHANNEL_READABLE')
+            is_string($testChannel) ? $testChannel : '',
         );
 
         // Read current cache
@@ -118,7 +123,7 @@ class Auth
             // Create request to make login using given credentials
             $client->request(
                 'POST',
-                WebTestCase::API_URL_PREFIX . '/auth/getToken',
+                WebTestCase::API_URL_PREFIX . '/v1/auth/get_token',
                 [],
                 [],
                 array_merge(
@@ -128,7 +133,10 @@ class Auth
                         'HTTP_X-Requested-With' => 'XMLHttpRequest',
                     ]
                 ),
-                JSON::encode(['username' => $username, 'password' => $password])
+                JSON::encode([
+                    'username' => $username,
+                    'password' => $password,
+                ])
             );
 
             $response = $client->getResponse();

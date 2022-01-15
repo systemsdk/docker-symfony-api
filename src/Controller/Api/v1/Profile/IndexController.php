@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\Profile;
+namespace App\Controller\Api\v1\Profile;
 
 use App\Entity\User;
-use App\Entity\UserGroup;
+use App\Security\RolesService;
+use App\Utils\JSON;
+use JsonException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -16,34 +18,32 @@ use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * Class GroupsController
+ * Class IndexController
  *
  * @OA\Tag(name="Profile")
  *
- * @package App\Controller\Api\Profile
+ * @package App\Controller\Api\v1\Profile
  */
-class GroupsController
+class IndexController
 {
     public function __construct(
         private SerializerInterface $serializer,
+        private RolesService $rolesService,
     ) {
     }
 
     /**
-     * Get current user user groups, accessible only for 'IS_AUTHENTICATED_FULLY' users.
+     * Get current user profile data, accessible only for 'IS_AUTHENTICATED_FULLY' users.
      *
      * @OA\Response(
      *     response=200,
-     *     description="User groups",
+     *     description="User profile data",
      *     @OA\JsonContent(
-     *         type="array",
-     *         @OA\Items(
-     *             ref=@Model(
-     *                 type=UserGroup::class,
-     *                 groups={"set.UserProfileGroups"},
-     *             ),
+     *         ref=@Model(
+     *             type=User::class,
+     *             groups={"set.UserProfile"},
      *         ),
-     *      ),
+     *     ),
      *  )
      * @OA\Response(
      *     response=401,
@@ -55,31 +55,31 @@ class GroupsController
      *         @OA\Property(property="message", type="string", description="Error description"),
      *     ),
      * )
-     * @OA\Response(
-     *     response=403,
-     *     description="Access denied",
-     *     @OA\JsonContent(
-     *        type="object",
-     *        example={"code": 403, "message": "Access denied"},
-     *        @OA\Property(property="code", type="integer", description="Error code"),
-     *        @OA\Property(property="message", type="string", description="Error description"),
-     *     ),
-     * )
+     *
+     * @throws JsonException
      */
     #[Route(
-        path: '/profile/groups',
+        path: '/v1/profile',
         methods: [Request::METHOD_GET],
     )]
     #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
     public function __invoke(User $loggedInUser): JsonResponse
     {
-        return new JsonResponse(
+        /** @var array<string, string|array<string, string>> $output */
+        $output = JSON::decode(
             $this->serializer->serialize(
-                $loggedInUser->getUserGroups()->toArray(),
+                $loggedInUser,
                 'json',
-                ['groups' => UserGroup::SET_USER_PROFILE_GROUPS],
+                [
+                    'groups' => User::SET_USER_PROFILE,
+                ]
             ),
-            json: true,
+            true,
         );
+        /** @var array<int, string> $roles */
+        $roles = $output['roles'];
+        $output['roles'] = $this->rolesService->getInheritedRoles($roles);
+
+        return new JsonResponse($output);
     }
 }

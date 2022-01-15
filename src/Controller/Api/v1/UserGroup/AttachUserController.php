@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api\UserGroup;
+namespace App\Controller\Api\v1\UserGroup;
 
 use App\Entity\User;
 use App\Entity\UserGroup;
@@ -25,11 +25,12 @@ use Throwable;
  *
  * @OA\Tag(name="UserGroup Management")
  *
- * @package App\Controller\Api\UserGroup
+ * @package App\Controller\Api\v1\UserGroup
  */
 class AttachUserController
 {
     public function __construct(
+        private UserResource $userResource,
         private UserGroupResource $userGroupResource,
         private SerializerInterface $serializer,
     ) {
@@ -108,7 +109,7 @@ class AttachUserController
      * @throws Throwable
      */
     #[Route(
-        path: '/user_group/{userGroup}/user/{user}',
+        path: '/v1/user_group/{userGroup}/user/{user}',
         requirements: [
             'userGroup' => '%app.uuid_v1_regex%',
             'user' => '%app.uuid_v1_regex%',
@@ -127,7 +128,8 @@ class AttachUserController
     public function __invoke(UserGroup $userGroup, User $user): JsonResponse
     {
         $status = $userGroup->getUsers()->contains($user) ? Response::HTTP_OK : Response::HTTP_CREATED;
-        $this->userGroupResource->save($userGroup->addUser($user));
+        $this->userGroupResource->save($userGroup->addUser($user), false);
+        $this->userResource->save($user, true, true);
         $groups = [
             'groups' => [
                 User::SET_USER_BASIC,
