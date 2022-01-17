@@ -14,6 +14,7 @@ use Throwable;
 
 use function array_filter;
 use function is_object;
+use function str_contains;
 use function str_starts_with;
 
 /**
@@ -39,6 +40,7 @@ class StopwatchDecorator
             $class->getFileName() === false
             || $class->isFinal()
             || str_starts_with($class->getName(), 'ProxyManagerGeneratedProxy')
+            || str_contains($class->getName(), 'RequestStack')
         ) {
             return $service;
         }

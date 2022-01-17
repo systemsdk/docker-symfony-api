@@ -7,6 +7,8 @@ namespace App\Repository\Traits;
 use App\Entity\Interfaces\EntityInterface;
 use App\Rest\RepositoryHelper;
 use App\Rest\UuidHelper;
+use Doctrine\DBAL\LockMode;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
@@ -29,7 +31,7 @@ trait RepositoryMethodsTrait
     /**
      * Wrapper for default Doctrine repository find method.
      *
-     * @phpstan-param 0|1|2|4|null $lockMode
+     * @psalm-param LockMode::*|null $lockMode
      *
      * @throws TransactionRequiredException
      * @throws OptimisticLockException
@@ -46,7 +48,7 @@ trait RepositoryMethodsTrait
     /**
      * {@inheritdoc}
      *
-     * @phpstan-param 1|2|3|4|5|6|string|null $hydrationMode
+     * @psalm-param string|AbstractQuery::HYDRATE_*|null $hydrationMode
      */
     public function findAdvanced(string $id, string | int | null $hydrationMode = null): null | array | EntityInterface
     {
