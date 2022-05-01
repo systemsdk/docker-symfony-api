@@ -59,6 +59,11 @@ jobs:
           command: |
             make phpcpd
 
+      - run:
+          name: Run PHP Mess Detector
+          command: |
+            make phpmd
+
       - store_artifacts:
           path: reports
 

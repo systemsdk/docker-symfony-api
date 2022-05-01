@@ -3,6 +3,7 @@ This document contains basic information and recommendation for development this
 
 ## General
 * Follow the [PSR-1 guide](https://www.php-fig.org/psr/psr-1/), [PSR-12 guide](https://www.php-fig.org/psr/psr-12/), [Coding Standards](http://symfony.com/doc/current/contributing/code/standards.html).
+* Try to follow [DDD](https://en.wikipedia.org/wiki/Domain-driven_design) approach.
 * Try to keep class names informative but not too long.
 * Follow Symfony conventions and [best practices](https://symfony.com/doc/current/best_practices/index.html).
 * Separate application logic from presentation and data-persistence layers.
@@ -16,7 +17,7 @@ This document contains basic information and recommendation for development this
 
 Within this application the base workflow is following:
 
-`Controller/Command <--> Resource <--> Repository <--> Entity`
+`Controller/Command(Transport layer) <--> Resource(Application layer) <--> Repository(Infrastructure layer) <--> Entity(Domain layer)`
 
 #### Exceptions
 * All Exceptions that should terminate the current request (and return an error message to the user) should be handled
@@ -28,20 +29,27 @@ try catch block (catchable Exceptions).
 
 #### Entities
 Entities should only be data-persistence layers, i.e. defines relationships, attributes, helper methods
-but does not fetch collections of data.
+but does not fetch collections of data. Entities are located on the Domain layer (according to DDD approach) and shouldn't
+know anything about other layers (Application/Infrastructure) or framework. In this application we made some "exception"
+for such components like Doctrine/Swagger/Serializer/Validator (for the first time) and you can find such
+dependencies inside Entities.
 
 #### Repositories
-Repositories need to be responsible for parameter handling and query builder callbacks/joins.
-Parameter handling can help with generic REST queries.
+Repositories need to be responsible for parameter handling and query builder callbacks/joins. Should be located on
+infrastructure layer. Parameter handling can help with generic REST queries.
 
 #### Resources
-Resource services are layer between your controller/command and repository.
-Within this layer it is possible to control how to `mutate` repository data for application needs.
+Resource services are services between your controller/command and repository. Should be located on application layer.
+Within this service it is possible to control how to `mutate` repository data for application needs.
 Resource services are basically the application foundation and it can control your request and response as you like.
+We have provided 2 examples how to build resource services: 1)resource with all-in-one actions (create/update/delete/etc, see example src/ApiKey/Application/Resource/ApiKeyResource.php) 
+2)resource with single responsibility (f.e. count, see example src/ApiKey/Application/Resource/ApiKeyCountResource.php).
 
 #### Controllers
-Keep controllers clean of application logic. They should ideally just inject resources/services - either through
-the constructor (if used more than once) or in the controller method itself.
+Should be located on Transport layer. Keep controllers clean of application logic. They should ideally just inject
+resources/services - either through the constructor (if used more than once) or in the controller method itself.
+We have provided 2 examples how to build controllers: 1)controller with all-in-one actions (create/update/delete/etc, see example src/ApiKey/Transport/Controller/Api/v1/ApiKey/ApiKeyController.php)
+2)controller with single responsibility (f.e. count, see example src/ApiKey/Transport/Controller/Api/v2/ApiKey/ApiKeyCountController.php)
 
 #### Events
 Events are handled by event listeners. Please follow instruction [here](https://symfony.com/doc/current/event_dispatcher.html).

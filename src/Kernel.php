@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Compiler\StopwatchCompilerPass;
+use App\General\Application\Compiler\StopwatchCompilerPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 // phpcs:ignoreFile
 namespace DoctrineMigrations;
 
+use Doctrine\DBAL\Platforms\AbstractMySQLPlatform;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
@@ -28,7 +29,7 @@ final class Version20211001194001 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf(
-            $this->connection->getDatabasePlatform()->getName() !== 'mysql',
+            !$this->connection->getDatabasePlatform() instanceof AbstractMySQLPlatform,
             'Migration can only be executed safely on \'mysql\'.'
         );
 
@@ -128,6 +129,7 @@ CREATE TABLE log_login (
     brand_name VARCHAR(255) DEFAULT NULL,
     model VARCHAR(255) DEFAULT NULL,
     type ENUM('failure', 'success') NOT NULL COMMENT '(DC2Type:EnumLogLogin)',
+    username VARCHAR(255) NOT NULL,
     time DATETIME NOT NULL COMMENT '(DC2Type:datetime_immutable)',
     `date` DATE NOT NULL COMMENT '(DC2Type:date_immutable)',
     agent LONGTEXT NOT NULL,
@@ -310,7 +312,7 @@ SQL;
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf(
-            $this->connection->getDatabasePlatform()->getName() !== 'mysql',
+            !$this->connection->getDatabasePlatform() instanceof AbstractMySQLPlatform,
             'Migration can only be executed safely on \'mysql\'.'
         );
 

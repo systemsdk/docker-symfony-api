@@ -29,11 +29,13 @@ services:
             $elasticNumberOfReplicas: '%env(int:ELASTICSEARCH_NUMBER_OF_REPLICAS)%'
             $lockUserOnLoginFailureAttempts: '%env(int:LOCK_USER_ON_LOGIN_FAILURE_ATTEMPTS)%'
     _instanceof:
-        App\Rest\Interfaces\ControllerInterface:
+        App\General\Transport\Rest\Interfaces\ControllerInterface:
             tags: [ 'app.rest.controller' ]
-        App\Rest\Interfaces\RestResourceInterface:
+        App\General\Application\Rest\Interfaces\RestResourceInterface:
             tags: [ 'app.rest.resource', 'app.stopwatch' ]
-        App\Repository\BaseRepository:
+        App\General\Application\Rest\Interfaces\RestSmallResourceInterface:
+            tags: [ 'app.rest.resource', 'app.stopwatch' ]
+        App\General\Infrastructure\Repository\BaseRepository:
             tags: [ 'app.rest.repository', 'app.stopwatch' ]
         AutoMapperPlus\MapperInterface:
             tags: [ 'app.stopwatch' ]
@@ -47,39 +49,51 @@ services:
     App\:
         resource: '../src/'
         exclude:
-            - '../src/DataFixtures/'
+            - '../src/*/Infrastructure/DataFixtures/'
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/EventListener/'
-            - '../src/Utils/Tests/'
+            - '../src/*/Domain/Entity/'
+            - '../src/*/Transport/EventListener/'
+            - '../src/General/Application/Utils/Tests/'
             - '../src/Kernel.php'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller/'
+    App\ApiKey\Transport\Controller\:
+        resource: '../src/ApiKey/Transport/Controller/'
         tags: ['controller.service_arguments']
 
-    App\ArgumentResolver\EntityValueResolver:
+    App\Role\Transport\Controller\:
+        resource: '../src/Role/Transport/Controller/'
+        tags: [ 'controller.service_arguments' ]
+
+    App\Tool\Transport\Controller\:
+        resource: '../src/Tool/Transport/Controller/'
+        tags: [ 'controller.service_arguments' ]
+
+    App\User\Transport\Controller\:
+        resource: '../src/User/Transport/Controller/'
+        tags: [ 'controller.service_arguments' ]
+
+    App\General\Transport\ArgumentResolver\EntityValueResolver:
         tags:
             - { name: controller.argument_value_resolver, priority: 150 }
 
-    App\Service\RequestLoggerService:
+    App\Log\Application\Service\RequestLoggerService:
         arguments:
             $sensitiveProperties: '%env(json:REQUEST_LOG_SENSITIVE_PROPERTIES)%'
 
-    App\Resource\ResourceCollection:
+    App\General\Application\Resource\ResourceCollection:
         arguments: [ !tagged app.rest.resource ]
 
-    App\Rest\ControllerCollection:
+    App\General\Transport\Rest\ControllerCollection:
         arguments: [ !tagged app.rest.controller ]
 
-    App\EventSubscriber\RequestLogSubscriber:
+    App\General\Transport\EventSubscriber\RequestLogSubscriber:
         arguments:
             $ignoredRoutes: '%env(json:REQUEST_LOG_IGNORED_ROUTES)%'
 
-    App\Service\Interfaces\ElasticsearchServiceInterface:
-        class: App\Service\ElasticsearchService
+    App\General\Domain\Service\Interfaces\ElasticsearchServiceInterface:
+        class: App\General\Infrastructure\Service\ElasticsearchService
         arguments:
             $host: '%env(ELASTICSEARCH_HOST)%'
             $username: '%env(ELASTICSEARCH_USERNAME)%'
@@ -91,12 +105,24 @@ when@dev:
         _defaults:
             autowire: true
             autoconfigure: true
-        App\DataFixtures\:
-            resource: '../src/DataFixtures/'
+
+        App\ApiKey\Infrastructure\DataFixtures\:
+            resource: '../src/ApiKey/Infrastructure/DataFixtures/'
             tags: [ 'doctrine.fixture.orm' ]
 
-        App\Utils\Tests\:
-            resource: '../src/Utils/Tests'
+        App\Role\Infrastructure\DataFixtures\:
+            resource: '../src/Role/Infrastructure/DataFixtures/'
+            tags: [ 'doctrine.fixture.orm' ]
+
+        App\User\Infrastructure\DataFixtures\:
+            resource: '../src/User/Infrastructure/DataFixtures/'
+            tags: [ 'doctrine.fixture.orm' ]
+
+        App\General\Transport\Utils\Tests\:
+            resource: '../src/General/Transport/Utils/Tests'
+
+        App\General\Application\Utils\Tests\:
+            resource: '../src/General/Application/Utils/Tests'
 
         ProxyManager\Factory\AccessInterceptorValueHolderFactory:
             class: ProxyManager\Factory\AccessInterceptorValueHolderFactory
@@ -104,13 +130,13 @@ when@dev:
         doctrine.dbal.default_connection.stopwatch:
             class: Doctrine\DBAL\Connection
             decorates: doctrine.dbal.default_connection
-            factory: [ '@App\Decorator\StopwatchDecorator', decorate ]
+            factory: [ '@App\General\Application\Decorator\StopwatchDecorator', decorate ]
             arguments: [ '@doctrine.dbal.default_connection.stopwatch.inner' ]
 
         symfony.component.serializer.stopwatch:
             class: Symfony\Component\Serializer\Serializer
             decorates: serializer
-            factory: [ '@App\Decorator\StopwatchDecorator', decorate ]
+            factory: [ '@App\General\Application\Decorator\StopwatchDecorator', decorate ]
             arguments: [ '@symfony.component.serializer.stopwatch.inner' ]
 
 when@test:
@@ -120,11 +146,22 @@ when@test:
             autoconfigure: true
             public: true
 
-        App\DataFixtures\:
-            resource: '../src/DataFixtures/'
+        App\ApiKey\Infrastructure\DataFixtures\:
+            resource: '../src/ApiKey/Infrastructure/DataFixtures/'
             tags: [ 'doctrine.fixture.orm' ]
 
-        App\Utils\Tests\:
-            resource: '../src/Utils/Tests'
+        App\Role\Infrastructure\DataFixtures\:
+            resource: '../src/Role/Infrastructure/DataFixtures/'
+            tags: [ 'doctrine.fixture.orm' ]
 
-        test.app.utils.tests.auth: '@App\Utils\Tests\Auth'
+        App\User\Infrastructure\DataFixtures\:
+            resource: '../src/User/Infrastructure/DataFixtures/'
+            tags: [ 'doctrine.fixture.orm' ]
+
+        App\General\Transport\Utils\Tests\:
+            resource: '../src/General/Transport/Utils/Tests'
+
+        App\General\Application\Utils\Tests\:
+            resource: '../src/General/Application/Utils/Tests'
+
+        test.app.utils.tests.auth: '@App\General\Transport\Utils\Tests\Auth'

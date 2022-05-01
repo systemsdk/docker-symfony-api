@@ -1,0 +1,69 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\ApiKey\Application\Security\Provider;
+
+use App\ApiKey\Application\Security\ApiKeyUser;
+use App\ApiKey\Application\Security\Provider\Interfaces\ApiKeyUserProviderInterface;
+use App\ApiKey\Domain\Entity\ApiKey;
+use App\ApiKey\Domain\Repository\Interfaces\ApiKeyRepositoryInterface;
+use App\Role\Application\Security\RolesService;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+
+/**
+ * Class ApiKeyUserProvider
+ *
+ * @package App\ApiKey
+ */
+class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInterface
+{
+    /**
+     * @param \App\ApiKey\Infrastructure\Repository\ApiKeyRepository $apiKeyRepository
+     */
+    public function __construct(
+        private ApiKeyRepositoryInterface $apiKeyRepository,
+        private RolesService $rolesService,
+    ) {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supportsClass(string $class): bool
+    {
+        return $class === ApiKeyUser::class;
+    }
+
+    public function loadUserByIdentifier(string $identifier): ApiKeyUser
+    {
+        $apiKey = $this->getApiKeyForToken($identifier);
+
+        if ($apiKey === null) {
+            throw new UserNotFoundException('API key is not valid');
+        }
+
+        return new ApiKeyUser($apiKey, $this->rolesService->getInheritedRoles($apiKey->getRoles()));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function refreshUser(UserInterface $user): UserInterface
+    {
+        throw new UnsupportedUserException('API key cannot refresh user');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getApiKeyForToken(string $token): ?ApiKey
+    {
+        return $this->apiKeyRepository->findOneBy([
+            'token' => $token,
+        ]);
+    }
+}

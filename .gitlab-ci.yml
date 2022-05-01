@@ -42,6 +42,7 @@ build:
     - make phpstan
     - make phpinsights
     - make phpcpd
+    - make phpmd
     - make stop-test
   artifacts:
     paths:

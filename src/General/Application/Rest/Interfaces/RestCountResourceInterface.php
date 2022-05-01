@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\General\Application\Rest\Interfaces;
+
+use Throwable;
+
+/**
+ * Interface RestCountResourceInterface
+ *
+ * @package App\General
+ */
+interface RestCountResourceInterface
+{
+    /**
+     * Generic count method to return entity count for specified criteria and search terms.
+     *
+     * @param array<int|string, string|array<mixed>>|null $criteria
+     * @param array<string, string>|null $search
+     *
+     * @throws Throwable
+     */
+    public function count(?array $criteria = null, ?array $search = null, ?string $entityManagerName = null): int;
+}

@@ -1,0 +1,58 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\User\Transport\EventSubscriber;
+
+use App\General\Domain\Doctrine\DBAL\Types\EnumLogLoginType;
+use App\Log\Application\Service\LoginLoggerService;
+use App\User\Domain\Repository\Interfaces\UserRepositoryInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
+use Lexik\Bundle\JWTAuthenticationBundle\Events;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Throwable;
+
+/**
+ * Class AuthenticationSuccessSubscriber
+ *
+ * @package App\User
+ */
+class AuthenticationSuccessSubscriber implements EventSubscriberInterface
+{
+    /**
+     * @param \App\User\Infrastructure\Repository\UserRepository $userRepository
+     */
+    public function __construct(
+        private LoginLoggerService $loginLoggerService,
+        private UserRepositoryInterface $userRepository,
+    ) {
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return array<string, string>
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            AuthenticationSuccessEvent::class => 'onAuthenticationSuccess',
+            Events::AUTHENTICATION_SUCCESS => 'onAuthenticationSuccess',
+        ];
+    }
+
+    /**
+     * Method to log user successfully login to database.
+     *
+     * This method is called when following event is broadcast
+     *  - lexik_jwt_authentication.on_authentication_success
+     *
+     * @throws Throwable
+     */
+    public function onAuthenticationSuccess(AuthenticationSuccessEvent $event): void
+    {
+        $this->loginLoggerService
+            ->setUser($this->userRepository->loadUserByIdentifier($event->getUser()->getUserIdentifier(), true))
+            ->process(EnumLogLoginType::TYPE_SUCCESS);
+    }
+}

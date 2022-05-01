@@ -1,4 +1,7 @@
 {
+    "bamarni/composer-bin-plugin": {
+        "version": "v1.5.0"
+    },
     "beberlei/doctrineextensions": {
         "version": "v1.3.0"
     },
@@ -291,6 +294,9 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "stella-maris/clock": {
+        "version": "0.1.4"
+    },
     "symfony/amqp-messenger": {
         "version": "v5.3.4"
     },
@@ -321,9 +327,6 @@
             "bin/console",
             "config/bootstrap.php"
         ]
-    },
-    "symfony/debug": {
-        "version": "v4.4.25"
     },
     "symfony/debug-bundle": {
         "version": "4.1",
@@ -421,9 +424,6 @@
     "symfony/http-kernel": {
         "version": "v4.4.25"
     },
-    "symfony/inflector": {
-        "version": "v4.4.25"
-    },
     "symfony/intl": {
         "version": "v4.4.25"
     },
@@ -511,9 +511,6 @@
     "symfony/password-hasher": {
         "version": "v5.3.4"
     },
-    "symfony/polyfill-ctype": {
-        "version": "v1.23.0"
-    },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.23.1"
     },
@@ -526,23 +523,8 @@
     "symfony/polyfill-intl-normalizer": {
         "version": "v1.23.0"
     },
-    "symfony/polyfill-mbstring": {
-        "version": "v1.23.0"
-    },
     "symfony/polyfill-php56": {
         "version": "v1.20.0"
-    },
-    "symfony/polyfill-php72": {
-        "version": "v1.23.0"
-    },
-    "symfony/polyfill-php73": {
-        "version": "v1.23.0"
-    },
-    "symfony/polyfill-php80": {
-        "version": "v1.23.0"
-    },
-    "symfony/polyfill-php81": {
-        "version": "v1.23.0"
     },
     "symfony/process": {
         "version": "v4.4.25"
@@ -555,9 +537,6 @@
     },
     "symfony/proxy-manager-bridge": {
         "version": "v5.4.2"
-    },
-    "symfony/redis-messenger": {
-        "version": "v5.3.4"
     },
     "symfony/requirements-checker": {
         "version": "2.0",
@@ -601,9 +580,6 @@
         "version": "v4.4.25"
     },
     "symfony/security-csrf": {
-        "version": "v4.4.25"
-    },
-    "symfony/security-guard": {
         "version": "v4.4.25"
     },
     "symfony/security-http": {

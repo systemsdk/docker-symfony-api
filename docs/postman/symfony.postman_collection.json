@@ -180,253 +180,504 @@
 			"name": "ApiKey Management",
 			"item": [
 				{
-					"name": "count",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "https://{{host}}/api/v1/api_key/count",
-							"protocol": "https",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"api_key",
-								"count"
-							]
+					"name": "v1",
+					"item": [
+						{
+							"name": "count",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{host}}/api/v1/api_key/count",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"api_key",
+										"count"
+									]
+								},
+								"description": "Count entities, accessible only for 'ROLE_ROOT' users."
+							},
+							"response": []
 						},
-						"description": "Count entities, accessible only for 'ROLE_ROOT' users."
-					},
-					"response": []
+						{
+							"name": "list",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{host}}/api/v1/api_key",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"api_key"
+									]
+								},
+								"description": "Get list of entities, accessible only for 'ROLE_ROOT' users."
+							},
+							"response": []
+						},
+						{
+							"name": "get",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{host}}/api/v1/api_key/5ce02838-08e5-11eb-a845-0242ac120007",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"api_key",
+										"5ce02838-08e5-11eb-a845-0242ac120007"
+									]
+								},
+								"description": "Find entity, accessible only for 'ROLE_ROOT' users."
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"description\": \"test api key\",\n    \"userGroups\": [\n        \"f99a6c90-70e7-11ec-b886-0242ac120008\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{host}}/api/v1/api_key",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"api_key"
+									]
+								},
+								"description": "Create entity, accessible only for 'ROLE_ROOT' users."
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"description\": \"test api key #2\",\n    \"userGroups\": [\n        \"f99a6c90-70e7-11ec-b886-0242ac120008\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{host}}/api/v1/api_key/27245cee-7579-11ec-bdae-0242ac120007",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"api_key",
+										"27245cee-7579-11ec-bdae-0242ac120007"
+									]
+								},
+								"description": "/api/api_key/{id}"
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"description\": \"test api key 22\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{host}}/api/v1/api_key/27245cee-7579-11ec-bdae-0242ac120007",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"api_key",
+										"27245cee-7579-11ec-bdae-0242ac120007"
+									]
+								},
+								"description": "Patch entity with new data, accessible only for 'ROLE_ROOT' users."
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{host}}/api/v1/api_key/27245cee-7579-11ec-bdae-0242ac120007",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"api_key",
+										"27245cee-7579-11ec-bdae-0242ac120007"
+									]
+								},
+								"description": "/api/api_key/{id}"
+							},
+							"response": []
+						},
+						{
+							"name": "ids list",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{host}}/api/v1/api_key/ids",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"api_key",
+										"ids"
+									]
+								},
+								"description": "Find ids list, accessible only for 'ROLE_ROOT' users."
+							},
+							"response": []
+						}
+					]
 				},
 				{
-					"name": "list",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "https://{{host}}/api/v1/api_key",
-							"protocol": "https",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"api_key"
-							]
-						},
-						"description": "Get list of entities, accessible only for 'ROLE_ROOT' users."
-					},
-					"response": []
-				},
-				{
-					"name": "create",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"description\": \"test api key\",\n    \"userGroups\": [\n        \"f99a6c90-70e7-11ec-b886-0242ac120008\"\n    ]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "v2",
+					"item": [
+						{
+							"name": "count",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{host}}/api/v2/api_key/count",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v2",
+										"api_key",
+										"count"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "https://{{host}}/api/v1/api_key",
-							"protocol": "https",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"api_key"
-							]
-						},
-						"description": "Create entity, accessible only for 'ROLE_ROOT' users."
-					},
-					"response": []
-				},
-				{
-					"name": "get",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "https://{{host}}/api/v1/api_key/5ce02838-08e5-11eb-a845-0242ac120007",
-							"protocol": "https",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"api_key",
-								"5ce02838-08e5-11eb-a845-0242ac120007"
-							]
-						},
-						"description": "Find entity, accessible only for 'ROLE_ROOT' users."
-					},
-					"response": []
-				},
-				{
-					"name": "update",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"description\": \"test api key #2\",\n    \"userGroups\": [\n        \"f99a6c90-70e7-11ec-b886-0242ac120008\"\n    ]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "list",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{host}}/api/v2/api_key",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v2",
+										"api_key"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "https://{{host}}/api/v1/api_key/27245cee-7579-11ec-bdae-0242ac120007",
-							"protocol": "https",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"api_key",
-								"27245cee-7579-11ec-bdae-0242ac120007"
-							]
-						},
-						"description": "/api/api_key/{id}"
-					},
-					"response": []
-				},
-				{
-					"name": "update",
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Authorization",
-								"type": "text",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"description\": \"test api key 22\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "get",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{host}}/api/v2/api_key/3bbe3828-c8ad-11ec-8ba6-0242ac120006",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v2",
+										"api_key",
+										"3bbe3828-c8ad-11ec-8ba6-0242ac120006"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "https://{{host}}/api/v1/api_key/27245cee-7579-11ec-bdae-0242ac120007",
-							"protocol": "https",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"api_key",
-								"27245cee-7579-11ec-bdae-0242ac120007"
-							]
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"description\": \"test api key\",\n    \"userGroups\": [\n        \"ed38a542-c3db-11ec-b147-0242ac120007\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{host}}/api/v2/api_key",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v2",
+										"api_key"
+									]
+								}
+							},
+							"response": []
 						},
-						"description": "Patch entity with new data, accessible only for 'ROLE_ROOT' users."
-					},
-					"response": []
-				},
-				{
-					"name": "delete",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "https://{{host}}/api/v1/api_key/27245cee-7579-11ec-bdae-0242ac120007",
-							"protocol": "https",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"api_key",
-								"27245cee-7579-11ec-bdae-0242ac120007"
-							]
+						{
+							"name": "update",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"description\": \"test api key #2\",\n    \"userGroups\": [\n        \"ed38a542-c3db-11ec-b147-0242ac120007\"\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{host}}/api/v2/api_key/3bbe3828-c8ad-11ec-8ba6-0242ac120006",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v2",
+										"api_key",
+										"3bbe3828-c8ad-11ec-8ba6-0242ac120006"
+									]
+								}
+							},
+							"response": []
 						},
-						"description": "/api/api_key/{id}"
-					},
-					"response": []
-				},
-				{
-					"name": "ids list",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "https://{{host}}/api/v1/api_key/ids",
-							"protocol": "https",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"api_key",
-								"ids"
-							]
+						{
+							"name": "update",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"description\": \"test api key\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{host}}/api/v2/api_key/3bbe3828-c8ad-11ec-8ba6-0242ac120006",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v2",
+										"api_key",
+										"3bbe3828-c8ad-11ec-8ba6-0242ac120006"
+									]
+								}
+							},
+							"response": []
 						},
-						"description": "Find ids list, accessible only for 'ROLE_ROOT' users."
-					},
-					"response": []
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{host}}/api/v2/api_key/27245cee-7579-11ec-bdae-0242ac120007",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v2",
+										"api_key",
+										"27245cee-7579-11ec-bdae-0242ac120007"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ids list",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{host}}/api/v2/api_key/ids",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"v2",
+										"api_key",
+										"ids"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},

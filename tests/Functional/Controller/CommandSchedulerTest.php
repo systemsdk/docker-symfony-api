@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller;
 
-use App\Utils\Tests\WebTestCase;
+use App\General\Transport\Utils\Tests\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
