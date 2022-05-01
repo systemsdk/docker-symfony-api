@@ -3,7 +3,7 @@
 	"description": "",
 	"require": {},
 	"require-dev": {
-		"phpmetrics/phpmetrics": "2.7.*",
+		"phpmetrics/phpmetrics": "2.8.*",
 		"roave/security-advisories": "dev-latest"
 	},
 	"config": {

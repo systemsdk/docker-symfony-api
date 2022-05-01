@@ -9,7 +9,7 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
 
-    App\EventListener\UserEntityEventListener:
+    App\User\Transport\EventListener\UserEntityEventListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }

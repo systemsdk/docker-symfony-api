@@ -1,40 +1,81 @@
 doctrine:
     dbal:
         # configure these for your database server
-        driver: 'pdo_mysql'
-        server_version: '8.0'
-        charset: utf8mb4
-        default_table_options:
-            charset: utf8mb4
-            collate: utf8mb4_unicode_ci
-
-        # https://symfony.com/doc/current/messenger.html#doctrine-transport
-        schema_filter: '~^(?!messenger_messages)~'
-
-        url: '%env(resolve:DATABASE_URL)%'
-        mapping_types:
-            enum: string
+        default_connection: default
+        connections:
+            default:
+                driver: 'pdo_mysql'
+                server_version: '8.0'
+                charset: utf8mb4
+                default_table_options:
+                    charset: utf8mb4
+                    collate: utf8mb4_unicode_ci
+                # https://symfony.com/doc/current/messenger.html#doctrine-transport
+                schema_filter: '~^(?!messenger_messages)~'
+                url: '%env(resolve:DATABASE_URL)%'
+                mapping_types:
+                    enum: string
         types:
-            datetime: App\Doctrine\DBAL\Types\UTCDateTimeType
-            datetimetz: App\Doctrine\DBAL\Types\UTCDateTimeType
-            EnumLanguage: App\Doctrine\DBAL\Types\EnumLanguageType
-            EnumLocale: App\Doctrine\DBAL\Types\EnumLocaleType
-            EnumLogLogin: App\Doctrine\DBAL\Types\EnumLogLoginType
+            datetime: App\General\Domain\Doctrine\DBAL\Types\UTCDateTimeType
+            datetimetz: App\General\Domain\Doctrine\DBAL\Types\UTCDateTimeType
+            EnumLanguage: App\General\Domain\Doctrine\DBAL\Types\EnumLanguageType
+            EnumLocale: App\General\Domain\Doctrine\DBAL\Types\EnumLocaleType
+            EnumLogLogin: App\General\Domain\Doctrine\DBAL\Types\EnumLogLoginType
     orm:
         auto_generate_proxy_classes: true
-        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-        auto_mapping: true
-        mappings:
-            App:
-                is_bundle: false
-                type: attribute
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
-        dql:
-            datetime_functions:
-                datesub: DoctrineExtensions\Query\Mysql\DateSub
-                now: DoctrineExtensions\Query\Mysql\Now
-            string_functions:
-                uuid_to_ouuid: App\DQL\UuidToOuuid
-                ouuid_to_uuid: App\DQL\OuuidToUuid
+        default_entity_manager: default
+        entity_managers:
+            default:
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                auto_mapping: true
+                connection: default
+                mappings:
+                    ApiKey:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/src/ApiKey/Domain/Entity'
+                        prefix: 'App\ApiKey\Domain\Entity'
+                        alias: ApiKey
+                    DateDimension:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/src/DateDimension/Domain/Entity'
+                        prefix: 'App\DateDimension\Domain\Entity'
+                        alias: DateDimension
+                    General:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/src/General/Domain/Entity'
+                        prefix: 'App\General\Domain\Entity'
+                        alias: General
+                    Log:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/src/Log/Domain/Entity'
+                        prefix: 'App\Log\Domain\Entity'
+                        alias: Log
+                    Role:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/src/Role/Domain/Entity'
+                        prefix: 'App\Role\Domain\Entity'
+                        alias: Role
+                    Tool:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/src/Tool/Domain/Entity'
+                        prefix: 'App\Tool\Domain\Entity'
+                        alias: Tool
+                    User:
+                        is_bundle: false
+                        type: attribute
+                        dir: '%kernel.project_dir%/src/User/Domain/Entity'
+                        prefix: 'App\User\Domain\Entity'
+                        alias: User
+                dql:
+                    datetime_functions:
+                        datesub: DoctrineExtensions\Query\Mysql\DateSub
+                        now: DoctrineExtensions\Query\Mysql\Now
+                    string_functions:
+                        uuid_to_ouuid: App\General\Infrastructure\DQL\UuidToOuuid
+                        ouuid_to_uuid: App\General\Infrastructure\DQL\OuuidToUuid

@@ -12,9 +12,9 @@ security:
             chain:
                 providers: [security_user_provider, api_key_user_provider]
         security_user_provider:
-            id: App\Security\Provider\SecurityUserFactory
+            id: App\User\Application\Security\Provider\SecurityUserFactory
         api_key_user_provider:
-            id: App\Security\Provider\ApiKeyUserProvider
+            id: App\ApiKey\Application\Security\Provider\ApiKeyUserProvider
 
     # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
     firewalls:
@@ -29,7 +29,7 @@ security:
                 provider: security_user_provider
                 check_path: /api/v1/auth/get_token
                 success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: App\Security\Handler\TranslatedAuthenticationFailureHandler
+                failure_handler: App\User\Application\Security\Handler\TranslatedAuthenticationFailureHandler
         root:
             pattern: ^/($|command-scheduler)
             stateless: true
@@ -42,7 +42,7 @@ security:
             provider: chain_user_provider
             jwt: ~
             custom_authenticators:
-                - App\Security\Authenticator\ApiKeyAuthenticator
+                - App\ApiKey\Application\Security\Authenticator\ApiKeyAuthenticator
 
     role_hierarchy:
         ROLE_API: [ROLE_LOGGED]

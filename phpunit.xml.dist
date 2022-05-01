@@ -19,8 +19,16 @@
             <directory suffix=".php">./src</directory>
         </include>
         <exclude>
-            <directory>./src/Command</directory>
-            <directory>./src/DataFixtures</directory>
+            <directory>./src/ApiKey/Transport/Command</directory>
+            <directory>./src/DateDimension/Transport/Command</directory>
+            <directory>./src/General/Transport/Command</directory>
+            <directory>./src/Log/Transport/Command</directory>
+            <directory>./src/Role/Transport/Command</directory>
+            <directory>./src/Tool/Transport/Command</directory>
+            <directory>./src/User/Transport/Command</directory>
+            <directory>./src/ApiKey/Infrastructure/DataFixtures</directory>
+            <directory>./src/Role/Infrastructure/DataFixtures</directory>
+            <directory>./src/User/Infrastructure/DataFixtures</directory>
             <file>./src/Kernel.php</file>
         </exclude>
     </coverage>

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\Api;
 
-use App\Resource\LogRequestResource;
-use App\Utils\Tests\WebTestCase;
+use App\General\Transport\Utils\Tests\WebTestCase;
+use App\Log\Application\Resource\LogRequestResource;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
