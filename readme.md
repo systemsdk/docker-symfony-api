@@ -27,6 +27,15 @@ Note: OS recommendation - Linux Ubuntu based.
 7. Kibana 7
 8. Redis 6
 
+## Setting up Docker and docker-compose
+1. For installing Docker please follow steps mentioned on page [install on Ubuntu linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+   or [install on Mac/Windows](https://docs.docker.com/engine/install/).
+
+2. For installing docker-compose please follow steps on page [install compose](https://docs.docker.com/compose/install/#install-compose)
+   and select `Linux Standalone binary` tab if you are using Linux OS.
+
+Note: Please run next cmd after above step 2 if you are using Linux OS: `sudo usermod -aG docker $USER`
+
 ## Setting up DEV environment
 1.You can clone this repository from GitHub or install via composer.
 
