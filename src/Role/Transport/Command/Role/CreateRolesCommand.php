@@ -43,9 +43,9 @@ class CreateRolesCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private RoleRepositoryInterface $roleRepository,
-        private RolesService $rolesService,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly RoleRepositoryInterface $roleRepository,
+        private readonly RolesService $rolesService,
     ) {
         parent::__construct();
     }

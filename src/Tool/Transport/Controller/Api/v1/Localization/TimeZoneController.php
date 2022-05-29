@@ -23,7 +23,7 @@ use Throwable;
 class TimeZoneController
 {
     public function __construct(
-        private LocalizationService $localization,
+        private readonly LocalizationService $localization,
     ) {
     }
 

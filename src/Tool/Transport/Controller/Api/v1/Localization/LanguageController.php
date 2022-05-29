@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LanguageController
 {
     public function __construct(
-        private LocalizationService $localization,
+        private readonly LocalizationService $localization,
     ) {
     }
 

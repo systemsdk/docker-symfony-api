@@ -42,8 +42,8 @@ class ListUsersCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private UserResource $userResource,
-        private RolesService $roles,
+        private readonly UserResource $userResource,
+        private readonly RolesService $roles,
     ) {
         parent::__construct();
     }

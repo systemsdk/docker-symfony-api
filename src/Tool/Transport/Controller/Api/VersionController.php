@@ -21,7 +21,7 @@ use Throwable;
 class VersionController
 {
     public function __construct(
-        private VersionService $versionService,
+        private readonly VersionService $versionService,
     ) {
     }
 

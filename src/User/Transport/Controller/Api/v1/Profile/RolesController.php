@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 class RolesController
 {
     public function __construct(
-        private RolesService $rolesService,
+        private readonly RolesService $rolesService,
     ) {
     }
 

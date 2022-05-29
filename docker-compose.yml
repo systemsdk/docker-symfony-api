@@ -7,13 +7,13 @@ services:
       build:
         context: ./docker/
         args:
-          - "BUILD_ARGUMENT_ENV=dev"
+          BUILD_ARGUMENT_ENV: dev
         dockerfile: ./nginx/Dockerfile
       container_name: ${COMPOSE_PROJECT_NAME}_nginx
       restart: always
       ports:
-        - 80:80
-        - 443:443
+        - "80:80"
+        - "443:443"
       volumes:
         - .:/var/www/html:ro
       depends_on:
@@ -26,8 +26,9 @@ services:
       build:
         context: .
         args:
-          - "BUILD_ARGUMENT_ENV=dev"
-          - "BUILD_ARGUMENT_DEBUG_ENABLED=false"
+          BUILD_ARGUMENT_ENV: dev
+          HOST_UID: ${HOST_UID}
+          HOST_GID: ${HOST_GID}
         dockerfile: ./Dockerfile
       container_name: ${COMPOSE_PROJECT_NAME}_symfony
       volumes:
@@ -52,10 +53,10 @@ services:
       container_name: ${COMPOSE_PROJECT_NAME}_mysql
       command: --default-authentication-plugin=mysql_native_password
       environment:
-        - MYSQL_ROOT_PASSWORD=secret
-        - MYSQL_DATABASE=symfony
+        MYSQL_ROOT_PASSWORD: secret
+        MYSQL_DATABASE: symfony
       ports:
-        - 33061:3306
+        - "33061:3306"
       volumes:
         - ./var/mysql-data:/var/lib/mysql
         - ./docker/dev/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
@@ -69,12 +70,12 @@ services:
         dockerfile: ./Dockerfile
       container_name: ${COMPOSE_PROJECT_NAME}_rabbitmq
       environment:
-        - RABBITMQ_ERLANG_COOKIE=7ead507151fc4461b9f45c1161384a04
-        - RABBITMQ_DEFAULT_USER=guest
-        - RABBITMQ_DEFAULT_PASS=guest
-        - RABBITMQ_DEFAULT_VHOST=/
+        RABBITMQ_ERLANG_COOKIE: 7ead507151fc4461b9f45c1161384a04
+        RABBITMQ_DEFAULT_USER: guest
+        RABBITMQ_DEFAULT_PASS: guest
+        RABBITMQ_DEFAULT_VHOST: /
       ports:
-        - 15672:15672
+        - "15672:15672"
       volumes:
         - ./var/rabbitmq:/var/lib/rabbitmq
       networks:
@@ -85,7 +86,7 @@ services:
       build:
         context: ./docker/
         args:
-          - "ELK_VERSION=${ELK_VERSION}"
+          ELK_VERSION: ${ELK_VERSION}
         dockerfile: ./elasticsearch/Dockerfile
       container_name: ${COMPOSE_PROJECT_NAME}_elasticsearch
       environment:
@@ -95,8 +96,8 @@ services:
         # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
         discovery.type: single-node
       ports:
-        - 9200:9200
-        - 9300:9300
+        - "9200:9200"
+        - "9300:9300"
       volumes:
         - ./docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
         - ./var/elasticsearch-data:/usr/share/elasticsearch/data
@@ -108,11 +109,11 @@ services:
       build:
         context: ./docker/
         args:
-          - "ELK_VERSION=${ELK_VERSION}"
+          ELK_VERSION: ${ELK_VERSION}
         dockerfile: ./kibana/Dockerfile
       container_name: ${COMPOSE_PROJECT_NAME}_kibana
       ports:
-        - 5601:5601
+        - "5601:5601"
       volumes:
         - ./docker/dev/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
       depends_on:
@@ -127,7 +128,7 @@ services:
         context: ./docker/redis
       restart: always
       ports:
-        - 6379:6379
+        - "6379:6379"
       networks:
         - symfony
 

@@ -23,8 +23,8 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
      * @param \App\User\Infrastructure\Repository\UserRepository $userRepository
      */
     public function __construct(
-        private LoginLoggerService $loginLoggerService,
-        private UserRepositoryInterface $userRepository,
+        private readonly LoginLoggerService $loginLoggerService,
+        private readonly UserRepositoryInterface $userRepository,
     ) {
     }
 

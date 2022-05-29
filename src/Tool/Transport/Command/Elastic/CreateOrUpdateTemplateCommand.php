@@ -38,9 +38,9 @@ class CreateOrUpdateTemplateCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private ElasticsearchServiceInterface $elasticsearchService,
-        private int $elasticNumberOfShards,
-        private int $elasticNumberOfReplicas,
+        private readonly ElasticsearchServiceInterface $elasticsearchService,
+        private readonly int $elasticNumberOfShards,
+        private readonly int $elasticNumberOfReplicas,
     ) {
         parent::__construct();
     }

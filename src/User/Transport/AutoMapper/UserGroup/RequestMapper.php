@@ -25,7 +25,7 @@ class RequestMapper extends RestRequestMapper
     ];
 
     public function __construct(
-        private RoleResource $roleResource,
+        private readonly RoleResource $roleResource,
     ) {
     }
 

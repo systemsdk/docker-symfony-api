@@ -40,8 +40,8 @@ class ListApiKeysCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private ApiKeyResource $apiKeyResource,
-        private RolesService $rolesService,
+        private readonly ApiKeyResource $apiKeyResource,
+        private readonly RolesService $rolesService,
     ) {
         parent::__construct();
     }

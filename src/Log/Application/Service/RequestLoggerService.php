@@ -33,11 +33,11 @@ class RequestLoggerService implements RequestLoggerServiceInterface
      * @param array<int, string> $sensitiveProperties
      */
     public function __construct(
-        private LogRequestResource $logRequestResource,
-        private UserResource $userResource,
-        private ApiKeyResource $apiKeyResource,
-        private LoggerInterface $logger,
-        private array $sensitiveProperties,
+        private readonly LogRequestResource $logRequestResource,
+        private readonly UserResource $userResource,
+        private readonly ApiKeyResource $apiKeyResource,
+        private readonly LoggerInterface $logger,
+        private readonly array $sensitiveProperties,
     ) {
     }
 

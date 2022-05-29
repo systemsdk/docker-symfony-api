@@ -41,7 +41,7 @@ class ListUserGroupsCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private UserGroupResource $userGroupResource,
+        private readonly UserGroupResource $userGroupResource,
     ) {
         parent::__construct();
     }

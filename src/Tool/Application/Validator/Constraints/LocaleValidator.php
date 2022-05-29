@@ -18,7 +18,7 @@ use function in_array;
 class LocaleValidator extends ConstraintValidator
 {
     public function __construct(
-        private LocalizationService $localization,
+        private readonly LocalizationService $localization,
     ) {
     }
 

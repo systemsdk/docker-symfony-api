@@ -27,8 +27,8 @@ use function str_replace;
 class LocalizationService implements LocalizationServiceInterface
 {
     public function __construct(
-        private CacheInterface $appCache,
-        private LoggerInterface $logger,
+        private readonly CacheInterface $appCache,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -56,6 +56,7 @@ class LocalizationService implements LocalizationServiceInterface
         $output = [];
 
         try {
+            /** @var array<int, array{timezone: string, identifier: string, offset: string, value: string}> $output */
             $output = $this->appCache->get('application_timezone', $this->getClosure());
         } catch (Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());

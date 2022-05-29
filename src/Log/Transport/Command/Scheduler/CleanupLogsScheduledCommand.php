@@ -37,7 +37,7 @@ class CleanupLogsScheduledCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private EntityManagerInterface $entityManager,
+        private readonly EntityManagerInterface $entityManager,
     ) {
         parent::__construct();
     }

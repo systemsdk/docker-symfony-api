@@ -37,7 +37,7 @@ class WaitDatabaseCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private EntityManagerInterface $em,
+        private readonly EntityManagerInterface $em,
     ) {
         parent::__construct();
     }

@@ -37,7 +37,7 @@ final class LoadUserGroupData extends Fixture implements OrderedFixtureInterface
     ];
 
     public function __construct(
-        private RolesServiceInterface $rolesService,
+        private readonly RolesServiceInterface $rolesService,
     ) {
     }
 

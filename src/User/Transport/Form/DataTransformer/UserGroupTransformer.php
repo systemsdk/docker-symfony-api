@@ -23,7 +23,7 @@ use function sprintf;
 class UserGroupTransformer implements DataTransformerInterface
 {
     public function __construct(
-        private UserGroupResource $resource,
+        private readonly UserGroupResource $resource,
     ) {
     }
 

@@ -33,7 +33,7 @@ use const DIRECTORY_SEPARATOR;
 class Auth
 {
     public function __construct(
-        private KernelInterface $kernel,
+        private readonly KernelInterface $kernel,
     ) {
     }
 

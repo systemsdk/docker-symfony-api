@@ -93,9 +93,9 @@ class UserType extends AbstractType
     ];
 
     public function __construct(
-        private UserGroupResource $userGroupResource,
-        private UserGroupTransformer $userGroupTransformer,
-        private LocalizationService $localization,
+        private readonly UserGroupResource $userGroupResource,
+        private readonly UserGroupTransformer $userGroupTransformer,
+        private readonly LocalizationService $localization,
     ) {
     }
 

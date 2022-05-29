@@ -19,7 +19,7 @@ class HealthService
      * @param \App\Tool\Infrastructure\Repository\HealthRepository $repository
      */
     public function __construct(
-        private HealthRepositoryInterface $repository,
+        private readonly HealthRepositoryInterface $repository,
     ) {
     }
 

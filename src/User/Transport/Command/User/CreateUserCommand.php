@@ -78,10 +78,10 @@ class CreateUserCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private UserResource $userResource,
-        private UserGroupResource $userGroupResource,
-        private RolesService $rolesService,
-        private RoleRepositoryInterface $roleRepository,
+        private readonly UserResource $userResource,
+        private readonly UserGroupResource $userGroupResource,
+        private readonly RolesService $rolesService,
+        private readonly RoleRepositoryInterface $roleRepository,
     ) {
         parent::__construct();
     }

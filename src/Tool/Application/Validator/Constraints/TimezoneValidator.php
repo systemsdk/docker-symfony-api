@@ -20,7 +20,7 @@ use function is_string;
 class TimezoneValidator extends ConstraintValidator
 {
     public function __construct(
-        private LocalizationService $localization,
+        private readonly LocalizationService $localization,
     ) {
     }
 

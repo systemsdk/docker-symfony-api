@@ -28,7 +28,7 @@ class AcceptLanguageSubscriber implements EventSubscriberInterface
     ];
 
     public function __construct(
-        private string $locale,
+        private readonly string $locale,
     ) {
     }
 

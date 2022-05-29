@@ -24,9 +24,9 @@ class UserTypeIdentification
      * @param \App\User\Infrastructure\Repository\UserRepository $userRepository
      */
     public function __construct(
-        private TokenStorageInterface $tokenStorage,
-        private UserRepositoryInterface $userRepository,
-        private ApiKeyUserProvider $apiKeyUserProvider,
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly ApiKeyUserProvider $apiKeyUserProvider,
     ) {
     }
 

@@ -25,9 +25,9 @@ class SecurityUserFactory implements UserProviderInterface
      * @param \App\User\Infrastructure\Repository\UserRepository $userRepository
      */
     public function __construct(
-        private UserRepositoryInterface $userRepository,
-        private RolesService $rolesService,
-        private string $uuidV1Regex,
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly RolesService $rolesService,
+        private readonly string $uuidV1Regex,
     ) {
     }
 

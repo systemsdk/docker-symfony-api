@@ -25,8 +25,8 @@ class LoginLoggerService implements LoginLoggerServiceInterface
     private ?User $user = null;
 
     public function __construct(
-        private LogLoginResource $logLoginResource,
-        private RequestStack $requestStack,
+        private readonly LogLoginResource $logLoginResource,
+        private readonly RequestStack $requestStack,
     ) {
         $this->deviceDetector = new DeviceDetector();
     }

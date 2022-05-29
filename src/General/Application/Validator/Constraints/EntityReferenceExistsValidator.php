@@ -28,7 +28,7 @@ use function str_replace;
 class EntityReferenceExistsValidator extends ConstraintValidator
 {
     public function __construct(
-        private LoggerInterface $logger,
+        private readonly LoggerInterface $logger,
     ) {
     }
 

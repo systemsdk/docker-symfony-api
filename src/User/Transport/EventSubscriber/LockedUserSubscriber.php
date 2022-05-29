@@ -34,10 +34,10 @@ class LockedUserSubscriber implements EventSubscriberInterface
      * @param \App\User\Infrastructure\Repository\UserRepository $userRepository
      */
     public function __construct(
-        private UserRepositoryInterface $userRepository,
-        private LogLoginFailureResource $logLoginFailureResource,
-        private RequestStack $requestStack,
-        private int $lockUserOnLoginFailureAttempts,
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly LogLoginFailureResource $logLoginFailureResource,
+        private readonly RequestStack $requestStack,
+        private readonly int $lockUserOnLoginFailureAttempts,
     ) {
     }
 

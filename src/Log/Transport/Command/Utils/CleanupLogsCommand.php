@@ -38,8 +38,8 @@ class CleanupLogsCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private LogLoginRepositoryInterface $logLoginRepository,
-        private LogRequestRepositoryInterface $logRequestRepository,
+        private readonly LogLoginRepositoryInterface $logLoginRepository,
+        private readonly LogRequestRepositoryInterface $logRequestRepository,
     ) {
         parent::__construct();
     }

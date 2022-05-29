@@ -33,7 +33,7 @@ use Throwable;
 class LoggedInUserValueResolver implements ArgumentValueResolverInterface
 {
     public function __construct(
-        private UserTypeIdentification $userService,
+        private readonly UserTypeIdentification $userService,
     ) {
     }
 

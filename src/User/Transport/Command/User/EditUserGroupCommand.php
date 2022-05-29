@@ -38,8 +38,8 @@ class EditUserGroupCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private UserGroupResource $userGroupResource,
-        private UserHelper $userHelper,
+        private readonly UserGroupResource $userGroupResource,
+        private readonly UserHelper $userHelper,
     ) {
         parent::__construct();
     }

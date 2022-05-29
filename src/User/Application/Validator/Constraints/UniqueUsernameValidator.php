@@ -22,7 +22,7 @@ class UniqueUsernameValidator extends ConstraintValidator
      * @param \App\User\Infrastructure\Repository\UserRepository $repository
      */
     public function __construct(
-        private UserRepositoryInterface $repository,
+        private readonly UserRepositoryInterface $repository,
     ) {
     }
 

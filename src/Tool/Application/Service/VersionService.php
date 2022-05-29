@@ -11,6 +11,11 @@ use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Throwable;
 
+use function array_key_exists;
+use function assert;
+use function is_array;
+use function is_string;
+
 /**
  * Class VersionService
  *
@@ -19,9 +24,9 @@ use Throwable;
 class VersionService
 {
     public function __construct(
-        private string $projectDir,
-        private CacheInterface $appCache,
-        private LoggerInterface $logger,
+        private readonly string $projectDir,
+        private readonly CacheInterface $appCache,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -34,7 +39,7 @@ class VersionService
         $output = '0.0.0';
 
         try {
-            $output = $this->appCache->get('application_version', $this->getClosure());
+            $output = (string)$this->appCache->get('application_version', $this->getClosure());
         } catch (Throwable $exception) {
             $this->logger->error($exception->getMessage(), $exception->getTrace());
         }
@@ -47,9 +52,12 @@ class VersionService
         return function (ItemInterface $item): string {
             // One year
             $item->expiresAfter(31536000);
-            $composerData = JSON::decode((string)file_get_contents($this->projectDir . '/composer.json'));
+            $composerData = JSON::decode((string)file_get_contents($this->projectDir . '/composer.json'), true);
+            assert(is_array($composerData));
 
-            return (string)($composerData->version ?? '0.0.0');
+            return array_key_exists('version', $composerData) && is_string($composerData['version'])
+                ? $composerData['version']
+                : '0.0.0';
         };
     }
 }

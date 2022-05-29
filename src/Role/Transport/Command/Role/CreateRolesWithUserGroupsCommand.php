@@ -35,9 +35,9 @@ class CreateRolesWithUserGroupsCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private UserGroupResource $userGroupResource,
-        private RolesService $rolesService,
-        private RoleRepositoryInterface $roleRepository,
+        private readonly UserGroupResource $userGroupResource,
+        private readonly RolesService $rolesService,
+        private readonly RoleRepositoryInterface $roleRepository,
     ) {
         parent::__construct('user:create-roles-groups');
 

@@ -43,7 +43,7 @@ class CreateDateDimensionEntitiesCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private DateDimensionResource $dateDimensionResource,
+        private readonly DateDimensionResource $dateDimensionResource,
     ) {
         parent::__construct();
     }

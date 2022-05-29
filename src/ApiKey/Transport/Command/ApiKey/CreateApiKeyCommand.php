@@ -56,11 +56,11 @@ class CreateApiKeyCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private ApiKeyHelper $apiKeyHelper,
-        private ApiKeyResource $apiKeyResource,
-        private UserGroupResource $userGroupResource,
-        private RolesService $rolesService,
-        private RoleResource $roleResource,
+        private readonly ApiKeyHelper $apiKeyHelper,
+        private readonly ApiKeyResource $apiKeyResource,
+        private readonly UserGroupResource $userGroupResource,
+        private readonly RolesService $rolesService,
+        private readonly RoleResource $roleResource,
     ) {
         parent::__construct();
     }

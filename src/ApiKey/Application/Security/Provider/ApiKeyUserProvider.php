@@ -25,8 +25,8 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInt
      * @param \App\ApiKey\Infrastructure\Repository\ApiKeyRepository $apiKeyRepository
      */
     public function __construct(
-        private ApiKeyRepositoryInterface $apiKeyRepository,
-        private RolesService $rolesService,
+        private readonly ApiKeyRepositoryInterface $apiKeyRepository,
+        private readonly RolesService $rolesService,
     ) {
     }
 

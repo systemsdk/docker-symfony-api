@@ -37,7 +37,7 @@ class WaitElasticCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private ElasticsearchServiceInterface $elasticsearchService,
+        private readonly ElasticsearchServiceInterface $elasticsearchService,
     ) {
         parent::__construct();
     }

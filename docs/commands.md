@@ -32,6 +32,7 @@ make env-prod                           # Create cached config file .env.local.p
 make generate-jwt-keys                  # Generates JWT auth keys
 
 make ssh                                # Enter symfony container shell
+make ssh-root                           # Enter symfony container shell as root user
 make ssh-nginx                          # Enter nginx container shell
 make ssh-supervisord                    # Enter supervisord container shell (cron jobs running there, etc...)
 make ssh-mysql                          # Enter mysql container shell

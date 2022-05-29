@@ -219,6 +219,7 @@ make env-prod
 make generate-jwt-keys
 
 make ssh
+make ssh-root
 make ssh-nginx
 make ssh-supervisord
 make ssh-mysql
