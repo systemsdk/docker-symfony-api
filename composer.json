@@ -14,7 +14,7 @@
 		"Elasticsearch"
 	],
 	"homepage": "https://github.com/systemsdk/docker-symfony-api",
-	"version": "v1.0.0",
+	"version": "v1.0.1",
 	"license": "MIT",
 	"authors": [
 		{
