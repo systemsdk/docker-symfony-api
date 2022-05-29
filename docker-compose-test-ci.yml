@@ -86,7 +86,7 @@ services:
       build:
         context: ./docker/
         args:
-          ELK_VERSION: ${ELK_VERSION}"
+          ELK_VERSION: ${ELK_VERSION}
         dockerfile: ./elasticsearch/Dockerfile
       container_name: ${COMPOSE_PROJECT_NAME}_elasticsearch
       environment:
