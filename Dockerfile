@@ -56,7 +56,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 RUN mkdir -p $APP_HOME/public && \
     mkdir -p /home/$USERNAME && chown $USERNAME:$USERNAME /home/$USERNAME \
     && usermod -u $HOST_UID $USERNAME -d /home/$USERNAME \
-    && groupmod -g $HOST_GID $USERNAME \
+    && groupmod -o -g $HOST_GID $USERNAME \
     && chown -R ${USERNAME}:${USERNAME} $APP_HOME
 
 # put php config for Symfony
