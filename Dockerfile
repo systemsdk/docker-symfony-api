@@ -55,7 +55,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
 # create document root, fix permissions for www-data user and change owner to www-data
 RUN mkdir -p $APP_HOME/public && \
     mkdir -p /home/$USERNAME && chown $USERNAME:$USERNAME /home/$USERNAME \
-    && usermod -u $HOST_UID $USERNAME -d /home/$USERNAME \
+    && usermod -o -u $HOST_UID $USERNAME -d /home/$USERNAME \
     && groupmod -o -g $HOST_GID $USERNAME \
     && chown -R ${USERNAME}:${USERNAME} $APP_HOME
 

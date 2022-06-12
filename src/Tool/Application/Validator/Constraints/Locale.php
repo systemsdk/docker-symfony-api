@@ -29,9 +29,9 @@ class Locale extends Constraint
     /**
      * {@inheritdoc}
      *
-     * @var array<string, string>
+     * @psalm-var array<string, string>
      */
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::INVALID_LOCALE => 'INVALID_LOCALE',
     ];
 }

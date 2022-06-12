@@ -15,7 +15,7 @@ services:
         - "80:80"
         - "443:443"
       volumes:
-        - .:/var/www/html:ro
+        - .:/var/www/html:ro,cached
       depends_on:
         - symfony
       networks:
@@ -58,7 +58,7 @@ services:
         MYSQL_ROOT_PASSWORD: secret
         MYSQL_DATABASE: symfony
       volumes:
-        - ./var/mysql-data:/var/lib/mysql
+        - ./var/mysql-data:/var/lib/mysql:delegated
       networks:
         - symfony
 
@@ -77,7 +77,7 @@ services:
       ports:
         - "15672:15672"
       volumes:
-        - ./var/rabbitmq:/var/lib/rabbitmq
+        - ./var/rabbitmq:/var/lib/rabbitmq:delegated
       networks:
         - symfony
 
@@ -101,7 +101,7 @@ services:
         "9300:9300"
       volumes:
         - ./docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-        - ./var/elasticsearch-data:/usr/share/elasticsearch/data
+        - ./var/elasticsearch-data:/usr/share/elasticsearch/data:delegated
       networks:
         - symfony
 

@@ -1,3 +1,27 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+api-key-controllers:
+    resource: ../src/ApiKey/Transport/Controller/Api/
+    type: attribute
+    prefix: /api
+    defaults:
+        _format: json
+
+role-controllers:
+    resource: ../src/Role/Transport/Controller/Api/
+    type: attribute
+    prefix: /api
+    defaults:
+        _format: json
+
+tool-controllers:
+    resource: ../src/Tool/Transport/Controller/Api/
+    type: attribute
+    prefix: /api
+    defaults:
+        _format: json
+
+user-controllers:
+    resource: ../src/User/Transport/Controller/Api/
+    type: attribute
+    prefix: /api
+    defaults:
+        _format: json
