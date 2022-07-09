@@ -140,12 +140,6 @@
     "ergebnis/json-schema-validator": {
         "version": "2.0.0"
     },
-    "ezimuel/guzzlestreams": {
-        "version": "3.0.1"
-    },
-    "ezimuel/ringphp": {
-        "version": "1.1.2"
-    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
@@ -275,9 +269,6 @@
         "files": [
             "config/packages/ramsey_uuid_doctrine.yaml"
         ]
-    },
-    "react/promise": {
-        "version": "v2.8.0"
     },
     "roave/security-advisories": {
         "version": "dev-latest"

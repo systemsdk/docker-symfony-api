@@ -18,14 +18,14 @@ Docker environment (based on official php and mysql docker hub repositories) req
 Note: OS recommendation - Linux Ubuntu based.
 
 ## Components
-1. Nginx 1.21
-2. PHP 8 fpm
+1. Nginx 1.23
+2. PHP 8.1 fpm
 3. MySQL 8
 4. Symfony 6
 5. RabbitMQ 3
 6. Elasticsearch 7
 7. Kibana 7
-8. Redis 6
+8. Redis 7
 
 ## Setting up Docker and docker-compose
 1.For installing Docker please follow steps mentioned on page [install on Ubuntu linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
@@ -312,6 +312,7 @@ Notes: Please see more commands in Makefile
 * [phpinsights](https://packagist.org/packages/nunomaduro/phpinsights)
 * [beberlei/doctrineextensions](https://github.com/beberlei/DoctrineExtensions)
 * [elasticsearch](https://github.com/elastic/elasticsearch-php)
+* [rector](https://packagist.org/packages/rector/rector)
 
 ## External links / resources
 * [Symfony Flex REST API](https://github.com/tarlepp/symfony-flex-backend.git): code in "src/" folder forked from Symfony Flex REST API.

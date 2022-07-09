@@ -14,7 +14,7 @@
 		"Elasticsearch"
 	],
 	"homepage": "https://github.com/systemsdk/docker-symfony-api",
-	"version": "v1.1.0",
+	"version": "v1.2.0",
 	"license": "MIT",
 	"authors": [
 		{
@@ -47,7 +47,7 @@
 		"dukecity/command-scheduler-bundle": "^5.0",
 		"elasticsearch/elasticsearch": "^7.17",
 		"gedmo/doctrine-extensions": "^3.7",
-		"lexik/jwt-authentication-bundle": "^2.15",
+		"lexik/jwt-authentication-bundle": "^2.16",
 		"mark-gerarts/automapper-plus-bundle": "^1.4",
 		"matomo/device-detector": "^6.0",
 		"matthiasnoback/symfony-console-form": "^5.3",
@@ -95,9 +95,9 @@
 		"symfony/twig-bundle": "<3.3"
 	},
 	"require-dev": {
-		"bamarni/composer-bin-plugin": "^1.5",
+		"bamarni/composer-bin-plugin": "^1.6",
 		"doctrine/doctrine-fixtures-bundle": "^3.4",
-		"systemsdk/easy-log-bundle": "1.10.*",
+		"systemsdk/easy-log-bundle": "2.0.*",
 		"ergebnis/composer-normalize": "^2.22",
 		"roave/security-advisories": "dev-latest",
 		"symfony/browser-kit": "6.1.*",
@@ -165,7 +165,12 @@
 			"PHPStan\\Rules\\PHPUnit\\": "tools/02_phpstan/vendor/phpstan/phpstan-phpunit/src/Rules/PHPUnit",
 			"PHPStan\\Symfony\\": "tools/02_phpstan/vendor/phpstan/phpstan-symfony/src/Symfony",
 			"PHPStan\\Type\\PHPUnit\\": "tools/02_phpstan/vendor/phpstan/phpstan-phpunit/src/Type/PHPUnit",
-			"PHPStan\\Type\\Symfony\\": "tools/02_phpstan/vendor/phpstan/phpstan-symfony/src/Type/Symfony"
+			"PHPStan\\Type\\Symfony\\": "tools/02_phpstan/vendor/phpstan/phpstan-symfony/src/Type/Symfony",
+			"Rector\\Core\\": "tools/08_rector/vendor/rector/rector/src",
+			"Rector\\Php74\\": "tools/08_rector/vendor/rector/rector/rules/Php74",
+			"Rector\\Php80\\": "tools/08_rector/vendor/rector/rector/rules/Php80",
+			"Rector\\Php81\\": "tools/08_rector/vendor/rector/rector/rules/Php81",
+			"Rector\\Set\\": "tools/08_rector/vendor/rector/rector/packages/Set"
 		}
 	},
 	"prefer-stable": true,
