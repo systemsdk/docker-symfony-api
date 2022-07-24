@@ -11,7 +11,7 @@ use Throwable;
 /**
  * Class CommandSchedulerTest
  *
- * @package App\Tests\Functional\Controller
+ * @package App\Tests
  */
 class CommandSchedulerTest extends WebTestCase
 {

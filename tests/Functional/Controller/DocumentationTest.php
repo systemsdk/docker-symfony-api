@@ -11,14 +11,14 @@ use Throwable;
 /**
  * Class DocumentationTest
  *
- * @package App\Tests\Functional\Controller
+ * @package App\Tests
  */
 class DocumentationTest extends WebTestCase
 {
     /**
-     * @throws Throwable
+     * @testdox Test that documentation (/api/doc) is working.
      *
-     * @testdox Test that documentation (/api/doc) is working
+     * @throws Throwable
      */
     public function testThatDocumentationUiWorks(): void
     {
@@ -29,9 +29,9 @@ class DocumentationTest extends WebTestCase
     }
 
     /**
-     * @throws Throwable
+     * @testdox Test that documentation json (/api/doc.json) is working.
      *
-     * @testdox Test that documentation json (/api/doc.json) is working
+     * @throws Throwable
      */
     public function testThatDocumentationJsonWorks(): void
     {

@@ -29,7 +29,7 @@ final class LoadApiKeyData extends Fixture implements OrderedFixtureInterface
     /**
      * @var array<string, string>
      */
-    private array $uuids = [
+    public static array $uuids = [
         '' => '30000000-0000-1000-8000-000000000001',
         '-logged' => '30000000-0000-1000-8000-000000000002',
         '-api' => '30000000-0000-1000-8000-000000000003',
@@ -93,7 +93,7 @@ final class LoadApiKeyData extends Fixture implements OrderedFixtureInterface
 
         PhpUnitUtil::setProperty(
             'id',
-            UuidHelper::fromString($this->uuids[$suffix]),
+            UuidHelper::fromString(self::$uuids[$suffix]),
             $entity
         );
 
