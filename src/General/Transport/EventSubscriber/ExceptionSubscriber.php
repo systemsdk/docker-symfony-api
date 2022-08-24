@@ -8,7 +8,7 @@ use App\General\Application\Exception\Interfaces\ClientErrorInterface;
 use App\General\Domain\Utils\JSON;
 use App\User\Application\Security\UserTypeIdentification;
 use Doctrine\DBAL\Exception;
-use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Exception\ORMException;
 use JsonException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -24,7 +24,6 @@ use function array_intersect;
 use function array_key_exists;
 use function class_implements;
 use function in_array;
-use function method_exists;
 use function spl_object_hash;
 
 /**
@@ -40,7 +39,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
     private static array $cache = [];
 
     /**
-     * @var array<int, string>
+     * @var array<int, class-string>
      */
     private static array $clientExceptions = [
         HttpExceptionInterface::class,
@@ -166,25 +165,23 @@ class ExceptionSubscriber implements EventSubscriberInterface
      */
     private function determineStatusCode(Throwable $exception, bool $isUser): int
     {
-        // Default status code is always 500
-        $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
+        $accessDeniedException = static fn (bool $isUser): int => $isUser
+            ? Response::HTTP_FORBIDDEN
+            : Response::HTTP_UNAUTHORIZED;
 
-        // HttpExceptionInterface is a special type of exception that holds status code and header details
-        if ($exception instanceof AuthenticationException) {
-            $statusCode = Response::HTTP_UNAUTHORIZED;
-        } elseif ($exception instanceof AccessDeniedException) {
-            $statusCode = $isUser ? Response::HTTP_FORBIDDEN : Response::HTTP_UNAUTHORIZED;
-        } elseif ($exception instanceof HttpExceptionInterface) {
-            $statusCode = $exception->getStatusCode();
-        } elseif ($this->isClientExceptions($exception)) {
-            $statusCode = (int)$exception->getCode();
+        $clientException = static fn (HttpExceptionInterface|ClientErrorInterface|Throwable $exception): int =>
+            $exception instanceof HttpExceptionInterface || $exception instanceof ClientErrorInterface
+                ? $exception->getStatusCode()
+                : (int)$exception->getCode();
 
-            if (method_exists($exception, 'getStatusCode')) {
-                $statusCode = $exception->getStatusCode();
-            }
-        }
+        $statusCode = match (true) {
+            $exception instanceof AuthenticationException => Response::HTTP_UNAUTHORIZED,
+            $exception instanceof AccessDeniedException => $accessDeniedException($isUser),
+            $this->isClientExceptions($exception) => $clientException($exception),
+            default => 0,
+        };
 
-        return $statusCode === 0 ? Response::HTTP_INTERNAL_SERVER_ERROR : $statusCode;
+        return $statusCode > 0 ? $statusCode : Response::HTTP_INTERNAL_SERVER_ERROR;
     }
 
     /**

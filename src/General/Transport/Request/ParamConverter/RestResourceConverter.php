@@ -12,6 +12,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInte
 use Symfony\Component\HttpFoundation\Request;
 use Throwable;
 
+use function assert;
+use function is_string;
+
 /**
  * Class RestResourceConverter
  *
@@ -34,9 +37,11 @@ class RestResourceConverter implements ParamConverterInterface
     public function apply(Request $request, ParamConverter $configuration): bool
     {
         $name = $configuration->getName();
-        $identifier = (string)$request->attributes->get($name, '');
+        $identifier = $request->attributes->get($name, '');
+        $class = $configuration->getClass();
+        assert(is_string($identifier) && is_string($class));
         /** @var RestResourceInterface|RestFindOneResourceInterface $resource */
-        $resource = $this->collection->get((string)$configuration->getClass(), RestFindOneResourceInterface::class);
+        $resource = $this->collection->get($class, RestFindOneResourceInterface::class);
 
         if ($identifier !== '') {
             $request->attributes->set($name, $resource->findOne($identifier, true));

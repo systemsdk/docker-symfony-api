@@ -59,6 +59,25 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
+     * @testdox Test that `GET /v1/api_key/count` for the Root user returns success response.
+     *
+     * @throws Throwable
+     */
+    public function testThatCountActionForRootUserReturnsSuccessResponse(): void
+    {
+        $client = $this->getTestClient('john-root', 'password-root');
+
+        $client->request(method: 'GET', uri: $this->baseUrl . '/count');
+        $response = $client->getResponse();
+        $content = $response->getContent();
+        self::assertNotFalse($content);
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
+        $responseData = JSON::decode($content, true);
+        self::assertArrayHasKey('count', $responseData);
+        self::assertGreaterThan(0, $responseData['count']);
+    }
+
+    /**
      * @testdox Test that `GET /v1/api_key` returns `$responseCode` with login: `$login`, password: `$password`.
      *
      * @dataProvider dataProviderTestThatFindActionWorksAsExpected
@@ -74,6 +93,14 @@ class ApiKeyControllerTest extends WebTestCase
         $content = $response->getContent();
         self::assertNotFalse($content);
         self::assertSame($responseCode, $response->getStatusCode(), "Response:\n" . $response);
+        $responseData = JSON::decode($content, true);
+
+        if ($responseCode === Response::HTTP_OK) {
+            self::assertIsArray($responseData);
+            self::assertGreaterThan(5, $responseData);
+            self::assertIsArray($responseData[0]);
+            $this->checkBasicFieldsInResponse($responseData[0]);
+        }
     }
 
     /**
@@ -97,9 +124,7 @@ class ApiKeyControllerTest extends WebTestCase
         self::assertNotFalse($content);
         self::assertSame(Response::HTTP_CREATED, $response->getStatusCode(), "Response:\n" . $response);
         $responseData = JSON::decode($content, true);
-        self::assertArrayHasKey('id', $responseData);
-        self::assertArrayHasKey('token', $responseData);
-        self::assertArrayHasKey('description', $responseData);
+        $this->checkBasicFieldsInResponse($responseData);
         self::assertEquals($requestData['description'], $responseData['description']);
     }
 
@@ -126,9 +151,7 @@ class ApiKeyControllerTest extends WebTestCase
         self::assertNotFalse($content);
         self::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
         $responseData = JSON::decode($content, true);
-        self::assertArrayHasKey('id', $responseData);
-        self::assertArrayHasKey('token', $responseData);
-        self::assertArrayHasKey('description', $responseData);
+        $this->checkBasicFieldsInResponse($responseData);
         self::assertEquals($apiKeyEntity->getToken(), $responseData['token']);
         self::assertEquals($apiKeyEntity->getDescription(), $responseData['description']);
     }
@@ -166,9 +189,7 @@ class ApiKeyControllerTest extends WebTestCase
         self::assertNotFalse($content);
         self::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
         $responseData = JSON::decode($content, true);
-        self::assertArrayHasKey('id', $responseData);
-        self::assertArrayHasKey('token', $responseData);
-        self::assertArrayHasKey('description', $responseData);
+        $this->checkBasicFieldsInResponse($responseData);
         self::assertEquals($apiKeyEntity->getToken(), $responseData['token']);
         self::assertEquals($apiKeyEntity->getDescription(), $responseData['description']);
         // let's check that after updating the entity we have new userGroup
@@ -212,9 +233,7 @@ class ApiKeyControllerTest extends WebTestCase
         self::assertNotFalse($content);
         self::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
         $responseData = JSON::decode($content, true);
-        self::assertArrayHasKey('id', $responseData);
-        self::assertArrayHasKey('token', $responseData);
-        self::assertArrayHasKey('description', $responseData);
+        $this->checkBasicFieldsInResponse($responseData);
         self::assertEquals($apiKeyEntity->getToken(), $responseData['token']);
         self::assertEquals('test api key edited', $responseData['description']);
         // tet's check that after patch the entity we have the same userGroup as before
@@ -250,9 +269,7 @@ class ApiKeyControllerTest extends WebTestCase
         self::assertNotFalse($content);
         self::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
         $responseData = JSON::decode($content, true);
-        self::assertArrayHasKey('id', $responseData);
-        self::assertArrayHasKey('token', $responseData);
-        self::assertArrayHasKey('description', $responseData);
+        $this->checkBasicFieldsInResponse($responseData);
     }
 
     /**
@@ -269,6 +286,10 @@ class ApiKeyControllerTest extends WebTestCase
         $content = $response->getContent();
         self::assertNotFalse($content);
         self::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
+        $responseData = JSON::decode($content, true);
+        self::assertIsArray($responseData);
+        self::assertGreaterThan(5, $responseData);
+        self::assertIsString($responseData[0]);
     }
 
     /**
@@ -306,5 +327,15 @@ class ApiKeyControllerTest extends WebTestCase
         yield ['DELETE', $this->baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
         yield ['PATCH', $this->baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
         yield ['GET', $this->baseUrl . '/ids'];
+    }
+
+    /**
+     * @param array<string, string> $responseData
+     */
+    private function checkBasicFieldsInResponse(array $responseData): void
+    {
+        self::assertArrayHasKey('id', $responseData);
+        self::assertArrayHasKey('token', $responseData);
+        self::assertArrayHasKey('description', $responseData);
     }
 }

@@ -58,16 +58,6 @@ class UTCDateTimeType extends DateTimeType
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
-    {
-        parent::requiresSQLCommentHint($platform);
-
-        return true;
-    }
-
-    /**
      * Method to initialize DateTimeZone as in UTC.
      */
     private function getUtcDateTimeZone(): DateTimeZone

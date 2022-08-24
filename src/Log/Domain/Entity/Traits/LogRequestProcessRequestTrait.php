@@ -39,7 +39,7 @@ trait LogRequestProcessRequestTrait
      */
     #[ORM\Column(
         name: 'headers',
-        type: Types::ARRAY,
+        type: Types::JSON,
     )]
     #[Groups([
         'LogRequest',
@@ -204,7 +204,7 @@ trait LogRequestProcessRequestTrait
      */
     #[ORM\Column(
         name: 'parameters',
-        type: Types::ARRAY,
+        type: Types::JSON,
     )]
     #[Groups([
         'LogRequest',
