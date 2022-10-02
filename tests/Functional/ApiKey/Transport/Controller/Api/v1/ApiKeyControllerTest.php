@@ -25,7 +25,7 @@ class ApiKeyControllerTest extends WebTestCase
     private string $baseUrl = self::API_URL_PREFIX . '/v1/api_key';
 
     /**
-     * @testdox Test that `GET /v1/api_key` request returns `401` for non-logged user.
+     * @testdox Test that `GET /api/v1/api_key` request returns `401` for non-logged user.
      *
      * @throws Throwable
      */
@@ -59,7 +59,7 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /v1/api_key/count` for the Root user returns success response.
+     * @testdox Test that `GET /api/v1/api_key/count` for the root user returns success response.
      *
      * @throws Throwable
      */
@@ -78,7 +78,7 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /v1/api_key` returns `$responseCode` with login: `$login`, password: `$password`.
+     * @testdox Test that `GET /api/v1/api_key` returns `$responseCode` with login: `$login`, password: `$password`.
      *
      * @dataProvider dataProviderTestThatFindActionWorksAsExpected
      *
@@ -104,7 +104,7 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `POST /v1/api_key` (create api-key) for the Root user returns success response.
+     * @testdox Test that `POST /api/v1/api_key` (create api-key) for the root user returns success response.
      *
      * @throws Throwable
      */
@@ -129,7 +129,7 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /v1/api_key/{id}` for the Root user returns success response.
+     * @testdox Test that `GET /api/v1/api_key/{id}` for the root user returns success response.
      *
      * @depends testThatCreateActionForRootUserReturnsSuccessResponse
      *
@@ -138,6 +138,7 @@ class ApiKeyControllerTest extends WebTestCase
     public function testThatFindOneActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
+
         $resource = static::getContainer()->get(ApiKeyResource::class);
         static::assertInstanceOf(ApiKeyResource::class, $resource);
         $apiKeyEntity = $resource->findOneBy([
@@ -157,7 +158,7 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `PUT /v1/api_key/{id}` for the Root user returns success response.
+     * @testdox Test that `PUT /api/v1/api_key/{id}` for the root user returns success response.
      *
      * @depends testThatCreateActionForRootUserReturnsSuccessResponse
      *
@@ -166,6 +167,7 @@ class ApiKeyControllerTest extends WebTestCase
     public function testThatUpdateActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
+
         $resource = static::getContainer()->get(ApiKeyResource::class);
         static::assertInstanceOf(ApiKeyResource::class, $resource);
         $apiKeyEntity = $resource->findOneBy([
@@ -202,7 +204,7 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `PATCH /v1/api_key/{id}` for the Root user returns success response.
+     * @testdox Test that `PATCH /api/v1/api_key/{id}` for the root user returns success response.
      *
      * @depends testThatCreateActionForRootUserReturnsSuccessResponse
      *
@@ -211,6 +213,7 @@ class ApiKeyControllerTest extends WebTestCase
     public function testThatPatchActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
+
         $resource = static::getContainer()->get(ApiKeyResource::class);
         static::assertInstanceOf(ApiKeyResource::class, $resource);
         $apiKeyEntity = $resource->findOneBy([
@@ -246,7 +249,7 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `DELETE /v1/api_key/{id}` for the Root user returns success response.
+     * @testdox Test that `DELETE /api/v1/api_key/{id}` for the root user returns success response.
      *
      * @depends testThatPatchActionForRootUserReturnsSuccessResponse
      *
@@ -273,7 +276,7 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /v1/api_key/ids` for the Root user returns success response.
+     * @testdox Test that `GET /api/v1/api_key/ids` for the root user returns success response.
      *
      * @throws Throwable
      */

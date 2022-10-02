@@ -290,6 +290,8 @@ Notes: Please see more commands in Makefile
 * [messenger](https://symfony.com/doc/current/messenger.html)
 * [composer-bin-plugin](https://github.com/bamarni/composer-bin-plugin)
 * [composer-normalize](https://github.com/ergebnis/composer-normalize)
+* [composer-unused](https://packagist.org/packages/icanhazstring/composer-unused)
+* [composer-require-checker](https://packagist.org/packages/maglnet/composer-require-checker)
 * [requirements-checker](https://github.com/symfony/requirements-checker)
 * [security-advisories](https://github.com/Roave/SecurityAdvisories)
 * [jwt-authentication-bundle](https://packagist.org/packages/lexik/jwt-authentication-bundle)

@@ -17,7 +17,7 @@ interface LocalizationServiceInterface
 {
     public const DEFAULT_LANGUAGE = EnumLanguageType::LANGUAGE_EN;
     public const DEFAULT_LOCALE = EnumLocaleType::LOCALE_EN;
-    public const DEFAULT_TIMEZONE = 'Europe/Kiev';
+    public const DEFAULT_TIMEZONE = 'Europe/Kyiv';
 
     /**
      * @return array<int, string>
