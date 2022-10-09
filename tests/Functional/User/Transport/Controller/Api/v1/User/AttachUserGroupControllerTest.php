@@ -58,6 +58,31 @@ class AttachUserGroupControllerTest extends WebTestCase
     }
 
     /**
+     * @testdox Test that `POST /api/v1/user/{userId}/group/{groupId}` under the non-root user returns error response.
+     *
+     * @throws Throwable
+     */
+    public function testThatAttachUserGroupToTheUserUnderNonRootUserReturnsErrorResponse(): void
+    {
+        $client = $this->getTestClient('john-admin', 'password-admin');
+
+        $client->request('POST', $this->baseUrl . '/' . $this->user->getId() . '/group/'
+            . $this->userGroupForAttach->getId());
+        $response = $client->getResponse();
+        $content = $response->getContent();
+        self::assertNotFalse($content);
+        self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode(), "Response:\n" . $response);
+
+        // let's check that inside database we have the same data as before request
+        /** @var User|null $user */
+        $user = $this->userResource->findOneBy([
+            'username' => 'john-user',
+        ]);
+        self::assertInstanceOf(User::class, $user);
+        self::assertEquals(1, $user->getUserGroups()->count());
+    }
+
+    /**
      * @testdox Test that `POST /api/v1/user/{userId}/group/{groupId}` under the root user returns success response.
      *
      * @throws Throwable
@@ -101,31 +126,6 @@ class AttachUserGroupControllerTest extends WebTestCase
         self::assertInstanceOf(UserGroup::class, $userGroupForAttach);
         $user = $this->userResource->save($user->removeUserGroup($userGroupForAttach), false);
         $this->userGroupResource->save($userGroupForAttach, true, true);
-        self::assertEquals(1, $user->getUserGroups()->count());
-    }
-
-    /**
-     * @testdox Test that `POST /api/v1/user/{userId}/group/{groupId}` under the non-root user returns error response.
-     *
-     * @throws Throwable
-     */
-    public function testThatAttachUserGroupToTheUserUnderNonRootUserReturnsErrorResponse(): void
-    {
-        $client = $this->getTestClient('john-admin', 'password-admin');
-
-        $client->request('POST', $this->baseUrl . '/' . $this->user->getId() . '/group/'
-            . $this->userGroupForAttach->getId());
-        $response = $client->getResponse();
-        $content = $response->getContent();
-        self::assertNotFalse($content);
-        self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode(), "Response:\n" . $response);
-
-        // let's check that inside database we have the same data as before request
-        /** @var User|null $user */
-        $user = $this->userResource->findOneBy([
-            'username' => 'john-user',
-        ]);
-        self::assertInstanceOf(User::class, $user);
         self::assertEquals(1, $user->getUserGroups()->count());
     }
 }

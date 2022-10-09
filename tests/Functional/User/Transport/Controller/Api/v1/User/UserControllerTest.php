@@ -6,12 +6,14 @@ namespace App\Tests\Functional\User\Transport\Controller\Api\v1\User;
 
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
+use App\Tests\Functional\User\Transport\Controller\Api\v1\Traits\UserHelper;
 use App\Tool\Domain\Service\Interfaces\LocalizationServiceInterface;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Entity\UserGroup;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserData;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
+use Exception;
 use Generator;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -23,10 +25,15 @@ use Throwable;
  */
 class UserControllerTest extends WebTestCase
 {
+    use UserHelper;
+
     private const USERNAME_FOR_TEST = 'test-user-controller';
     private string $baseUrl = self::API_URL_PREFIX . '/v1/user';
-    private userResource $userResource;
+    private UserResource $userResource;
 
+    /**
+     * @throws Exception
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -95,17 +102,7 @@ class UserControllerTest extends WebTestCase
      */
     public function testThatCountActionForAdminUserReturnsSuccessResponse(): void
     {
-        $client = $this->getTestClient('john-admin', 'password-admin');
-
-        $client->request(method: 'GET', uri: $this->baseUrl . '/count');
-        $response = $client->getResponse();
-        $content = $response->getContent();
-        self::assertNotFalse($content);
-        self::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
-        $responseData = JSON::decode($content, true);
-        self::assertIsArray($responseData);
-        self::assertArrayHasKey('count', $responseData);
-        self::assertGreaterThan(0, $responseData['count']);
+        $this->countActionForAdminUserReturnsSuccessResponse();
     }
 
     /**
@@ -117,21 +114,7 @@ class UserControllerTest extends WebTestCase
      */
     public function testThatFindActionWorksAsExpected(string $login, string $password, int $responseCode): void
     {
-        $client = $this->getTestClient($login, $password);
-
-        $client->request('GET', $this->baseUrl);
-        $response = $client->getResponse();
-        $content = $response->getContent();
-        self::assertNotFalse($content);
-        self::assertSame($responseCode, $response->getStatusCode(), "Response:\n" . $response);
-
-        if ($responseCode === Response::HTTP_OK) {
-            $responseData = JSON::decode($content, true);
-            self::assertIsArray($responseData);
-            self::assertGreaterThan(5, $responseData);
-            self::assertIsArray($responseData[0]);
-            $this->checkBasicFieldsInResponse($responseData[0]);
-        }
+        $this->findActionWorksAsExpected($login, $password, $responseCode, 5);
     }
 
     /**
@@ -171,17 +154,7 @@ class UserControllerTest extends WebTestCase
      */
     public function testThatIdsActionForAdminUserReturnsSuccessResponse(): void
     {
-        $client = $this->getTestClient('john-admin', 'password-admin');
-
-        $client->request('GET', $this->baseUrl . '/ids');
-        $response = $client->getResponse();
-        $content = $response->getContent();
-        self::assertNotFalse($content);
-        self::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
-        $responseData = JSON::decode($content, true);
-        self::assertIsArray($responseData);
-        self::assertGreaterThan(5, $responseData);
-        self::assertIsString($responseData[0]);
+        $this->idsActionForAdminUserReturnsSuccessResponse(5);
     }
 
     /**
@@ -304,6 +277,9 @@ class UserControllerTest extends WebTestCase
         $responseData = JSON::decode($content, true);
         $this->checkBasicFieldsInResponse($responseData);
         $this->checkThatRequestEqualsResponseData($requestData, $responseData);
+
+        // let's delete our test user for cleanup user group users
+        $this->userResource->delete($responseData['id']);
     }
 
     /**
@@ -352,7 +328,7 @@ class UserControllerTest extends WebTestCase
     /**
      * @param array<string, string> $responseData
      */
-    private function checkBasicFieldsInResponse(array $responseData): void
+    protected function checkBasicFieldsInResponse(array $responseData): void
     {
         self::assertArrayHasKey('id', $responseData);
         self::assertArrayHasKey('username', $responseData);
