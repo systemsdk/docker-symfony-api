@@ -1,9 +1,7 @@
-ifndef APP_ENV
-	include .env
-	# Determine if .env.local file exist
-	ifneq ("$(wildcard .env.local)", "")
-		include .env.local
-	endif
+include .env
+# Determine if .env.local file exist
+ifneq ("$(wildcard .env.local)", "")
+	include .env.local
 endif
 
 ifndef INSIDE_DOCKER_CONTAINER
@@ -25,86 +23,89 @@ ifeq ($(GITLAB_CI), 1)
 	PHPUNIT_OPTIONS := --coverage-text --colors=never
 endif
 
+test:
+	@echo $(INNODB_USE_NATIVE_AIO)
+
 build:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose -f docker-compose.yml build
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose -f docker-compose.yml build
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 build-test:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose -f docker-compose-test-ci.yml build
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose -f docker-compose-test-ci.yml build
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 build-staging:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose -f docker-compose-staging.yml build
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose -f docker-compose-staging.yml build
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 build-prod:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose -f docker-compose-prod.yml build
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose -f docker-compose-prod.yml build
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 start:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose -f docker-compose.yml $(PROJECT_NAME) up -d
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose -f docker-compose.yml $(PROJECT_NAME) up -d
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 start-test:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose -f docker-compose-test-ci.yml $(PROJECT_NAME) up -d
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose -f docker-compose-test-ci.yml $(PROJECT_NAME) up -d
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 start-staging:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose -f docker-compose-staging.yml $(PROJECT_NAME) up -d
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose -f docker-compose-staging.yml $(PROJECT_NAME) up -d
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 start-prod:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose -f docker-compose-prod.yml $(PROJECT_NAME) up -d
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose -f docker-compose-prod.yml $(PROJECT_NAME) up -d
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 stop:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose -f docker-compose.yml $(PROJECT_NAME) down
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose -f docker-compose.yml $(PROJECT_NAME) down
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 stop-test:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose -f docker-compose-test-ci.yml $(PROJECT_NAME) down
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose -f docker-compose-test-ci.yml $(PROJECT_NAME) down
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 stop-staging:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose -f docker-compose-staging.yml $(PROJECT_NAME) down
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose -f docker-compose-staging.yml $(PROJECT_NAME) down
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 stop-prod:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose -f docker-compose-prod.yml $(PROJECT_NAME) down
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose -f docker-compose-prod.yml $(PROJECT_NAME) down
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
@@ -137,56 +138,56 @@ endif
 
 ssh:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose $(PROJECT_NAME) exec $(OPTION_T) $(PHP_USER) symfony bash
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose $(PROJECT_NAME) exec $(OPTION_T) $(PHP_USER) symfony bash
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 ssh-root:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose $(PROJECT_NAME) exec $(OPTION_T) symfony bash
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose $(PROJECT_NAME) exec $(OPTION_T) symfony bash
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 ssh-nginx:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose $(PROJECT_NAME) exec nginx /bin/sh
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose $(PROJECT_NAME) exec nginx /bin/sh
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 ssh-supervisord:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose $(PROJECT_NAME) exec supervisord bash
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose $(PROJECT_NAME) exec supervisord bash
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 ssh-mysql:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose $(PROJECT_NAME) exec mysql bash
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose $(PROJECT_NAME) exec mysql bash
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 ssh-rabbitmq:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose $(PROJECT_NAME) exec rabbitmq /bin/sh
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose $(PROJECT_NAME) exec rabbitmq /bin/sh
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 ssh-elasticsearch:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose $(PROJECT_NAME) exec elasticsearch bash
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose $(PROJECT_NAME) exec elasticsearch bash
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 ssh-kibana:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose $(PROJECT_NAME) exec kibana bash
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose $(PROJECT_NAME) exec kibana bash
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
@@ -195,19 +196,19 @@ exec:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 1)
 	@$$cmd
 else
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose $(PROJECT_NAME) exec $(OPTION_T) $(PHP_USER) symfony $$cmd
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose $(PROJECT_NAME) exec $(OPTION_T) $(PHP_USER) symfony $$cmd
 endif
 
 exec-bash:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 1)
 	@bash -c "$(cmd)"
 else
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose $(PROJECT_NAME) exec $(OPTION_T) $(PHP_USER) symfony bash -c "$(cmd)"
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose $(PROJECT_NAME) exec $(OPTION_T) $(PHP_USER) symfony bash -c "$(cmd)"
 endif
 
 exec-by-root:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) docker-compose $(PROJECT_NAME) exec $(OPTION_T) symfony $$cmd
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) docker-compose $(PROJECT_NAME) exec $(OPTION_T) symfony $$cmd
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
@@ -239,49 +240,49 @@ info:
 
 logs:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@docker logs -f ${COMPOSE_PROJECT_NAME}_symfony
+	@docker logs -f ${COMPOSE_PROJECT_NAME}-symfony
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 logs-nginx:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@docker logs -f ${COMPOSE_PROJECT_NAME}_nginx
+	@docker logs -f ${COMPOSE_PROJECT_NAME}-nginx
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 logs-supervisord:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@docker logs -f ${COMPOSE_PROJECT_NAME}_supervisord
+	@docker logs -f ${COMPOSE_PROJECT_NAME}-supervisord
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 logs-mysql:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@docker logs -f ${COMPOSE_PROJECT_NAME}_mysql
+	@docker logs -f ${COMPOSE_PROJECT_NAME}-mysql
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 logs-rabbitmq:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@docker logs -f ${COMPOSE_PROJECT_NAME}_rabbitmq
+	@docker logs -f ${COMPOSE_PROJECT_NAME}-rabbitmq
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 logs-elasticsearch:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@docker logs -f ${COMPOSE_PROJECT_NAME}_elasticsearch
+	@docker logs -f ${COMPOSE_PROJECT_NAME}-elasticsearch
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
 logs-kibana:
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
-	@docker logs -f ${COMPOSE_PROJECT_NAME}_kibana
+	@docker logs -f ${COMPOSE_PROJECT_NAME}-kibana
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif

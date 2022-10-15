@@ -3,17 +3,17 @@ version: '3.5'
 services:
 
     nginx:
-      image: ${COMPOSE_PROJECT_NAME}_nginx:latest
+      image: ${COMPOSE_PROJECT_NAME}-nginx:latest
       build:
         context: ./docker/
         args:
           BUILD_ARGUMENT_ENV: prod
         dockerfile: ./nginx/Dockerfile
-      container_name: ${COMPOSE_PROJECT_NAME}_nginx
+      container_name: ${COMPOSE_PROJECT_NAME}-nginx
       restart: always
       ports:
-        - "80:80"
-        - "443:443"
+        - "${WEB_PORT_HTTP}:80"
+        - "${WEB_PORT_SSL}:443"
       volumes:
         - .:/var/www/html:ro,cached
       depends_on:
@@ -22,7 +22,7 @@ services:
         - symfony
 
     symfony: &symfony-template
-      image: ${COMPOSE_PROJECT_NAME}_symfony:latest
+      image: ${COMPOSE_PROJECT_NAME}-symfony:latest
       build:
         context: .
         args:
@@ -30,7 +30,7 @@ services:
           HOST_UID: ${HOST_UID}
           HOST_GID: ${HOST_GID}
         dockerfile: ./Dockerfile
-      container_name: ${COMPOSE_PROJECT_NAME}_symfony
+      container_name: ${COMPOSE_PROJECT_NAME}-symfony
       restart: always
       depends_on:
         - mysql
@@ -43,15 +43,16 @@ services:
     ### Cron tasks, RabbitMQ consumers
     supervisord:
       <<: *symfony-template
-      container_name: ${COMPOSE_PROJECT_NAME}_supervisord
+      container_name: ${COMPOSE_PROJECT_NAME}-supervisord
       expose: []
       command: ["/usr/bin/supervisord"]
 
     mysql:
       image: mysql:8.0
-      container_name: ${COMPOSE_PROJECT_NAME}_mysql
+      platform: linux/x86_64
+      container_name: ${COMPOSE_PROJECT_NAME}-mysql
       restart: always
-      command: --default-authentication-plugin=mysql_native_password
+      command: --default-authentication-plugin=mysql_native_password --innodb-use-native-aio=${INNODB_USE_NATIVE_AIO:-1}
       environment:
         MYSQL_ROOT_PASSWORD: secret
         MYSQL_DATABASE: symfony
@@ -61,11 +62,11 @@ services:
         - symfony
 
     rabbitmq:
-      image: ${COMPOSE_PROJECT_NAME}_rabbitmq
+      image: ${COMPOSE_PROJECT_NAME}-rabbitmq
       build:
         context: ./docker/rabbitmq/
         dockerfile: ./Dockerfile
-      container_name: ${COMPOSE_PROJECT_NAME}_rabbitmq
+      container_name: ${COMPOSE_PROJECT_NAME}-rabbitmq
       restart: always
       environment:
         RABBITMQ_ERLANG_COOKIE: 7ead507151fc4461b9f45c1161384a04
@@ -80,13 +81,13 @@ services:
         - symfony
 
     elasticsearch:
-      image: ${COMPOSE_PROJECT_NAME}_elasticsearch
+      image: ${COMPOSE_PROJECT_NAME}-elasticsearch
       build:
         context: ./docker/
         args:
           ELK_VERSION: ${ELK_VERSION}
         dockerfile: ./elasticsearch/Dockerfile
-      container_name: ${COMPOSE_PROJECT_NAME}_elasticsearch
+      container_name: ${COMPOSE_PROJECT_NAME}-elasticsearch
       restart: always
       environment:
         ES_JAVA_OPTS: "-Xmx4096m -Xms4096m"
@@ -104,13 +105,14 @@ services:
         - symfony
 
     kibana:
-      image: ${COMPOSE_PROJECT_NAME}_kibana
+      image: ${COMPOSE_PROJECT_NAME}-kibana
+      platform: linux/x86_64
       build:
         context: ./docker/
         args:
           ELK_VERSION: ${ELK_VERSION}
         dockerfile: ./kibana/Dockerfile
-      container_name: ${COMPOSE_PROJECT_NAME}_kibana
+      container_name: ${COMPOSE_PROJECT_NAME}-kibana
       ports:
         - "5601:5601"
       volumes:
@@ -121,8 +123,8 @@ services:
         - symfony
 
     redis:
-      image: ${COMPOSE_PROJECT_NAME}_redis
-      container_name: ${COMPOSE_PROJECT_NAME}_redis
+      image: ${COMPOSE_PROJECT_NAME}-redis
+      container_name: ${COMPOSE_PROJECT_NAME}-redis
       build:
         context: ./docker/redis
       restart: always
