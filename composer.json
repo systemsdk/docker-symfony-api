@@ -46,7 +46,7 @@
 		"doctrine/orm": "^2.13",
 		"dukecity/command-scheduler-bundle": "^5.0",
 		"elasticsearch/elasticsearch": "^7.17",
-		"gedmo/doctrine-extensions": "^3.8",
+		"gedmo/doctrine-extensions": "^3.9",
 		"lexik/jwt-authentication-bundle": "^2.16",
 		"mark-gerarts/automapper-plus-bundle": "^1.4",
 		"matomo/device-detector": "^6.0",
