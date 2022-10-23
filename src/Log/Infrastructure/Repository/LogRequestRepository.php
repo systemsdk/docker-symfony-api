@@ -35,7 +35,7 @@ class LogRequestRepository extends BaseRepository implements LogRequestRepositor
 
     public function __construct(
         protected ManagerRegistry $managerRegistry,
-        private int $databaseLogRequestHistoryDays,
+        private readonly int $databaseLogRequestHistoryDays,
     ) {
     }
 

@@ -11,11 +11,11 @@ use Doctrine\ORM\Query\QueryException;
 use Doctrine\ORM\Query\SqlWalker;
 
 /**
- * Class UuidToOuuid
+ * Class BinToUuidOT
  *
  * @package App\General
  */
-class UuidToOuuid extends FunctionNode
+class BinToUuidOT extends FunctionNode
 {
     public mixed $value;
 
@@ -32,6 +32,6 @@ class UuidToOuuid extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker): string
     {
-        return 'uuid_to_ouuid(' . $this->value->dispatch($sqlWalker) . ')';
+        return 'BIN_TO_UUID(' . $this->value->dispatch($sqlWalker) . ', 1)';
     }
 }

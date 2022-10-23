@@ -34,6 +34,11 @@ know anything about other layers (Application/Infrastructure) or framework. In t
 for such components like Doctrine/Swagger/Serializer/Validator (for the first time) and you can find such
 dependencies inside Entities.
 
+Within this application we are using uuid v1 for the primary key inside Entities. Also we have id field as
+binary type ([details](https://uuid.ramsey.dev/en/stable/database.html#using-as-a-primary-key)). If you need to convert
+id into bin or from bin to string inside query, please use already existing dql functions `uuid_o_t_to_bin` and `bin_to_uuid_o_t`.
+For instance `... WHERE id = uuid_o_t_to_bin(:id)`, or when you need to convert uuid binary ordered time into string representative `... WHERE bin_to_uuid_o_t(id) = :id`.
+
 #### Repositories
 Repositories need to be responsible for parameter handling and query builder callbacks/joins. Should be located on
 infrastructure layer. Parameter handling can help with generic REST queries.

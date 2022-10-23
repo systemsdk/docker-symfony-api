@@ -77,5 +77,5 @@ doctrine:
                         datesub: DoctrineExtensions\Query\Mysql\DateSub
                         now: DoctrineExtensions\Query\Mysql\Now
                     string_functions:
-                        uuid_to_ouuid: App\General\Infrastructure\DQL\UuidToOuuid
-                        ouuid_to_uuid: App\General\Infrastructure\DQL\OuuidToUuid
+                        uuid_o_t_to_bin: App\General\Infrastructure\DQL\UuidOTToBin
+                        bin_to_uuid_o_t: App\General\Infrastructure\DQL\BinToUuidOT

@@ -45,7 +45,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function __construct(
         protected ManagerRegistry $managerRegistry,
-        private string $environment,
+        private readonly string $environment,
     ) {
     }
 
