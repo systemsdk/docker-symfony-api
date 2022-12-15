@@ -32,11 +32,6 @@ interface BaseRestResourceInterface
     public function getRepository(): BaseRepositoryInterface;
 
     /**
-     * Setter method for repository.
-     */
-    public function setRepository(BaseRepositoryInterface $repository): self;
-
-    /**
      * Getter for used validator.
      */
     public function getValidator(): ValidatorInterface;

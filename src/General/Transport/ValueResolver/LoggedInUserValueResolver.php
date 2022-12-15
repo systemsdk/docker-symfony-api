@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\General\Transport\ArgumentResolver;
+namespace App\General\Transport\ValueResolver;
 
 use App\User\Application\Security\UserTypeIdentification;
 use App\User\Domain\Entity\User;
 use Generator;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\MissingTokenException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Throwable;
 
@@ -30,7 +30,7 @@ use Throwable;
  *
  * @package App\General
  */
-class LoggedInUserValueResolver implements ArgumentValueResolverInterface
+class LoggedInUserValueResolver implements ValueResolverInterface
 {
     public function __construct(
         private readonly UserTypeIdentification $userService,
@@ -38,9 +38,9 @@ class LoggedInUserValueResolver implements ArgumentValueResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @throws MissingTokenException
      */
-    public function supports(Request $request, ArgumentMetadata $argument): bool
+    public function supports(ArgumentMetadata $argument): bool
     {
         $output = false;
 
@@ -67,6 +67,10 @@ class LoggedInUserValueResolver implements ArgumentValueResolverInterface
      */
     public function resolve(Request $request, ArgumentMetadata $argument): Generator
     {
+        if (!$this->supports($argument)) {
+            return [];
+        }
+
         yield $this->userService->getUser();
     }
 }

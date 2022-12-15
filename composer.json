@@ -14,7 +14,7 @@
 		"Elasticsearch"
 	],
 	"homepage": "https://github.com/systemsdk/docker-symfony-api",
-	"version": "v1.3.1",
+	"version": "v1.4.0",
 	"license": "MIT",
 	"authors": [
 		{
@@ -31,7 +31,7 @@
 		}
 	],
 	"require": {
-		"php": "^8.1.0",
+		"php": "^8.2.0",
 		"ext-amqp": "*",
 		"ext-ctype": "*",
 		"ext-iconv": "*",
@@ -46,7 +46,7 @@
 		"doctrine/orm": "^2.13",
 		"dukecity/command-scheduler-bundle": "^5.0",
 		"elasticsearch/elasticsearch": "^7.17",
-		"gedmo/doctrine-extensions": "^3.9",
+		"gedmo/doctrine-extensions": "^3.10",
 		"lexik/jwt-authentication-bundle": "^2.16",
 		"mark-gerarts/automapper-plus-bundle": "^1.4",
 		"matomo/device-detector": "^6.0",
@@ -56,37 +56,37 @@
 		"phpdocumentor/reflection-docblock": "^5.3",
 		"ramsey/uuid-doctrine": "^1.8",
 		"sensio/framework-extra-bundle": "^6.2",
-		"symfony/amqp-messenger": "6.1.*",
-		"symfony/asset": "6.1.*",
-		"symfony/config": "6.1.*",
-		"symfony/console": "6.1.*",
-		"symfony/doctrine-messenger": "6.1.*",
-		"symfony/dotenv": "6.1.*",
-		"symfony/expression-language": "6.1.*",
+		"symfony/amqp-messenger": "6.2.*",
+		"symfony/asset": "6.2.*",
+		"symfony/config": "6.2.*",
+		"symfony/console": "6.2.*",
+		"symfony/doctrine-messenger": "6.2.*",
+		"symfony/dotenv": "6.2.*",
+		"symfony/expression-language": "6.2.*",
 		"symfony/flex": "^2.2",
-		"symfony/form": "6.1.*",
-		"symfony/framework-bundle": "6.1.*",
-		"symfony/http-client": "6.1.*",
-		"symfony/intl": "6.1.*",
-		"symfony/mailer": "6.1.*",
-		"symfony/messenger": "6.1.*",
-		"symfony/mime": "6.1.*",
+		"symfony/form": "6.2.*",
+		"symfony/framework-bundle": "6.2.*",
+		"symfony/http-client": "6.2.*",
+		"symfony/intl": "6.2.*",
+		"symfony/mailer": "6.2.*",
+		"symfony/messenger": "6.2.*",
+		"symfony/mime": "6.2.*",
 		"symfony/monolog-bundle": "^3.8",
-		"symfony/notifier": "6.1.*",
-		"symfony/process": "6.1.*",
-		"symfony/property-access": "6.1.*",
-		"symfony/property-info": "6.1.*",
-		"symfony/proxy-manager-bridge": "6.1.*",
-		"symfony/runtime": "6.1.*",
-		"symfony/routing": "6.1.*",
-		"symfony/security-bundle": "6.1.*",
-		"symfony/serializer": "6.1.*",
-		"symfony/string": "6.1.*",
-		"symfony/translation": "6.1.*",
-		"symfony/twig-bundle": "6.1.*",
-		"symfony/validator": "6.1.*",
-		"symfony/web-link": "6.1.*",
-		"symfony/yaml": "6.1.*",
+		"symfony/notifier": "6.2.*",
+		"symfony/process": "6.2.*",
+		"symfony/property-access": "6.2.*",
+		"symfony/property-info": "6.2.*",
+		"symfony/proxy-manager-bridge": "6.2.*",
+		"symfony/runtime": "6.2.*",
+		"symfony/routing": "6.2.*",
+		"symfony/security-bundle": "6.2.*",
+		"symfony/serializer": "6.2.*",
+		"symfony/string": "6.2.*",
+		"symfony/translation": "6.2.*",
+		"symfony/twig-bundle": "6.2.*",
+		"symfony/validator": "6.2.*",
+		"symfony/web-link": "6.2.*",
+		"symfony/yaml": "6.2.*",
 		"twig/extra-bundle": "^2.12|^3.0"
 	},
 	"conflict": {
@@ -99,13 +99,13 @@
 		"doctrine/doctrine-fixtures-bundle": "^3.4",
 		"systemsdk/easy-log-bundle": "2.0.*",
 		"roave/security-advisories": "dev-latest",
-		"symfony/browser-kit": "6.1.*",
-		"symfony/debug-bundle": "6.1.*",
-		"symfony/maker-bundle": "^1.47",
+		"symfony/browser-kit": "6.2.*",
+		"symfony/debug-bundle": "6.2.*",
+		"symfony/maker-bundle": "^1.48",
 		"symfony/requirements-checker": "^2.0",
-		"symfony/stopwatch": "6.1.*",
-		"symfony/var-dumper": "6.1.*",
-		"symfony/web-profiler-bundle": "6.1.*"
+		"symfony/stopwatch": "6.2.*",
+		"symfony/var-dumper": "6.2.*",
+		"symfony/web-profiler-bundle": "6.2.*"
 	},
 	"replace": {
 		"symfony/polyfill-ctype": "*",
@@ -117,7 +117,7 @@
 	"config": {
 		"allow-plugins": true,
 		"platform": {
-			"php": "8.1.0"
+			"php": "8.2.0"
 		},
 		"preferred-install": {
 			"*": "dist"
@@ -134,7 +134,7 @@
 		"projectTitle": "Docker Symfony API",
 		"symfony": {
 			"allow-contrib": true,
-			"require": "6.1.*"
+			"require": "6.2.*"
 		}
 	},
 	"autoload": {

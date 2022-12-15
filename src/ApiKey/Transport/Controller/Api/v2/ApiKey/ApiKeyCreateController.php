@@ -40,8 +40,12 @@ class ApiKeyCreateController extends Controller
         Controller::METHOD_CREATE => ApiKeyCreate::class,
     ];
 
+    /**
+     * @param \App\ApiKey\Application\Resource\ApiKeyCreateResource $resource
+     */
     public function __construct(
-        protected ApiKeyCreateResourceInterface $resource,
+        ApiKeyCreateResourceInterface $resource,
     ) {
+        parent::__construct($resource);
     }
 }

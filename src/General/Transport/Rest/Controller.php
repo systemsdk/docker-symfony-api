@@ -46,6 +46,11 @@ abstract class Controller implements ControllerInterface
 
     protected ?ResponseHandlerInterface $responseHandler = null;
 
+    public function __construct(
+        protected readonly RestResourceInterface|RestSmallResourceInterface $resource
+    ) {
+    }
+
     /**
      * {@inheritdoc}
      */

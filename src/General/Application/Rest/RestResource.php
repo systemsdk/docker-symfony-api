@@ -6,6 +6,7 @@ namespace App\General\Application\Rest;
 
 use App\General\Application\Rest\Interfaces\RestResourceInterface;
 use App\General\Application\Rest\Traits\Methods;
+use App\General\Domain\Repository\Interfaces\BaseRepositoryInterface;
 
 /**
  * Class RestResource
@@ -25,4 +26,9 @@ abstract class RestResource implements RestResourceInterface
     use Methods\ResourcePatchMethod;
     use Methods\ResourceSaveMethod;
     use Methods\ResourceUpdateMethod;
+
+    public function __construct(
+        protected readonly BaseRepositoryInterface $repository,
+    ) {
+    }
 }

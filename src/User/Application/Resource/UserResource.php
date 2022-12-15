@@ -44,9 +44,10 @@ class UserResource extends RestResource
      * @param \App\User\Infrastructure\Repository\UserRepository $repository
      */
     public function __construct(
-        protected Repository $repository,
-        private RolesService $rolesService,
+        Repository $repository,
+        private readonly RolesService $rolesService,
     ) {
+        parent::__construct($repository);
     }
 
     /**

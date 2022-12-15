@@ -48,7 +48,7 @@ class TimeZoneController
      *             @OA\Property(
      *                 property="identier",
      *                 type="string",
-     *                 example="Europe/Kiev",
+     *                 example="Europe/Kyiv",
      *                 description="Timezone identifier that you can use with other librariers."
      *             ),
      *             @OA\Property(
@@ -60,7 +60,7 @@ class TimeZoneController
      *             @OA\Property(
      *                 property="value",
      *                 type="string",
-     *                 example="Europe/Kiev",
+     *                 example="Europe/Kyiv",
      *                 description="User friendly value of identifier value eg. '_' characters are replaced by space."
      *             ),
      *         ),

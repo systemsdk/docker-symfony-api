@@ -6,14 +6,13 @@ namespace App\General\Transport\AutoMapper;
 
 use AutoMapperPlus\AutoMapperPlusBundle\AutoMapperConfiguratorInterface;
 use AutoMapperPlus\Configuration\AutoMapperConfigInterface;
+use AutoMapperPlus\MapperInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class RestAutoMapperConfiguration
  *
  * @package App\General
- *
- * @property RestRequestMapper $requestMapper
  */
 abstract class RestAutoMapperConfiguration implements AutoMapperConfiguratorInterface
 {
@@ -24,8 +23,10 @@ abstract class RestAutoMapperConfiguration implements AutoMapperConfiguratorInte
      */
     protected static array $requestMapperClasses = [];
 
-    // We cannot define this here if we're using constructor property promotion
-    // protected RestRequestMapper $requestMapper;
+    public function __construct(
+        protected readonly MapperInterface $requestMapper,
+    ) {
+    }
 
     /**
      * Use this method to register your mappings.

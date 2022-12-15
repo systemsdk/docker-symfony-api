@@ -49,20 +49,6 @@ trait RestResourceBaseMethods
     /**
      * {@inheritdoc}
      */
-    public function setRepository(BaseRepositoryInterface $repository): self
-    {
-        if (!property_exists($this, 'repository')) {
-            throw new UnexpectedValueException('Repository not set on constructor');
-        }
-
-        $this->repository = $repository;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getValidator(): ValidatorInterface
     {
         return $this->validator;

@@ -32,8 +32,12 @@ class ApiKeyCountController extends Controller
 {
     use Actions\Root\CountAction;
 
+    /**
+     * @param \App\ApiKey\Application\Resource\ApiKeyCountResource $resource
+     */
     public function __construct(
-        protected ApiKeyCountResourceInterface $resource,
+        ApiKeyCountResourceInterface $resource,
     ) {
+        parent::__construct($resource);
     }
 }

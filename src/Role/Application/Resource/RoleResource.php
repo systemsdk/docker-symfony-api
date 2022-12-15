@@ -37,7 +37,8 @@ class RoleResource extends RestResource
      * @param \App\Role\Infrastructure\Repository\RoleRepository $repository
      */
     public function __construct(
-        protected Repository $repository,
+        Repository $repository,
     ) {
+        parent::__construct($repository);
     }
 }

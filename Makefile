@@ -356,7 +356,7 @@ ifeq ($(INSIDE_DOCKER_CONTAINER), 1)
 	@echo "\033[32mRunning PHPStan - PHP Static Analysis Tool\033[39m"
 	@bin/console cache:clear --env=test
 	@./vendor/bin/phpstan --version
-	@./vendor/bin/phpstan analyze src tests
+	@./vendor/bin/phpstan analyze src tests --xdebug
 else
 	@make exec cmd="make phpstan"
 endif
@@ -364,7 +364,7 @@ endif
 phpinsights: ## Runs Php Insights analysis tool
 ifeq ($(INSIDE_DOCKER_CONTAINER), 1)
 	@echo "\033[32mRunning PHP Insights\033[39m"
-	@php -d error_reporting=0 ./vendor/bin/phpinsights analyse --no-interaction --min-quality=100 --min-complexity=84 --min-architecture=100 --min-style=100
+	@php -d error_reporting=0 ./vendor/bin/phpinsights analyse --no-interaction --min-quality=98 --min-complexity=85 --min-architecture=100 --min-style=100
 else
 	@make exec cmd="make phpinsights"
 endif

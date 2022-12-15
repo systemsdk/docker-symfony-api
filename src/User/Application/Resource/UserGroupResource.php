@@ -37,7 +37,8 @@ class UserGroupResource extends RestResource
      * @param \App\User\Infrastructure\Repository\UserGroupRepository $repository
      */
     public function __construct(
-        protected Repository $repository,
+        Repository $repository,
     ) {
+        parent::__construct($repository);
     }
 }

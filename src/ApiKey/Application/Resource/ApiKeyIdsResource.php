@@ -31,7 +31,8 @@ class ApiKeyIdsResource extends RestSmallResource implements ApiKeyIdsResourceIn
      * @param \App\ApiKey\Infrastructure\Repository\ApiKeyRepository $repository
      */
     public function __construct(
-        protected RepositoryInterface $repository,
+        RepositoryInterface $repository,
     ) {
+        parent::__construct($repository);
     }
 }

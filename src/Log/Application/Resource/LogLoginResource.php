@@ -37,7 +37,8 @@ class LogLoginResource extends RestResource
      * @param \App\Log\Infrastructure\Repository\LogLoginRepository $repository
      */
     public function __construct(
-        protected Repository $repository,
+        Repository $repository,
     ) {
+        parent::__construct($repository);
     }
 }

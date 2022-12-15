@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\General\Transport\ArgumentResolver;
+namespace App\General\Transport\ValueResolver;
 
 use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Transport\Rest\Controller;
 use App\General\Transport\Rest\ControllerCollection;
 use AutoMapperPlus\AutoMapperInterface;
-use BadMethodCallException;
 use Generator;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Throwable;
 
@@ -24,7 +23,7 @@ use function in_array;
  *
  * @package App\General
  */
-class RestDtoValueResolver implements ArgumentValueResolverInterface
+class RestDtoValueResolver implements ValueResolverInterface
 {
     private const CONTROLLER_KEY = '_controller';
 
@@ -60,9 +59,6 @@ class RestDtoValueResolver implements ArgumentValueResolverInterface
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
         $bits = explode('::', (string)$request->attributes->get(self::CONTROLLER_KEY, ''));
@@ -94,13 +90,12 @@ class RestDtoValueResolver implements ArgumentValueResolverInterface
      */
     public function resolve(Request $request, ArgumentMetadata $argument): Generator
     {
-        if ($this->controllerName === null || $this->actionName === null) {
-            $message = sprintf(
-                'You cannot call `%1$s::resolve(...)` method without calling `%1$s::supports(...)` first',
-                self::class,
-            );
+        if (!$this->supports($request, $argument)) {
+            return [];
+        }
 
-            throw new BadMethodCallException($message);
+        if ($this->controllerName === null) {
+            return [];
         }
 
         $dtoClass = $this->controllerCollection

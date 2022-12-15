@@ -6,6 +6,7 @@ namespace App\General\Application\Rest;
 
 use App\General\Application\Rest\Interfaces\RestSmallResourceInterface;
 use App\General\Application\Rest\Traits\RestResourceBaseMethods;
+use App\General\Domain\Repository\Interfaces\BaseRepositoryInterface;
 
 /**
  * Class RestSmallResource
@@ -15,4 +16,9 @@ use App\General\Application\Rest\Traits\RestResourceBaseMethods;
 abstract class RestSmallResource implements RestSmallResourceInterface
 {
     use RestResourceBaseMethods;
+
+    public function __construct(
+        protected readonly BaseRepositoryInterface $repository,
+    ) {
+    }
 }

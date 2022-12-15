@@ -37,7 +37,8 @@ class DateDimensionResource extends RestResource
      * @param \App\DateDimension\Infrastructure\Repository\DateDimensionRepository $repository
      */
     public function __construct(
-        protected RepositoryInterface $repository,
+        RepositoryInterface $repository,
     ) {
+        parent::__construct($repository);
     }
 }

@@ -37,7 +37,8 @@ class ApiKeyPatchResource extends RestSmallResource implements ApiKeyPatchResour
      * @param \App\ApiKey\Infrastructure\Repository\ApiKeyRepository $repository
      */
     public function __construct(
-        protected RepositoryInterface $repository,
+        RepositoryInterface $repository,
     ) {
+        parent::__construct($repository);
     }
 }

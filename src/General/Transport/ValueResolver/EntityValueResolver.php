@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\General\Transport\ArgumentResolver;
+namespace App\General\Transport\ValueResolver;
 
 use App\General\Application\Resource\ResourceCollection;
 use App\General\Application\Rest\Interfaces\RestFindOneResourceInterface;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 use Generator;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Throwable;
 
@@ -36,16 +36,13 @@ use function is_subclass_of;
  *
  * @package App\General
  */
-class EntityValueResolver implements ArgumentValueResolverInterface
+class EntityValueResolver implements ValueResolverInterface
 {
     public function __construct(
         private readonly ResourceCollection $resourceCollection,
     ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
         return is_string($this->getUuid($argument, $request))
@@ -62,6 +59,10 @@ class EntityValueResolver implements ArgumentValueResolverInterface
      */
     public function resolve(Request $request, ArgumentMetadata $argument): Generator
     {
+        if (!$this->supports($request, $argument)) {
+            return [];
+        }
+
         yield $this->resourceCollection /** @phpstan-ignore-line */
             ->getEntityResource((string)$argument->getType(), RestFindOneResourceInterface::class)
             ->findOne((string)($this->getUuid($argument, $request)), !$argument->isNullable());

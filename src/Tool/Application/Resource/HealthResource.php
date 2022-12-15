@@ -37,7 +37,8 @@ class HealthResource extends RestResource
      * @param \App\Tool\Infrastructure\Repository\HealthRepository $repository
      */
     public function __construct(
-        protected Repository $repository,
+        Repository $repository,
     ) {
+        parent::__construct($repository);
     }
 }

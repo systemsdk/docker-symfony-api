@@ -32,8 +32,12 @@ class ApiKeyViewController extends Controller
 {
     use Actions\Root\FindOneAction;
 
+    /**
+     * @param \App\ApiKey\Application\Resource\ApiKeyFindOneResource $resource
+     */
     public function __construct(
-        protected ApiKeyFindOneResourceInterface $resource,
+        ApiKeyFindOneResourceInterface $resource,
     ) {
+        parent::__construct($resource);
     }
 }

@@ -69,7 +69,6 @@ return [
         SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff::class,
         SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff::class,
         SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff::class,
-        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff::class,
         PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting\TodoSniff::class,
     ],
     'config' => [
@@ -107,8 +106,8 @@ return [
         ],
         SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff::class => [
             'exclude' => [
-                'src/General/Transport/ArgumentResolver/LoggedInUserValueResolver.php',
-                'src/General/Transport/ArgumentResolver/RestDtoValueResolver.php',
+                'src/General/Transport/ValueResolver/LoggedInUserValueResolver.php',
+                'src/General/Transport/ValueResolver/RestDtoValueResolver.php',
                 'src/General/Transport/AutoMapper/RestRequestMapper.php',
                 'src/General/Application/Decorator/StopwatchDecorator.php',
                 'src/General/Domain/Doctrine/DBAL/Types/EnumType.php',

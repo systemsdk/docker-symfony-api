@@ -74,7 +74,7 @@ services:
         resource: '../src/User/Transport/Controller/'
         tags: [ 'controller.service_arguments' ]
 
-    App\General\Transport\ArgumentResolver\EntityValueResolver:
+    App\General\Transport\ValueResolver\EntityValueResolver:
         tags:
             - { name: controller.argument_value_resolver, priority: 150 }
 

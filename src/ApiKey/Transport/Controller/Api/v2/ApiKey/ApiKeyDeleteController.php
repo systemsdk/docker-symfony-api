@@ -32,8 +32,12 @@ class ApiKeyDeleteController extends Controller
 {
     use Actions\Root\DeleteAction;
 
+    /**
+     * @param \App\ApiKey\Application\Resource\ApiKeyDeleteResource $resource
+     */
     public function __construct(
-        protected ApiKeyDeleteResourceInterface $resource,
+        ApiKeyDeleteResourceInterface $resource,
     ) {
+        parent::__construct($resource);
     }
 }

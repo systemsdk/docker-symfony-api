@@ -40,8 +40,12 @@ class ApiKeyPatchController extends Controller
         Controller::METHOD_PATCH => ApiKeyPatch::class,
     ];
 
+    /**
+     * @param \App\ApiKey\Application\Resource\ApiKeyPatchResource $resource
+     */
     public function __construct(
-        protected ApiKeyPatchResourceInterface $resource,
+        ApiKeyPatchResourceInterface $resource,
     ) {
+        parent::__construct($resource);
     }
 }

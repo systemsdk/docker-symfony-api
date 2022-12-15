@@ -40,8 +40,12 @@ class ApiKeyUpdateController extends Controller
         Controller::METHOD_UPDATE => ApiKeyUpdate::class,
     ];
 
+    /**
+     * @param \App\ApiKey\Application\Resource\ApiKeyUpdateResource $resource
+     */
     public function __construct(
-        protected ApiKeyUpdateResourceInterface $resource,
+        ApiKeyUpdateResourceInterface $resource,
     ) {
+        parent::__construct($resource);
     }
 }

@@ -6,19 +6,21 @@ namespace App\General\Infrastructure\MessageHandler;
 
 use App\General\Infrastructure\Message\TestMessage;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Messenger\Handler\MessageSubscriberInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Throwable;
 
 /**
  * Class TestHandler
+ * If you need handling multiple - follow https://symfony.com/doc/current/messenger.html#handling-multiple-messages
  * TODO: This is handler example, you can delete it.
  *
  * @package App\General
  */
-class TestHandler implements MessageSubscriberInterface
+#[AsMessageHandler]
+class TestHandler
 {
     public function __construct(
-        private LoggerInterface $logger,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -28,21 +30,6 @@ class TestHandler implements MessageSubscriberInterface
     public function __invoke(TestMessage $message): void
     {
         $this->handleMessage($message);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @phpstan-return iterable<string>
-     */
-    public static function getHandledMessages(): iterable
-    {
-        // handle this message on __invoke
-        yield TestMessage::class;
-
-        /*yield ...Message::class => [
-            'method' => 'handle...',
-        ];*/
     }
 
     /**

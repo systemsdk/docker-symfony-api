@@ -32,8 +32,12 @@ class ApiKeyIdsController extends Controller
 {
     use Actions\Root\IdsAction;
 
+    /**
+     * @param \App\ApiKey\Application\Resource\ApiKeyIdsResource $resource
+     */
     public function __construct(
-        protected ApiKeyIdsResourceInterface $resource,
+        ApiKeyIdsResourceInterface $resource,
     ) {
+        parent::__construct($resource);
     }
 }

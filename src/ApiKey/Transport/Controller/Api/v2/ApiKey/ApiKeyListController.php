@@ -32,8 +32,12 @@ class ApiKeyListController extends Controller
 {
     use Actions\Root\FindAction;
 
+    /**
+     * @param \App\ApiKey\Application\Resource\ApiKeyListResource $resource
+     */
     public function __construct(
-        protected ApiKeyListResourceInterface $resource,
+        ApiKeyListResourceInterface $resource,
     ) {
+        parent::__construct($resource);
     }
 }
