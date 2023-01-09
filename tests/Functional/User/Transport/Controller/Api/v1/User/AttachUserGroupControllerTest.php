@@ -6,7 +6,7 @@ namespace App\Tests\Functional\User\Transport\Controller\Api\v1\User;
 
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
@@ -49,9 +49,9 @@ class AttachUserGroupControllerTest extends WebTestCase
         self::assertEquals(1, $this->user->getUserGroups()->count());
         $userGroup = $this->user->getUserGroups()->first();
         self::assertInstanceOf(UserGroup::class, $userGroup);
-        self::assertEquals(Role::ROLE_USER, $userGroup->getRole()->getId());
+        self::assertEquals(Role::USER->value, $userGroup->getRole()->getId());
         $userGroupForAttach = $this->userGroupResource->findOneBy([
-            'role' => Role::ROLE_LOGGED,
+            'role' => Role::LOGGED->value,
         ]);
         self::assertInstanceOf(UserGroup::class, $userGroupForAttach);
         $this->userGroupForAttach = $userGroupForAttach;
@@ -106,7 +106,7 @@ class AttachUserGroupControllerTest extends WebTestCase
             self::assertArrayHasKey('role', $userGroup);
             self::assertIsArray($userGroup['role']);
             self::assertArrayHasKey('id', $userGroup['role']);
-            self::assertContains($userGroup['role']['id'], [Role::ROLE_USER, Role::ROLE_LOGGED]);
+            self::assertContains($userGroup['role']['id'], [Role::USER->value, Role::LOGGED->value]);
             self::assertArrayHasKey('name', $userGroup);
         }
 
@@ -121,7 +121,7 @@ class AttachUserGroupControllerTest extends WebTestCase
         // cleanup our actions above in order to have only 1 attached user group to the user
         /** @var UserGroup|null $userGroupForAttach */
         $userGroupForAttach = $this->userGroupResource->findOneBy([
-            'role' => Role::ROLE_LOGGED,
+            'role' => Role::LOGGED->value,
         ]);
         self::assertInstanceOf(UserGroup::class, $userGroupForAttach);
         $user = $this->userResource->save($user->removeUserGroup($userGroupForAttach), false);

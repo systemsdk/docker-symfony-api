@@ -55,8 +55,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @return array<string, array<int, string|int>>
      */
     public static function getSubscribedEvents(): array
     {

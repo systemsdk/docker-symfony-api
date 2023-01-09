@@ -128,6 +128,8 @@ services:
       build:
         context: ./docker/redis
       restart: always
+      volumes:
+        - ./var/redis:/data:delegated
       networks:
         - symfony
 

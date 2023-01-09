@@ -7,11 +7,12 @@ namespace App\General\Transport\Rest\Traits\Actions\Authenticated;
 use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Transport\Rest\Traits\Methods\UpdateMethod;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Throwable;
 
 /**
@@ -63,7 +64,7 @@ trait UpdateAction
     #[Route(
         path: '/{id}',
         requirements: [
-            'id' => '%app.uuid_v1_regex%',
+            'id' => Requirement::UUID_V1,
         ],
         methods: [Request::METHOD_PUT],
     )]

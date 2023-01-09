@@ -126,7 +126,6 @@ return [
                 'src/User/Application/Security/Handler/TranslatedAuthenticationFailureHandler.php',
                 'src/ApiKey/Application/Security/Provider/ApiKeyUserProvider.php',
                 'src/User/Application/Security/Voter/IsUserHimselfVoter.php',
-                'src/General/Application/Serializer/Normalizer/CollectionNormalizer.php',
                 'src/Tool/Application/Validator/Constraints/LanguageValidator.php',
                 'src/Tool/Application/Validator/Constraints/LocaleValidator.php',
                 'src/Tool/Application/Validator/Constraints/TimezoneValidator.php',

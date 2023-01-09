@@ -8,6 +8,7 @@ use App\Role\Application\Security\RolesService;
 use App\User\Application\Security\SecurityUser;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Repository\Interfaces\UserRepositoryInterface;
+use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -27,7 +28,6 @@ class SecurityUserFactory implements UserProviderInterface
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
         private readonly RolesService $rolesService,
-        private readonly string $uuidV1Regex,
     ) {
     }
 
@@ -48,7 +48,7 @@ class SecurityUserFactory implements UserProviderInterface
     {
         $user = $this->userRepository->loadUserByIdentifier(
             $identifier,
-            (bool)preg_match('#' . $this->uuidV1Regex . '#', $identifier)
+            (bool)preg_match('#' . Requirement::UUID_V1 . '#', $identifier)
         );
 
         if (!($user instanceof User)) {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\User\Transport\Controller\Api\v1\UserGroup;
 
 use App\General\Transport\Utils\Tests\WebTestCase;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use App\Tests\Functional\User\Transport\Controller\Api\v1\Traits\UserHelper;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Domain\Entity\UserGroup;
@@ -34,7 +34,7 @@ class UsersControllerTest extends WebTestCase
         $userGroupResource = static::getContainer()->get(UserGroupResource::class);
         static::assertInstanceOf(UserGroupResource::class, $userGroupResource);
         $userGroup = $userGroupResource->findOneBy([
-            'role' => Role::ROLE_ADMIN,
+            'role' => Role::ADMIN->value,
         ]);
         self::assertInstanceOf(UserGroup::class, $userGroup);
         $this->baseUrl .= '/' . $userGroup->getId() . '/users';

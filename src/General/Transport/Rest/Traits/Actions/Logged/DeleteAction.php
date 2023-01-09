@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\General\Transport\Rest\Traits\Actions\Logged;
 
 use App\General\Transport\Rest\Traits\Methods\DeleteMethod;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Throwable;
 
 /**
@@ -53,11 +54,11 @@ trait DeleteAction
     #[Route(
         path: '/{id}',
         requirements: [
-            'id' => '%app.uuid_v1_regex%',
+            'id' => Requirement::UUID_V1,
         ],
         methods: [Request::METHOD_DELETE],
     )]
-    #[IsGranted(Role::ROLE_LOGGED)]
+    #[IsGranted(Role::LOGGED->value)]
     public function deleteAction(Request $request, string $id): Response
     {
         return $this->deleteMethod($request, $id);

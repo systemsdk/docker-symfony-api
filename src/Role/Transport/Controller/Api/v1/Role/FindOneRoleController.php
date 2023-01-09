@@ -7,13 +7,15 @@ namespace App\Role\Transport\Controller\Api\v1\Role;
 use App\General\Transport\Rest\Controller;
 use App\General\Transport\Rest\Traits\Methods;
 use App\Role\Application\Resource\RoleResource;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Entity\Role as RoleEntity;
+use App\Role\Domain\Enum\Role;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Requirement\EnumRequirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Throwable;
 
 /**
@@ -42,7 +44,7 @@ class FindOneRoleController extends Controller
      *     @OA\JsonContent(
      *         example={"id": "ROLE_ROOT", "description": "role root description"},
      *         ref=@Model(
-     *             type=Role::class,
+     *             type=RoleEntity::class,
      *             groups={"Role"},
      *         ),
      *     ),
@@ -63,11 +65,11 @@ class FindOneRoleController extends Controller
     #[Route(
         path: '/v1/role/{role}',
         requirements: [
-            'role' => '^ROLE_\w+$',
+            'role' => new EnumRequirement(Role::class),
         ],
         methods: [Request::METHOD_GET],
     )]
-    #[IsGranted(Role::ROLE_ADMIN)]
+    #[IsGranted(Role::ADMIN->value)]
     public function __invoke(Request $request, string $role): Response
     {
         return $this->findOneMethod($request, $role);

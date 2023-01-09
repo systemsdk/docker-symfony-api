@@ -6,7 +6,7 @@ namespace App\Tests\Functional\User\Transport\Controller\Api\v1\User;
 
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
@@ -45,7 +45,7 @@ class DetachUserGroupControllerTest extends WebTestCase
         $this->user = $user;
         // let's attach role to the user in order to detach it in the test bellow
         $userGroupForAttachAndDetach = $userGroupResource->findOneBy([
-            'role' => Role::ROLE_LOGGED,
+            'role' => Role::LOGGED->value,
         ]);
         self::assertInstanceOf(UserGroup::class, $userGroupForAttachAndDetach);
         $this->userGroupForAttachAndDetach = $userGroupForAttachAndDetach;
@@ -103,7 +103,7 @@ class DetachUserGroupControllerTest extends WebTestCase
             self::assertArrayHasKey('role', $userGroup);
             self::assertIsArray($userGroup['role']);
             self::assertArrayHasKey('id', $userGroup['role']);
-            self::assertContains($userGroup['role']['id'], [Role::ROLE_USER]);
+            self::assertContains($userGroup['role']['id'], [Role::USER->value]);
             self::assertArrayHasKey('name', $userGroup);
         }
 
@@ -116,6 +116,6 @@ class DetachUserGroupControllerTest extends WebTestCase
         self::assertEquals(1, $user->getUserGroups()->count());
         /** @var UserGroup $userGroup */
         $userGroup = $user->getUserGroups()->first();
-        self::assertEquals(Role::ROLE_USER, $userGroup->getRole()->getId());
+        self::assertEquals(Role::USER->value, $userGroup->getRole()->getId());
     }
 }

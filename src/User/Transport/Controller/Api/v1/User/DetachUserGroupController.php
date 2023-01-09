@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\User\Transport\Controller\Api\v1\User;
 
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Entity\UserGroup;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
 
@@ -97,20 +97,12 @@ class DetachUserGroupController
     #[Route(
         path: '/v1/user/{user}/group/{userGroup}',
         requirements: [
-            'user' => '%app.uuid_v1_regex%',
-            'userGroup' => '%app.uuid_v1_regex%',
+            'user' => Requirement::UUID_V1,
+            'userGroup' => Requirement::UUID_V1,
         ],
         methods: [Request::METHOD_DELETE],
     )]
-    #[IsGranted(Role::ROLE_ROOT)]
-    #[ParamConverter(
-        data: 'user',
-        class: UserResource::class,
-    )]
-    #[ParamConverter(
-        data: 'userGroup',
-        class: UserGroupResource::class,
-    )]
+    #[IsGranted(Role::ROOT->value)]
     public function __invoke(User $user, UserGroup $userGroup): JsonResponse
     {
         $this->userResource->save($user->removeUserGroup($userGroup), false);

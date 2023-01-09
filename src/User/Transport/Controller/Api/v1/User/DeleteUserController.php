@@ -6,17 +6,17 @@ namespace App\User\Transport\Controller\Api\v1\User;
 
 use App\General\Transport\Rest\Controller;
 use App\General\Transport\Rest\Traits\Methods;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Throwable;
 
 /**
@@ -63,23 +63,19 @@ class DeleteUserController extends Controller
      * @throws Throwable
      */
     #[Route(
-        path: '/v1/user/{requestUser}',
+        path: '/v1/user/{user}',
         requirements: [
-            'requestUser' => '%app.uuid_v1_regex%',
+            'user' => Requirement::UUID_V1,
         ],
         methods: [Request::METHOD_DELETE],
     )]
-    #[IsGranted(Role::ROLE_ROOT)]
-    #[ParamConverter(
-        data: 'requestUser',
-        class: UserResource::class,
-    )]
-    public function __invoke(Request $request, User $requestUser, User $loggedInUser): Response
+    #[IsGranted(Role::ROOT->value)]
+    public function __invoke(Request $request, User $user, User $loggedInUser): Response
     {
-        if ($loggedInUser === $requestUser) {
+        if ($loggedInUser === $user) {
             throw new HttpException(Response::HTTP_BAD_REQUEST, 'You cannot remove yourself...');
         }
 
-        return $this->deleteMethod($request, $requestUser->getId());
+        return $this->deleteMethod($request, $user->getId());
     }
 }

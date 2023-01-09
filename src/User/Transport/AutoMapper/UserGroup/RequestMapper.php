@@ -17,7 +17,7 @@ use Throwable;
 class RequestMapper extends RestRequestMapper
 {
     /**
-     * @var array<int, string>
+     * @var array<int, non-empty-string>
      */
     protected static array $properties = [
         'name',

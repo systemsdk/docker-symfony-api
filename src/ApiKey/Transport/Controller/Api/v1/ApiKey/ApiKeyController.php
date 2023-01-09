@@ -12,9 +12,9 @@ use App\General\Transport\Rest\Controller;
 use App\General\Transport\Rest\ResponseHandler;
 use App\General\Transport\Rest\Traits\Actions;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class ApiKeyController

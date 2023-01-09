@@ -6,7 +6,7 @@ namespace App\Tests\Functional\User\Transport\Controller\Api\v1\User;
 
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use App\User\Application\DTO\User\UserCreate;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Application\Resource\UserResource;
@@ -46,7 +46,7 @@ class DeleteUserControllerTest extends WebTestCase
             $userGroupResource = static::getContainer()->get(UserGroupResource::class);
             self::assertInstanceOf(UserGroupResource::class, $userGroupResource);
             $userGroupForAttach = $userGroupResource->findOneBy([
-                'role' => Role::ROLE_LOGGED,
+                'role' => Role::LOGGED->value,
             ]);
             self::assertInstanceOf(UserGroup::class, $userGroupForAttach);
             $dto = (new UserCreate())

@@ -6,7 +6,7 @@ namespace App\Tests\Functional\User\Transport\Controller\Api\v1\User;
 
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use Generator;
@@ -95,7 +95,7 @@ class UserGroupsControllerTest extends WebTestCase
         self::assertArrayHasKey('role', $responseData[0]);
         self::assertIsArray($responseData[0]['role']);
         self::assertArrayHasKey('id', $responseData[0]['role']);
-        self::assertEquals(Role::ROLE_USER, $responseData[0]['role']['id']);
+        self::assertEquals(Role::USER->value, $responseData[0]['role']['id']);
         self::assertArrayHasKey('name', $responseData[0]);
     }
 

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\General\Transport\Rest\Traits\Actions\Admin;
 
 use App\General\Transport\Rest\Traits\Methods\CountMethod;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Throwable;
 
 /**
@@ -55,7 +55,7 @@ trait CountAction
         path: '/count',
         methods: [Request::METHOD_GET],
     )]
-    #[IsGranted(Role::ROLE_ADMIN)]
+    #[IsGranted(Role::ADMIN->value)]
     public function countAction(Request $request): Response
     {
         return $this->countMethod($request);

@@ -6,7 +6,7 @@ namespace App\Tests\Functional\User\Transport\Controller\Api\v1\Profile;
 
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -43,7 +43,7 @@ class GroupsControllerTest extends WebTestCase
         self::assertEquals($responseData[0]['id'], LoadUserGroupData::$uuids['Role-logged']);
         self::assertIsArray($responseData[0]['role']);
         self::assertArrayHasKey('id', $responseData[0]['role']);
-        self::assertEquals(Role::ROLE_LOGGED, $responseData[0]['role']['id']);
+        self::assertEquals(Role::LOGGED->value, $responseData[0]['role']['id']);
         self::assertIsString($responseData[0]['name']);
     }
 

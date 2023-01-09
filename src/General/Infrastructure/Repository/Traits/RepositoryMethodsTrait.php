@@ -7,6 +7,7 @@ namespace App\General\Infrastructure\Repository\Traits;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 use App\General\Domain\Rest\UuidHelper;
 use App\General\Infrastructure\Rest\RepositoryHelper;
+use ArrayIterator;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\NonUniqueResultException;
@@ -20,6 +21,7 @@ use Doctrine\ORM\TransactionRequiredException;
 use InvalidArgumentException;
 
 use function array_column;
+use function assert;
 
 /**
  * Trait RepositoryMethodsTrait
@@ -132,8 +134,11 @@ trait RepositoryMethodsTrait
          */
         RepositoryHelper::resetParameterCount();
 
-        /** @psalm-suppress UndefinedInterfaceMethod */
-        return (new Paginator($queryBuilder, true))->getIterator()->getArrayCopy();
+        $iterator = (new Paginator($queryBuilder, true))->getIterator();
+
+        assert($iterator instanceof ArrayIterator);
+
+        return $iterator->getArrayCopy();
     }
 
     /**

@@ -6,12 +6,13 @@ namespace App\General\Transport\Rest\Traits\Actions\Admin;
 
 use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Transport\Rest\Traits\Methods\PatchMethod;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Throwable;
 
 /**
@@ -63,11 +64,11 @@ trait PatchAction
     #[Route(
         path: '/{id}',
         requirements: [
-            'id' => '%app.uuid_v1_regex%',
+            'id' => Requirement::UUID_V1,
         ],
         methods: [Request::METHOD_PATCH],
     )]
-    #[IsGranted(Role::ROLE_ADMIN)]
+    #[IsGranted(Role::ADMIN->value)]
     public function patchAction(Request $request, RestDtoInterface $restDto, string $id): Response
     {
         return $this->patchMethod($request, $restDto, $id);

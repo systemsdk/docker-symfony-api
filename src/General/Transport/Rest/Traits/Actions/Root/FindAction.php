@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\General\Transport\Rest\Traits\Actions\Root;
 
 use App\General\Transport\Rest\Traits\Methods\FindMethod;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Throwable;
 
 /**
@@ -54,7 +54,7 @@ trait FindAction
         path: '',
         methods: [Request::METHOD_GET],
     )]
-    #[IsGranted(Role::ROLE_ROOT)]
+    #[IsGranted(Role::ROOT->value)]
     public function findAction(Request $request): Response
     {
         return $this->findMethod($request);

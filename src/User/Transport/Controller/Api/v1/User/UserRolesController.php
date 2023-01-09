@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\User\Transport\Controller\Api\v1\User;
 
 use App\Role\Application\Security\RolesService;
-use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class UserRolesController
@@ -61,19 +61,15 @@ class UserRolesController
      * )
      */
     #[Route(
-        path: '/v1/user/{requestUser}/roles',
+        path: '/v1/user/{user}/roles',
         requirements: [
-            'requestUser' => '%app.uuid_v1_regex%',
+            'user' => Requirement::UUID_V1,
         ],
         methods: [Request::METHOD_GET],
     )]
-    #[Security('is_granted("IS_USER_HIMSELF", requestUser) or is_granted("ROLE_ROOT")')]
-    #[ParamConverter(
-        data: 'requestUser',
-        class: UserResource::class,
-    )]
-    public function __invoke(User $requestUser): JsonResponse
+    #[IsGranted(new Expression('is_granted("IS_USER_HIMSELF", object) or "ROLE_ROOT" in role_names'), 'user')]
+    public function __invoke(User $user): JsonResponse
     {
-        return new JsonResponse($this->rolesService->getInheritedRoles($requestUser->getRoles()));
+        return new JsonResponse($this->rolesService->getInheritedRoles($user->getRoles()));
     }
 }

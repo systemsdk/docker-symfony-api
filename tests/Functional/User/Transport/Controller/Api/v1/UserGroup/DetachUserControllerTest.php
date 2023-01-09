@@ -6,7 +6,7 @@ namespace App\Tests\Functional\User\Transport\Controller\Api\v1\UserGroup;
 
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
@@ -40,7 +40,7 @@ class DetachUserControllerTest extends WebTestCase
         $this->userGroupResource = $userGroupResource;
         /** @var UserGroup|null $userGroup */
         $userGroup = $this->userGroupResource->findOneBy([
-            'role' => Role::ROLE_LOGGED,
+            'role' => Role::LOGGED->value,
         ]);
         self::assertInstanceOf(UserGroup::class, $userGroup);
         $this->userGroup = $userGroup;
@@ -77,7 +77,7 @@ class DetachUserControllerTest extends WebTestCase
         // let's check that inside database we have the same data as before request
         /** @var UserGroup|null $userGroup */
         $userGroup = $this->userGroupResource->findOneBy([
-            'role' => Role::ROLE_LOGGED,
+            'role' => Role::LOGGED->value,
         ]);
         self::assertInstanceOf(UserGroup::class, $userGroup);
         self::assertEquals(2, $userGroup->getUsers()->count());

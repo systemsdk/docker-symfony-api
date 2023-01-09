@@ -1,26 +1,34 @@
 api-key-controllers:
-    resource: ../src/ApiKey/Transport/Controller/Api/
+    resource:
+        path: ../src/ApiKey/Transport/Controller/Api/
+        namespace: App\ApiKey\Transport\Controller\Api
     type: attribute
     prefix: /api
     defaults:
         _format: json
 
 role-controllers:
-    resource: ../src/Role/Transport/Controller/Api/
+    resource:
+        path: ../src/Role/Transport/Controller/Api/
+        namespace: App\Role\Transport\Controller\Api
     type: attribute
     prefix: /api
     defaults:
         _format: json
 
 tool-controllers:
-    resource: ../src/Tool/Transport/Controller/Api/
+    resource:
+        path: ../src/Tool/Transport/Controller/Api/
+        namespace: App\Tool\Transport\Controller\Api
     type: attribute
     prefix: /api
     defaults:
         _format: json
 
 user-controllers:
-    resource: ../src/User/Transport/Controller/Api/
+    resource:
+        path: ../src/User/Transport/Controller/Api/
+        namespace: App\User\Transport\Controller\Api
     type: attribute
     prefix: /api
     defaults:

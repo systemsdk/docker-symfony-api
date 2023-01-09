@@ -6,7 +6,7 @@ namespace App\Tests\Functional\User\Transport\Controller\Api\v1\User;
 
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use Generator;
@@ -91,7 +91,7 @@ class UserRolesControllerTest extends WebTestCase
         self::assertIsArray($responseData);
         self::assertCount(2, $responseData);
         foreach ($responseData as $role) {
-            self::assertContains($role, [Role::ROLE_LOGGED, Role::ROLE_USER]);
+            self::assertContains($role, [Role::LOGGED->value, Role::USER->value]);
         }
     }
 

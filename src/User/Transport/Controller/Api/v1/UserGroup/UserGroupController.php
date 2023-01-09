@@ -12,9 +12,9 @@ use App\User\Application\DTO\UserGroup\UserGroupPatch;
 use App\User\Application\DTO\UserGroup\UserGroupUpdate;
 use App\User\Application\Resource\UserGroupResource;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class UserGroupController

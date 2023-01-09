@@ -6,7 +6,7 @@ namespace App\Tests\Functional\User\Transport\Controller\Api\v1\UserGroup;
 
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use App\Tests\Functional\User\Transport\Controller\Api\v1\Traits\UserHelper;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Domain\Entity\UserGroup;
@@ -148,7 +148,7 @@ class UserGroupControllerTest extends WebTestCase
 
         $requestData = [
             'name' => self::USER_GROUP_NAME_FOR_TEST,
-            'role' => Role::ROLE_LOGGED,
+            'role' => Role::LOGGED->value,
         ];
         $client->request(method: 'POST', uri: $this->baseUrl, content: JSON::encode($requestData));
         $response = $client->getResponse();
@@ -176,7 +176,7 @@ class UserGroupControllerTest extends WebTestCase
         ]);
         self::assertInstanceOf(UserGroup::class, $userGroupEntity);
         $requestData = [
-            'role' => Role::ROLE_USER,
+            'role' => Role::USER->value,
         ];
 
         $client->request(
@@ -209,7 +209,7 @@ class UserGroupControllerTest extends WebTestCase
         self::assertInstanceOf(UserGroup::class, $userGroupEntity);
         $requestData = [
             'name' => self::USER_GROUP_NAME_FOR_TEST . ' edited',
-            'role' => Role::ROLE_LOGGED,
+            'role' => Role::LOGGED->value,
         ];
         $client->request(
             method: 'PUT',

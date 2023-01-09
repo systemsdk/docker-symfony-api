@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Role\Transport\Controller\Api\v1\Role;
 
-use App\Role\Application\Resource\RoleResource;
 use App\Role\Application\Security\RolesService;
 use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role as RoleEnum;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Requirement\EnumRequirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class InheritedRolesController
@@ -53,15 +53,11 @@ class InheritedRolesController
     #[Route(
         path: '/v1/role/{role}/inherited',
         requirements: [
-            'role' => '^ROLE_\w+$',
+            'role' => new EnumRequirement(RoleEnum::class),
         ],
         methods: [Request::METHOD_GET],
     )]
-    #[IsGranted(Role::ROLE_ADMIN)]
-    #[ParamConverter(
-        data: 'role',
-        class: RoleResource::class,
-    )]
+    #[IsGranted(RoleEnum::ADMIN->value)]
     public function __invoke(Role $role): JsonResponse
     {
         return new JsonResponse($this->rolesService->getInheritedRoles([$role->getId()]));

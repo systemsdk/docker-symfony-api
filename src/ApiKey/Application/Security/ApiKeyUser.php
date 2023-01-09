@@ -6,7 +6,7 @@ namespace App\ApiKey\Application\Security;
 
 use App\ApiKey\Application\Security\Interfaces\ApiKeyUserInterface;
 use App\ApiKey\Domain\Entity\ApiKey;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use function array_merge;
@@ -34,7 +34,7 @@ class ApiKeyUser implements ApiKeyUserInterface, UserInterface
     {
         $this->identifier = $apiKey->getToken();
         $this->apiKeyIdentifier = $apiKey->getId();
-        $this->roles = array_unique(array_merge($roles, [Role::ROLE_API]));
+        $this->roles = array_unique(array_merge($roles, [Role::API->value]));
     }
 
     public function getUserIdentifier(): string

@@ -6,12 +6,12 @@ namespace App\General\Transport\Rest\Traits\Actions\Root;
 
 use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Transport\Rest\Traits\Methods\CreateMethod;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Throwable;
 
 /**
@@ -64,7 +64,7 @@ trait CreateAction
         path: '',
         methods: [Request::METHOD_POST],
     )]
-    #[IsGranted(Role::ROLE_ROOT)]
+    #[IsGranted(Role::ROOT->value)]
     public function createAction(Request $request, RestDtoInterface $restDto): Response
     {
         return $this->createMethod($request, $restDto);

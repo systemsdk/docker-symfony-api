@@ -32,7 +32,7 @@ class RoleTransformer implements DataTransformerInterface
      *
      * @psalm-param Role|mixed $value
      */
-    public function transform($value): string
+    public function transform(mixed $value): string
     {
         return $value instanceof Role ? $value->getId() : '';
     }
@@ -46,7 +46,7 @@ class RoleTransformer implements DataTransformerInterface
      *
      * @throws Throwable
      */
-    public function reverseTransform($value): ?Role
+    public function reverseTransform(mixed $value): ?Role
     {
         return is_string($value)
             ? $this->resource->findOne($value, false) ?? throw new TransformationFailedException(

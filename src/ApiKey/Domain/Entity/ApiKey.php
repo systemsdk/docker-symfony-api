@@ -8,7 +8,7 @@ use App\General\Domain\Entity\Interfaces\EntityInterface;
 use App\General\Domain\Entity\Traits\Timestampable;
 use App\General\Domain\Entity\Traits\Uuid;
 use App\Log\Domain\Entity\LogRequest;
-use App\Role\Domain\Entity\Role;
+use App\Role\Domain\Enum\Role as RoleEnum;
 use App\User\Domain\Entity\Interfaces\UserGroupAwareInterface;
 use App\User\Domain\Entity\Traits\Blameable;
 use App\User\Domain\Entity\UserGroup;
@@ -205,7 +205,7 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
                 '\strval',
                 array_unique(
                     array_merge(
-                        [Role::ROLE_API],
+                        [RoleEnum::API->value],
                         $this->userGroups
                             ->map(static fn (UserGroup $userGroup): string => $userGroup->getRole()->getId())
                             ->toArray(),

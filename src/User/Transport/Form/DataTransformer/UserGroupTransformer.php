@@ -34,9 +34,9 @@ class UserGroupTransformer implements DataTransformerInterface
      *
      * @psalm-param array<int, string|UserGroup>|mixed $value
      *
-     * @psalm-return array<int, string>
+     * @psalm-return array<array-key, string>
      */
-    public function transform($value): array
+    public function transform(mixed $value): array
     {
         $callback = static fn (UserGroup | Stringable $userGroup): string =>
             $userGroup instanceof UserGroup ? $userGroup->getId() : (string)$userGroup;
@@ -53,9 +53,9 @@ class UserGroupTransformer implements DataTransformerInterface
      *
      * @throws Throwable
      *
-     * @psalm-return array<int, UserGroup>|null
+     * @psalm-return array<array-key, UserGroup>|null
      */
-    public function reverseTransform($value): ?array
+    public function reverseTransform(mixed $value): ?array
     {
         return is_array($value)
             ? array_map(
