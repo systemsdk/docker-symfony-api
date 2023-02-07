@@ -7,6 +7,7 @@ namespace App\Tool\Transport\Controller\Api;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
@@ -15,6 +16,7 @@ use Throwable;
  *
  * @package App\Tool
  */
+#[AsController]
 class IndexController
 {
     /**

@@ -13,6 +13,7 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Requirement\EnumRequirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -25,6 +26,7 @@ use Throwable;
  *
  * @package App\Role
  */
+#[AsController]
 class FindOneRoleController extends Controller
 {
     use Methods\FindOneMethod;

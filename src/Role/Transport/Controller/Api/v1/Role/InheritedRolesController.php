@@ -10,6 +10,7 @@ use App\Role\Domain\Enum\Role as RoleEnum;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Requirement\EnumRequirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -21,6 +22,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
  *
  * @package App\Role
  */
+#[AsController]
 class InheritedRolesController
 {
     public function __construct(

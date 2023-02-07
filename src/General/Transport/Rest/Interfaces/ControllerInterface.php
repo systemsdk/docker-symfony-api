@@ -8,6 +8,7 @@ use App\General\Application\Rest\Interfaces\RestResourceInterface;
 use App\General\Application\Rest\Interfaces\RestSmallResourceInterface;
 use App\General\Transport\Rest\ResponseHandler;
 use LogicException;
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Throwable;
@@ -18,6 +19,7 @@ use UnexpectedValueException;
  *
  * @package App\General
  */
+#[AutoconfigureTag('app.rest.controller')]
 interface ControllerInterface
 {
     /**

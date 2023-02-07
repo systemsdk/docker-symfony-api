@@ -11,6 +11,7 @@ use OpenApi\Annotations as OA;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -23,6 +24,7 @@ use Symfony\Component\Serializer\SerializerInterface;
  *
  * @package App\User
  */
+#[AsController]
 class UserGroupsController
 {
     public function __construct(

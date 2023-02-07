@@ -12,6 +12,7 @@ use App\User\Application\DTO\UserGroup\UserGroupPatch;
 use App\User\Application\DTO\UserGroup\UserGroupUpdate;
 use App\User\Application\Resource\UserGroupResource;
 use OpenApi\Annotations as OA;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -26,6 +27,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
  * @method UserGroupResource getResource()
  * @method ResponseHandler getResponseHandler()
  */
+#[AsController]
 #[Route(
     path: '/v1/user_group',
 )]

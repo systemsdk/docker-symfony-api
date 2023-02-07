@@ -11,6 +11,7 @@ use App\General\Transport\Rest\Controller;
 use App\General\Transport\Rest\ResponseHandler;
 use App\General\Transport\Rest\Traits\Actions;
 use OpenApi\Annotations as OA;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -25,6 +26,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
  * @method ApiKeyUpdateResource getResource()
  * @method ResponseHandler getResponseHandler()
  */
+#[AsController]
 #[Route(
     path: '/v2/api_key',
 )]

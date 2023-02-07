@@ -9,11 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class DefaultControllerTest
+ * Class IndexControllerTest
  *
  * @package App\Tests
  */
-class DefaultControllerTest extends WebTestCase
+class IndexControllerTest extends WebTestCase
 {
     private string $baseUrl = self::API_URL_PREFIX . '/';
 
