@@ -11,6 +11,7 @@ namespace App\General\Infrastructure\Rest\Interfaces;
  */
 interface SearchTermInterface
 {
+    // @codeCoverageIgnoreStart
     // Used OPERAND constants
     public const OPERAND_OR = 'or';
     public const OPERAND_AND = 'and';
@@ -19,9 +20,12 @@ interface SearchTermInterface
     public const MODE_STARTS_WITH = 1;
     public const MODE_ENDS_WITH = 2;
     public const MODE_FULL = 3;
+    // @codeCoverageIgnoreEnd
 
     /**
      * Static method to get search term criteria for specified columns and search terms with specified operand and mode.
+     *
+     * @codeCoverageIgnore This is needed because variables are multiline
      *
      * @param string|array<int, string> $column  search column(s), could be a string or an array of strings
      * @param string|array<int, string> $search  search term(s), could be a string or an array of strings

@@ -17,6 +17,8 @@ interface RestSaveResourceInterface
     /**
      * Generic method to save given entity to specified repository. Return value is created entity.
      *
+     * @codeCoverageIgnore This is needed because variables are multiline
+     *
      * @throws Throwable
      */
     public function save(

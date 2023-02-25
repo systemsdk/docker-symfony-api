@@ -64,6 +64,8 @@ interface BaseRepositoryInterface
 
     /**
      * Method to create new query builder for current entity.
+     *
+     * @codeCoverageIgnore This is needed because variables are multiline
      */
     public function createQueryBuilder(
         ?string $alias = null,
@@ -73,6 +75,8 @@ interface BaseRepositoryInterface
 
     /**
      * Wrapper for default Doctrine repository find method.
+     *
+     * @codeCoverageIgnore This is needed because variables are multiline
      *
      * @psalm-param LockMode::*|null $lockMode
      *
@@ -90,6 +94,8 @@ interface BaseRepositoryInterface
     /**
      * Advanced version of find method, with this you can process query as you like, eg. add joins and callbacks to
      * modify / optimize current query.
+     *
+     * @codeCoverageIgnore This is needed because variables are multiline
      *
      * @psalm-param string|AbstractQuery::HYDRATE_*|null $hydrationMode
      *
@@ -116,6 +122,8 @@ interface BaseRepositoryInterface
     /**
      * Wrapper for default Doctrine repository findBy method.
      *
+     * @codeCoverageIgnore This is needed because variables are multiline
+     *
      * @psalm-param array<string, mixed> $criteria
      * @psalm-param array<string, string>|null $orderBy
      *
@@ -131,6 +139,8 @@ interface BaseRepositoryInterface
 
     /**
      * Generic replacement for basic 'findBy' method if/when you want to use generic LIKE search.
+     *
+     * @codeCoverageIgnore This is needed because variables are multiline
      *
      * @param array<int|string, mixed> $criteria
      * @param array<string, string>|null $orderBy
@@ -170,6 +180,8 @@ interface BaseRepositoryInterface
 
     /**
      * Generic count method to determine count of entities for specified criteria and search term(s).
+     *
+     * @codeCoverageIgnore This is needed because variables are multiline
      *
      * @param array<int|string, mixed>|null $criteria
      * @param array<string, string>|null $search

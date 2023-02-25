@@ -18,6 +18,8 @@ interface RestUpdateResourceInterface extends RestSaveResourceInterface
     /**
      * Generic method to update specified entity with new data.
      *
+     * @codeCoverageIgnore This is needed because variables are multiline
+     *
      * @throws Throwable
      */
     public function update(

@@ -19,6 +19,8 @@ interface RestCreateResourceInterface extends RestSaveResourceInterface
      * Generic method to create new item (entity) to specified database repository. Return value is created entity for
      * specified repository.
      *
+     * @codeCoverageIgnore This is needed because variables are multiline
+     *
      * @throws Throwable
      */
     public function create(

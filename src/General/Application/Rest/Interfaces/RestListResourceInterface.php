@@ -18,6 +18,8 @@ interface RestListResourceInterface
      * Generic find method to return an array of items from database. Return value is an array of specified repository
      * entities.
      *
+     * @codeCoverageIgnore This is needed because variables are multiline
+     *
      * @param array<int|string, string|array<mixed>>|null $criteria
      * @param array<string, string>|null $orderBy
      * @param array<string, string>|null $search

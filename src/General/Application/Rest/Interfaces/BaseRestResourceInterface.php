@@ -80,6 +80,8 @@ interface BaseRestResourceInterface
     /**
      * Getter method DTO class with loaded entity data.
      *
+     * @codeCoverageIgnore This is needed because variables are multiline
+     *
      * @throws Throwable
      */
     public function getDtoForEntity(
