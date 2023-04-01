@@ -12,7 +12,7 @@ use Throwable;
  *
  * @package App\General
  */
-interface RestFindOneResourceInterface
+interface RestFindOneResourceInterface extends RestSmallResourceInterface
 {
     /**
      * Generic findOne method to return single item from database. Return value is single entity from specified

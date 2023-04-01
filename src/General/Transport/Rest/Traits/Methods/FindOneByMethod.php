@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\General\Transport\Rest\Traits\Methods;
 
+use App\General\Application\Rest\Interfaces\RestFindOneResourceInterface;
+use App\General\Application\Rest\Interfaces\RestResourceInterface;
 use App\General\Transport\Rest\RequestHandler;
 use App\General\Transport\Rest\ResponseHandler;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +31,7 @@ trait FindOneByMethod
      */
     public function findOneByMethod(Request $request, array $criteria, ?array $allowedHttpMethods = null): Response
     {
+        /** @var RestResourceInterface|RestFindOneResourceInterface $resource */
         $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? [Request::METHOD_GET]);
 
         try {

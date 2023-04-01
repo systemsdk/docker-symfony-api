@@ -11,7 +11,7 @@ use Throwable;
  *
  * @package App\General
  */
-interface RestIdsResourceInterface
+interface RestIdsResourceInterface extends RestSmallResourceInterface
 {
     /**
      * Generic ids method to return an array of id values from database. Return value is an array of specified

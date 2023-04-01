@@ -11,6 +11,7 @@ use App\User\Application\Resource\UserGroupResource;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Entity\UserGroup;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -34,12 +35,8 @@ class AttachUserGroupControllerTest extends WebTestCase
     {
         parent::setUp();
 
-        $userResource = static::getContainer()->get(UserResource::class);
-        $userGroupResource = static::getContainer()->get(UserGroupResource::class);
-        self::assertInstanceOf(UserResource::class, $userResource);
-        self::assertInstanceOf(UserGroupResource::class, $userGroupResource);
-        $this->userResource = $userResource;
-        $this->userGroupResource = $userGroupResource;
+        $this->userResource = static::getContainer()->get(UserResource::class);
+        $this->userGroupResource = static::getContainer()->get(UserGroupResource::class);
         $user = $this->userResource->findOneBy([
             'username' => 'john-user',
         ]);
@@ -58,10 +55,9 @@ class AttachUserGroupControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `POST /api/v1/user/{userId}/group/{groupId}` under the non-root user returns error response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `POST /api/v1/user/{userId}/group/{groupId}` under the non-root user returns error response.')]
     public function testThatAttachUserGroupToTheUserUnderNonRootUserReturnsErrorResponse(): void
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
@@ -83,10 +79,9 @@ class AttachUserGroupControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `POST /api/v1/user/{userId}/group/{groupId}` under the root user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `POST /api/v1/user/{userId}/group/{groupId}` under the root user returns success response.')]
     public function testThatAttachUserGroupToTheUserUnderRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');

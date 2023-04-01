@@ -10,6 +10,8 @@ use App\General\Transport\Utils\Tests\WebTestCase;
 use App\Tests\Functional\ApiKey\Transport\Controller\Api\v2\Traits\ApiKeyHelper;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Throwable;
 
 /**
@@ -37,24 +39,21 @@ class ApiKeyPatchControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `PATCH /v2/api_key/{id}` returns forbidden error for non-root user.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `PATCH /v2/api_key/{id}` returns forbidden error for non-root user.')]
     public function testThatPatchActionForNonRootUserReturnsForbiddenResponse(): void
     {
         $this->checkActionForNonRootUserReturnsForbiddenResponse('PATCH', 'test api key patched');
     }
 
     /**
-     * @testdox Test that `PATCH /v2/api_key/{id}` with wrong data returns validation error.
-     *
-     * @dataProvider dataProviderWithIncorrectData
-     *
      * @param array<string, string|array<string>> $requestData
      *
      * @throws Throwable
      */
+    #[DataProvider('dataProviderWithIncorrectData')]
+    #[TestDox('Test that `PATCH /v2/api_key/{id}` with wrong data returns validation error.')]
     public function testThatPatchActionForRootUserWithWrongDataReturnsValidationErrorResponse(
         array $requestData,
         string $error
@@ -63,10 +62,9 @@ class ApiKeyPatchControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `PATCH /v2/api_key/{id}` for the Root user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `PATCH /v2/api_key/{id}` for the Root user returns success response.')]
     public function testThatPatchActionForRootUserReturnsSuccessResponse(): void
     {
         $this->checkActionForRootUserReturnsSuccessResponse('PATCH', 'test api key patched');
@@ -75,7 +73,7 @@ class ApiKeyPatchControllerTest extends WebTestCase
     /**
      * @return Generator<array{0: array<string, string|array<string>>, 1: string}>
      */
-    public function dataProviderWithIncorrectData(): Generator
+    public static function dataProviderWithIncorrectData(): Generator
     {
         yield [
             [

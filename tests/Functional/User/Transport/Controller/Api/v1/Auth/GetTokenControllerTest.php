@@ -7,6 +7,8 @@ namespace App\Tests\Functional\User\Transport\Controller\Api\v1\Auth;
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -20,12 +22,10 @@ class GetTokenControllerTest extends WebTestCase
     private string $baseUrl = self::API_URL_PREFIX . '/v1/auth';
 
     /**
-     * @testdox Test that `POST /api/v1/auth/get_token` for the `$username` returns success response.
-     *
-     * @dataProvider dataProviderUsers
-     *
      * @throws Throwable
      */
+    #[DataProvider('dataProviderUsers')]
+    #[TestDox('Test that `POST /api/v1/auth/get_token` for the `$username` returns success response.')]
     public function testThatGetTokenActionForUsersReturnsSuccessResponse(string $username, string $password): void
     {
         $client = $this->getTestClient();
@@ -45,10 +45,9 @@ class GetTokenControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `POST /api/v1/auth/get_token` with wrong password returns error response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `POST /api/v1/auth/get_token` with wrong password returns error response.')]
     public function testThatGetTokenActionForUserWithWrongPasswordReturnsErrorResponse(): void
     {
         $client = $this->getTestClient();
@@ -72,7 +71,7 @@ class GetTokenControllerTest extends WebTestCase
     /**
      * @return Generator<array{0: string, 1: string}>
      */
-    public function dataProviderUsers(): Generator
+    public static function dataProviderUsers(): Generator
     {
         yield ['john', 'password'];
         yield ['john-logged', 'password-logged'];

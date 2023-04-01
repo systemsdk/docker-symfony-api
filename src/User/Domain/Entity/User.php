@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\User\Domain\Entity;
 
-use App\General\Domain\Doctrine\DBAL\Types\EnumLanguageType;
 use App\General\Domain\Doctrine\DBAL\Types\EnumLocaleType;
 use App\General\Domain\Doctrine\DBAL\Types\Types as AppTypes;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 use App\General\Domain\Entity\Traits\Timestampable;
 use App\General\Domain\Entity\Traits\Uuid;
+use App\General\Domain\Enum\Language;
 use App\Tool\Domain\Service\Interfaces\LocalizationServiceInterface;
 use App\User\Domain\Entity\Interfaces\UserGroupAwareInterface;
 use App\User\Domain\Entity\Interfaces\UserInterface;
@@ -182,7 +182,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
     ])]
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    private string $language = LocalizationServiceInterface::DEFAULT_LANGUAGE;
+    private Language $language;
 
     #[ORM\Column(
         name: 'locale',
@@ -250,6 +250,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
     public function __construct()
     {
         $this->id = $this->createUuid();
+        $this->language = Language::getDefault();
         $this->userGroups = new ArrayCollection();
         $this->logsRequest = new ArrayCollection();
         $this->logsLogin = new ArrayCollection();
@@ -309,17 +310,13 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
         return $this;
     }
 
-    public function getLanguage(): string
+    public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    public function setLanguage(string $language): self
+    public function setLanguage(Language $language): self
     {
-        if (in_array($language, EnumLanguageType::getValues(), true) !== true) {
-            throw new UnexpectedValueException(sprintf("Invalid language value: '%s'", $language));
-        }
-
         $this->language = $language;
 
         return $this;

@@ -7,6 +7,7 @@ namespace App\Tests\Functional\ApiKey\Transport\Controller\Api\v2;
 use App\ApiKey\Infrastructure\DataFixtures\ORM\LoadApiKeyData;
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -20,10 +21,9 @@ class ApiKeyViewControllerTest extends WebTestCase
     private string $baseUrl = self::API_URL_PREFIX . '/v2/api_key';
 
     /**
-     * @testdox Test that `GET /v2/api_key/{id}` returns forbidden error for non-root user.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /v2/api_key/{id}` returns forbidden error for non-root user.')]
     public function testThatFindOneActionForNonRootUserReturnsForbiddenResponse(): void
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
@@ -36,10 +36,9 @@ class ApiKeyViewControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /v2/api_key/{id}` for the Root user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /v2/api_key/{id}` for the Root user returns success response.')]
     public function testThatFindOneActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');

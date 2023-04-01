@@ -10,6 +10,8 @@ use App\Tests\Functional\User\Transport\Controller\Api\v1\Traits\UserHelper;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Domain\Entity\UserGroup;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -22,7 +24,7 @@ class UsersControllerTest extends WebTestCase
 {
     use UserHelper;
 
-    private string $baseUrl = self::API_URL_PREFIX . '/v1/user_group';
+    protected static string $baseUrl;
 
     /**
      * @throws Throwable
@@ -32,24 +34,22 @@ class UsersControllerTest extends WebTestCase
         parent::setUp();
 
         $userGroupResource = static::getContainer()->get(UserGroupResource::class);
-        static::assertInstanceOf(UserGroupResource::class, $userGroupResource);
         $userGroup = $userGroupResource->findOneBy([
             'role' => Role::ADMIN->value,
         ]);
         self::assertInstanceOf(UserGroup::class, $userGroup);
-        $this->baseUrl .= '/' . $userGroup->getId() . '/users';
+        static::$baseUrl = self::API_URL_PREFIX . '/v1/user_group/' . $userGroup->getId() . '/users';
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user_group/{groupId}/users` request returns `401` for non-logged user.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/user_group/{groupId}/users` request returns `401` for non-logged user.')]
     public function testThatGetBaseRouteReturn401(): void
     {
         $client = $this->getTestClient();
 
-        $client->request('GET', $this->baseUrl);
+        $client->request('GET', static::$baseUrl);
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -57,12 +57,10 @@ class UsersControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that user group users returns `$responseCode` with login: `$login`, password: `$password`.
-     *
-     * @dataProvider dataProviderTestThatGetUserGroupUsersWorksAsExpected
-     *
      * @throws Throwable
      */
+    #[DataProvider('dataProviderTestThatGetUserGroupUsersWorksAsExpected')]
+    #[TestDox('Test that user group users returns `$responseCode` with login: `$login`, password: `$password`.')]
     public function testThatGetUserGroupUsersWorksAsExpected(string $login, string $password, int $responseCode): void
     {
         $this->findActionWorksAsExpected($login, $password, $responseCode, 1);
@@ -71,7 +69,7 @@ class UsersControllerTest extends WebTestCase
     /**
      * @return Generator<array{0: string, 1: string, 2: int}>
      */
-    public function dataProviderTestThatGetUserGroupUsersWorksAsExpected(): Generator
+    public static function dataProviderTestThatGetUserGroupUsersWorksAsExpected(): Generator
     {
         // username === login
         yield ['john-api', 'password-api', Response::HTTP_FORBIDDEN];

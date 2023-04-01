@@ -6,6 +6,7 @@ namespace App\Tests\Functional\Tool\Transport\Controller\Api;
 
 use App\General\Transport\Utils\Tests\WebTestCase;
 use App\Log\Application\Resource\LogRequestResource;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -19,10 +20,9 @@ class HealthControllerTest extends WebTestCase
     private string $baseUrl = self::API_URL_PREFIX . '/health';
 
     /**
-     * @testdox Test that health route returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that health route returns success response.')]
     public function testThatHealthRouteReturns200(): void
     {
         $client = $this->getTestClient();
@@ -33,14 +33,12 @@ class HealthControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that health route does not make request log.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that health route does not make request log.')]
     public function testThatHealthRouteDoesNotMakeRequestLog(): void
     {
         $resource = static::getContainer()->get(LogRequestResource::class);
-        static::assertInstanceOf(LogRequestResource::class, $resource);
         $expectedLogCount = $resource->count();
         $client = $this->getTestClient();
 

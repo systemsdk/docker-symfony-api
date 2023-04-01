@@ -27,7 +27,7 @@ trait UserHelper
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
 
-        $client->request(method: 'GET', uri: $this->baseUrl . '/count');
+        $client->request(method: 'GET', uri: static::$baseUrl . '/count');
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -49,7 +49,7 @@ trait UserHelper
     ): void {
         $client = $this->getTestClient($login, $password);
 
-        $client->request('GET', $this->baseUrl);
+        $client->request('GET', static::$baseUrl);
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -71,7 +71,7 @@ trait UserHelper
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
 
-        $client->request('GET', $this->baseUrl . '/ids');
+        $client->request('GET', static::$baseUrl . '/ids');
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);

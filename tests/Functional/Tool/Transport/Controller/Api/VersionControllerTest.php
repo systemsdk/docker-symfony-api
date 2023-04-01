@@ -7,6 +7,7 @@ namespace App\Tests\Functional\Tool\Transport\Controller\Api;
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
 use App\Log\Application\Resource\LogRequestResource;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -22,10 +23,9 @@ class VersionControllerTest extends WebTestCase
     private string $baseUrl = self::API_URL_PREFIX . '/version';
 
     /**
-     * @testdox Test that version route returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that version route returns success response.')]
     public function testThatVersionRouteReturns200(): void
     {
         $client = $this->getTestClient();
@@ -36,14 +36,12 @@ class VersionControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that version route does not make request log.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that version route does not make request log.')]
     public function testThatVersionRouteDoesNotMakeRequestLog(): void
     {
         $resource = static::getContainer()->get(LogRequestResource::class);
-        static::assertInstanceOf(LogRequestResource::class, $resource);
         $expectedLogCount = $resource->count();
         $client = $this->getTestClient();
 
@@ -52,10 +50,9 @@ class VersionControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that 'X-API-VERSION' is added to response headers.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `X-API-VERSION` is added to response headers.')]
     public function testThatApiVersionIsAddedToResponseHeaders(): void
     {
         $client = $this->getTestClient();

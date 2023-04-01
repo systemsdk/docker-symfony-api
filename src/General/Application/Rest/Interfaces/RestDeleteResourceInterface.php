@@ -12,7 +12,7 @@ use Throwable;
  *
  * @package App\General
  */
-interface RestDeleteResourceInterface
+interface RestDeleteResourceInterface extends RestSmallResourceInterface
 {
     /**
      * Generic method to delete specified entity from database.

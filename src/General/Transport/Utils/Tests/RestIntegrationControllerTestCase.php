@@ -43,7 +43,6 @@ abstract class RestIntegrationControllerTestCase extends KernelTestCase
 
         parent::setUp();
 
-        /** @var Controller $controller */
         $controller = static::getContainer()->get($this->controllerClass);
         assert($controller instanceof Controller);
         $this->controller = $controller;

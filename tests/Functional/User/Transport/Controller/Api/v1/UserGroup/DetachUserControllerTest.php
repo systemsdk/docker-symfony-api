@@ -11,6 +11,7 @@ use App\User\Application\Resource\UserGroupResource;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Entity\UserGroup;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -33,11 +34,8 @@ class DetachUserControllerTest extends WebTestCase
     {
         parent::setUp();
 
-        $userGroupResource = static::getContainer()->get(UserGroupResource::class);
+        $this->userGroupResource = static::getContainer()->get(UserGroupResource::class);
         $userResource = static::getContainer()->get(UserResource::class);
-        self::assertInstanceOf(UserGroupResource::class, $userGroupResource);
-        self::assertInstanceOf(UserResource::class, $userResource);
-        $this->userGroupResource = $userGroupResource;
         /** @var UserGroup|null $userGroup */
         $userGroup = $this->userGroupResource->findOneBy([
             'role' => Role::LOGGED->value,
@@ -59,10 +57,9 @@ class DetachUserControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `DELETE /api/v1/user_group/{groupId}/user/{userId}` under the non-root user returns error.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `DELETE /api/v1/user_group/{groupId}/user/{userId}` under the non-root user returns error.')]
     public function testThatDetachUserFromTheUserGroupUnderNonRootUserReturnsErrorResponse(): void
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
@@ -84,10 +81,9 @@ class DetachUserControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `DELETE /api/v1/user_group/{groupId}/user/{userId}` under the root user returns success.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `DELETE /api/v1/user_group/{groupId}/user/{userId}` under the root user returns success.')]
     public function testThatDetachUserFromTheUserGroupUnderRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Transport\Form\Type\Console;
 
+use App\General\Domain\Enum\Language;
 use App\General\Transport\Form\Type\Interfaces\FormTypeLabelInterface;
 use App\General\Transport\Form\Type\Traits\AddBasicFieldToForm;
 use App\Tool\Application\Service\LocalizationService;
@@ -144,17 +145,16 @@ class UserType extends AbstractType
 
     private function addLocalizationFieldsToForm(FormBuilderInterface $builder): void
     {
-        $languages = $this->localization->getLanguages();
         $locales = $this->localization->getLocales();
         $builder
             ->add(
                 'language',
-                Type\ChoiceType::class,
+                Type\EnumType::class,
                 [
+                    FormTypeLabelInterface::CLASS_NAME => Language::class,
                     FormTypeLabelInterface::LABEL => 'Language',
                     FormTypeLabelInterface::REQUIRED => true,
-                    FormTypeLabelInterface::EMPTY_DATA => LocalizationServiceInterface::DEFAULT_LANGUAGE,
-                    FormTypeLabelInterface::CHOICES => array_combine($languages, $languages),
+                    FormTypeLabelInterface::EMPTY_DATA => Language::getDefault(),
                 ],
             );
         $builder
@@ -183,6 +183,8 @@ class UserType extends AbstractType
 
     /**
      * Method to get choices array for time zones.
+     *
+     * @throws Throwable
      *
      * @return array<string, string>
      */

@@ -43,8 +43,6 @@ trait ApiKeyHelper
             $apiKey = $apiKeyCreateResource->create($dto, true);
         }
 
-        self::assertInstanceOf(ApiKey::class, $apiKey);
-
         return $apiKey;
     }
 

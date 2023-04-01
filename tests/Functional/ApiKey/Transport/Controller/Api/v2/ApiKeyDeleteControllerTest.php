@@ -9,6 +9,7 @@ use App\ApiKey\Domain\Entity\ApiKey;
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
 use App\Tests\Functional\ApiKey\Transport\Controller\Api\v2\Traits\ApiKeyHelper;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -37,10 +38,9 @@ class ApiKeyDeleteControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `DELETE /v2/api_key/{id}` returns forbidden error for non-root user.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `DELETE /v2/api_key/{id}` returns forbidden error for non-root user.')]
     public function testThatDeleteActionForNonRootUserReturnsForbiddenResponse(): void
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
@@ -58,10 +58,9 @@ class ApiKeyDeleteControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `DELETE /v2/api_key/{id}` for the Root user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `DELETE /v2/api_key/{id}` for the Root user returns success response.')]
     public function testThatDeleteActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');

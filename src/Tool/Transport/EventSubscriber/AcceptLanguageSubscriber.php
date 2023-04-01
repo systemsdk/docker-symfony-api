@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tool\Transport\EventSubscriber;
 
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
@@ -31,7 +30,6 @@ class AcceptLanguageSubscriber implements EventSubscriberInterface
     ];
 
     public function __construct(
-        #[Autowire('%locale%')]
         private readonly string $locale,
     ) {
     }

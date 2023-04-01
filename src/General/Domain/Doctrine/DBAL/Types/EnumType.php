@@ -65,6 +65,11 @@ abstract class EnumType extends Type
         return $value;
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
+     */
     public function getName(): string
     {
         return static::$name;

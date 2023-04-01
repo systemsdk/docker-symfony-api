@@ -1,0 +1,38 @@
+when@dev: &dev
+    nelmio_api_doc:
+        documentation:
+            openapi: '3.0.0'
+            servers:
+                -   url: http://{domain}
+                    variables:
+                        domain:
+                            default: localhost
+                    description: API over HTTP
+                -   url: https://{domain}
+                    variables:
+                        domain:
+                            default: localhost
+                    description: API over HTTPS
+            info:
+                title: Symfony Api
+                description: This is an symfony api environment example
+                version: 1.0.0
+            components:
+                securitySchemes:
+                    Bearer:
+                        type: http
+                        scheme: bearer
+                        bearerFormat: JWT
+                    ApiKey:
+                        type: apiKey
+                        name: Authorization
+                        description: 'Value: ApiKey {token}'
+                        in: header
+            security:
+                -   Bearer: []
+                -   ApiKey: []
+        areas: # to filter documented areas
+            path_patterns:
+                - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+
+when@test: *dev

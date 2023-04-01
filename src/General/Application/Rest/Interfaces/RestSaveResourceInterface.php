@@ -12,7 +12,7 @@ use Throwable;
  *
  * @package App\General
  */
-interface RestSaveResourceInterface
+interface RestSaveResourceInterface extends RestSmallResourceInterface
 {
     /**
      * Generic method to save given entity to specified repository. Return value is created entity.

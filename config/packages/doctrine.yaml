@@ -80,3 +80,31 @@ doctrine:
                     string_functions:
                         uuid_o_t_to_bin: App\General\Infrastructure\DQL\UuidOTToBin
                         bin_to_uuid_o_t: App\General\Infrastructure\DQL\BinToUuidOT
+
+when@prod: &not-dev
+    doctrine:
+        dbal:
+            logging: false
+        orm:
+            auto_generate_proxy_classes: false
+            proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            result_cache_driver:
+                type: pool
+                pool: doctrine.result_cache_pool
+    framework:
+        cache:
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system
+
+when@staging: *not-dev
+
+when@test:
+    doctrine:
+        dbal:
+            logging: false

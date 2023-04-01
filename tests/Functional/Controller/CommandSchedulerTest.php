@@ -26,7 +26,6 @@ class CommandSchedulerTest extends WebTestCase
         $client->request('GET', '/command-scheduler/list');
 
         $response = $client->getResponse();
-        static::assertInstanceOf(Response::class, $response);
         // check for 401 due to allow only for user with admin role
         static::assertSame(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
         unset($response, $client);

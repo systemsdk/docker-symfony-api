@@ -10,6 +10,8 @@ use App\Role\Domain\Enum\Role;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -31,7 +33,6 @@ class UserRolesControllerTest extends WebTestCase
         parent::setUp();
 
         $userResource = static::getContainer()->get(UserResource::class);
-        static::assertInstanceOf(UserResource::class, $userResource);
         $userEntity = $userResource->findOneBy([
             'username' => 'john-user',
         ]);
@@ -40,10 +41,9 @@ class UserRolesControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user/{$userId}/roles` request returns `401` for non-logged user.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/user/{$userId}/roles` request returns `401` for non-logged user.')]
     public function testThatGetUserRolesForNonLoggedUserReturns401(): void
     {
         $client = $this->getTestClient();
@@ -56,10 +56,9 @@ class UserRolesControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user/{$userId}/roles` returns forbidden error for non-root/non-himself users.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/user/{$userId}/roles` returns forbidden error for non-root/non-himself users.')]
     public function testThatGetUserRolesForbiddenForNonRootAndNonHimselfUsers(): void
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
@@ -72,12 +71,10 @@ class UserRolesControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user/{$userId}/roles` success under root/himself users.
-     *
-     * @dataProvider dataProviderTestThatGetUserRolesWorksAsExpected
-     *
      * @throws Throwable
      */
+    #[DataProvider('dataProviderTestThatGetUserRolesWorksAsExpected')]
+    #[TestDox('Test that `GET /api/v1/user/{$userId}/roles` success under root/himself users.')]
     public function testThatGetUserRolesWorksAsExpected(string $login, string $password): void
     {
         $client = $this->getTestClient($login, $password);
@@ -98,7 +95,7 @@ class UserRolesControllerTest extends WebTestCase
     /**
      * @return Generator<array{0: string, 1: string}>
      */
-    public function dataProviderTestThatGetUserRolesWorksAsExpected(): Generator
+    public static function dataProviderTestThatGetUserRolesWorksAsExpected(): Generator
     {
         yield ['john-user', 'password-user'];
         yield ['john-root', 'password-root'];

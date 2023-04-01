@@ -7,7 +7,6 @@ namespace App\Tool\Application\Service;
 use App\General\Domain\Utils\JSON;
 use Closure;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Throwable;
@@ -25,7 +24,6 @@ use function is_string;
 class VersionService
 {
     public function __construct(
-        #[Autowire('%kernel.project_dir%')]
         private readonly string $projectDir,
         private readonly CacheInterface $appCache,
         private readonly LoggerInterface $logger,

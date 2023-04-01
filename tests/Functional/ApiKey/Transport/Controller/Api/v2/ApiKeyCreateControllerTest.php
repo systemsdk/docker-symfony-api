@@ -8,6 +8,8 @@ use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -21,10 +23,9 @@ class ApiKeyCreateControllerTest extends WebTestCase
     private string $baseUrl = self::API_URL_PREFIX . '/v2/api_key';
 
     /**
-     * @testdox Test that `POST /v2/api_key` returns forbidden error for non-root user.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `POST /v2/api_key` returns forbidden error for non-root user.')]
     public function testThatCreateActionForNonRootUserReturnsForbiddenResponse(): void
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
@@ -43,14 +44,12 @@ class ApiKeyCreateControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `POST /v2/api_key` with wrong data returns validation error.
-     *
-     * @dataProvider dataProviderWithIncorrectData
-     *
      * @param array<string, string|array<string>> $requestData
      *
      * @throws Throwable
      */
+    #[DataProvider('dataProviderWithIncorrectData')]
+    #[TestDox('Test that `POST /v2/api_key` with wrong data returns validation error.')]
     public function testThatCreateActionForRootUserWithWrongDataReturnsValidationErrorResponse(
         array $requestData,
         string $error
@@ -68,10 +67,9 @@ class ApiKeyCreateControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `POST /v2/api_key` for the Root user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `POST /v2/api_key` for the Root user returns success response.')]
     public function testThatCreateActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
@@ -97,7 +95,7 @@ class ApiKeyCreateControllerTest extends WebTestCase
     /**
      * @return Generator<array{0: array<string, string|array<string>>, 1: string}>
      */
-    public function dataProviderWithIncorrectData(): Generator
+    public static function dataProviderWithIncorrectData(): Generator
     {
         yield [
             [

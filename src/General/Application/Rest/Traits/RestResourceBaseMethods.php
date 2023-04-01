@@ -11,7 +11,6 @@ use App\General\Domain\Repository\Interfaces\BaseRepositoryInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Contracts\Service\Attribute\Required;
 use Throwable;
 use UnexpectedValueException;
 
@@ -41,9 +40,7 @@ trait RestResourceBaseMethods
      */
     public function getRepository(): BaseRepositoryInterface
     {
-        $exception = new UnexpectedValueException('Repository not set on constructor');
-
-        return property_exists($this, 'repository') ? $this->repository ?? throw $exception : throw $exception;
+        return $this->repository;
     }
 
     /**
@@ -57,7 +54,6 @@ trait RestResourceBaseMethods
     /**
      * {@inheritdoc}
      */
-    #[Required]
     public function setValidator(ValidatorInterface $validator): self
     {
         $this->validator = $validator;

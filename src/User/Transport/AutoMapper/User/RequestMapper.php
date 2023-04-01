@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\User\Transport\AutoMapper\User;
 
+use App\General\Domain\Enum\Language;
 use App\General\Transport\AutoMapper\RestRequestMapper;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Domain\Entity\UserGroup;
+use InvalidArgumentException;
 use Throwable;
 
 use function array_map;
@@ -51,5 +53,10 @@ class RequestMapper extends RestRequestMapper
             fn (string $userGroupUuid): UserGroup => $this->userGroupResource->getReference($userGroupUuid),
             $userGroups,
         );
+    }
+
+    protected function transformLanguage(string $language): Language
+    {
+        return Language::tryFrom($language) ?? throw new InvalidArgumentException('Invalid language');
     }
 }

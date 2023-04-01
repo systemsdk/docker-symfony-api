@@ -14,6 +14,9 @@ use App\User\Infrastructure\DataFixtures\ORM\LoadUserData;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use Exception;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -27,7 +30,7 @@ class UserGroupControllerTest extends WebTestCase
     use UserHelper;
 
     private const USER_GROUP_NAME_FOR_TEST = 'Test UserGroup controller';
-    private string $baseUrl = self::API_URL_PREFIX . '/v1/user_group';
+    protected static string $baseUrl = self::API_URL_PREFIX . '/v1/user_group';
     private UserGroupResource $userGroupResource;
 
     /**
@@ -37,21 +40,18 @@ class UserGroupControllerTest extends WebTestCase
     {
         parent::setUp();
 
-        $userGroupResource = static::getContainer()->get(UserGroupResource::class);
-        static::assertInstanceOf(UserGroupResource::class, $userGroupResource);
-        $this->userGroupResource = $userGroupResource;
+        $this->userGroupResource = static::getContainer()->get(UserGroupResource::class);
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user_group` request returns `401` for non-logged user.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/user_group` request returns `401` for non-logged user.')]
     public function testThatGetBaseRouteReturn401(): void
     {
         $client = $this->getTestClient();
 
-        $client->request('GET', $this->baseUrl);
+        $client->request('GET', static::$baseUrl);
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -59,56 +59,48 @@ class UserGroupControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `$method $action` returns forbidden error for non-root user.
-     *
-     * @dataProvider dataProviderCreateUpdatePatchDeleteActions
-     *
      * @throws Throwable
      */
+    #[DataProvider('dataProviderCreateUpdatePatchDeleteActions')]
+    #[TestDox('Test that `$method $action` returns forbidden error for non-root user.')]
     public function testThatCreateUpdatePatchDeleteActionsForbiddenForNonRootUser(string $method, string $action): void
     {
         $this->checkIsForbidden('john-admin', 'password-admin', $method, $action);
     }
 
     /**
-     * @testdox Test that `$method $action` returns forbidden error for non-admin user.
-     *
-     * @dataProvider dataProviderGetActions
-     *
      * @throws Throwable
      */
+    #[DataProvider('dataProviderGetActions')]
+    #[TestDox('Test that `$method $action` returns forbidden error for non-admin user.')]
     public function testThatGetActionsForbiddenForNonAdminUser(string $method, string $action): void
     {
         $this->checkIsForbidden('john-user', 'password-user', $method, $action);
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user_group/count` for the admin user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/user_group/count` for the admin user returns success response.')]
     public function testThatCountActionForAdminUserReturnsSuccessResponse(): void
     {
         $this->countActionForAdminUserReturnsSuccessResponse();
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user_group` returns `$responseCode` with login: `$login`, password: `$password`.
-     *
-     * @dataProvider dataProviderTestThatFindActionWorksAsExpected
-     *
      * @throws Throwable
      */
+    #[DataProvider('dataProviderTestThatFindActionWorksAsExpected')]
+    #[TestDox('Test that `GET /api/v1/user_group` returns `$responseCode` with login:`$login`, password:`$password`.')]
     public function testThatFindActionWorksAsExpected(string $login, string $password, int $responseCode): void
     {
         $this->findActionWorksAsExpected($login, $password, $responseCode, 4);
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user_group/{id}` for the admin user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/user_group/{id}` for the admin user returns success response.')]
     public function testThatFindOneActionForAdminUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
@@ -116,7 +108,7 @@ class UserGroupControllerTest extends WebTestCase
         $userGroupEntity = $this->userGroupResource->findOne(LoadUserGroupData::$uuids['Role-logged']);
         self::assertInstanceOf(UserGroup::class, $userGroupEntity);
 
-        $client->request('GET', $this->baseUrl . '/' . $userGroupEntity->getId());
+        $client->request('GET', static::$baseUrl . '/' . $userGroupEntity->getId());
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -128,20 +120,18 @@ class UserGroupControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user_group/ids` for the admin user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/user_group/ids` for the admin user returns success response.')]
     public function testThatIdsActionForAdminUserReturnsSuccessResponse(): void
     {
         $this->idsActionForAdminUserReturnsSuccessResponse(4);
     }
 
     /**
-     * @testdox Test that `POST /api/v1/user_group` (create user group) for the root user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `POST /api/v1/user_group` (create user group) for the root user returns success response.')]
     public function testThatCreateActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
@@ -150,7 +140,7 @@ class UserGroupControllerTest extends WebTestCase
             'name' => self::USER_GROUP_NAME_FOR_TEST,
             'role' => Role::LOGGED->value,
         ];
-        $client->request(method: 'POST', uri: $this->baseUrl, content: JSON::encode($requestData));
+        $client->request(method: 'POST', uri: static::$baseUrl, content: JSON::encode($requestData));
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -161,12 +151,10 @@ class UserGroupControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `PATCH /api/v1/user_group/{id}` for the root user returns success response.
-     *
-     * @depends testThatCreateActionForRootUserReturnsSuccessResponse
-     *
      * @throws Throwable
      */
+    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
+    #[TestDox('Test that `PATCH /api/v1/user_group/{id}` for the root user returns success response.')]
     public function testThatPatchActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
@@ -181,7 +169,7 @@ class UserGroupControllerTest extends WebTestCase
 
         $client->request(
             method: 'PATCH',
-            uri: $this->baseUrl . '/' . $userGroupEntity->getId(),
+            uri: static::$baseUrl . '/' . $userGroupEntity->getId(),
             content: JSON::encode($requestData)
         );
         $response = $client->getResponse();
@@ -193,12 +181,10 @@ class UserGroupControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `PUT /api/v1/user_group/{id}` for the root user returns success response.
-     *
-     * @depends testThatCreateActionForRootUserReturnsSuccessResponse
-     *
      * @throws Throwable
      */
+    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
+    #[TestDox('Test that `PUT /api/v1/user_group/{id}` for the root user returns success response.')]
     public function testThatUpdateActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
@@ -213,7 +199,7 @@ class UserGroupControllerTest extends WebTestCase
         ];
         $client->request(
             method: 'PUT',
-            uri: $this->baseUrl . '/' . $userGroupEntity->getId(),
+            uri: static::$baseUrl . '/' . $userGroupEntity->getId(),
             content: JSON::encode($requestData)
         );
         $response = $client->getResponse();
@@ -226,12 +212,10 @@ class UserGroupControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `DELETE /api/v1/user_group/{id}` under the non-root user returns error response.
-     *
-     * @depends testThatUpdateActionForRootUserReturnsSuccessResponse
-     *
      * @throws Throwable
      */
+    #[Depends('testThatUpdateActionForRootUserReturnsSuccessResponse')]
+    #[TestDox('Test that `DELETE /api/v1/user_group/{id}` under the non-root user returns error response.')]
     public function testThatDeleteActionForNonRootUserReturnsForbiddenResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
@@ -241,7 +225,7 @@ class UserGroupControllerTest extends WebTestCase
         ]);
         self::assertInstanceOf(UserGroup::class, $userGroupEntity);
 
-        $client->request(method: 'DELETE', uri: $this->baseUrl . '/' . $userGroupEntity->getId());
+        $client->request(method: 'DELETE', uri: static::$baseUrl . '/' . $userGroupEntity->getId());
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -258,29 +242,29 @@ class UserGroupControllerTest extends WebTestCase
     /**
      * @return Generator<array{0: string, 1: string}>
      */
-    public function dataProviderCreateUpdatePatchDeleteActions(): Generator
+    public static function dataProviderCreateUpdatePatchDeleteActions(): Generator
     {
-        yield ['POST', $this->baseUrl];
-        yield ['PUT', $this->baseUrl . '/' . LoadUserGroupData::$uuids['Role-logged']];
-        yield ['PATCH', $this->baseUrl . '/' . LoadUserGroupData::$uuids['Role-logged']];
-        yield ['DELETE', $this->baseUrl . '/' . LoadUserGroupData::$uuids['Role-logged']];
+        yield ['POST', static::$baseUrl];
+        yield ['PUT', static::$baseUrl . '/' . LoadUserGroupData::$uuids['Role-logged']];
+        yield ['PATCH', static::$baseUrl . '/' . LoadUserGroupData::$uuids['Role-logged']];
+        yield ['DELETE', static::$baseUrl . '/' . LoadUserGroupData::$uuids['Role-logged']];
     }
 
     /**
      * @return Generator<array{0: string, 1: string}>
      */
-    public function dataProviderGetActions(): Generator
+    public static function dataProviderGetActions(): Generator
     {
-        yield ['GET', $this->baseUrl . '/count'];
-        yield ['GET', $this->baseUrl];
-        yield ['GET', $this->baseUrl . '/' . LoadUserData::$uuids['john-root']];
-        yield ['GET', $this->baseUrl . '/ids'];
+        yield ['GET', static::$baseUrl . '/count'];
+        yield ['GET', static::$baseUrl];
+        yield ['GET', static::$baseUrl . '/' . LoadUserData::$uuids['john-root']];
+        yield ['GET', static::$baseUrl . '/ids'];
     }
 
     /**
      * @return Generator<array{0: string, 1: string, 2: int}>
      */
-    public function dataProviderTestThatFindActionWorksAsExpected(): Generator
+    public static function dataProviderTestThatFindActionWorksAsExpected(): Generator
     {
         // username === login
         yield ['john-api', 'password-api', Response::HTTP_FORBIDDEN];

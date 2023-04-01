@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\User\Transport\Controller\Api\v1\User;
 
+use App\General\Domain\Enum\Language;
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
 use App\Tests\Functional\User\Transport\Controller\Api\v1\Traits\UserHelper;
@@ -15,6 +16,9 @@ use App\User\Infrastructure\DataFixtures\ORM\LoadUserData;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use Exception;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -28,7 +32,7 @@ class UserControllerTest extends WebTestCase
     use UserHelper;
 
     private const USERNAME_FOR_TEST = 'test-user-controller';
-    private string $baseUrl = self::API_URL_PREFIX . '/v1/user';
+    protected static string $baseUrl = self::API_URL_PREFIX . '/v1/user';
     private UserResource $userResource;
 
     /**
@@ -38,21 +42,18 @@ class UserControllerTest extends WebTestCase
     {
         parent::setUp();
 
-        $userResource = static::getContainer()->get(UserResource::class);
-        static::assertInstanceOf(UserResource::class, $userResource);
-        $this->userResource = $userResource;
+        $this->userResource = static::getContainer()->get(UserResource::class);
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user` request returns `401` for non-logged user.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/user` request returns `401` for non-logged user.')]
     public function testThatGetBaseRouteReturn401(): void
     {
         $client = $this->getTestClient();
 
-        $client->request('GET', $this->baseUrl);
+        $client->request('GET', static::$baseUrl);
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -60,12 +61,10 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `$method $action` returns forbidden error for non-root user.
-     *
-     * @dataProvider dataProviderCreateUpdatePatchActions
-     *
      * @throws Throwable
      */
+    #[DataProvider('dataProviderCreateUpdatePatchActions')]
+    #[TestDox('Test that `$method $action` returns forbidden error for non-root user.')]
     public function testThatCreateUpdatePatchActionsForbiddenForNonRootUser(string $method, string $action): void
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
@@ -78,12 +77,10 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `$method $action` returns forbidden error for non-admin user.
-     *
-     * @dataProvider dataProviderGetActions
-     *
      * @throws Throwable
      */
+    #[DataProvider('dataProviderGetActions')]
+    #[TestDox('Test that `$method $action` returns forbidden error for non-admin user.')]
     public function testThatGetActionsForbiddenForNonAdminUser(string $method, string $action): void
     {
         $client = $this->getTestClient('john-user', 'password-user');
@@ -96,32 +93,28 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user/count` for the admin user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/user/count` for the admin user returns success response.')]
     public function testThatCountActionForAdminUserReturnsSuccessResponse(): void
     {
         $this->countActionForAdminUserReturnsSuccessResponse();
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user` returns `$responseCode` with login: `$login`, password: `$password`.
-     *
-     * @dataProvider dataProviderTestThatFindActionWorksAsExpected
-     *
      * @throws Throwable
      */
+    #[DataProvider('dataProviderTestThatFindActionWorksAsExpected')]
+    #[TestDox('Test that `GET /api/v1/user` returns `$responseCode` with login: `$login`, password: `$password`.')]
     public function testThatFindActionWorksAsExpected(string $login, string $password, int $responseCode): void
     {
         $this->findActionWorksAsExpected($login, $password, $responseCode, 5);
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user/{id}` for the admin user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/user/{id}` for the admin user returns success response.')]
     public function testThatFindOneActionForAdminUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
@@ -131,7 +124,7 @@ class UserControllerTest extends WebTestCase
         ]);
         self::assertInstanceOf(User::class, $userEntity);
 
-        $client->request('GET', $this->baseUrl . '/' . $userEntity->getId());
+        $client->request('GET', static::$baseUrl . '/' . $userEntity->getId());
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -142,26 +135,24 @@ class UserControllerTest extends WebTestCase
         self::assertEquals($userEntity->getFirstName(), $responseData['firstName']);
         self::assertEquals($userEntity->getLastName(), $responseData['lastName']);
         self::assertEquals($userEntity->getEmail(), $responseData['email']);
-        self::assertEquals($userEntity->getLanguage(), $responseData['language']);
+        self::assertEquals($userEntity->getLanguage()->value, $responseData['language']);
         self::assertEquals($userEntity->getLocale(), $responseData['locale']);
         self::assertEquals($userEntity->getTimezone(), $responseData['timezone']);
     }
 
     /**
-     * @testdox Test that `GET /api/v1/user/ids` for the admin user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/user/ids` for the admin user returns success response.')]
     public function testThatIdsActionForAdminUserReturnsSuccessResponse(): void
     {
         $this->idsActionForAdminUserReturnsSuccessResponse(5);
     }
 
     /**
-     * @testdox Test that `POST /api/v1/user` (create user) for the root user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `POST /api/v1/user` (create user) for the root user returns success response.')]
     public function testThatCreateActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
@@ -175,11 +166,11 @@ class UserControllerTest extends WebTestCase
                 LoadUserGroupData::$uuids['Role-logged'],
             ],
             'password' => 'test12345',
-            'language' => LocalizationServiceInterface::DEFAULT_LANGUAGE,
+            'language' => Language::getDefault()->value,
             'locale' => LocalizationServiceInterface::DEFAULT_LOCALE,
             'timezone' => LocalizationServiceInterface::DEFAULT_TIMEZONE,
         ];
-        $client->request(method: 'POST', uri: $this->baseUrl, content: JSON::encode($requestData));
+        $client->request(method: 'POST', uri: static::$baseUrl, content: JSON::encode($requestData));
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -190,12 +181,10 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `PATCH /api/v1/user/{id}` for the root user returns success response.
-     *
-     * @depends testThatCreateActionForRootUserReturnsSuccessResponse
-     *
      * @throws Throwable
      */
+    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
+    #[TestDox('Test that `PATCH /api/v1/user/{id}` for the root user returns success response.')]
     public function testThatPatchActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
@@ -213,7 +202,7 @@ class UserControllerTest extends WebTestCase
 
         $client->request(
             method: 'PATCH',
-            uri: $this->baseUrl . '/' . $userEntity->getId(),
+            uri: static::$baseUrl . '/' . $userEntity->getId(),
             content: JSON::encode($requestData)
         );
         $response = $client->getResponse();
@@ -238,12 +227,10 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `PUT /api/v1/user/{id}` for the root user returns success response.
-     *
-     * @depends testThatCreateActionForRootUserReturnsSuccessResponse
-     *
      * @throws Throwable
      */
+    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
+    #[TestDox('Test that `PUT /api/v1/user/{id}` for the root user returns success response.')]
     public function testThatUpdateActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
@@ -261,13 +248,13 @@ class UserControllerTest extends WebTestCase
                 LoadUserGroupData::$uuids['Role-logged'],
             ],
             'password' => 'test123456',
-            'language' => LocalizationServiceInterface::DEFAULT_LANGUAGE,
+            'language' => Language::getDefault()->value,
             'locale' => LocalizationServiceInterface::DEFAULT_LOCALE,
             'timezone' => LocalizationServiceInterface::DEFAULT_TIMEZONE,
         ];
         $client->request(
             method: 'PUT',
-            uri: $this->baseUrl . '/' . $userEntity->getId(),
+            uri: static::$baseUrl . '/' . $userEntity->getId(),
             content: JSON::encode($requestData)
         );
         $response = $client->getResponse();
@@ -285,28 +272,28 @@ class UserControllerTest extends WebTestCase
     /**
      * @return Generator<array{0: string, 1: string}>
      */
-    public function dataProviderCreateUpdatePatchActions(): Generator
+    public static function dataProviderCreateUpdatePatchActions(): Generator
     {
-        yield ['POST', $this->baseUrl];
-        yield ['PUT', $this->baseUrl . '/' . LoadUserData::$uuids['john-root']];
-        yield ['PATCH', $this->baseUrl . '/' . LoadUserData::$uuids['john-root']];
+        yield ['POST', static::$baseUrl];
+        yield ['PUT', static::$baseUrl . '/' . LoadUserData::$uuids['john-root']];
+        yield ['PATCH', static::$baseUrl . '/' . LoadUserData::$uuids['john-root']];
     }
 
     /**
      * @return Generator<array{0: string, 1: string}>
      */
-    public function dataProviderGetActions(): Generator
+    public static function dataProviderGetActions(): Generator
     {
-        yield ['GET', $this->baseUrl . '/count'];
-        yield ['GET', $this->baseUrl];
-        yield ['GET', $this->baseUrl . '/' . LoadUserData::$uuids['john-root']];
-        yield ['GET', $this->baseUrl . '/ids'];
+        yield ['GET', static::$baseUrl . '/count'];
+        yield ['GET', static::$baseUrl];
+        yield ['GET', static::$baseUrl . '/' . LoadUserData::$uuids['john-root']];
+        yield ['GET', static::$baseUrl . '/ids'];
     }
 
     /**
      * @return Generator<array{0: string, 1: string, 2: int}>
      */
-    public function dataProviderTestThatFindActionWorksAsExpected(): Generator
+    public static function dataProviderTestThatFindActionWorksAsExpected(): Generator
     {
         // username === login
         yield ['john', 'password', Response::HTTP_FORBIDDEN];
@@ -357,7 +344,6 @@ class UserControllerTest extends WebTestCase
         self::assertEquals($requestData['timezone'], $responseData['timezone']);
 
         // let's check saved user groups
-        self::assertIsString($responseData['id']);
         $user = $this->userResource->findOne($responseData['id']);
         self::assertInstanceOf(User::class, $user);
         self::assertCount(1, $user->getUserGroups());

@@ -12,6 +12,9 @@ use App\General\Transport\Utils\Tests\WebTestCase;
 use App\User\Domain\Entity\UserGroup;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -22,18 +25,17 @@ use Throwable;
  */
 class ApiKeyControllerTest extends WebTestCase
 {
-    private string $baseUrl = self::API_URL_PREFIX . '/v1/api_key';
+    protected static string $baseUrl = self::API_URL_PREFIX . '/v1/api_key';
 
     /**
-     * @testdox Test that `GET /api/v1/api_key` request returns `401` for non-logged user.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/api_key` request returns `401` for non-logged user.')]
     public function testThatGetBaseRouteReturn401(): void
     {
         $client = $this->getTestClient();
 
-        $client->request('GET', $this->baseUrl);
+        $client->request('GET', static::$baseUrl);
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -41,12 +43,10 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `$method $action` returns forbidden error for non-root user.
-     *
-     * @dataProvider dataProviderActions
-     *
      * @throws Throwable
      */
+    #[DataProvider('dataProviderActions')]
+    #[TestDox('Test that `$method $action` returns forbidden error for non-root user.')]
     public function testThatAllActionsForbiddenForNonRootUser(string $method, string $action): void
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
@@ -59,15 +59,14 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /api/v1/api_key/count` for the root user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/api_key/count` for the root user returns success response.')]
     public function testThatCountActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
 
-        $client->request(method: 'GET', uri: $this->baseUrl . '/count');
+        $client->request(method: 'GET', uri: static::$baseUrl . '/count');
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -78,17 +77,15 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /api/v1/api_key` returns `$responseCode` with login: `$login`, password: `$password`.
-     *
-     * @dataProvider dataProviderTestThatFindActionWorksAsExpected
-     *
      * @throws Throwable
      */
+    #[DataProvider('dataProviderTestThatFindActionWorksAsExpected')]
+    #[TestDox('Test that `GET /api/v1/api_key` returns `$responseCode` with login: `$login`, password: `$password`.')]
     public function testThatFindActionWorksAsExpected(string $login, string $password, int $responseCode): void
     {
         $client = $this->getTestClient($login, $password);
 
-        $client->request('GET', $this->baseUrl);
+        $client->request('GET', static::$baseUrl);
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -104,10 +101,9 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `POST /api/v1/api_key` (create api-key) for the root user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `POST /api/v1/api_key` (create api-key) for the root user returns success response.')]
     public function testThatCreateActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
@@ -118,7 +114,7 @@ class ApiKeyControllerTest extends WebTestCase
                 LoadUserGroupData::$uuids['Role-api'],
             ],
         ];
-        $client->request(method: 'POST', uri: $this->baseUrl, content: JSON::encode($requestData));
+        $client->request(method: 'POST', uri: static::$baseUrl, content: JSON::encode($requestData));
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -129,24 +125,21 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /api/v1/api_key/{id}` for the root user returns success response.
-     *
-     * @depends testThatCreateActionForRootUserReturnsSuccessResponse
-     *
      * @throws Throwable
      */
+    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
+    #[TestDox('Test that `GET /api/v1/api_key/{id}` for the root user returns success response.')]
     public function testThatFindOneActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
 
         $resource = static::getContainer()->get(ApiKeyResource::class);
-        static::assertInstanceOf(ApiKeyResource::class, $resource);
         $apiKeyEntity = $resource->findOneBy([
             'description' => 'test api key',
         ]);
         self::assertInstanceOf(ApiKey::class, $apiKeyEntity);
 
-        $client->request('GET', $this->baseUrl . '/' . $apiKeyEntity->getId());
+        $client->request('GET', static::$baseUrl . '/' . $apiKeyEntity->getId());
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -158,18 +151,15 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `PUT /api/v1/api_key/{id}` for the root user returns success response.
-     *
-     * @depends testThatCreateActionForRootUserReturnsSuccessResponse
-     *
      * @throws Throwable
      */
+    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
+    #[TestDox('Test that `PUT /api/v1/api_key/{id}` for the root user returns success response.')]
     public function testThatUpdateActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
 
         $resource = static::getContainer()->get(ApiKeyResource::class);
-        static::assertInstanceOf(ApiKeyResource::class, $resource);
         $apiKeyEntity = $resource->findOneBy([
             'description' => 'test api key',
         ]);
@@ -183,7 +173,7 @@ class ApiKeyControllerTest extends WebTestCase
 
         $client->request(
             method: 'PUT',
-            uri: $this->baseUrl . '/' . $apiKeyEntity->getId(),
+            uri: static::$baseUrl . '/' . $apiKeyEntity->getId(),
             content: JSON::encode($requestData)
         );
         $response = $client->getResponse();
@@ -204,18 +194,15 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `PATCH /api/v1/api_key/{id}` for the root user returns success response.
-     *
-     * @depends testThatCreateActionForRootUserReturnsSuccessResponse
-     *
      * @throws Throwable
      */
+    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
+    #[TestDox('Test that `PATCH /api/v1/api_key/{id}` for the root user returns success response.')]
     public function testThatPatchActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
 
         $resource = static::getContainer()->get(ApiKeyResource::class);
-        static::assertInstanceOf(ApiKeyResource::class, $resource);
         $apiKeyEntity = $resource->findOneBy([
             'description' => 'test api key',
         ]);
@@ -228,7 +215,7 @@ class ApiKeyControllerTest extends WebTestCase
 
         $client->request(
             method: 'PATCH',
-            uri: $this->baseUrl . '/' . $apiKeyEntity->getId(),
+            uri: static::$baseUrl . '/' . $apiKeyEntity->getId(),
             content: JSON::encode($requestData)
         );
         $response = $client->getResponse();
@@ -249,24 +236,21 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `DELETE /api/v1/api_key/{id}` for the root user returns success response.
-     *
-     * @depends testThatPatchActionForRootUserReturnsSuccessResponse
-     *
      * @throws Throwable
      */
+    #[Depends('testThatPatchActionForRootUserReturnsSuccessResponse')]
+    #[TestDox('Test that `DELETE /api/v1/api_key/{id}` for the root user returns success response.')]
     public function testThatDeleteActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
 
         $resource = static::getContainer()->get(ApiKeyResource::class);
-        static::assertInstanceOf(ApiKeyResource::class, $resource);
         $apiKeyEntity = $resource->findOneBy([
             'description' => 'test api key edited',
         ]);
         self::assertInstanceOf(ApiKey::class, $apiKeyEntity);
 
-        $client->request('DELETE', $this->baseUrl . '/' . $apiKeyEntity->getId());
+        $client->request('DELETE', static::$baseUrl . '/' . $apiKeyEntity->getId());
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -276,15 +260,14 @@ class ApiKeyControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /api/v1/api_key/ids` for the root user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/api_key/ids` for the root user returns success response.')]
     public function testThatIdsActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
 
-        $client->request('GET', $this->baseUrl . '/ids');
+        $client->request('GET', static::$baseUrl . '/ids');
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -298,7 +281,7 @@ class ApiKeyControllerTest extends WebTestCase
     /**
      * @return Generator<array{0: string, 1: string, 2: int}>
      */
-    public function dataProviderTestThatFindActionWorksAsExpected(): Generator
+    public static function dataProviderTestThatFindActionWorksAsExpected(): Generator
     {
         // username === login
         yield ['john', 'password', Response::HTTP_FORBIDDEN];
@@ -320,16 +303,16 @@ class ApiKeyControllerTest extends WebTestCase
     /**
      * @return Generator<array{0: string, 1: string}>
      */
-    public function dataProviderActions(): Generator
+    public static function dataProviderActions(): Generator
     {
-        yield ['GET', $this->baseUrl . '/count'];
-        yield ['GET', $this->baseUrl];
-        yield ['POST', $this->baseUrl];
-        yield ['GET', $this->baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
-        yield ['PUT', $this->baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
-        yield ['DELETE', $this->baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
-        yield ['PATCH', $this->baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
-        yield ['GET', $this->baseUrl . '/ids'];
+        yield ['GET', static::$baseUrl . '/count'];
+        yield ['GET', static::$baseUrl];
+        yield ['POST', static::$baseUrl];
+        yield ['GET', static::$baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
+        yield ['PUT', static::$baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
+        yield ['DELETE', static::$baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
+        yield ['PATCH', static::$baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
+        yield ['GET', static::$baseUrl . '/ids'];
     }
 
     /**

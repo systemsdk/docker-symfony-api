@@ -11,6 +11,7 @@ use App\User\Application\Resource\UserGroupResource;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Entity\UserGroup;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -33,11 +34,8 @@ class DetachUserGroupControllerTest extends WebTestCase
     {
         parent::setUp();
 
-        $userResource = static::getContainer()->get(UserResource::class);
+        $this->userResource = static::getContainer()->get(UserResource::class);
         $userGroupResource = static::getContainer()->get(UserGroupResource::class);
-        self::assertInstanceOf(UserResource::class, $userResource);
-        self::assertInstanceOf(UserGroupResource::class, $userGroupResource);
-        $this->userResource = $userResource;
         $user = $this->userResource->findOneBy([
             'username' => 'john-user',
         ]);
@@ -55,10 +53,9 @@ class DetachUserGroupControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `DELETE /api/v1/user/{userId}/group/{groupId}` under the non-root user returns error response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `DELETE /api/v1/user/{userId}/group/{groupId}` under the non-root user returns error.')]
     public function testThatDetachUserGroupFromTheUserUnderNonRootUserReturnsErrorResponse(): void
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
@@ -80,10 +77,9 @@ class DetachUserGroupControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `DELETE /api/v1/user/{userId}/group/{groupId}` under the root user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `DELETE /api/v1/user/{userId}/group/{groupId}` under the root user returns success.')]
     public function testThatDetachUserGroupFromTheUserUnderRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');

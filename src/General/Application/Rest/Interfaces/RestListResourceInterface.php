@@ -12,7 +12,7 @@ use Throwable;
  *
  * @package App\General
  */
-interface RestListResourceInterface
+interface RestListResourceInterface extends RestSmallResourceInterface
 {
     /**
      * Generic find method to return an array of items from database. Return value is an array of specified repository

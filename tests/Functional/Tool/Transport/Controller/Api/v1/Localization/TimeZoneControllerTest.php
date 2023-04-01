@@ -7,6 +7,7 @@ namespace App\Tests\Functional\Tool\Transport\Controller\Api\v1\Localization;
 use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
 use App\Tool\Domain\Service\Interfaces\LocalizationServiceInterface;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -27,16 +28,13 @@ class TimeZoneControllerTest extends WebTestCase
     {
         parent::setUp();
 
-        $localizationService = static::getContainer()->get(LocalizationServiceInterface::class);
-        self::assertInstanceOf(LocalizationServiceInterface::class, $localizationService);
-        $this->localizationService = $localizationService;
+        $this->localizationService = static::getContainer()->get(LocalizationServiceInterface::class);
     }
 
     /**
-     * @testdox Test that `GET /v1/localization/timezone` returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /v1/localization/timezone` returns success response.')]
     public function testThatGettingSupportedTimeZonesRouteReturns200(): void
     {
         $client = $this->getTestClient();

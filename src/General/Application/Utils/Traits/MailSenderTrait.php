@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\General\Application\Utils\Traits;
 
 use App\General\Domain\Service\Interfaces\MailerServiceInterface;
-use Symfony\Contracts\Service\Attribute\Required;
 use Throwable;
 use Twig\Environment as Twig;
 
@@ -22,7 +21,6 @@ trait MailSenderTrait
     private bool $appEmailNotificationAboutError;
     private Twig $twig;
 
-    #[Required]
     public function setMailerService(
         MailerServiceInterface $mailerService,
         string $appSenderEmail,
@@ -35,7 +33,6 @@ trait MailSenderTrait
         $this->appEmailNotificationAboutError = (bool)$appEmailNotificationAboutError;
     }
 
-    #[Required]
     public function setTwig(Twig $twig): void
     {
         $this->twig = $twig;

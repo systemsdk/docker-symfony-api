@@ -9,6 +9,7 @@ use App\General\Transport\Utils\Tests\WebTestCase;
 use App\Role\Application\Security\RolesService;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -22,17 +23,14 @@ class IndexControllerTest extends WebTestCase
     private string $baseUrl = self::API_URL_PREFIX . '/v1/profile';
 
     /**
-     * @testdox Test that `GET /api/v1/profile` for the `john-root` user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/profile` for the `john-root` user returns success response.')]
     public function testThatGetUserProfileActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
         $roleService = static::getContainer()->get(RolesService::class);
-        static::assertInstanceOf(RolesService::class, $roleService);
         $resource = static::getContainer()->get(UserResource::class);
-        static::assertInstanceOf(UserResource::class, $resource);
         $userEntity = $resource->findOneBy([
             'username' => 'john-root',
         ]);
@@ -56,7 +54,7 @@ class IndexControllerTest extends WebTestCase
         self::assertArrayHasKey('email', $responseData);
         self::assertEquals($userEntity->getEmail(), $responseData['email']);
         self::assertArrayHasKey('language', $responseData);
-        self::assertEquals($userEntity->getLanguage(), $responseData['language']);
+        self::assertEquals($userEntity->getLanguage()->value, $responseData['language']);
         self::assertArrayHasKey('locale', $responseData);
         self::assertEquals($userEntity->getLocale(), $responseData['locale']);
         self::assertArrayHasKey('timezone', $responseData);
@@ -67,10 +65,9 @@ class IndexControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /api/v1/profile` for non-logged user returns error response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/profile` for non-logged user returns error response.')]
     public function testThatGetGetUserProfileActionForNonLoggedUserReturnsErrorResponse(): void
     {
         $client = $this->getTestClient();

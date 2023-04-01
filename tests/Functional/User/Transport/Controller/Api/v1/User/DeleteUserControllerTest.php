@@ -12,6 +12,7 @@ use App\User\Application\Resource\UserGroupResource;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Entity\UserGroup;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -35,16 +36,13 @@ class DeleteUserControllerTest extends WebTestCase
         parent::setUp();
 
         // let's create user that we will use within this test
-        $userResource = static::getContainer()->get(UserResource::class);
-        self::assertInstanceOf(UserResource::class, $userResource);
-        $this->userResource = $userResource;
+        $this->userResource = static::getContainer()->get(UserResource::class);
         $user = $this->userResource->findOneBy([
             'username' => self::USERNAME_FOR_TEST,
         ]);
 
         if (!$user) {
             $userGroupResource = static::getContainer()->get(UserGroupResource::class);
-            self::assertInstanceOf(UserGroupResource::class, $userGroupResource);
             $userGroupForAttach = $userGroupResource->findOneBy([
                 'role' => Role::LOGGED->value,
             ]);
@@ -57,16 +55,14 @@ class DeleteUserControllerTest extends WebTestCase
                 ->setUserGroups([$userGroupForAttach])
                 ->setPassword('test12345');
             $user = $this->userResource->create($dto);
-            self::assertInstanceOf(User::class, $user);
         }
         $this->user = $user;
     }
 
     /**
-     * @testdox Test that `DELETE /api/v1/user/{userId}` under the non-root user returns error response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `DELETE /api/v1/user/{userId}` under the non-root user returns error response.')]
     public function testThatDeleteActionForNonRootUserReturnsForbiddenResponse(): void
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
@@ -84,10 +80,9 @@ class DeleteUserControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `DELETE /api/v1/user/{userId}` for the root user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `DELETE /api/v1/user/{userId}` for the root user returns success response.')]
     public function testThatDeleteActionForRootUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');

@@ -11,7 +11,7 @@ use Throwable;
  *
  * @package App\General
  */
-interface RestCountResourceInterface
+interface RestCountResourceInterface extends RestSmallResourceInterface
 {
     /**
      * Generic count method to return entity count for specified criteria and search terms.

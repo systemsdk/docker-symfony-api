@@ -36,8 +36,9 @@ dependencies inside Entities.
 
 Within this application we are using uuid v1 for the primary key inside Entities. Also we have id field as
 binary type ([details](https://uuid.ramsey.dev/en/stable/database.html#using-as-a-primary-key)). If you need to convert
-id into bin or from bin to string inside query, please use already existing dql functions `uuid_o_t_to_bin` and `bin_to_uuid_o_t`.
-For instance `... WHERE id = uuid_o_t_to_bin(:id)`, or when you need to convert uuid binary ordered time into string representative `... WHERE bin_to_uuid_o_t(id) = :id`.
+id into binary ordered time or from bin ordered time into a string inside query, please use MySql 8 internal functions [UUID_TO_BIN](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_uuid-to-bin) and [BIN_TO_UUID](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_bin-to-uuid).
+For instance `... WHERE id = UUID_TO_BIN(:id, 1)`, or when you need to convert uuid binary ordered time into string representative `... WHERE BIN_TO_UUID(id, 1) = :id`.
+The second argument determines if the byte order should be swapped, therefore when using uuid_binary you should pass 0 and when using uuid_binary_ordered_time you should pass 1.
 
 #### Repositories
 Repositories need to be responsible for parameter handling and query builder callbacks/joins. Should be located on
@@ -100,26 +101,6 @@ make phpcs
 If you are using [PhpStorm](https://www.jetbrains.com/phpstorm/) you can configure PHP Code Sniffer using recommendation
 [here](https://www.jetbrains.com/help/phpstorm/using-php-code-sniffer.html).
 
-## PHP copy/paste detector
-This tool is a copy/paste detector for PHP code.
-
-PHP copy/paste detector is available for dev/test environment using next local shell command:
-```bash
-make phpcpd
-```
-
-## PHP mess detector
-This tool takes a given PHP source code base and look for several potential problems within that source. These problems can be things like:
-* Possible bugs
-* Suboptimal code
-* Overcomplicated expressions
-* Unused parameters, methods, properties
-
-PHP mess detector is available for dev/test environment using next local shell command:
-```bash
-make phpmd
-```
-
 ## PHPStan static analysis tool
 PHPStan focuses on finding errors in your code without actually running it. It catches whole classes of bugs even before you write tests for the code.
 It moves PHP closer to compiled languages in the sense that the correctness of each line of the code can be checked before you run the actual line.
@@ -164,6 +145,42 @@ vendor/bin/rector process src/your_folder_with_code_for_refactoring
 ```
 Note: You can process rector without specifying folder, in such case it will process src and tests folder.
 
+## PHP mess detector
+This tool takes a given PHP source code base and look for several potential problems within that source. These problems can be things like:
+* Possible bugs
+* Suboptimal code
+* Overcomplicated expressions
+* Unused parameters, methods, properties
+
+PHP mess detector is available for dev/test environment using next local shell command:
+```bash
+make phpmd
+```
+
+## PHP copy/paste detector
+This tool is a copy/paste detector for PHP code.
+
+PHP copy/paste detector is available for dev/test environment using next local shell command:
+```bash
+make phpcpd
+```
+
+## Composer tools
+To normalize or validate your composer.json you can use next local shell commands:
+```bash
+make composer-normalize
+make composer-validate
+```
+
+If you need to find unused packages by scanning your code you can use next local shell commands:
+```bash
+make composer-unused
+```
+
+In order to check the defined dependencies against your code you can use next local shell commands:
+```bash
+make composer-require-checke
+```
 
 ## Database changes
 Doctrine migrations it is functionality for versioning your database schema and easily deploying changes to it.

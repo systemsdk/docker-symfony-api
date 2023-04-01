@@ -21,6 +21,6 @@ class ExampleTest extends KernelTestCase
      */
     public function testBasicTest(): void
     {
-        self::assertTrue(true);
+        self::assertEquals(true, true);
     }
 }

@@ -11,7 +11,6 @@ use Doctrine\DBAL\Exception;
 use Doctrine\ORM\Exception\ORMException;
 use JsonException;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -50,7 +49,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly LoggerInterface $logger,
         private readonly UserTypeIdentification $userService,
-        #[Autowire('%kernel.environment%')]
         private readonly string $environment,
     ) {
     }

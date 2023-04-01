@@ -8,6 +8,7 @@ use App\General\Domain\Utils\JSON;
 use App\General\Transport\Utils\Tests\WebTestCase;
 use App\Role\Domain\Enum\Role;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -21,10 +22,9 @@ class GroupsControllerTest extends WebTestCase
     private string $baseUrl = self::API_URL_PREFIX . '/v1/profile';
 
     /**
-     * @testdox Test that `GET /api/v1/profile/groups` for the `john-logged` user returns success response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/profile/groups` for the `john-logged` user returns success response.')]
     public function testThatGetGroupsActionForUserReturnsSuccessResponse(): void
     {
         $client = $this->getTestClient('john-logged', 'password-logged');
@@ -48,10 +48,9 @@ class GroupsControllerTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that `GET /api/v1/profile/groups` for non-logged user returns error response.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that `GET /api/v1/profile/groups` for non-logged user returns error response.')]
     public function testThatGetGroupsActionForNonLoggedUserReturnsErrorResponse(): void
     {
         $client = $this->getTestClient();

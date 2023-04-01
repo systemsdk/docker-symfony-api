@@ -8,6 +8,7 @@ use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Application\DTO\RestDto;
 use App\General\Application\Validator\Constraints as GeneralAppAssert;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
+use App\General\Domain\Enum\Language;
 use App\Tool\Application\Validator\Constraints as ToolAppAssert;
 use App\Tool\Domain\Service\Interfaces\LocalizationServiceInterface;
 use App\User\Application\Validator\Constraints as UserAppAssert;
@@ -61,8 +62,7 @@ class User extends RestDto
 
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    #[ToolAppAssert\Language]
-    protected string $language = LocalizationServiceInterface::DEFAULT_LANGUAGE;
+    protected Language $language;
 
     #[Assert\NotBlank]
     #[Assert\NotNull]
@@ -83,6 +83,11 @@ class User extends RestDto
     #[Assert\NotBlank]
     #[Assert\Length(min: Entity::PASSWORD_MIN_LENGTH, max: 255)]
     protected string $password = '';
+
+    public function __construct()
+    {
+        $this->language = Language::getDefault();
+    }
 
     public function getUsername(): string
     {
@@ -136,12 +141,12 @@ class User extends RestDto
         return $this;
     }
 
-    public function getLanguage(): string
+    public function getLanguage(): Language
     {
         return $this->language;
     }
 
-    public function setLanguage(string $language): self
+    public function setLanguage(Language $language): self
     {
         $this->setVisited('language');
 

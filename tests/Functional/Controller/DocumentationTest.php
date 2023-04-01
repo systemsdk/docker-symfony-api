@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Controller;
 
 use App\General\Transport\Utils\Tests\WebTestCase;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -16,10 +17,9 @@ use Throwable;
 class DocumentationTest extends WebTestCase
 {
     /**
-     * @testdox Test that documentation (/api/doc) is working.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that documentation (/api/doc) is working.')]
     public function testThatDocumentationUiWorks(): void
     {
         $client = $this->getTestClient();
@@ -29,10 +29,9 @@ class DocumentationTest extends WebTestCase
     }
 
     /**
-     * @testdox Test that documentation json (/api/doc.json) is working.
-     *
      * @throws Throwable
      */
+    #[TestDox('Test that documentation json (/api/doc.json) is working.')]
     public function testThatDocumentationJsonWorks(): void
     {
         $client = $this->getTestClient();

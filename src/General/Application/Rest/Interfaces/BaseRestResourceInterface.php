@@ -26,8 +26,6 @@ interface BaseRestResourceInterface
 
     /**
      * Getter method for entity repository.
-     *
-     * @throws Throwable
      */
     public function getRepository(): BaseRepositoryInterface;
 
