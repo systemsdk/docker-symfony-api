@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\General\Application\Utils\Tests;
+namespace App\Tests\Utils;
 
 use App\General\Domain\Utils\JSON;
 use ArrayObject;
@@ -12,7 +12,7 @@ use Stringable;
 /**
  * Class StringableArrayObject
  *
- * @package App\General
+ * @package App\Tests
  */
 class StringableArrayObject extends ArrayObject implements Stringable
 {

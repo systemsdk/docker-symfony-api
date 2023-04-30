@@ -8,7 +8,7 @@ use App\ApiKey\Application\Resource\ApiKeyResource;
 use App\ApiKey\Domain\Entity\ApiKey;
 use App\ApiKey\Infrastructure\DataFixtures\ORM\LoadApiKeyData;
 use App\General\Domain\Utils\JSON;
-use App\General\Transport\Utils\Tests\WebTestCase;
+use App\Tests\TestCase\WebTestCase;
 use App\User\Domain\Entity\UserGroup;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use Generator;

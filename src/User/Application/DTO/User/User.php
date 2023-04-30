@@ -9,6 +9,7 @@ use App\General\Application\DTO\RestDto;
 use App\General\Application\Validator\Constraints as GeneralAppAssert;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 use App\General\Domain\Enum\Language;
+use App\General\Domain\Enum\Locale;
 use App\Tool\Application\Validator\Constraints as ToolAppAssert;
 use App\Tool\Domain\Service\Interfaces\LocalizationServiceInterface;
 use App\User\Application\Validator\Constraints as UserAppAssert;
@@ -66,8 +67,7 @@ class User extends RestDto
 
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    #[ToolAppAssert\Locale]
-    protected string $locale = LocalizationServiceInterface::DEFAULT_LOCALE;
+    protected Locale $locale;
 
     #[Assert\NotBlank]
     #[Assert\NotNull]
@@ -87,6 +87,7 @@ class User extends RestDto
     public function __construct()
     {
         $this->language = Language::getDefault();
+        $this->locale = Locale::getDefault();
     }
 
     public function getUsername(): string
@@ -155,12 +156,12 @@ class User extends RestDto
         return $this;
     }
 
-    public function getLocale(): string
+    public function getLocale(): Locale
     {
         return $this->locale;
     }
 
-    public function setLocale(string $locale): self
+    public function setLocale(Locale $locale): self
     {
         $this->setVisited('locale');
 

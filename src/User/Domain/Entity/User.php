@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\User\Domain\Entity;
 
-use App\General\Domain\Doctrine\DBAL\Types\EnumLocaleType;
 use App\General\Domain\Doctrine\DBAL\Types\Types as AppTypes;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 use App\General\Domain\Entity\Traits\Timestampable;
 use App\General\Domain\Entity\Traits\Uuid;
 use App\General\Domain\Enum\Language;
+use App\General\Domain\Enum\Locale;
 use App\Tool\Domain\Service\Interfaces\LocalizationServiceInterface;
 use App\User\Domain\Entity\Interfaces\UserGroupAwareInterface;
 use App\User\Domain\Entity\Interfaces\UserInterface;
@@ -25,9 +25,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as AssertCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Throwable;
-use UnexpectedValueException;
-
-use function in_array;
 
 /**
  * Class User
@@ -54,10 +51,10 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
     use UserRelations;
     use Uuid;
 
-    public const SET_USER_PROFILE = 'set.UserProfile';
-    public const SET_USER_BASIC = 'set.UserBasic';
+    final public const SET_USER_PROFILE = 'set.UserProfile';
+    final public const SET_USER_BASIC = 'set.UserBasic';
 
-    public const PASSWORD_MIN_LENGTH = 8;
+    final public const PASSWORD_MIN_LENGTH = 8;
 
     /**
      * @OA\Property(type="string", format="uuid")
@@ -201,7 +198,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
     ])]
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    private string $locale = LocalizationServiceInterface::DEFAULT_LOCALE;
+    private Locale $locale;
 
     #[ORM\Column(
         name: 'timezone',
@@ -251,6 +248,7 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
     {
         $this->id = $this->createUuid();
         $this->language = Language::getDefault();
+        $this->locale = Locale::getDefault();
         $this->userGroups = new ArrayCollection();
         $this->logsRequest = new ArrayCollection();
         $this->logsLogin = new ArrayCollection();
@@ -322,17 +320,13 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
         return $this;
     }
 
-    public function getLocale(): string
+    public function getLocale(): Locale
     {
         return $this->locale;
     }
 
-    public function setLocale(string $locale): self
+    public function setLocale(Locale $locale): self
     {
-        if (in_array($locale, EnumLocaleType::getValues(), true) !== true) {
-            throw new UnexpectedValueException(sprintf("Invalid locale value: '%s'", $locale));
-        }
-
         $this->locale = $locale;
 
         return $this;

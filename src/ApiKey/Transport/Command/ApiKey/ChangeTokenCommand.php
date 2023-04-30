@@ -27,7 +27,7 @@ class ChangeTokenCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    public const NAME = 'api-key:change-token';
+    final public const NAME = 'api-key:change-token';
 
     /**
      * Constructor

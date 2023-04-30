@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tool\Application\Service;
 
-use App\General\Domain\Doctrine\DBAL\Types\EnumLocaleType;
 use App\General\Domain\Enum\Language;
+use App\General\Domain\Enum\Locale;
 use App\Tool\Domain\Service\Interfaces\LocalizationServiceInterface;
 use Closure;
 use DateTimeImmutable;
@@ -45,7 +45,7 @@ class LocalizationService implements LocalizationServiceInterface
      */
     public function getLocales(): array
     {
-        return EnumLocaleType::getValues();
+        return Locale::getValues();
     }
 
     /**

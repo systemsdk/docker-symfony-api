@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\ApiKey\Infrastructure\DataFixtures\ORM;
 
 use App\ApiKey\Domain\Entity\ApiKey;
-use App\General\Application\Utils\Tests\PhpUnitUtil;
 use App\General\Domain\Rest\UuidHelper;
 use App\Role\Application\Security\Interfaces\RolesServiceInterface;
+use App\Tests\Utils\PhpUnitUtil;
 use App\User\Domain\Entity\UserGroup;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;

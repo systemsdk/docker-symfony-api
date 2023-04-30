@@ -28,7 +28,7 @@ class CreateOrUpdateTemplateCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    public const NAME = 'elastic:create-or-update-template';
+    final public const NAME = 'elastic:create-or-update-template';
 
     /**
      * Constructor

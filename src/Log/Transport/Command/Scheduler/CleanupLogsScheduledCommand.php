@@ -29,7 +29,7 @@ class CleanupLogsScheduledCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    public const NAME = 'scheduler:cleanup-logs';
+    final public const NAME = 'scheduler:cleanup-logs';
 
     /**
      * Constructor

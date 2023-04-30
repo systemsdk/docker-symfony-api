@@ -49,7 +49,6 @@ services:
             - '../src/DependencyInjection/'
             - '../src/*/Domain/Entity/'
             - '../src/*/Transport/EventListener/'
-            - '../src/General/Application/Utils/Tests/'
             - '../src/Kernel.php'
 
     # controllers are imported separately to make sure services can be injected
@@ -84,19 +83,19 @@ when@dev:
             autoconfigure: true
 
         App\ApiKey\Infrastructure\DataFixtures\:
-            resource: '../src/ApiKey/Infrastructure/DataFixtures/'
+            resource: '../src/ApiKey/Infrastructure/DataFixtures/*'
 
         App\Role\Infrastructure\DataFixtures\:
-            resource: '../src/Role/Infrastructure/DataFixtures/'
+            resource: '../src/Role/Infrastructure/DataFixtures/*'
 
         App\User\Infrastructure\DataFixtures\:
-            resource: '../src/User/Infrastructure/DataFixtures/'
+            resource: '../src/User/Infrastructure/DataFixtures/*'
 
-        App\General\Transport\Utils\Tests\:
-            resource: '../src/General/Transport/Utils/Tests'
+        App\Tests\TestCase\:
+            resource: '../tests/TestCase/*'
 
-        App\General\Application\Utils\Tests\:
-            resource: '../src/General/Application/Utils/Tests'
+        App\Tests\Utils\:
+            resource: '../tests/Utils/*'
 
         ProxyManager\Factory\AccessInterceptorValueHolderFactory:
             class: ProxyManager\Factory\AccessInterceptorValueHolderFactory
@@ -121,16 +120,16 @@ when@test:
             public: true
 
         App\ApiKey\Infrastructure\DataFixtures\:
-            resource: '../src/ApiKey/Infrastructure/DataFixtures/'
+            resource: '../src/ApiKey/Infrastructure/DataFixtures/*'
 
         App\Role\Infrastructure\DataFixtures\:
-            resource: '../src/Role/Infrastructure/DataFixtures/'
+            resource: '../src/Role/Infrastructure/DataFixtures/*'
 
         App\User\Infrastructure\DataFixtures\:
-            resource: '../src/User/Infrastructure/DataFixtures/'
+            resource: '../src/User/Infrastructure/DataFixtures/*'
 
-        App\General\Transport\Utils\Tests\:
-            resource: '../src/General/Transport/Utils/Tests'
+        App\Tests\TestCase\:
+            resource: '../tests/TestCase/*'
 
-        App\General\Application\Utils\Tests\:
-            resource: '../src/General/Application/Utils/Tests'
+        App\Tests\Utils\:
+            resource: '../tests/Utils/*'

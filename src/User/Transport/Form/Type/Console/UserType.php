@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\User\Transport\Form\Type\Console;
 
 use App\General\Domain\Enum\Language;
+use App\General\Domain\Enum\Locale;
 use App\General\Transport\Form\Type\Interfaces\FormTypeLabelInterface;
 use App\General\Transport\Form\Type\Traits\AddBasicFieldToForm;
 use App\Tool\Application\Service\LocalizationService;
@@ -20,7 +21,6 @@ use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Throwable;
 
-use function array_combine;
 use function array_map;
 
 /**
@@ -145,7 +145,6 @@ class UserType extends AbstractType
 
     private function addLocalizationFieldsToForm(FormBuilderInterface $builder): void
     {
-        $locales = $this->localization->getLocales();
         $builder
             ->add(
                 'language',
@@ -160,12 +159,12 @@ class UserType extends AbstractType
         $builder
             ->add(
                 'locale',
-                Type\ChoiceType::class,
+                Type\EnumType::class,
                 [
+                    FormTypeLabelInterface::CLASS_NAME => Locale::class,
                     FormTypeLabelInterface::LABEL => 'Locale',
                     FormTypeLabelInterface::REQUIRED => true,
-                    FormTypeLabelInterface::EMPTY_DATA => LocalizationServiceInterface::DEFAULT_LOCALE,
-                    FormTypeLabelInterface::CHOICES => array_combine($locales, $locales),
+                    FormTypeLabelInterface::EMPTY_DATA => Locale::getDefault(),
                 ],
             );
         $builder

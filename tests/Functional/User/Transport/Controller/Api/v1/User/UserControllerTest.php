@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Functional\User\Transport\Controller\Api\v1\User;
 
 use App\General\Domain\Enum\Language;
+use App\General\Domain\Enum\Locale;
 use App\General\Domain\Utils\JSON;
-use App\General\Transport\Utils\Tests\WebTestCase;
 use App\Tests\Functional\User\Transport\Controller\Api\v1\Traits\UserHelper;
+use App\Tests\TestCase\WebTestCase;
 use App\Tool\Domain\Service\Interfaces\LocalizationServiceInterface;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
@@ -136,7 +137,7 @@ class UserControllerTest extends WebTestCase
         self::assertEquals($userEntity->getLastName(), $responseData['lastName']);
         self::assertEquals($userEntity->getEmail(), $responseData['email']);
         self::assertEquals($userEntity->getLanguage()->value, $responseData['language']);
-        self::assertEquals($userEntity->getLocale(), $responseData['locale']);
+        self::assertEquals($userEntity->getLocale()->value, $responseData['locale']);
         self::assertEquals($userEntity->getTimezone(), $responseData['timezone']);
     }
 
@@ -167,7 +168,7 @@ class UserControllerTest extends WebTestCase
             ],
             'password' => 'test12345',
             'language' => Language::getDefault()->value,
-            'locale' => LocalizationServiceInterface::DEFAULT_LOCALE,
+            'locale' => Locale::getDefault()->value,
             'timezone' => LocalizationServiceInterface::DEFAULT_TIMEZONE,
         ];
         $client->request(method: 'POST', uri: static::$baseUrl, content: JSON::encode($requestData));
@@ -249,7 +250,7 @@ class UserControllerTest extends WebTestCase
             ],
             'password' => 'test123456',
             'language' => Language::getDefault()->value,
-            'locale' => LocalizationServiceInterface::DEFAULT_LOCALE,
+            'locale' => Locale::getDefault()->value,
             'timezone' => LocalizationServiceInterface::DEFAULT_TIMEZONE,
         ];
         $client->request(

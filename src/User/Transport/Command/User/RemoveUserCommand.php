@@ -27,7 +27,7 @@ class RemoveUserCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    public const NAME = 'user:remove';
+    final public const NAME = 'user:remove';
 
     /**
      * Constructor

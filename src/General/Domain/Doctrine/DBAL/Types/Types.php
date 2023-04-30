@@ -11,7 +11,7 @@ namespace App\General\Domain\Doctrine\DBAL\Types;
  */
 class Types
 {
-    public const ENUM_LANGUAGE = 'EnumLanguage';
-    public const ENUM_LOCALE = 'EnumLocale';
-    public const ENUM_LOG_LOGIN = 'EnumLogLogin';
+    final public const ENUM_LANGUAGE = 'EnumLanguage';
+    final public const ENUM_LOCALE = 'EnumLocale';
+    final public const ENUM_LOG_LOGIN = 'EnumLogLogin';
 }

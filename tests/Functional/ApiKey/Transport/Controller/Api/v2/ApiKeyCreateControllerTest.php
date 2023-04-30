@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\ApiKey\Transport\Controller\Api\v2;
 
 use App\General\Domain\Utils\JSON;
-use App\General\Transport\Utils\Tests\WebTestCase;
+use App\Tests\TestCase\WebTestCase;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;

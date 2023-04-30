@@ -6,7 +6,7 @@ namespace App\Tests\Functional\ApiKey\Transport\Controller\Api\v2;
 
 use App\ApiKey\Infrastructure\DataFixtures\ORM\LoadApiKeyData;
 use App\General\Domain\Utils\JSON;
-use App\General\Transport\Utils\Tests\WebTestCase;
+use App\Tests\TestCase\WebTestCase;
 use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;

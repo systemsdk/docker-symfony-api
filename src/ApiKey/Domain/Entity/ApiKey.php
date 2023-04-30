@@ -26,7 +26,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Throwable;
 
 use function array_map;
-use function array_merge;
 use function array_unique;
 use function array_values;
 
@@ -204,12 +203,12 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
             array_map(
                 '\strval',
                 array_unique(
-                    array_merge(
-                        [RoleEnum::API->value],
-                        $this->userGroups
+                    [
+                        RoleEnum::API->value,
+                        ...$this->userGroups
                             ->map(static fn (UserGroup $userGroup): string => $userGroup->getRole()->getId())
                             ->toArray(),
-                    ),
+                    ],
                 ),
             ),
         );

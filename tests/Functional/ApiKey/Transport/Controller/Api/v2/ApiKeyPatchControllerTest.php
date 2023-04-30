@@ -6,8 +6,8 @@ namespace App\Tests\Functional\ApiKey\Transport\Controller\Api\v2;
 
 use App\ApiKey\Application\Resource\ApiKeyFindOneResource;
 use App\ApiKey\Domain\Entity\ApiKey;
-use App\General\Transport\Utils\Tests\WebTestCase;
 use App\Tests\Functional\ApiKey\Transport\Controller\Api\v2\Traits\ApiKeyHelper;
+use App\Tests\TestCase\WebTestCase;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;

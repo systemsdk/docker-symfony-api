@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Tool\Transport\Controller\Api\v1\Localization;
 
 use App\General\Domain\Utils\JSON;
-use App\General\Transport\Utils\Tests\WebTestCase;
+use App\Tests\TestCase\WebTestCase;
 use App\Tool\Domain\Service\Interfaces\LocalizationServiceInterface;
 use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;

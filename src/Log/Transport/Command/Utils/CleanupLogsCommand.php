@@ -27,7 +27,7 @@ class CleanupLogsCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    public const NAME = 'logs:cleanup';
+    final public const NAME = 'logs:cleanup';
 
     /**
      * Constructor

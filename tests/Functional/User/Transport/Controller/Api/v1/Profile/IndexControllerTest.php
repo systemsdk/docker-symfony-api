@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Functional\User\Transport\Controller\Api\v1\Profile;
 
 use App\General\Domain\Utils\JSON;
-use App\General\Transport\Utils\Tests\WebTestCase;
 use App\Role\Application\Security\RolesService;
+use App\Tests\TestCase\WebTestCase;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use PHPUnit\Framework\Attributes\TestDox;
@@ -56,7 +56,7 @@ class IndexControllerTest extends WebTestCase
         self::assertArrayHasKey('language', $responseData);
         self::assertEquals($userEntity->getLanguage()->value, $responseData['language']);
         self::assertArrayHasKey('locale', $responseData);
-        self::assertEquals($userEntity->getLocale(), $responseData['locale']);
+        self::assertEquals($userEntity->getLocale()->value, $responseData['locale']);
         self::assertArrayHasKey('timezone', $responseData);
         self::assertEquals($userEntity->getTimezone(), $responseData['timezone']);
         self::assertArrayHasKey('roles', $responseData);

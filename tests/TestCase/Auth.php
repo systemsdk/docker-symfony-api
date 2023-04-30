@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\General\Transport\Utils\Tests;
+namespace App\Tests\TestCase;
 
 use App\General\Domain\Utils\JSON;
 use JsonException;
@@ -12,7 +12,6 @@ use Throwable;
 use UnexpectedValueException;
 
 use function array_key_exists;
-use function array_merge;
 use function file_get_contents;
 use function file_put_contents;
 use function getenv;
@@ -28,7 +27,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Class Auth
  *
- * @package App\General
+ * @package App\Tests
  */
 class Auth
 {
@@ -57,12 +56,12 @@ class Auth
      */
     public function getAuthorizationHeadersForApiKey(string $role): array
     {
-        return array_merge(
-            $this->getContentTypeHeader(),
-            [
+        return [
+            ...$this->getContentTypeHeader(),
+            ...[
                 'HTTP_AUTHORIZATION' => 'ApiKey ' . str_pad($role, 40, '_'),
-            ]
-        );
+            ],
+        ];
     }
 
     /**
@@ -72,12 +71,12 @@ class Auth
      */
     public function getAuthorizationHeaders(string $token): array
     {
-        return array_merge(
-            $this->getContentTypeHeader(),
-            [
+        return [
+            ...$this->getContentTypeHeader(),
+            ...[
                 'HTTP_AUTHORIZATION' => 'Bearer ' . $token,
-            ]
-        );
+            ],
+        ];
     }
 
     /**
@@ -116,7 +115,7 @@ class Auth
         // Create hash for username + password
         $hash = sha1($username . $password);
 
-        // User + password doesn't exists on cache - so we need to make real login
+        // User + password doesn't exist on cache - so we need to make real login
         if (!array_key_exists($hash, $cache)) {
             /** @var KernelBrowser $client */
             $client = $this->kernel->getContainer()->get('test.client');
@@ -126,13 +125,13 @@ class Auth
                 WebTestCase::API_URL_PREFIX . '/v1/auth/get_token',
                 [],
                 [],
-                array_merge(
-                    $this->getJwtHeaders(),
-                    $this->getContentTypeHeader(),
-                    [
+                [
+                    ...$this->getJwtHeaders(),
+                    ...$this->getContentTypeHeader(),
+                    ...[
                         'HTTP_X-Requested-With' => 'XMLHttpRequest',
-                    ]
-                ),
+                    ],
+                ],
                 JSON::encode([
                     'username' => $username,
                     'password' => $password,
@@ -155,7 +154,7 @@ class Auth
         // And finally store cache for later usage
         file_put_contents($filename, JSON::encode($cache));
 
-        return $cache[$hash];
+        return (string)$cache[$hash];
     }
 
     /**

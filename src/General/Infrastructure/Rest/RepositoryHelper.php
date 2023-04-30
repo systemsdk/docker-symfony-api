@@ -301,7 +301,7 @@ class RepositoryHelper
         self::$parameterCount++;
         // Initialize used callback parameters
         $parameters = [$comparisonObject->field];
-        $lowercaseOperator = strtolower($comparisonObject->operator);
+        $lowercaseOperator = strtolower((string)$comparisonObject->operator);
 
         if ($lowercaseOperator !== 'isnull' && $lowercaseOperator !== 'isnotnull') {
             $parameters = self::getComparisonParameters(

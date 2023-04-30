@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\General\Application\Utils\Tests;
+namespace App\Tests\Utils;
 
 use App\General\Domain\Doctrine\DBAL\Types\Types as AppTypes;
 use App\General\Domain\Enum\Language;
+use App\General\Domain\Enum\Locale;
 use App\Role\Domain\Entity\Role;
 use DateTime;
 use DateTimeImmutable;
@@ -23,6 +24,7 @@ use stdClass;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Throwable;
 
@@ -35,19 +37,19 @@ use function substr_count;
 /**
  * Class PHPUnitUtil
  *
- * @package App\General
+ * @package App\Tests
  */
 class PhpUnitUtil
 {
-    public const TYPE_INT = 'int';
-    public const TYPE_INTEGER = 'integer';
-    public const TYPE_STRING = 'string';
-    public const TYPE_ARRAY = 'array';
-    public const TYPE_JSON = 'json';
-    public const TYPE_BOOL = 'bool';
-    public const TYPE_BOOLEAN = 'boolean';
-    public const TYPE_CUSTOM_CLASS = 'CustomClass';
-    public const TYPE_ENUM = 'ENUM';
+    final public const TYPE_INT = 'int';
+    final public const TYPE_INTEGER = 'integer';
+    final public const TYPE_STRING = 'string';
+    final public const TYPE_ARRAY = 'array';
+    final public const TYPE_JSON = 'json';
+    final public const TYPE_BOOL = 'bool';
+    final public const TYPE_BOOLEAN = 'boolean';
+    final public const TYPE_CUSTOM_CLASS = 'CustomClass';
+    final public const TYPE_ENUM = 'ENUM';
 
     /**
      * @var array<string, mixed>
@@ -74,7 +76,7 @@ class PhpUnitUtil
             '--quiet' => true,
         ]);
         $input->setInteractive(false);
-        $application->run($input, new ConsoleOutput(ConsoleOutput::VERBOSITY_QUIET));
+        $application->run($input, new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
     }
 
     /**
@@ -168,8 +170,9 @@ class PhpUnitUtil
             'time', 'date', 'datetime' => DateTime::class,
             'time_immutable', 'date_immutable', 'datetime_immutable' => DateTimeImmutable::class,
             AppTypes::ENUM_LANGUAGE => Language::class,
+            AppTypes::ENUM_LOCALE => Locale::class,
             self::TYPE_INT, self::TYPE_INTEGER, 'bigint' => self::TYPE_INT,
-            self::TYPE_STRING, 'text', 'EnumLocale', 'EnumLogLogin' => self::TYPE_STRING,
+            self::TYPE_STRING, 'text', 'EnumLogLogin' => self::TYPE_STRING,
             self::TYPE_JSON => self::TYPE_JSON,
             self::TYPE_ARRAY => self::TYPE_ARRAY,
             self::TYPE_BOOL, self::TYPE_BOOLEAN => self::TYPE_BOOL,

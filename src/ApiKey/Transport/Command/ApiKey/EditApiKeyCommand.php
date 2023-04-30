@@ -30,7 +30,7 @@ class EditApiKeyCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    public const NAME = 'api-key:edit';
+    final public const NAME = 'api-key:edit';
 
     /**
      * Constructor

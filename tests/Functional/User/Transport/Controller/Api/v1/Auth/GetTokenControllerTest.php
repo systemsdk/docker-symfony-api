@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\User\Transport\Controller\Api\v1\Auth;
 
 use App\General\Domain\Utils\JSON;
-use App\General\Transport\Utils\Tests\WebTestCase;
+use App\Tests\TestCase\WebTestCase;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestDox;

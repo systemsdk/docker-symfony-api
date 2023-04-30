@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\General\Transport\Utils\Tests;
+namespace App\Tests\TestCase;
 
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
@@ -15,7 +15,7 @@ use function gc_enable;
 /**
  * Class WebTestCase
  *
- * @package App\General
+ * @package App\Tests
  */
 abstract class WebTestCase extends BaseWebTestCase
 {
@@ -71,12 +71,12 @@ abstract class WebTestCase extends BaseWebTestCase
         self::ensureKernelShutdown();
 
         return static::createClient(
-            array_merge(
-                $options,
-                [
+            [
+                ...$options,
+                ...[
                     'debug' => false,
-                ]
-            ),
+                ],
+            ],
             $server
         );
     }

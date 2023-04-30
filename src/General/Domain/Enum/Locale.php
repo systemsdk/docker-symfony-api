@@ -8,11 +8,11 @@ use App\General\Domain\Enum\Interfaces\DatabaseEnumInterface;
 use App\General\Domain\Enum\Traits\GetValues;
 
 /**
- * Language
+ * Locale
  *
  * @package App\General
  */
-enum Language: string implements DatabaseEnumInterface
+enum Locale: string implements DatabaseEnumInterface
 {
     use GetValues;
 

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Functional\User\Transport\Controller\Api\v1\Profile;
 
 use App\General\Domain\Utils\JSON;
-use App\General\Transport\Utils\Tests\WebTestCase;
 use App\Role\Domain\Enum\Role;
+use App\Tests\TestCase\WebTestCase;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;

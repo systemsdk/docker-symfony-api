@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tool\Domain\Service\Interfaces;
 
-use App\General\Domain\Doctrine\DBAL\Types\EnumLocaleType;
 use Throwable;
 
 /**
@@ -14,8 +13,7 @@ use Throwable;
  */
 interface LocalizationServiceInterface
 {
-    public const DEFAULT_LOCALE = EnumLocaleType::LOCALE_EN;
-    public const DEFAULT_TIMEZONE = 'Europe/Kyiv';
+    final public const DEFAULT_TIMEZONE = 'Europe/Kyiv';
 
     /**
      * @return array<int, string>

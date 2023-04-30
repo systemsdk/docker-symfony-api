@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\User\Transport\EventSubscriber;
 
 use App\General\Domain\Enum\Language;
+use App\General\Domain\Enum\Locale;
 use App\Tool\Domain\Service\Interfaces\LocalizationServiceInterface;
 use App\User\Application\Security\SecurityUser;
 use DateTime;
@@ -74,8 +75,8 @@ class JWTCreatedSubscriber implements EventSubscriberInterface
             ? $user->getLanguage()->value
             : Language::getDefault()->value;
         $payload['locale'] = $user instanceof SecurityUser
-            ? $user->getLocale()
-            : LocalizationServiceInterface::DEFAULT_LOCALE;
+            ? $user->getLocale()->value
+            : Locale::getDefault()->value;
         $payload['timezone'] = $user instanceof SecurityUser
             ? $user->getTimezone()
             : LocalizationServiceInterface::DEFAULT_TIMEZONE;
