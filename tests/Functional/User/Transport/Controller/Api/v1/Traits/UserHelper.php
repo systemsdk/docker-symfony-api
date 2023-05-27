@@ -58,7 +58,7 @@ trait UserHelper
         if ($responseCode === Response::HTTP_OK) {
             $responseData = JSON::decode($content, true);
             self::assertIsArray($responseData);
-            self::assertGreaterThan($expectedCount, $responseData);
+            self::assertGreaterThan($expectedCount, count($responseData));
             self::assertIsArray($responseData[0]);
             $this->checkBasicFieldsInResponse($responseData[0]);
         }
@@ -78,7 +78,7 @@ trait UserHelper
         self::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
         $responseData = JSON::decode($content, true);
         self::assertIsArray($responseData);
-        self::assertGreaterThan($expectedCount, $responseData);
+        self::assertGreaterThan($expectedCount, count($responseData));
         self::assertIsString($responseData[0]);
     }
 }

@@ -14,7 +14,7 @@
 		"Elasticsearch"
 	],
 	"homepage": "https://github.com/systemsdk/docker-symfony-api",
-	"version": "v1.4.6",
+	"version": "v1.4.7",
 	"license": "MIT",
 	"authors": [
 		{
@@ -43,11 +43,11 @@
 		"beberlei/doctrineextensions": "^1.3",
 		"doctrine/doctrine-bundle": "^2.9",
 		"doctrine/doctrine-migrations-bundle": "^3.2",
-		"doctrine/orm": "^2.14",
+		"doctrine/orm": "^2.15",
 		"dukecity/command-scheduler-bundle": "^5.0",
 		"elasticsearch/elasticsearch": "^7.17",
 		"gedmo/doctrine-extensions": "^3.11",
-		"lexik/jwt-authentication-bundle": "^2.18",
+		"lexik/jwt-authentication-bundle": "^2.19",
 		"mark-gerarts/automapper-plus-bundle": "^1.4",
 		"matomo/device-detector": "^6.1",
 		"matthiasnoback/symfony-console-form": "^5.3",

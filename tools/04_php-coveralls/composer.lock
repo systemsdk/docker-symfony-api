@@ -9,21 +9,21 @@
     "packages-dev": [
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.5.1",
+            "version": "7.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "b964ca597e86b752cd994f27293e9fa6b6a95ed9"
+                "reference": "fb7566caccf22d74d1ab270de3551f72a58399f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/b964ca597e86b752cd994f27293e9fa6b6a95ed9",
-                "reference": "b964ca597e86b752cd994f27293e9fa6b6a95ed9",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/fb7566caccf22d74d1ab270de3551f72a58399f5",
+                "reference": "fb7566caccf22d74d1ab270de3551f72a58399f5",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "guzzlehttp/promises": "^1.5",
+                "guzzlehttp/promises": "^1.5.3 || ^2.0",
                 "guzzlehttp/psr7": "^1.9.1 || ^2.4.5",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0",
@@ -35,7 +35,8 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.1",
                 "ext-curl": "*",
-                "php-http/client-integration-tests": "^3.0",
+                "php-http/client-integration-tests": "dev-master#2c025848417c1135031fdf9c728ee53d0a7ceaee as 3.0.999",
+                "php-http/message-factory": "^1.1",
                 "phpunit/phpunit": "^8.5.29 || ^9.5.23",
                 "psr/log": "^1.1 || ^2.0 || ^3.0"
             },
@@ -49,9 +50,6 @@
                 "bamarni-bin": {
                     "bin-links": true,
                     "forward-command": false
-                },
-                "branch-alias": {
-                    "dev-master": "7.5-dev"
                 }
             },
             "autoload": {
@@ -117,7 +115,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.5.1"
+                "source": "https://github.com/guzzle/guzzle/tree/7.7.0"
             },
             "funding": [
                 {
@@ -133,38 +131,37 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-17T16:30:08+00:00"
+            "time": "2023-05-21T14:04:53+00:00"
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "1.5.2",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "b94b2807d85443f9719887892882d0329d1e2598"
+                "reference": "3a494dc7dc1d7d12e511890177ae2d0e6c107da6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/b94b2807d85443f9719887892882d0329d1e2598",
-                "reference": "b94b2807d85443f9719887892882d0329d1e2598",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/3a494dc7dc1d7d12e511890177ae2d0e6c107da6",
+                "reference": "3a494dc7dc1d7d12e511890177ae2d0e6c107da6",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5"
+                "php": "^7.2.5 || ^8.0"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "^4.4 || ^5.1"
+                "bamarni/composer-bin-plugin": "^1.8.1",
+                "phpunit/phpunit": "^8.5.29 || ^9.5.23"
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.5-dev"
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": false
                 }
             },
             "autoload": {
-                "files": [
-                    "src/functions_include.php"
-                ],
                 "psr-4": {
                     "GuzzleHttp\\Promise\\": "src/"
                 }
@@ -201,7 +198,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/1.5.2"
+                "source": "https://github.com/guzzle/promises/tree/2.0.0"
             },
             "funding": [
                 {
@@ -217,7 +214,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-08-28T14:55:35+00:00"
+            "time": "2023-05-21T13:50:22+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -731,12 +728,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "a31b8b0ce0409fca4e8fcdda046e8d4b603dc739"
+                "reference": "2d73bad6cb1c8cda0ab4e4208f4ee2d70e472879"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/a31b8b0ce0409fca4e8fcdda046e8d4b603dc739",
-                "reference": "a31b8b0ce0409fca4e8fcdda046e8d4b603dc739",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/2d73bad6cb1c8cda0ab4e4208f4ee2d70e472879",
+                "reference": "2d73bad6cb1c8cda0ab4e4208f4ee2d70e472879",
                 "shasum": ""
             },
             "conflict": {
@@ -764,7 +761,7 @@
                 "automad/automad": "<1.8",
                 "awesome-support/awesome-support": "<=6.0.7",
                 "aws/aws-sdk-php": ">=3,<3.2.1",
-                "azuracast/azuracast": "<0.18",
+                "azuracast/azuracast": "<0.18.3",
                 "backdrop/backdrop": "<1.24.2",
                 "badaso/core": "<2.7",
                 "bagisto/bagisto": "<0.1.5",
@@ -800,7 +797,7 @@
                 "cockpit-hq/cockpit": "<2.4.1",
                 "codeception/codeception": "<3.1.3|>=4,<4.1.22",
                 "codeigniter/framework": "<=3.0.6",
-                "codeigniter4/framework": "<4.2.11",
+                "codeigniter4/framework": "<4.3.5",
                 "codeigniter4/shield": "<1-beta.4|= 1.0.0-beta",
                 "codiad/codiad": "<=2.8.4",
                 "composer/composer": "<1.10.26|>=2-alpha.1,<2.2.12|>=2.3,<2.3.5",
@@ -812,7 +809,7 @@
                 "contao/core-bundle": "<4.9.40|>=4.10,<4.11.7|>=4.13,<4.13.21|>=5.1,<5.1.4|= 4.10.0",
                 "contao/listing-bundle": ">=4,<4.4.8",
                 "contao/managed-edition": "<=1.5",
-                "craftcms/cms": "<3.7.68|>= 4.0.0-RC1, < 4.3.7|>= 4.0.0-RC1, < 4.2.1",
+                "craftcms/cms": ">= 4.0.0-RC1, <= 4.4.5|>= 4.0.0-RC1, <= 4.4.6|<=3.8.5|>=4,<4.4.6|>= 4.0.0-RC1, < 4.4.6|>= 4.0.0-RC1, < 4.3.7|>= 4.0.0-RC1, < 4.2.1",
                 "croogo/croogo": "<3.0.7",
                 "cuyz/valinor": "<0.12",
                 "czproject/git-php": "<4.0.3",
@@ -884,14 +881,14 @@
                 "fooman/tcpdf": "<6.2.22",
                 "forkcms/forkcms": "<5.11.1",
                 "fossar/tcpdf-parser": "<6.2.22",
-                "francoisjacquet/rosariosis": "<10.9.3",
+                "francoisjacquet/rosariosis": "<11",
                 "frappant/frp-form-answers": "<3.1.2|>=4,<4.0.2",
                 "friendsofsymfony/oauth2-php": "<1.3",
                 "friendsofsymfony/rest-bundle": ">=1.2,<1.2.2",
                 "friendsofsymfony/user-bundle": ">=1.2,<1.3.5",
                 "friendsoftypo3/mediace": ">=7.6.2,<7.6.5",
                 "froala/wysiwyg-editor": "<3.2.7",
-                "froxlor/froxlor": "<2.0.14",
+                "froxlor/froxlor": "<2.0.16",
                 "fuel/core": "<1.8.1",
                 "funadmin/funadmin": "<=3.2",
                 "gaoming13/wechat-php-sdk": "<=1.10.2",
@@ -921,6 +918,7 @@
                 "ibexa/core": ">=4,<4.0.7|>=4.1,<4.1.4|>=4.2,<4.2.3",
                 "ibexa/graphql": ">=2.5,<2.5.31|>=3.3,<3.3.28|>=4.2,<4.2.3",
                 "ibexa/post-install": "<=1.0.4",
+                "ibexa/user": ">=4,<4.4.3",
                 "icecoder/icecoder": "<=8.1",
                 "idno/known": "<=1.3.1",
                 "illuminate/auth": ">=4,<4.0.99|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.10",
@@ -963,7 +961,7 @@
                 "laravel/framework": "<6.20.42|>=7,<7.30.6|>=8,<8.75",
                 "laravel/socialite": ">=1,<1.0.99|>=2,<2.0.10",
                 "latte/latte": "<2.10.8",
-                "lavalite/cms": "<=5.8",
+                "lavalite/cms": "<=9",
                 "lcobucci/jwt": ">=3.4,<3.4.6|>=4,<4.0.4|>=4.1,<4.1.5",
                 "league/commonmark": "<0.18.3",
                 "league/flysystem": "<1.1.4|>=2,<2.1.1",
@@ -999,7 +997,7 @@
                 "modx/revolution": "<= 2.8.3-pl|<2.8",
                 "mojo42/jirafeau": "<4.4",
                 "monolog/monolog": ">=1.8,<1.12",
-                "moodle/moodle": "<4.0.7|>=4.1-beta,<4.1.2|= 3.11",
+                "moodle/moodle": "<4.2-rc.2|= 3.11",
                 "mustache/mustache": ">=2,<2.14.1",
                 "namshi/jose": "<2.2",
                 "neoan3-apps/template": "<1.1.1",
@@ -1011,7 +1009,7 @@
                 "netgen/tagsbundle": ">=3.4,<3.4.11|>=4,<4.0.15",
                 "nette/application": ">=2,<2.0.19|>=2.1,<2.1.13|>=2.2,<2.2.10|>=2.3,<2.3.14|>=2.4,<2.4.16|>=3,<3.0.6",
                 "nette/nette": ">=2,<2.0.19|>=2.1,<2.1.13",
-                "nilsteampassnet/teampass": "<3.0.3",
+                "nilsteampassnet/teampass": "<3.0.7",
                 "notrinos/notrinos-erp": "<=0.7",
                 "noumo/easyii": "<=0.9",
                 "nukeviet/nukeviet": "<4.5.2",
@@ -1061,6 +1059,7 @@
                 "phpwhois/phpwhois": "<=4.2.5",
                 "phpxmlrpc/extras": "<0.6.1",
                 "phpxmlrpc/phpxmlrpc": "<4.9.2",
+                "pimcore/customer-management-framework-bundle": "<3.3.10",
                 "pimcore/data-hub": "<1.2.4",
                 "pimcore/perspective-editor": "<1.5.1",
                 "pimcore/pimcore": "<10.5.21",
@@ -1088,7 +1087,7 @@
                 "pyrocms/pyrocms": "<=3.9.1",
                 "rainlab/debugbar-plugin": "<3.1",
                 "rankmath/seo-by-rank-math": "<=1.0.95",
-                "react/http": ">=0.7,<1.7",
+                "react/http": ">=0.7,<1.9",
                 "really-simple-plugins/complianz-gdpr": "<6.4.2",
                 "remdex/livehelperchat": "<3.99",
                 "rmccue/requests": ">=1.6,<1.8",
@@ -1132,7 +1131,7 @@
                 "simplesamlphp/simplesamlphp-module-openidprovider": "<0.9",
                 "simplito/elliptic-php": "<1.0.6",
                 "sitegeist/fluid-components": "<3.5",
-                "slim/psr7": "<1.6.1",
+                "slim/psr7": "<1.4.1|>=1.5,<1.5.1|>=1.6,<1.6.1",
                 "slim/slim": "<2.6",
                 "smarty/smarty": "<3.1.48|>=4,<4.3.1",
                 "snipe/snipe-it": "<=6.0.14|>= 6.0.0-RC-1, <= 6.0.0-RC-5",
@@ -1201,7 +1200,7 @@
                 "thelia/thelia": ">=2.1-beta.1,<2.1.3",
                 "theonedemon/phpwhois": "<=4.2.5",
                 "thinkcmf/thinkcmf": "<=5.1.7",
-                "thorsten/phpmyfaq": "<3.1.12",
+                "thorsten/phpmyfaq": "<3.2-beta",
                 "tinymce/tinymce": "<5.10.7|>=6,<6.3.1",
                 "tinymighty/wiki-seo": "<1.2.2",
                 "titon/framework": ">=0,<9.9.99",
@@ -1247,7 +1246,7 @@
                 "wp-graphql/wp-graphql": "<0.3.5",
                 "wpanel/wpanel4-cms": "<=4.3.1",
                 "wpcloud/wp-stateless": "<3.2",
-                "wwbn/avideo": "<12.4",
+                "wwbn/avideo": "<=12.4",
                 "xataface/xataface": "<3",
                 "xpressengine/xpressengine": "<3.0.15",
                 "yeswiki/yeswiki": "<4.1",
@@ -1329,7 +1328,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-28T21:04:09+00:00"
+            "time": "2023-05-26T14:04:17+00:00"
         },
         {
             "name": "symfony/config",

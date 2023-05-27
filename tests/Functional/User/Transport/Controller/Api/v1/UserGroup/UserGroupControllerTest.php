@@ -105,7 +105,7 @@ class UserGroupControllerTest extends WebTestCase
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
 
-        $userGroupEntity = $this->userGroupResource->findOne(LoadUserGroupData::$uuids['Role-logged']);
+        $userGroupEntity = $this->userGroupResource->findOne(LoadUserGroupData::getUuidByKey('Role-logged'));
         self::assertInstanceOf(UserGroup::class, $userGroupEntity);
 
         $client->request('GET', static::$baseUrl . '/' . $userGroupEntity->getId());
@@ -245,9 +245,9 @@ class UserGroupControllerTest extends WebTestCase
     public static function dataProviderCreateUpdatePatchDeleteActions(): Generator
     {
         yield ['POST', static::$baseUrl];
-        yield ['PUT', static::$baseUrl . '/' . LoadUserGroupData::$uuids['Role-logged']];
-        yield ['PATCH', static::$baseUrl . '/' . LoadUserGroupData::$uuids['Role-logged']];
-        yield ['DELETE', static::$baseUrl . '/' . LoadUserGroupData::$uuids['Role-logged']];
+        yield ['PUT', static::$baseUrl . '/' . LoadUserGroupData::getUuidByKey('Role-logged')];
+        yield ['PATCH', static::$baseUrl . '/' . LoadUserGroupData::getUuidByKey('Role-logged')];
+        yield ['DELETE', static::$baseUrl . '/' . LoadUserGroupData::getUuidByKey('Role-logged')];
     }
 
     /**
@@ -257,7 +257,7 @@ class UserGroupControllerTest extends WebTestCase
     {
         yield ['GET', static::$baseUrl . '/count'];
         yield ['GET', static::$baseUrl];
-        yield ['GET', static::$baseUrl . '/' . LoadUserData::$uuids['john-root']];
+        yield ['GET', static::$baseUrl . '/' . LoadUserData::getUuidByKey('john-root')];
         yield ['GET', static::$baseUrl . '/ids'];
     }
 

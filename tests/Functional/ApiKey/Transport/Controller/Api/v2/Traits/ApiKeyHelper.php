@@ -37,7 +37,7 @@ trait ApiKeyHelper
             /** @var UserGroupResource $userGroupResource */
             $userGroupResource = static::getContainer()->get(UserGroupResource::class);
             /** @var UserGroup|null $userGroup */
-            $userGroup = $userGroupResource->findOne(LoadUserGroupData::$uuids['Role-api']);
+            $userGroup = $userGroupResource->findOne(LoadUserGroupData::getUuidByKey('Role-api'));
             self::assertInstanceOf(UserGroup::class, $userGroup);
             $dto = (new ApiKeyCreate())->setDescription('test api key')->setUserGroups([$userGroup]);
             $apiKey = $apiKeyCreateResource->create($dto, true);
@@ -56,7 +56,7 @@ trait ApiKeyHelper
         $requestData = [
             'description' => $description,
             'userGroups' => [
-                LoadUserGroupData::$uuids['Role-api'],
+                LoadUserGroupData::getUuidByKey('Role-api'),
             ],
         ];
         $this->wait();
@@ -115,7 +115,7 @@ trait ApiKeyHelper
         $requestData = [
             'description' => $description,
             'userGroups' => [
-                LoadUserGroupData::$uuids['Role-api'],
+                LoadUserGroupData::getUuidByKey('Role-api'),
             ],
         ];
         $this->wait();

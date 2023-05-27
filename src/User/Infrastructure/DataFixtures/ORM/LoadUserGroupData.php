@@ -64,6 +64,11 @@ final class LoadUserGroupData extends Fixture implements OrderedFixtureInterface
         return 2;
     }
 
+    public static function getUuidByKey(string $key): string
+    {
+        return self::$uuids[$key];
+    }
+
     /**
      * Method to create UserGroup entity for specified role.
      *

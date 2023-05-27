@@ -40,7 +40,7 @@ class GroupsControllerTest extends WebTestCase
         self::assertArrayHasKey('id', $responseData[0]);
         self::assertArrayHasKey('role', $responseData[0]);
         self::assertArrayHasKey('name', $responseData[0]);
-        self::assertEquals($responseData[0]['id'], LoadUserGroupData::$uuids['Role-logged']);
+        self::assertEquals($responseData[0]['id'], LoadUserGroupData::getUuidByKey('Role-logged'));
         self::assertIsArray($responseData[0]['role']);
         self::assertArrayHasKey('id', $responseData[0]['role']);
         self::assertEquals(Role::LOGGED->value, $responseData[0]['role']['id']);

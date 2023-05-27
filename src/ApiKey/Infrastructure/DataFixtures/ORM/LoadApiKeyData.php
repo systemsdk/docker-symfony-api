@@ -73,6 +73,11 @@ final class LoadApiKeyData extends Fixture implements OrderedFixtureInterface
         return 4;
     }
 
+    public static function getUuidByKey(string $key): string
+    {
+        return self::$uuids[$key];
+    }
+
     /**
      * Helper method to create new ApiKey entity with specified role.
      *

@@ -33,7 +33,7 @@ class ApiKeyCreateControllerTest extends WebTestCase
         $requestData = [
             'description' => 'test api key',
             'userGroups' => [
-                LoadUserGroupData::$uuids['Role-api'],
+                LoadUserGroupData::getUuidByKey('Role-api'),
             ],
         ];
         $client->request(method: 'POST', uri: $this->baseUrl, content: JSON::encode($requestData));
@@ -77,7 +77,7 @@ class ApiKeyCreateControllerTest extends WebTestCase
         $requestData = [
             'description' => 'test api key',
             'userGroups' => [
-                LoadUserGroupData::$uuids['Role-api'],
+                LoadUserGroupData::getUuidByKey('Role-api'),
             ],
         ];
         $client->request(method: 'POST', uri: $this->baseUrl, content: JSON::encode($requestData));
@@ -101,7 +101,7 @@ class ApiKeyCreateControllerTest extends WebTestCase
             [
                 'description' => '',
                 'userGroups' => [
-                    LoadUserGroupData::$uuids['Role-api'],
+                    LoadUserGroupData::getUuidByKey('Role-api'),
                 ],
             ],
             'This value should not be blank.',

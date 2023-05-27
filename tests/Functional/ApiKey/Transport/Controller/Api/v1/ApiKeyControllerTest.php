@@ -94,7 +94,7 @@ class ApiKeyControllerTest extends WebTestCase
 
         if ($responseCode === Response::HTTP_OK) {
             self::assertIsArray($responseData);
-            self::assertGreaterThan(5, $responseData);
+            self::assertGreaterThan(5, count($responseData));
             self::assertIsArray($responseData[0]);
             $this->checkBasicFieldsInResponse($responseData[0]);
         }
@@ -111,7 +111,7 @@ class ApiKeyControllerTest extends WebTestCase
         $requestData = [
             'description' => 'test api key',
             'userGroups' => [
-                LoadUserGroupData::$uuids['Role-api'],
+                LoadUserGroupData::getUuidByKey('Role-api'),
             ],
         ];
         $client->request(method: 'POST', uri: static::$baseUrl, content: JSON::encode($requestData));
@@ -167,7 +167,7 @@ class ApiKeyControllerTest extends WebTestCase
         $requestData = [
             'description' => 'test api key',
             'userGroups' => [
-                LoadUserGroupData::$uuids['Role-logged'],
+                LoadUserGroupData::getUuidByKey('Role-logged'),
             ],
         ];
 
@@ -274,7 +274,7 @@ class ApiKeyControllerTest extends WebTestCase
         self::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
         $responseData = JSON::decode($content, true);
         self::assertIsArray($responseData);
-        self::assertGreaterThan(5, $responseData);
+        self::assertGreaterThan(5, count($responseData));
         self::assertIsString($responseData[0]);
     }
 
@@ -308,10 +308,10 @@ class ApiKeyControllerTest extends WebTestCase
         yield ['GET', static::$baseUrl . '/count'];
         yield ['GET', static::$baseUrl];
         yield ['POST', static::$baseUrl];
-        yield ['GET', static::$baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
-        yield ['PUT', static::$baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
-        yield ['DELETE', static::$baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
-        yield ['PATCH', static::$baseUrl . '/' . LoadApiKeyData::$uuids['-root']];
+        yield ['GET', static::$baseUrl . '/' . LoadApiKeyData::getUuidByKey('-root')];
+        yield ['PUT', static::$baseUrl . '/' . LoadApiKeyData::getUuidByKey('-root')];
+        yield ['DELETE', static::$baseUrl . '/' . LoadApiKeyData::getUuidByKey('-root')];
+        yield ['PATCH', static::$baseUrl . '/' . LoadApiKeyData::getUuidByKey('-root')];
         yield ['GET', static::$baseUrl . '/ids'];
     }
 

@@ -164,7 +164,7 @@ class UserControllerTest extends WebTestCase
             'lastName' => 'Last name',
             'email' => self::USERNAME_FOR_TEST . '@test.com',
             'userGroups' => [
-                LoadUserGroupData::$uuids['Role-logged'],
+                LoadUserGroupData::getUuidByKey('Role-logged'),
             ],
             'password' => 'test12345',
             'language' => Language::getDefault()->value,
@@ -197,7 +197,7 @@ class UserControllerTest extends WebTestCase
         $requestData = [
             'password' => 'test12345',
             'userGroups' => [
-                LoadUserGroupData::$uuids['Role-user'],
+                LoadUserGroupData::getUuidByKey('Role-user'),
             ],
         ];
 
@@ -222,7 +222,7 @@ class UserControllerTest extends WebTestCase
         foreach ($userGroups as $userGroup) {
             self::assertContains(
                 $userGroup->getId(),
-                [LoadUserGroupData::$uuids['Role-logged'], LoadUserGroupData::$uuids['Role-user']]
+                [LoadUserGroupData::getUuidByKey('Role-logged'), LoadUserGroupData::getUuidByKey('Role-user')]
             );
         }
     }
@@ -246,7 +246,7 @@ class UserControllerTest extends WebTestCase
             'lastName' => 'Last name edited',
             'email' => self::USERNAME_FOR_TEST . '@test1.com',
             'userGroups' => [
-                LoadUserGroupData::$uuids['Role-logged'],
+                LoadUserGroupData::getUuidByKey('Role-logged'),
             ],
             'password' => 'test123456',
             'language' => Language::getDefault()->value,
@@ -276,8 +276,8 @@ class UserControllerTest extends WebTestCase
     public static function dataProviderCreateUpdatePatchActions(): Generator
     {
         yield ['POST', static::$baseUrl];
-        yield ['PUT', static::$baseUrl . '/' . LoadUserData::$uuids['john-root']];
-        yield ['PATCH', static::$baseUrl . '/' . LoadUserData::$uuids['john-root']];
+        yield ['PUT', static::$baseUrl . '/' . LoadUserData::getUuidByKey('john-root')];
+        yield ['PATCH', static::$baseUrl . '/' . LoadUserData::getUuidByKey('john-root')];
     }
 
     /**
@@ -287,7 +287,7 @@ class UserControllerTest extends WebTestCase
     {
         yield ['GET', static::$baseUrl . '/count'];
         yield ['GET', static::$baseUrl];
-        yield ['GET', static::$baseUrl . '/' . LoadUserData::$uuids['john-root']];
+        yield ['GET', static::$baseUrl . '/' . LoadUserData::getUuidByKey('john-root')];
         yield ['GET', static::$baseUrl . '/ids'];
     }
 
@@ -351,6 +351,6 @@ class UserControllerTest extends WebTestCase
         /** @var UserGroup|false $userGroup */
         $userGroup = $user->getUserGroups()->first();
         self::assertInstanceOf(UserGroup::class, $userGroup);
-        self::assertEquals(LoadUserGroupData::$uuids['Role-logged'], $userGroup->getId());
+        self::assertEquals(LoadUserGroupData::getUuidByKey('Role-logged'), $userGroup->getId());
     }
 }

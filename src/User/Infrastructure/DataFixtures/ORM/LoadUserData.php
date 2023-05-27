@@ -71,6 +71,11 @@ final class LoadUserData extends Fixture implements OrderedFixtureInterface
         return 3;
     }
 
+    public static function getUuidByKey(string $key): string
+    {
+        return self::$uuids[$key];
+    }
+
     /**
      * Method to create User entity with specified role.
      *

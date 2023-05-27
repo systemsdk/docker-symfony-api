@@ -28,7 +28,7 @@ class ApiKeyViewControllerTest extends WebTestCase
     {
         $client = $this->getTestClient('john-admin', 'password-admin');
 
-        $client->request('GET', $this->baseUrl . '/' . LoadApiKeyData::$uuids['-logged']);
+        $client->request('GET', $this->baseUrl . '/' . LoadApiKeyData::getUuidByKey('-logged'));
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -43,7 +43,7 @@ class ApiKeyViewControllerTest extends WebTestCase
     {
         $client = $this->getTestClient('john-root', 'password-root');
 
-        $client->request('GET', $this->baseUrl . '/' . LoadApiKeyData::$uuids['-logged']);
+        $client->request('GET', $this->baseUrl . '/' . LoadApiKeyData::getUuidByKey('-logged'));
         $response = $client->getResponse();
         $content = $response->getContent();
         self::assertNotFalse($content);
@@ -52,6 +52,6 @@ class ApiKeyViewControllerTest extends WebTestCase
         self::assertArrayHasKey('id', $responseData);
         self::assertArrayHasKey('token', $responseData);
         self::assertArrayHasKey('description', $responseData);
-        self::assertEquals(LoadApiKeyData::$uuids['-logged'], $responseData['id']);
+        self::assertEquals(LoadApiKeyData::getUuidByKey('-logged'), $responseData['id']);
     }
 }

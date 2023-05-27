@@ -86,7 +86,7 @@ class UserGroupsControllerTest extends WebTestCase
         self::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
         $responseData = JSON::decode($content, true);
         self::assertIsArray($responseData);
-        self::assertGreaterThan(0, $responseData);
+        self::assertGreaterThan(0, count($responseData));
         self::assertIsArray($responseData[0]);
         self::assertArrayHasKey('id', $responseData[0]);
         self::assertArrayHasKey('role', $responseData[0]);

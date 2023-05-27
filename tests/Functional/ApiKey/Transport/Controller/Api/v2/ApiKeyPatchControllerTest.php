@@ -79,7 +79,7 @@ class ApiKeyPatchControllerTest extends WebTestCase
             [
                 'description' => '',
                 'userGroups' => [
-                    LoadUserGroupData::$uuids['Role-api'],
+                    LoadUserGroupData::getUuidByKey('Role-api'),
                 ],
             ],
             'This value should not be blank.',

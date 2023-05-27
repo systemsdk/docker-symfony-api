@@ -349,7 +349,7 @@ phpcpd: ## Runs php copy/paste detector
 	@make exec cmd="php phpcpd.phar --fuzzy src tests"
 
 phpmd: ## Runs php mess detector
-	@make exec cmd="php ./vendor/bin/phpmd src text phpmd_ruleset.xml --suffixes php"
+	@make exec cmd="php ./vendor/bin/phpmd src,tests text phpmd_ruleset.xml --suffixes php"
 
 phpstan: ## Runs PhpStan static analysis tool
 ifeq ($(INSIDE_DOCKER_CONTAINER), 1)
