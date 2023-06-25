@@ -23,6 +23,14 @@ final class Version20211001194001 extends AbstractMigration
     }
 
     /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
+    public function isTransactional(): bool
+    {
+        return false;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function up(Schema $schema): void
