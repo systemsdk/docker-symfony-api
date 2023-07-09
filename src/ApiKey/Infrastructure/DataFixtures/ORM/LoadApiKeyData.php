@@ -93,7 +93,7 @@ final class LoadApiKeyData extends Fixture implements OrderedFixtureInterface
 
         if ($role !== null) {
             /** @var UserGroup $userGroup */
-            $userGroup = $this->getReference('UserGroup-' . $this->rolesService->getShort($role));
+            $userGroup = $this->getReference('UserGroup-' . $this->rolesService->getShort($role), UserGroup::class);
             $entity->addUserGroup($userGroup);
             $suffix = '-' . $this->rolesService->getShort($role);
         }

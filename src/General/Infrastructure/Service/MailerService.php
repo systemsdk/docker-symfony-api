@@ -16,7 +16,7 @@ use Symfony\Component\Mime\Email;
 class MailerService implements MailerServiceInterface
 {
     public function __construct(
-        private MailerInterface $mailer,
+        private readonly MailerInterface $mailer,
     ) {
     }
 

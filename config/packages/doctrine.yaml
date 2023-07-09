@@ -29,6 +29,8 @@ doctrine:
             default:
                 naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
                 auto_mapping: true
+                report_fields_where_declared: true
+                validate_xml_mapping: true
                 connection: default
                 mappings:
                     ApiKey:

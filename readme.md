@@ -26,11 +26,12 @@ Note: OS recommendation - Linux Ubuntu based.
 6. Elasticsearch 7
 7. Kibana 7
 8. Redis 7
+9. Mailpit (only for debug emails on dev environment)
 
 ## Setting up Docker and docker-compose
 1.For installing Docker please follow steps mentioned on page [install on Ubuntu linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/) or [install on Mac/Windows](https://docs.docker.com/engine/install/).
 
-2.For installing docker-compose as `Linux Standalone binary` please follow steps on the page [install compose](https://docs.docker.com/compose/install/other/#install-compose-standalone) if you are using Linux OS.
+2.For installing docker-compose as `Linux Standalone binary` please follow steps on the page [install compose](https://docs.docker.com/compose/install/standalone/) if you are using Linux OS.
 
 Note 1: Please run next cmd after above step 2 if you are using Linux OS: `sudo usermod -aG docker $USER`
 
@@ -99,7 +100,9 @@ make elastic-create-or-update-template
 
 8.In order to use this application, please open in your browser next urls:
 - [http://localhost/api/doc](http://localhost/api/doc)
+- [http://localhost:15672 (RabbitMQ)](http://localhost:15672)
 - [http://localhost:5601 (Kibana)](http://localhost:5601)
+- [http://localhost:8025 (Mailpit)](http://localhost:8025)
 
 ## Setting up STAGING environment locally
 1.You can clone this repository from GitHub or install via composer.
@@ -114,7 +117,7 @@ composer create-project systemsdk/docker-symfony-api api-example-app
 2.Elasticsearch is pre-configured with the following privileged bootstrap user:
 ```bash
 user: elastic
-password: ********
+password: changeme
 ```
 
 3.Build, start and install the docker images from your terminal:
@@ -150,7 +153,7 @@ Note: Delete var/mysql-data folder if it is exist.
 4.Elasticsearch is pre-configured with the following privileged bootstrap user:
 ```bash
 user: elastic
-password: ********
+password: changeme
 ```
 
 5.Build, start and install the docker images from your terminal:
