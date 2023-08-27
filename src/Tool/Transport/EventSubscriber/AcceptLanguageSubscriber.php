@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tool\Transport\EventSubscriber;
 
+use App\General\Domain\Enum\Language;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
@@ -16,19 +17,6 @@ use function in_array;
  */
 class AcceptLanguageSubscriber implements EventSubscriberInterface
 {
-    // Supported locales
-    final public const LOCALE_EN = 'en';
-    final public const LOCALE_RU = 'ru';
-    final public const LOCALE_UA = 'ua';
-    final public const LOCALE_FI = 'fi';
-
-    final public const SUPPORTED_LOCALES = [
-        self::LOCALE_EN,
-        self::LOCALE_RU,
-        self::LOCALE_UA,
-        self::LOCALE_FI,
-    ];
-
     public function __construct(
         private readonly string $locale,
     ) {
@@ -57,7 +45,7 @@ class AcceptLanguageSubscriber implements EventSubscriberInterface
         $locale = $request->headers->get('Accept-Language', $this->locale);
 
         // Ensure that given locale is supported, if not fallback to default.
-        if (!in_array($locale, self::SUPPORTED_LOCALES, true)) {
+        if (!in_array($locale, Language::getValues(), true)) {
             $locale = $this->locale;
         }
 

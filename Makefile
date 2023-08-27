@@ -84,28 +84,56 @@ else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
-stop: ## Stop dev environment
+stop: ## Stop dev environment services
+ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) SQL_MODE=$(SQL_MODE) docker-compose -f docker-compose.yml $(PROJECT_NAME) stop
+else
+	$(ERROR_ONLY_FOR_HOST)
+endif
+
+stop-test: ## Stop test or continuous integration environment services
+ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) SQL_MODE=$(SQL_MODE) docker-compose -f docker-compose-test-ci.yml $(PROJECT_NAME) stop
+else
+	$(ERROR_ONLY_FOR_HOST)
+endif
+
+stop-staging: ## Stop staging environment services
+ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) SQL_MODE=$(SQL_MODE) docker-compose -f docker-compose-staging.yml $(PROJECT_NAME) stop
+else
+	$(ERROR_ONLY_FOR_HOST)
+endif
+
+stop-prod: ## Stop prod environment services
+ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
+	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) SQL_MODE=$(SQL_MODE) docker-compose -f docker-compose-prod.yml $(PROJECT_NAME) stop
+else
+	$(ERROR_ONLY_FOR_HOST)
+endif
+
+down: ## Stop and remove dev environment containers, networks
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
 	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) SQL_MODE=$(SQL_MODE) docker-compose -f docker-compose.yml $(PROJECT_NAME) down
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
-stop-test: ## Stop test or continuous integration environment
+down-test: ## Stop and remove test or continuous integration environment containers, networks
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
 	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) XDEBUG_CONFIG=$(XDEBUG_CONFIG) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) SQL_MODE=$(SQL_MODE) docker-compose -f docker-compose-test-ci.yml $(PROJECT_NAME) down
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
-stop-staging: ## Stop staging environment
+down-staging: ## Stop and remove staging environment containers, networks
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
 	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) SQL_MODE=$(SQL_MODE) docker-compose -f docker-compose-staging.yml $(PROJECT_NAME) down
 else
 	$(ERROR_ONLY_FOR_HOST)
 endif
 
-stop-prod: ## Stop prod environment
+down-prod: ## Stop and remove prod environment containers, networks
 ifeq ($(INSIDE_DOCKER_CONTAINER), 0)
 	@HOST_UID=$(HOST_UID) HOST_GID=$(HOST_GID) WEB_PORT_HTTP=$(WEB_PORT_HTTP) WEB_PORT_SSL=$(WEB_PORT_SSL) INNODB_USE_NATIVE_AIO=$(INNODB_USE_NATIVE_AIO) SQL_MODE=$(SQL_MODE) docker-compose -f docker-compose-prod.yml $(PROJECT_NAME) down
 else

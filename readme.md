@@ -187,13 +187,11 @@ Note 2: Please use `exit` command in order to return from container's shell to l
 ## Building containers
 In case you edited Dockerfile or other environment configuration you'll need to build containers again using next commands:
 ```bash
-make stop
+make down
 make build
 make start
 ```
-Note 1: Please use next command if you need to build staging environment `make build-staging` instead `make build`.
-
-Note 2: Please use next command if you need to build prod environment `make build-prod` instead `make build`.
+Note: Please use environment-specific commands if you need to build staging/prod environment, more details can be found using help `make help`.
 
 ## Start and stop environment
 Please use next make commands in order to start and stop environment:
@@ -221,6 +219,11 @@ make stop
 make stop-test
 make stop-staging
 make stop-prod
+
+make down
+make down-test
+make down-staging
+make down-prod
 
 make restart
 make restart-test
