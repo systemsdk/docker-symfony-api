@@ -18,10 +18,10 @@ make start-test                         # Start test or continuous integration e
 make start-staging                      # Start staging environment
 make start-prod                         # Start prod environment
 
-make stop                               # Stop dev environment services
-make stop-test                          # Stop test or continuous integration environment services
-make stop-staging                       # Stop staging environment services
-make stop-prod                          # Stop prod environment services
+make stop                               # Stop dev environment containers
+make stop-test                          # Stop test or continuous integration environment containers
+make stop-staging                       # Stop staging environment containers
+make stop-prod                          # Stop prod environment containers
 
 make down                               # Stop and remove dev environment containers, networks
 make down-test                          # Stop and remove test or continuous integration environment containers, networks
