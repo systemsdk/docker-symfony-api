@@ -66,7 +66,7 @@ class EntityValueResolver implements ValueResolverInterface
         $entity = end($bits);
 
         return is_string($this->getUuid($argument, $request))
-            && is_subclass_of((string)$argument->getType(), EntityInterface::class, true)
+            && is_subclass_of((string)$argument->getType(), EntityInterface::class)
             && $argument->getName() === u($entity)->camel()->toString()
             && $this->resourceCollection->hasEntityResource($argument->getType(), RestFindOneResourceInterface::class);
     }

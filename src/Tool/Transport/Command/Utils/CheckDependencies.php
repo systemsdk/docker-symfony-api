@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Tool\Transport\Command\Utils;
 
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
-use InvalidArgumentException;
+use Exception;
 use JsonException;
-use LogicException;
 use SplFileInfo;
 use stdClass;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -121,8 +120,7 @@ class CheckDependencies extends Command
     /**
      * Method to determine all namespace directories under 'tools' directory.
      *
-     * @throws LogicException
-     * @throws InvalidArgumentException
+     * @throws Exception
      *
      * @return array<int, string>
      */

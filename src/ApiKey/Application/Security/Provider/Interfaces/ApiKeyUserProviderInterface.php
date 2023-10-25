@@ -7,6 +7,7 @@ namespace App\ApiKey\Application\Security\Provider\Interfaces;
 use App\ApiKey\Domain\Entity\ApiKey;
 use App\ApiKey\Domain\Repository\Interfaces\ApiKeyRepositoryInterface;
 use App\Role\Application\Security\RolesService;
+use Throwable;
 
 /**
  * Interface ApiKeyUserProviderInterface
@@ -19,6 +20,8 @@ interface ApiKeyUserProviderInterface
 
     /**
      * Method to fetch ApiKey entity for specified token.
+     *
+     * @throws Throwable
      */
     public function getApiKeyForToken(string $token): ?ApiKey;
 }

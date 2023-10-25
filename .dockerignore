@@ -1,8 +1,7 @@
 ### User-specific stuff:
 /.git*
-/.idea*
+/.idea/workspace.xml
 .dockerignore
-.editorconfig
 
 ###> symfony/framework-bundle ###
 /.env.local

@@ -244,7 +244,7 @@ class LogLogin implements EntityInterface
             'LogLogin',
             'LogLogin.user',
         ])]
-        private ?User $user = null
+        private readonly ?User $user = null
     ) {
         $this->id = $this->createUuid();
         $this->processTimeAndDate();

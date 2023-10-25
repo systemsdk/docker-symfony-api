@@ -105,7 +105,7 @@ class LogRequest implements EntityInterface
      * @throws Throwable
      */
     public function __construct(
-        private array $sensitiveProperties,
+        private readonly array $sensitiveProperties,
         ?Request $request = null,
         ?Response $response = null,
         #[ORM\ManyToOne(
@@ -119,7 +119,7 @@ class LogRequest implements EntityInterface
         #[Groups([
             'LogRequest.user',
         ])]
-        private ?User $user = null,
+        private readonly ?User $user = null,
         #[ORM\ManyToOne(
             targetEntity: ApiKey::class,
             inversedBy: 'logsRequest',
@@ -131,7 +131,7 @@ class LogRequest implements EntityInterface
         #[Groups([
             'LogRequest.apiKey',
         ])]
-        private ?ApiKey $apiKey = null,
+        private readonly ?ApiKey $apiKey = null,
         ?bool $mainRequest = null
     ) {
         $this->id = $this->createUuid();

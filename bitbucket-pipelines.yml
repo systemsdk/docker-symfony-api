@@ -27,6 +27,6 @@ pipelines:
           - make phpcs
           - make phpstan
           - make phpinsights
-          - make phpcpd
           - make phpmd
+          - make phpcpd
           - make stop-test

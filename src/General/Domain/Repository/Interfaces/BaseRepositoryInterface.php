@@ -8,6 +8,7 @@ use App\General\Domain\Entity\Interfaces\EntityInterface;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\ORM\NonUniqueResultException;
@@ -115,6 +116,8 @@ interface BaseRepositoryInterface
      * @psalm-param array<string, mixed> $criteria
      * @psalm-param array<string, string>|null $orderBy
      *
+     * @throws NotSupported
+     *
      * @psalm-return EntityInterface|object|null
      */
     public function findOneBy(array $criteria, ?array $orderBy = null, ?string $entityManagerName = null): ?object;
@@ -163,6 +166,8 @@ interface BaseRepositoryInterface
      * Wrapper for default Doctrine repository findAll method.
      *
      * @psalm-return list<object|EntityInterface>
+     *
+     * @throws NotSupported
      */
     public function findAll(?string $entityManagerName = null): array;
 

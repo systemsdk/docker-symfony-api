@@ -74,7 +74,7 @@ class Role implements EntityInterface
             UserGroup::SET_USER_PROFILE_GROUPS,
             UserGroup::SET_USER_GROUP_BASIC,
         ])]
-        private string $id
+        private readonly string $id
     ) {
         $this->userGroups = new ArrayCollection();
     }

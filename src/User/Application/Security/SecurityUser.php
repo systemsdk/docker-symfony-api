@@ -65,8 +65,6 @@ class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @codeCoverageIgnore
      */
     public function getSalt(): ?string

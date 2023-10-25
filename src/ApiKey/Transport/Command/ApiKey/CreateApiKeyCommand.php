@@ -6,7 +6,6 @@ namespace App\ApiKey\Transport\Command\ApiKey;
 
 use App\ApiKey\Application\DTO\ApiKey\ApiKeyCreate as ApiKey;
 use App\ApiKey\Application\Resource\ApiKeyResource;
-use App\ApiKey\Domain\Entity\ApiKey as ApiKeyEntity;
 use App\ApiKey\Transport\Form\Type\Console\ApiKeyType;
 use App\General\Transport\Command\HelperConfigure;
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
@@ -100,7 +99,6 @@ class CreateApiKeyCommand extends Command
         /** @var ApiKey $dto */
         $dto = $helper->interactUsingForm(ApiKeyType::class, $input, $output);
         // Create new API key
-        /** @var ApiKeyEntity $apiKey */
         $apiKey = $this->apiKeyResource->create($dto);
 
         if ($input->isInteractive()) {

@@ -60,14 +60,14 @@ jobs:
             make phpinsights
 
       - run:
-          name: Run PHP copy past detector
-          command: |
-            make phpcpd
-
-      - run:
           name: Run PHP Mess Detector
           command: |
             make phpmd
+
+      - run:
+          name: Run PHP copy past detector
+          command: |
+            make phpcpd
 
       - store_artifacts:
           path: reports

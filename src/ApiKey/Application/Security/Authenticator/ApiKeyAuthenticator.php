@@ -15,6 +15,7 @@ use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
+use Throwable;
 
 use function preg_match;
 
@@ -35,6 +36,9 @@ class ApiKeyAuthenticator extends AbstractAuthenticator
         return $this->getToken($request) !== '';
     }
 
+    /**
+     * @throws Throwable
+     */
     public function authenticate(Request $request): Passport
     {
         $token = $this->getToken($request);

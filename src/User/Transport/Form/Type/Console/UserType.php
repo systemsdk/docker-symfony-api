@@ -143,6 +143,9 @@ class UserType extends AbstractType
         ]);
     }
 
+    /**
+     * @throws Throwable
+     */
     private function addLocalizationFieldsToForm(FormBuilderInterface $builder): void
     {
         $builder

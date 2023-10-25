@@ -52,8 +52,6 @@ class ApiKeyUser implements ApiKeyUserInterface, UserInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @codeCoverageIgnore
      */
     public function getPassword(): ?string
@@ -62,8 +60,6 @@ class ApiKeyUser implements ApiKeyUserInterface, UserInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @codeCoverageIgnore
      */
     public function getSalt(): ?string

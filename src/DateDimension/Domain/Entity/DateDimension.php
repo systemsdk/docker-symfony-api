@@ -180,6 +180,9 @@ class DateDimension implements EntityInterface
     ])]
     private int $unixTime;
 
+    /**
+     * @throws Throwable
+     */
     public function __construct(
         #[ORM\Column(
             name: 'date',
@@ -189,7 +192,7 @@ class DateDimension implements EntityInterface
             'DateDimension',
             'DateDimension.date',
         ])]
-        private DateTimeImmutable $date
+        private readonly DateTimeImmutable $date
     ) {
         $this->id = $this->createUuid();
 

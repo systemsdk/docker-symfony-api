@@ -12,6 +12,7 @@ use App\User\Domain\Repository\Interfaces\UserRepositoryInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Throwable;
 
 /**
  * Class UserTypeIdentification
@@ -32,6 +33,8 @@ class UserTypeIdentification
 
     /**
      * Helper method to get current logged in ApiKey entity via token storage.
+     *
+     * @throws Throwable
      */
     public function getApiKey(): ?ApiKey
     {
@@ -88,8 +91,6 @@ class UserTypeIdentification
      */
     private function getUserToken(): UserInterface | null
     {
-        $token = $this->tokenStorage->getToken();
-
-        return $token?->getUser();
+        return $this->tokenStorage->getToken()?->getUser();
     }
 }

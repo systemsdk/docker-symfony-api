@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Throwable;
 
 /**
  * Class ApiKeyUserProvider
@@ -38,6 +39,9 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInt
         return $class === ApiKeyUser::class;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function loadUserByIdentifier(string $identifier): ApiKeyUser
     {
         $apiKey = $this->getApiKeyForToken($identifier);

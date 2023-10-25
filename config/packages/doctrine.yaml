@@ -15,12 +15,14 @@ doctrine:
                 url: '%env(resolve:DATABASE_URL)%'
                 mapping_types:
                     enum: string
+                profiling_collect_backtrace: '%kernel.debug%'
         types:
             datetime: App\General\Domain\Doctrine\DBAL\Types\UTCDateTimeType
             datetimetz: App\General\Domain\Doctrine\DBAL\Types\UTCDateTimeType
             EnumLanguage: App\General\Domain\Doctrine\DBAL\Types\EnumLanguageType
             EnumLocale: App\General\Domain\Doctrine\DBAL\Types\EnumLocaleType
             EnumLogLogin: App\General\Domain\Doctrine\DBAL\Types\EnumLogLoginType
+
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true

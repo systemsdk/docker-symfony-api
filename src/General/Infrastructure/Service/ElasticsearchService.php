@@ -26,9 +26,9 @@ class ElasticsearchService implements ElasticsearchServiceInterface
      * Constructor
      */
     public function __construct(
-        private string $host,
-        private string $username,
-        private string $password,
+        private readonly string $host,
+        private readonly string $username,
+        private readonly string $password,
     ) {
         $this->instantiate();
     }

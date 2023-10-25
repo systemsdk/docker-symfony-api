@@ -17,7 +17,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 class MessageService implements MessageServiceInterface
 {
     public function __construct(
-        private MessageBusInterface $bus,
+        private readonly MessageBusInterface $bus,
     ) {
     }
 

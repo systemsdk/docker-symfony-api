@@ -10,6 +10,7 @@ use App\User\Domain\Repository\Interfaces\UserRepositoryInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Throwable;
 
 /**
@@ -51,7 +52,9 @@ class AuthenticationFailureSubscriber implements EventSubscriberInterface
      */
     public function onAuthenticationFailure(AuthenticationFailureEvent $event): void
     {
-        $token = $event->getException()->getToken();
+        /** @var AuthenticationException|null $exception */
+        $exception = $event->getException();
+        $token = $exception?->getToken();
         $user = $token?->getUser();
 
         // Fetch user entity

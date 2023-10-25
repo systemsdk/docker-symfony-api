@@ -35,7 +35,7 @@ class LogLoginRepository extends BaseRepository implements LogLoginRepositoryInt
 
     public function __construct(
         protected ManagerRegistry $managerRegistry,
-        private int $databaseLogLoginHistoryDays,
+        private readonly int $databaseLogLoginHistoryDays,
     ) {
     }
 

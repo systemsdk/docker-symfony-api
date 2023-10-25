@@ -9,6 +9,7 @@ use AutoMapperPlus\MapperInterface;
 use InvalidArgumentException;
 use LengthException;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionNamedType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -38,6 +39,8 @@ abstract class RestRequestMapper implements MapperInterface
      *
      * @psalm-param array<array-key, mixed>|object $source
      * @psalm-param array<int, mixed> $context
+     *
+     * @throws ReflectionException
      */
     public function map($source, string $targetClass, array $context = []): RestDtoInterface
     {
@@ -54,7 +57,9 @@ abstract class RestRequestMapper implements MapperInterface
      * @psalm-param object $destination
      * @psalm-param array<int, mixed> $context
      *
-     * @throws InvalidArgumentException|LengthException
+     * @throws InvalidArgumentException
+     * @throws LengthException
+     * @throws ReflectionException
      */
     public function mapToObject($source, $destination, array $context = []): RestDtoInterface
     {
@@ -97,6 +102,9 @@ abstract class RestRequestMapper implements MapperInterface
         return $this->getObject($source, $destination);
     }
 
+    /**
+     * @throws ReflectionException
+     */
     private function getObject(Request $request, RestDtoInterface $restDto): RestDtoInterface
     {
         $reflectionClass = new ReflectionClass($restDto::class);

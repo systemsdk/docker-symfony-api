@@ -6,6 +6,7 @@ namespace App\General\Application\Decorator;
 
 use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
+use Closure;
 use ProxyManager\Factory\AccessInterceptorValueHolderFactory;
 use ReflectionClass;
 use ReflectionMethod;
@@ -58,7 +59,7 @@ class StopwatchDecorator
     }
 
     /**
-     * @return array{0: array<string, \Closure>, 1: array<string, \Closure>}
+     * @return array{0: array<string, Closure>, 1: array<string, Closure>}
      */
     private function getPrefixAndSuffixInterceptors(ReflectionClass $class, string $className): array
     {

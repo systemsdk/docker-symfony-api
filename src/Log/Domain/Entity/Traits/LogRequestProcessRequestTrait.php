@@ -379,7 +379,7 @@ trait LogRequestProcessRequestTrait
             }
         }
 
-        return (array)$output;
+        return $output;
     }
 
     /**
@@ -394,7 +394,7 @@ trait LogRequestProcessRequestTrait
 
         // Replace current value
         if (array_key_exists($key, $replacements)) {
-            $value = $this->cleanContent((string)$replacements[$key]);
+            $value = $this->cleanContent((string)$replacements[(string)$key]);
         }
 
         // Recursive call

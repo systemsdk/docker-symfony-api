@@ -10,10 +10,11 @@ use App\General\Infrastructure\Rest\RepositoryHelper;
 use ArrayIterator;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\Exception\NotSupported;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -94,6 +95,8 @@ trait RepositoryMethodsTrait
 
     /**
      * {@inheritdoc}
+     *
+     * @throws NotSupported
      *
      * @psalm-return list<object|EntityInterface>
      */

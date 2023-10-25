@@ -42,7 +42,7 @@ class HealthRepository extends BaseRepository implements HealthRepositoryInterfa
 
     public function __construct(
         protected ManagerRegistry $managerRegistry,
-        private int $databaseHealthHistoryDays,
+        private readonly int $databaseHealthHistoryDays,
     ) {
     }
 

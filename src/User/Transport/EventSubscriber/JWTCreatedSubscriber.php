@@ -10,6 +10,7 @@ use App\Tool\Domain\Service\Interfaces\LocalizationServiceInterface;
 use App\User\Application\Security\SecurityUser;
 use DateTime;
 use DateTimeZone;
+use Exception;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Psr\Log\LoggerInterface;
@@ -51,6 +52,8 @@ class JWTCreatedSubscriber implements EventSubscriberInterface
      *
      * This method is called when following event is broadcast;
      *  - lexik_jwt_authentication.on_jwt_created
+     *
+     * @throws Exception
      */
     public function onJWTCreated(JWTCreatedEvent $event): void
     {
@@ -86,6 +89,8 @@ class JWTCreatedSubscriber implements EventSubscriberInterface
      * Method to set/modify JWT expiration date dynamically.
      *
      * @param array<string, string|int> $payload
+     *
+     * @throws Exception
      */
     private function setExpiration(array &$payload): void
     {

@@ -32,6 +32,8 @@ trait FindOneByMethod
     public function findOneByMethod(Request $request, array $criteria, ?array $allowedHttpMethods = null): Response
     {
         /** @var RestResourceInterface|RestFindOneResourceInterface $resource */
+        /** TODO: Delete noinspection when trait will be used */
+        /** @noinspection PhpUndefinedMethodInspection */
         $resource = $this->getResourceForMethod($request, $allowedHttpMethods ?? [Request::METHOD_GET]);
 
         try {
@@ -47,6 +49,8 @@ trait FindOneByMethod
                     $resource
                 );
         } catch (Throwable $exception) {
+            /** TODO: Delete noinspection when trait will be used */
+            /** @noinspection PhpUndefinedMethodInspection */
             throw $this->handleRestMethodException($exception, $criteria['id'] ?? null, $entityManagerName ?? null);
         }
     }
