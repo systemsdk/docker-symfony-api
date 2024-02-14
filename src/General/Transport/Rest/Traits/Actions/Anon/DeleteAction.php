@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\General\Transport\Rest\Traits\Actions\Anon;
 
 use App\General\Transport\Rest\Traits\Methods\DeleteMethod;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,15 +29,6 @@ trait DeleteAction
     /**
      * Delete entity, accessible for anonymous users.
      *
-     * @OA\Response(
-     *     response=200,
-     *     description="deleted",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={},
-     *     ),
-     * )
-     *
      * @throws Throwable
      */
     #[Route(
@@ -45,6 +37,14 @@ trait DeleteAction
             'id' => Requirement::UUID_V1,
         ],
         methods: [Request::METHOD_DELETE],
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'deleted',
+        content: new JsonContent(
+            type: 'object',
+            example: [],
+        ),
     )]
     public function deleteAction(Request $request, string $id): Response
     {

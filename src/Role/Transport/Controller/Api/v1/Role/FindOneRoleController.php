@@ -10,7 +10,9 @@ use App\Role\Application\Resource\RoleResource;
 use App\Role\Domain\Entity\Role as RoleEntity;
 use App\Role\Domain\Enum\Role;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
+use OpenApi\Attributes\Property;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -22,11 +24,10 @@ use Throwable;
 /**
  * Class FindOneRoleController
  *
- * @OA\Tag(name="Role Management")
- *
  * @package App\Role
  */
 #[AsController]
+#[OA\Tag(name: 'Role Management')]
 class FindOneRoleController extends Controller
 {
     use Methods\FindOneMethod;
@@ -40,28 +41,6 @@ class FindOneRoleController extends Controller
     /**
      * Find role entity, accessible for 'ROLE_ADMIN' users.
      *
-     * @OA\Response(
-     *     response=200,
-     *     description="success",
-     *     @OA\JsonContent(
-     *         example={"id": "ROLE_ROOT", "description": "role root description"},
-     *         ref=@Model(
-     *             type=RoleEntity::class,
-     *             groups={"Role"},
-     *         ),
-     *     ),
-     * )
-     * @OA\Response(
-     *     response=403,
-     *     description="Access denied",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={"code": 403, "message": "Access denied"},
-     *         @OA\Property(property="code", type="integer", description="Error code"),
-     *         @OA\Property(property="message", type="string", description="Error description"),
-     *     ),
-     *  )
-     *
      * @throws Throwable
      */
     #[Route(
@@ -72,6 +51,33 @@ class FindOneRoleController extends Controller
         methods: [Request::METHOD_GET],
     )]
     #[IsGranted(Role::ADMIN->value)]
+    #[OA\Response(
+        response: 200,
+        description: 'success',
+        content: new JsonContent(
+            ref: new Model(type: RoleEntity::class, groups: ['Role']),
+            type: 'object',
+            example: [
+                'id' => 'ROLE_ROOT',
+                'description' => 'role root description',
+            ],
+        ),
+    )]
+    #[OA\Response(
+        response: 403,
+        description: 'Access denied',
+        content: new JsonContent(
+            properties: [
+                new Property(property: 'code', description: 'Error code', type: 'integer'),
+                new Property(property: 'message', description: 'Error description', type: 'string'),
+            ],
+            type: 'object',
+            example: [
+                'code' => 403,
+                'message' => 'Access denied',
+            ],
+        ),
+    )]
     public function __invoke(Request $request, string $role): Response
     {
         return $this->findOneMethod($request, $role);

@@ -9,7 +9,7 @@ use App\ApiKey\Application\Resource\Interfaces\ApiKeyFindOneResourceInterface;
 use App\General\Transport\Rest\Controller;
 use App\General\Transport\Rest\ResponseHandler;
 use App\General\Transport\Rest\Traits\Actions;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
@@ -17,8 +17,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class ApiKeyViewController
- *
- * @OA\Tag(name="ApiKey Management v2")
  *
  * @package App\ApiKey
  *
@@ -30,6 +28,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
     path: '/v2/api_key',
 )]
 #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
+#[OA\Tag(name: 'ApiKey Management v2')]
 class ApiKeyViewController extends Controller
 {
     use Actions\Root\FindOneAction;

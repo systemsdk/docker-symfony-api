@@ -6,7 +6,9 @@ namespace App\General\Transport\Rest\Traits\Actions\Logged;
 
 use App\General\Transport\Rest\Traits\Methods\IdsMethod;
 use App\Role\Domain\Enum\Role;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
+use OpenApi\Attributes\Property;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,25 +31,6 @@ trait IdsAction
     /**
      * Find ids list, accessible only for 'ROLE_LOGGED' users.
      *
-     * @OA\Response(
-     *     response=200,
-     *     description="success",
-     *     @OA\JsonContent(
-     *         type="array",
-     *         @OA\Items(type="string"),
-     *     ),
-     * )
-     * @OA\Response(
-     *     response=403,
-     *     description="Access denied",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={"code": 403, "message": "Access denied"},
-     *         @OA\Property(property="code", type="integer", description="Error code"),
-     *         @OA\Property(property="message", type="string", description="Error description"),
-     *     ),
-     * )
-     *
      * @throws Throwable
      */
     #[Route(
@@ -55,6 +38,29 @@ trait IdsAction
         methods: [Request::METHOD_GET],
     )]
     #[IsGranted(Role::LOGGED->value)]
+    #[OA\Response(
+        response: 200,
+        description: 'success',
+        content: new JsonContent(
+            type: 'array',
+            items: new OA\Items(type: 'string'),
+        ),
+    )]
+    #[OA\Response(
+        response: 403,
+        description: 'Access denied',
+        content: new JsonContent(
+            properties: [
+                new Property(property: 'code', description: 'Error code', type: 'integer'),
+                new Property(property: 'message', description: 'Error description', type: 'string'),
+            ],
+            type: 'object',
+            example: [
+                'code' => 403,
+                'message' => 'Access denied',
+            ],
+        ),
+    )]
     public function idsAction(Request $request): Response
     {
         return $this->idsMethod($request);

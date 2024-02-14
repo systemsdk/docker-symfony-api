@@ -11,7 +11,7 @@ use App\User\Application\DTO\UserGroup\UserGroupCreate;
 use App\User\Application\DTO\UserGroup\UserGroupPatch;
 use App\User\Application\DTO\UserGroup\UserGroupUpdate;
 use App\User\Application\Resource\UserGroupResource;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
@@ -19,8 +19,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class UserGroupController
- *
- * @OA\Tag(name="UserGroup Management")
  *
  * @package App\User
  *
@@ -32,6 +30,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
     path: '/v1/user_group',
 )]
 #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
+#[OA\Tag(name: 'UserGroup Management')]
 class UserGroupController extends Controller
 {
     use Actions\Admin\CountAction;

@@ -6,7 +6,8 @@ namespace App\General\Transport\Rest\Traits\Actions\Anon;
 
 use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Transport\Rest\Traits\Methods\UpdateMethod;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,24 +30,6 @@ trait UpdateAction
     /**
      * Update entity with new data, accessible for anonymous users.
      *
-     * @OA\RequestBody(
-     *      request="body",
-     *      description="object",
-     *      @OA\JsonContent(
-     *          type="object",
-     *          example={"param": "value"},
-     *      )
-     * )
-     *
-     * @OA\Response(
-     *     response=200,
-     *     description="success",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={},
-     *     ),
-     * )
-     *
      * @throws Throwable
      */
     #[Route(
@@ -55,6 +38,24 @@ trait UpdateAction
             'id' => Requirement::UUID_V1,
         ],
         methods: [Request::METHOD_PUT],
+    )]
+    #[OA\RequestBody(
+        request: 'body',
+        description: 'object',
+        content: new JsonContent(
+            type: 'object',
+            example: [
+                'param' => 'value',
+            ],
+        ),
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'success',
+        content: new JsonContent(
+            type: 'object',
+            example: [],
+        ),
     )]
     public function updateAction(Request $request, RestDtoInterface $restDto, string $id): Response
     {

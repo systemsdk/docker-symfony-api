@@ -31,7 +31,7 @@ interface LocalizationServiceInterface
     public function getTimezones(): array;
 
     /**
-     * @return array<int, array{timezone: string, identifier: string,  offset: string, value: string}>
+     * @return array<int, array{timezone: string, identifier: non-empty-string,  offset: string, value: string}>
      *
      * @throws Throwable
      */

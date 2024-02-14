@@ -10,7 +10,9 @@ use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Entity\UserGroup;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
+use OpenApi\Attributes\Property;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -22,11 +24,10 @@ use Throwable;
 /**
  * Class UsersController
  *
- * @OA\Tag(name="UserGroup Management")
- *
  * @package App\User
  */
 #[AsController]
+#[OA\Tag(name: 'UserGroup Management')]
 class UsersController
 {
     public function __construct(
@@ -38,31 +39,6 @@ class UsersController
     /**
      * List specified user group users, accessible only for 'ROLE_ADMIN' users.
      *
-     * @OA\Response(
-     *     response=200,
-     *     description="User group users",
-     *     @OA\JsonContent(
-     *         ref=@Model(
-     *             type=User::class,
-     *             groups={"User", "User.userGroups", "User.roles", "UserGroup", "UserGroup.role"},
-     *         ),
-     *     ),
-     * )
-     * @OA\Response(
-     *     response=401,
-     *     description="Invalid token (not found or expired)",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={"code": 401, "message": "JWT Token not found"},
-     *         @OA\Property(property="code", type="integer", description="Error code"),
-     *         @OA\Property(property="message", type="string", description="Error description"),
-     *     ),
-     * )
-     * @OA\Response(
-     *     response=404,
-     *     description="User Group not found",
-     *  )
-     *
      * @throws Throwable
      */
     #[Route(
@@ -73,6 +49,53 @@ class UsersController
         methods: [Request::METHOD_GET],
     )]
     #[IsGranted(Role::ADMIN->value)]
+    #[OA\Response(
+        response: 200,
+        description: 'User group users',
+        content: new JsonContent(
+            type: 'array',
+            items: new OA\Items(
+                ref: new Model(
+                    type: User::class,
+                    groups: ['User', 'User.userGroups', 'User.roles', 'UserGroup', 'UserGroup.role']
+                ),
+            ),
+        ),
+    )]
+    #[OA\Response(
+        response: 401,
+        description: 'Invalid token (not found or expired)',
+        content: new JsonContent(
+            properties: [
+                new Property(property: 'code', description: 'Error code', type: 'integer'),
+                new Property(property: 'message', description: 'Error description', type: 'string'),
+            ],
+            type: 'object',
+            example: [
+                'code' => 401,
+                'message' => 'JWT Token not found',
+            ],
+        ),
+    )]
+    #[OA\Response(
+        response: 403,
+        description: 'Access denied',
+        content: new JsonContent(
+            properties: [
+                new Property(property: 'code', description: 'Error code', type: 'integer'),
+                new Property(property: 'message', description: 'Error description', type: 'string'),
+            ],
+            type: 'object',
+            example: [
+                'code' => 403,
+                'message' => 'Access denied',
+            ],
+        ),
+    )]
+    #[OA\Response(
+        response: 404,
+        description: 'User Group not found',
+    )]
     public function __invoke(Request $request, UserGroup $userGroup): Response
     {
         return $this->responseHandler

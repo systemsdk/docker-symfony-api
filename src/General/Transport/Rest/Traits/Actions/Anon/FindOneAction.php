@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\General\Transport\Rest\Traits\Actions\Anon;
 
 use App\General\Transport\Rest\Traits\Methods\FindOneMethod;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,15 +29,6 @@ trait FindOneAction
     /**
      * Find entity, accessible for anonymous users.
      *
-     * @OA\Response(
-     *     response=200,
-     *     description="success",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={},
-     *     ),
-     * )
-     *
      * @throws Throwable
      */
     #[Route(
@@ -45,6 +37,14 @@ trait FindOneAction
             'id' => Requirement::UUID_V1,
         ],
         methods: [Request::METHOD_GET],
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'success',
+        content: new JsonContent(
+            type: 'object',
+            example: [],
+        ),
     )]
     public function findOneAction(Request $request, string $id): Response
     {

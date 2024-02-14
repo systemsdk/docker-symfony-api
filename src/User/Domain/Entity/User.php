@@ -18,7 +18,6 @@ use App\User\Domain\Entity\Traits\UserRelations;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use OpenApi\Annotations as OA;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints as AssertCollection;
@@ -56,9 +55,6 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
 
     final public const PASSWORD_MIN_LENGTH = 8;
 
-    /**
-     * @OA\Property(type="string", format="uuid")
-     */
     #[ORM\Id]
     #[ORM\Column(
         name: 'id',

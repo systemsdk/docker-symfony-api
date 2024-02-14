@@ -6,7 +6,9 @@ namespace App\General\Transport\Rest\Traits\Actions\Admin;
 
 use App\General\Transport\Rest\Traits\Methods\CountMethod;
 use App\Role\Domain\Enum\Role;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
+use OpenApi\Attributes\Property;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,26 +31,6 @@ trait CountAction
     /**
      * Count entities, accessible only for 'ROLE_ADMIN' users.
      *
-     * @OA\Response(
-     *      response=200,
-     *      description="success",
-     *      @OA\JsonContent(
-     *          type="object",
-     *          example={"count": "1"},
-     *          @OA\Property(property="count", type="integer"),
-     *      ),
-     *  )
-     * @OA\Response(
-     *      response=403,
-     *      description="Access denied",
-     *      @OA\JsonContent(
-     *          type="object",
-     *          example={"code": 403, "message": "Access denied"},
-     *          @OA\Property(property="code", type="integer", description="Error code"),
-     *          @OA\Property(property="message", type="string", description="Error description"),
-     *      ),
-     *  )
-     *
      * @throws Throwable
      */
     #[Route(
@@ -56,6 +38,34 @@ trait CountAction
         methods: [Request::METHOD_GET],
     )]
     #[IsGranted(Role::ADMIN->value)]
+    #[OA\Response(
+        response: 200,
+        description: 'success',
+        content: new JsonContent(
+            properties: [
+                new Property(property: 'count', type: 'integer'),
+            ],
+            type: 'object',
+            example: [
+                'count' => 1,
+            ],
+        ),
+    )]
+    #[OA\Response(
+        response: 403,
+        description: 'Access denied',
+        content: new JsonContent(
+            properties: [
+                new Property(property: 'code', description: 'Error code', type: 'integer'),
+                new Property(property: 'message', description: 'Error description', type: 'string'),
+            ],
+            type: 'object',
+            example: [
+                'code' => 403,
+                'message' => 'Access denied',
+            ],
+        ),
+    )]
     public function countAction(Request $request): Response
     {
         return $this->countMethod($request);

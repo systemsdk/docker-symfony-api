@@ -11,7 +11,6 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use OpenApi\Annotations as OA;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -33,9 +32,6 @@ class LogLoginFailure implements EntityInterface
 {
     use Uuid;
 
-    /**
-     * @OA\Property(type="string", format="uuid")
-     */
     #[ORM\Id]
     #[ORM\Column(
         name: 'id',

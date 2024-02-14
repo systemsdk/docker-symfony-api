@@ -19,6 +19,8 @@ use Throwable;
  * Class ApiKeyUserProvider
  *
  * @package App\ApiKey
+ *
+ * @template-implements UserProviderInterface<ApiKeyUser>
  */
 class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInterface
 {

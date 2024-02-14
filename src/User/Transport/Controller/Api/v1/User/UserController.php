@@ -11,7 +11,7 @@ use App\User\Application\DTO\User\UserCreate;
 use App\User\Application\DTO\User\UserPatch;
 use App\User\Application\DTO\User\UserUpdate;
 use App\User\Application\Resource\UserResource;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
@@ -19,8 +19,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class UserController
- *
- * @OA\Tag(name="User Management")
  *
  * @package App\User
  *
@@ -32,6 +30,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
     path: '/v1/user',
 )]
 #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
+#[OA\Tag(name: 'User Management')]
 class UserController extends Controller
 {
     use Actions\Admin\CountAction;

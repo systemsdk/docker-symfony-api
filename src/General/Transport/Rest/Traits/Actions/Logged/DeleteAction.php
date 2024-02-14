@@ -6,7 +6,9 @@ namespace App\General\Transport\Rest\Traits\Actions\Logged;
 
 use App\General\Transport\Rest\Traits\Methods\DeleteMethod;
 use App\Role\Domain\Enum\Role;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
+use OpenApi\Attributes\Property;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,25 +32,6 @@ trait DeleteAction
     /**
      * Delete entity, accessible only for 'ROLE_LOGGED' users.
      *
-     * @OA\Response(
-     *     response=200,
-     *     description="deleted",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={},
-     *     ),
-     * )
-     * @OA\Response(
-     *     response=403,
-     *     description="Access denied",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={"code": 403, "message": "Access denied"},
-     *         @OA\Property(property="code", type="integer", description="Error code"),
-     *         @OA\Property(property="message", type="string", description="Error description"),
-     *     ),
-     * )
-     *
      * @throws Throwable
      */
     #[Route(
@@ -59,6 +42,29 @@ trait DeleteAction
         methods: [Request::METHOD_DELETE],
     )]
     #[IsGranted(Role::LOGGED->value)]
+    #[OA\Response(
+        response: 200,
+        description: 'deleted',
+        content: new JsonContent(
+            type: 'object',
+            example: [],
+        ),
+    )]
+    #[OA\Response(
+        response: 403,
+        description: 'Access denied',
+        content: new JsonContent(
+            properties: [
+                new Property(property: 'code', description: 'Error code', type: 'integer'),
+                new Property(property: 'message', description: 'Error description', type: 'string'),
+            ],
+            type: 'object',
+            example: [
+                'code' => 403,
+                'message' => 'Access denied',
+            ],
+        ),
+    )]
     public function deleteAction(Request $request, string $id): Response
     {
         return $this->deleteMethod($request, $id);

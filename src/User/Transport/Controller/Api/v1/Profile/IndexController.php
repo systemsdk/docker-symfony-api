@@ -9,7 +9,9 @@ use App\Role\Application\Security\RolesService;
 use App\User\Domain\Entity\User;
 use JsonException;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
+use OpenApi\Attributes\Property;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -21,11 +23,10 @@ use Symfony\Component\Serializer\SerializerInterface;
 /**
  * Class IndexController
  *
- * @OA\Tag(name="Profile")
- *
  * @package App\User
  */
 #[AsController]
+#[OA\Tag(name: 'Profile')]
 class IndexController
 {
     public function __construct(
@@ -37,27 +38,6 @@ class IndexController
     /**
      * Get current user profile data, accessible only for 'IS_AUTHENTICATED_FULLY' users.
      *
-     * @OA\Response(
-     *     response=200,
-     *     description="User profile data",
-     *     @OA\JsonContent(
-     *         ref=@Model(
-     *             type=User::class,
-     *             groups={"set.UserProfile"},
-     *         ),
-     *     ),
-     *  )
-     * @OA\Response(
-     *     response=401,
-     *     description="Invalid token (not found or expired)",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={"code": 401, "message": "JWT Token not found"},
-     *         @OA\Property(property="code", type="integer", description="Error code"),
-     *         @OA\Property(property="message", type="string", description="Error description"),
-     *     ),
-     * )
-     *
      * @throws JsonException
      */
     #[Route(
@@ -65,6 +45,47 @@ class IndexController
         methods: [Request::METHOD_GET],
     )]
     #[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
+    #[OA\Response(
+        response: 200,
+        description: 'User profile data',
+        content: new JsonContent(
+            ref: new Model(
+                type: User::class,
+                groups: ['set.UserProfile'],
+            ),
+            type: 'object',
+        ),
+    )]
+    #[OA\Response(
+        response: 401,
+        description: 'Invalid token (not found or expired)',
+        content: new JsonContent(
+            properties: [
+                new Property(property: 'code', description: 'Error code', type: 'integer'),
+                new Property(property: 'message', description: 'Error description', type: 'string'),
+            ],
+            type: 'object',
+            example: [
+                'code' => 401,
+                'message' => 'JWT Token not found',
+            ],
+        ),
+    )]
+    #[OA\Response(
+        response: 403,
+        description: 'Access denied',
+        content: new JsonContent(
+            properties: [
+                new Property(property: 'code', description: 'Error code', type: 'integer'),
+                new Property(property: 'message', description: 'Error description', type: 'string'),
+            ],
+            type: 'object',
+            example: [
+                'code' => 403,
+                'message' => 'Access denied',
+            ],
+        ),
+    )]
     public function __invoke(User $loggedInUser): JsonResponse
     {
         /** @var array<string, string|array<string, string>> $output */

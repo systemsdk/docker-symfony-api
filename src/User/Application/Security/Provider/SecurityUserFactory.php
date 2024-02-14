@@ -19,6 +19,8 @@ use Throwable;
  * Class SecurityUserFactory
  *
  * @package App\User
+ *
+ * @template-implements UserProviderInterface<SecurityUser>
  */
 class SecurityUserFactory implements UserProviderInterface
 {

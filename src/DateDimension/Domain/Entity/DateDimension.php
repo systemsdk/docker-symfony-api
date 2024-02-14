@@ -11,7 +11,7 @@ use DateTimeInterface;
 use DateTimeZone;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -35,9 +35,6 @@ class DateDimension implements EntityInterface
 {
     use Uuid;
 
-    /**
-     * @OA\Property(type="string", format="uuid")
-     */
     #[ORM\Id]
     #[ORM\Column(
         name: 'id',
@@ -48,6 +45,7 @@ class DateDimension implements EntityInterface
         'DateDimension',
         'DateDimension.id',
     ])]
+    #[OA\Property(type: 'string', format: 'uuid')]
     private UuidInterface $id;
 
     #[ORM\Column(
@@ -178,7 +176,7 @@ class DateDimension implements EntityInterface
         'DateDimension',
         'DateDimension.unixTime',
     ])]
-    private int $unixTime;
+    private string $unixTime;
 
     /**
      * @throws Throwable
@@ -205,7 +203,7 @@ class DateDimension implements EntityInterface
         $this->dayNumberOfYear = (int)$date->format('z');
         $this->leapYear = (bool)$date->format('L');
         $this->weekNumberingYear = (int)$date->format('o');
-        $this->unixTime = (int)$date->format('U');
+        $this->unixTime = $date->format('U');
     }
 
     public function getId(): string
@@ -263,7 +261,7 @@ class DateDimension implements EntityInterface
         return $this->weekNumberingYear;
     }
 
-    public function getUnixTime(): int
+    public function getUnixTime(): string
     {
         return $this->unixTime;
     }
@@ -273,7 +271,7 @@ class DateDimension implements EntityInterface
      */
     public function getCreatedAt(): DateTimeImmutable
     {
-        $output = DateTimeImmutable::createFromFormat('U', (string)$this->getUnixTime(), new DateTimeZone('UTC'));
+        $output = DateTimeImmutable::createFromFormat('U', $this->getUnixTime(), new DateTimeZone('UTC'));
 
         return $output === false ? new DateTimeImmutable(timezone: new DateTimeZone('UTC')) : $output;
     }

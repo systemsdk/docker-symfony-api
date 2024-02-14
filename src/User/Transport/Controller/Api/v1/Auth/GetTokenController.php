@@ -8,7 +8,9 @@ use App\General\Domain\Utils\JSON;
 use App\User\Domain\Entity\User;
 use JsonException;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
+use OpenApi\Attributes\Property;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -20,58 +22,14 @@ use function sprintf;
 /**
  * Class GetTokenController
  *
- * @OA\Tag(name="Authentication")
- *
  * @package App\User
  */
 #[AsController]
+#[OA\Tag(name: 'Authentication')]
 class GetTokenController
 {
     /**
      * Get user Json Web Token (JWT) for authentication.
-     *
-     * @OA\Post(security={})
-     *
-     * @OA\RequestBody(
-     *      request="body",
-     *      description="Credentials object",
-     *      required=true,
-     *      @OA\JsonContent(
-     *          type="object",
-     *          example={"username": "username", "password": "password"},
-     *          @OA\Property(property="username", ref=@Model(type=User::class, groups={"User.username"})),
-     *          @OA\Property(property="password", type="string"),
-     *      )
-     *  )
-     * @OA\Response(
-     *      response=200,
-     *      description="JSON Web Token for user",
-     *      @OA\JsonContent(
-     *          type="object",
-     *          example={"token": "_json_web_token_"},
-     *          @OA\Property(property="token", type="string", description="Json Web Token"),
-     *      ),
-     *  )
-     * @OA\Response(
-     *      response=400,
-     *      description="Bad Request",
-     *      @OA\JsonContent(
-     *          type="object",
-     *          example={"code": 400, "message": "Bad Request"},
-     *          @OA\Property(property="code", type="integer", description="Error code"),
-     *          @OA\Property(property="message", type="string", description="Error description"),
-     *      ),
-     *  )
-     * @OA\Response(
-     *      response=401,
-     *      description="Unauthorized",
-     *      @OA\JsonContent(
-     *          type="object",
-     *          example={"code": 401, "message": "Bad credentials"},
-     *          @OA\Property(property="code", type="integer", description="Error code"),
-     *          @OA\Property(property="message", type="string", description="Error description"),
-     *      ),
-     *  )
      *
      * @throws HttpException
      * @throws JsonException
@@ -80,7 +38,75 @@ class GetTokenController
         path: '/v1/auth/get_token',
         methods: [Request::METHOD_POST],
     )]
-    public function __invoke(): void
+    #[OA\RequestBody(
+        request: 'body',
+        description: 'Credentials object',
+        required: true,
+        content: new JsonContent(
+            properties: [
+                new Property(property: 'username', ref: new Model(type: User::class, groups: ['User.username'])),
+                new Property(property: 'password', type: 'string'),
+            ],
+            type: 'object',
+            example: [
+                'username' => 'username',
+                'password' => 'password',
+            ],
+        ),
+    )]
+    #[OA\Post(
+        security: [],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'JSON Web Token for user',
+                content: new JsonContent(
+                    properties: [
+                        new Property(
+                            property: 'token',
+                            description: 'Json Web Token',
+                            type: 'string',
+                        ),
+                    ],
+                    type: 'object',
+                    example: [
+                        'token' => '_json_web_token_',
+                    ],
+                ),
+            ),
+            new OA\Response(
+                response: 400,
+                description: 'Bad Request',
+                content: new JsonContent(
+                    properties: [
+                        new Property(property: 'code', description: 'Error code', type: 'integer'),
+                        new Property(property: 'message', description: 'Error description', type: 'string'),
+                    ],
+                    type: 'object',
+                    example: [
+                        'code' => 400,
+                        'message' => 'Bad Request',
+                    ],
+                ),
+            ),
+            new OA\Response(
+                response: 401,
+                description: 'Unauthorized',
+                content: new JsonContent(
+                    properties: [
+                        new Property(property: 'code', description: 'Error code', type: 'integer'),
+                        new Property(property: 'message', description: 'Error description', type: 'string'),
+                    ],
+                    type: 'object',
+                    example: [
+                        'code' => 401,
+                        'message' => 'Bad credentials',
+                    ],
+                ),
+            ),
+        ],
+    )]
+    public function __invoke(): never
     {
         $message = sprintf(
             'You need to send JSON body to obtain token eg. %s',

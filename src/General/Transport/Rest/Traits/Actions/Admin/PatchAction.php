@@ -7,7 +7,9 @@ namespace App\General\Transport\Rest\Traits\Actions\Admin;
 use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Transport\Rest\Traits\Methods\PatchMethod;
 use App\Role\Domain\Enum\Role;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
+use OpenApi\Attributes\Property;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,34 +33,6 @@ trait PatchAction
     /**
      * Patch entity with new data, accessible only for 'ROLE_ADMIN' users.
      *
-     * @OA\RequestBody(
-     *      request="body",
-     *      description="object",
-     *      @OA\JsonContent(
-     *          type="object",
-     *          example={"param": "value"},
-     *      )
-     * )
-     *
-     * @OA\Response(
-     *     response=200,
-     *     description="success",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={},
-     *     ),
-     * )
-     * @OA\Response(
-     *     response=403,
-     *     description="Access denied",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={"code": 403, "message": "Access denied"},
-     *         @OA\Property(property="code", type="integer", description="Error code"),
-     *         @OA\Property(property="message", type="string", description="Error description"),
-     *     ),
-     * )
-     *
      * @throws Throwable
      */
     #[Route(
@@ -69,6 +43,39 @@ trait PatchAction
         methods: [Request::METHOD_PATCH],
     )]
     #[IsGranted(Role::ADMIN->value)]
+    #[OA\RequestBody(
+        request: 'body',
+        description: 'object',
+        content: new JsonContent(
+            type: 'object',
+            example: [
+                'param' => 'value',
+            ],
+        ),
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'success',
+        content: new JsonContent(
+            type: 'object',
+            example: [],
+        ),
+    )]
+    #[OA\Response(
+        response: 403,
+        description: 'Access denied',
+        content: new JsonContent(
+            properties: [
+                new Property(property: 'code', description: 'Error code', type: 'integer'),
+                new Property(property: 'message', description: 'Error description', type: 'string'),
+            ],
+            type: 'object',
+            example: [
+                'code' => 403,
+                'message' => 'Access denied',
+            ],
+        ),
+    )]
     public function patchAction(Request $request, RestDtoInterface $restDto, string $id): Response
     {
         return $this->patchMethod($request, $restDto, $id);

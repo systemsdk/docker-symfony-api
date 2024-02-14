@@ -6,7 +6,8 @@ namespace App\General\Transport\Rest\Traits\Actions\Anon;
 
 use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Transport\Rest\Traits\Methods\CreateMethod;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,29 +29,29 @@ trait CreateAction
     /**
      * Create entity, accessible for anonymous users.
      *
-     * @OA\RequestBody(
-     *      request="body",
-     *      description="object",
-     *      @OA\JsonContent(
-     *          type="object",
-     *          example={"param": "value"},
-     *      )
-     * )
-     *
-     * @OA\Response(
-     *     response=201,
-     *     description="created",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={},
-     *     ),
-     * )
-     *
      * @throws Throwable
      */
     #[Route(
         path: '',
         methods: [Request::METHOD_POST],
+    )]
+    #[OA\RequestBody(
+        request: 'body',
+        description: 'object',
+        content: new JsonContent(
+            type: 'object',
+            example: [
+                'param' => 'value',
+            ],
+        ),
+    )]
+    #[OA\Response(
+        response: 201,
+        description: 'created',
+        content: new JsonContent(
+            type: 'object',
+            example: [],
+        ),
     )]
     public function createAction(Request $request, RestDtoInterface $restDto): Response
     {

@@ -12,7 +12,7 @@ use App\Log\Domain\Entity\Traits\LogRequestProcessRequestTrait;
 use App\User\Domain\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,9 +49,6 @@ class LogRequest implements EntityInterface
     use LogRequestProcessRequestTrait;
     use Uuid;
 
-    /**
-     * @OA\Property(type="string", format="uuid")
-     */
     #[ORM\Id]
     #[ORM\Column(
         name: 'id',
@@ -65,6 +62,7 @@ class LogRequest implements EntityInterface
         'ApiKey.logsRequest',
         'User.logsRequest',
     ])]
+    #[OA\Property(type: 'string', format: 'uuid')]
     private UuidInterface $id;
 
     #[ORM\Column(

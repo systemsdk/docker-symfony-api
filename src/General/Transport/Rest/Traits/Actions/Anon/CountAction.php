@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\General\Transport\Rest\Traits\Actions\Anon;
 
 use App\General\Transport\Rest\Traits\Methods\CountMethod;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
+use OpenApi\Attributes\Property;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,21 +29,24 @@ trait CountAction
     /**
      * Count entities, accessible for anonymous users.
      *
-     * @OA\Response(
-     *     response=200,
-     *     description="success",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={"count": "1"},
-     *         @OA\Property(property="count", type="integer"),
-     *     ),
-     * )
-     *
      * @throws Throwable
      */
     #[Route(
         path: '/count',
         methods: [Request::METHOD_GET],
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'success',
+        content: new JsonContent(
+            properties: [
+                new Property(property: 'count', type: 'integer'),
+            ],
+            type: 'object',
+            example: [
+                'count' => 1,
+            ],
+        ),
     )]
     public function countAction(Request $request): Response
     {

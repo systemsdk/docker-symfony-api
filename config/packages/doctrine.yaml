@@ -5,7 +5,7 @@ doctrine:
         connections:
             default:
                 driver: 'pdo_mysql'
-                server_version: '8.0.33'
+                server_version: '%env(resolve:MYSQL_VERSION)%'
                 charset: utf8mb4
                 default_table_options:
                     charset: utf8mb4
@@ -16,6 +16,7 @@ doctrine:
                 mapping_types:
                     enum: string
                 profiling_collect_backtrace: '%kernel.debug%'
+                use_savepoints: true
         types:
             datetime: App\General\Domain\Doctrine\DBAL\Types\UTCDateTimeType
             datetimetz: App\General\Domain\Doctrine\DBAL\Types\UTCDateTimeType
@@ -36,44 +37,44 @@ doctrine:
                 connection: default
                 mappings:
                     ApiKey:
-                        is_bundle: false
                         type: attribute
+                        is_bundle: false
                         dir: '%kernel.project_dir%/src/ApiKey/Domain/Entity'
                         prefix: 'App\ApiKey\Domain\Entity'
                         alias: ApiKey
                     DateDimension:
-                        is_bundle: false
                         type: attribute
+                        is_bundle: false
                         dir: '%kernel.project_dir%/src/DateDimension/Domain/Entity'
                         prefix: 'App\DateDimension\Domain\Entity'
                         alias: DateDimension
                     General:
-                        is_bundle: false
                         type: attribute
+                        is_bundle: false
                         dir: '%kernel.project_dir%/src/General/Domain/Entity'
                         prefix: 'App\General\Domain\Entity'
                         alias: General
                     Log:
-                        is_bundle: false
                         type: attribute
+                        is_bundle: false
                         dir: '%kernel.project_dir%/src/Log/Domain/Entity'
                         prefix: 'App\Log\Domain\Entity'
                         alias: Log
                     Role:
-                        is_bundle: false
                         type: attribute
+                        is_bundle: false
                         dir: '%kernel.project_dir%/src/Role/Domain/Entity'
                         prefix: 'App\Role\Domain\Entity'
                         alias: Role
                     Tool:
-                        is_bundle: false
                         type: attribute
+                        is_bundle: false
                         dir: '%kernel.project_dir%/src/Tool/Domain/Entity'
                         prefix: 'App\Tool\Domain\Entity'
                         alias: Tool
                     User:
-                        is_bundle: false
                         type: attribute
+                        is_bundle: false
                         dir: '%kernel.project_dir%/src/User/Domain/Entity'
                         prefix: 'App\User\Domain\Entity'
                         alias: User

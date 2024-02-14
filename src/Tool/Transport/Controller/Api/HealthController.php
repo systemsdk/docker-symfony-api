@@ -7,7 +7,9 @@ namespace App\Tool\Transport\Controller\Api;
 use App\General\Transport\Rest\Interfaces\ResponseHandlerInterface;
 use App\General\Transport\Rest\ResponseHandler;
 use App\Tool\Application\Service\HealthService;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
+use OpenApi\Attributes\JsonContent;
+use OpenApi\Attributes\Property;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -17,11 +19,10 @@ use Throwable;
 /**
  * Class HealthController
  *
- * @OA\Tag(name="Tools")
- *
  * @package App\Tool
  */
 #[AsController]
+#[OA\Tag(name: 'Tools')]
 class HealthController
 {
     public function __construct(
@@ -36,23 +37,33 @@ class HealthController
      *
      * @see https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
      *
-     * @OA\Get(security={})
-     *
-     * @OA\Response(
-     *     response=200,
-     *     description="success",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         example={"timestamp": "2019-08-01T09:00:00+00:00"},
-     *         @OA\Property(property="timestamp", type="string"),
-     *     ),
-     * )
-     *
      * @throws Throwable
      */
     #[Route(
         path: '/health',
         methods: [Request::METHOD_GET],
+    )]
+    #[OA\Get(
+        security: [],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'success',
+                content: new JsonContent(
+                    properties: [
+                        new Property(
+                            property: 'timestamp',
+                            description: 'Timestamp when health check was performed',
+                            type: 'string',
+                        ),
+                    ],
+                    type: 'object',
+                    example: [
+                        'timestamp' => '2019-08-01T09:00:00+00:00',
+                    ],
+                ),
+            ),
+        ],
     )]
     public function __invoke(Request $request): Response
     {

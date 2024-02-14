@@ -72,6 +72,7 @@ class LocalizationService implements LocalizationServiceInterface
     {
         $output = [];
 
+        /** @var array<int, non-empty-string> $identifiers */
         $identifiers = DateTimeZone::listIdentifiers();
 
         foreach ($identifiers as $identifier) {
