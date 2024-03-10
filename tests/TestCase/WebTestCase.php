@@ -13,13 +13,11 @@ use function gc_collect_cycles;
 use function gc_enable;
 
 /**
- * Class WebTestCase
- *
  * @package App\Tests
  */
 abstract class WebTestCase extends BaseWebTestCase
 {
-    public const API_URL_PREFIX = '/api';
+    public const string API_URL_PREFIX = '/api';
 
     /**
      * @codeCoverageIgnore

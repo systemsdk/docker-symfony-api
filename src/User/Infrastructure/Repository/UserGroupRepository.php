@@ -10,8 +10,6 @@ use App\User\Domain\Repository\Interfaces\UserGroupRepositoryInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Class UserGroupRepository
- *
  * @package App\User
  *
  * @psalm-suppress LessSpecificImplementedReturnType

@@ -10,8 +10,6 @@ use AutoMapperPlus\MapperInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class RestAutoMapperConfiguration
- *
  * @package App\General
  */
 abstract class RestAutoMapperConfiguration implements AutoMapperConfiguratorInterface

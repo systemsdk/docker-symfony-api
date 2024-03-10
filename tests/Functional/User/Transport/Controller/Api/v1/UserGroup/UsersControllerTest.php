@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class UsersControllerTest
- *
  * @package App\Tests
  */
 class UsersControllerTest extends WebTestCase

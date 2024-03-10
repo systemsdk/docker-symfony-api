@@ -11,8 +11,6 @@ use Doctrine\ORM\Query\QueryException;
 use Doctrine\ORM\Query\SqlWalker;
 
 /**
- * Class UuidOTToBin
- *
  * @package App\General
  */
 class UuidOTToBin extends FunctionNode

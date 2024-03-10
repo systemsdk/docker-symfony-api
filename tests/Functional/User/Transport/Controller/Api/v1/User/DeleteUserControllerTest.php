@@ -5,25 +5,19 @@ declare(strict_types=1);
 namespace App\Tests\Functional\User\Transport\Controller\Api\v1\User;
 
 use App\General\Domain\Utils\JSON;
-use App\Role\Domain\Enum\Role;
 use App\Tests\TestCase\WebTestCase;
-use App\User\Application\DTO\User\UserCreate;
-use App\User\Application\Resource\UserGroupResource;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
-use App\User\Domain\Entity\UserGroup;
 use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class DeleteUserControllerTest
- *
  * @package App\Tests
  */
 class DeleteUserControllerTest extends WebTestCase
 {
-    private const USERNAME_FOR_TEST = 'test-user';
+    private const string USERNAME_FOR_TEST = 'john';
     private string $baseUrl = self::API_URL_PREFIX . '/v1/user';
     private User $user;
     private UserResource $userResource;
@@ -35,27 +29,14 @@ class DeleteUserControllerTest extends WebTestCase
     {
         parent::setUp();
 
-        // let's create user that we will use within this test
         $this->userResource = static::getContainer()->get(UserResource::class);
-        $user = $this->userResource->findOneBy([
-            'username' => self::USERNAME_FOR_TEST,
-        ]);
-
-        if (!$user) {
-            $userGroupResource = static::getContainer()->get(UserGroupResource::class);
-            $userGroupForAttach = $userGroupResource->findOneBy([
-                'role' => Role::LOGGED->value,
-            ]);
-            self::assertInstanceOf(UserGroup::class, $userGroupForAttach);
-            $dto = (new UserCreate())
-                ->setUsername(self::USERNAME_FOR_TEST)
-                ->setFirstName('Test')
-                ->setLastName('Tester')
-                ->setEmail(self::USERNAME_FOR_TEST . '@test.com')
-                ->setUserGroups([$userGroupForAttach])
-                ->setPassword('test12345');
-            $user = $this->userResource->create($dto);
-        }
+        /** @var User $user */
+        $user = $this->userResource->findOneBy(
+            criteria: [
+                'username' => self::USERNAME_FOR_TEST,
+            ],
+            throwExceptionIfNotFound: true
+        );
         $this->user = $user;
     }
 

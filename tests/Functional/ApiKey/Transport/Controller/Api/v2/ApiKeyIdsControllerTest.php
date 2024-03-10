@@ -11,8 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class ApiKeyIdsControllerTest
- *
  * @package App\Tests
  */
 class ApiKeyIdsControllerTest extends WebTestCase

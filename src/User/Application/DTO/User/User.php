@@ -21,8 +21,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use function array_map;
 
 /**
- * Class User
- *
  * @package App\User
  *
  * @method self|RestDtoInterface get(string $id)

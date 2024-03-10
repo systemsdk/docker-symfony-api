@@ -30,8 +30,6 @@ use function array_unique;
 use function array_values;
 
 /**
- * Class ApiKey
- *
  * @package App\ApiKey
  */
 #[ORM\Entity]

@@ -12,8 +12,6 @@ use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateTimeType;
 
 /**
- * Class UTCDateTimeType
- *
  * @see http://doctrine-orm.readthedocs.org/en/latest/cookbook/working-with-datetime.html
  *
  * @package App\General

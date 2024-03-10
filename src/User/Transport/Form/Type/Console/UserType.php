@@ -24,8 +24,6 @@ use Throwable;
 use function array_map;
 
 /**
- * Class UserType
- *
  * @package App\User
  */
 class UserType extends AbstractType

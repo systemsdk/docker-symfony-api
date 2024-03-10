@@ -27,8 +27,6 @@ use function mb_substr;
 use function str_starts_with;
 
 /**
- * Class RequestHandler
- *
  * @package App\General
  */
 final class RequestHandler

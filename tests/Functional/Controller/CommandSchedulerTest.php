@@ -9,8 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class CommandSchedulerTest
- *
  * @package App\Tests
  */
 class CommandSchedulerTest extends WebTestCase

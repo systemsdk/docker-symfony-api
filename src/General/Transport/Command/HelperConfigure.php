@@ -14,8 +14,6 @@ use function array_key_exists;
 use function array_map;
 
 /**
- * Class HelperConfigure
- *
  * @package App\General
  */
 class HelperConfigure

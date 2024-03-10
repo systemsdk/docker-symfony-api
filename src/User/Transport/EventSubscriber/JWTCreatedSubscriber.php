@@ -22,8 +22,6 @@ use function hash;
 use function implode;
 
 /**
- * Class JWTCreatedSubscriber
- *
  * @package App\User
  */
 class JWTCreatedSubscriber implements EventSubscriberInterface

@@ -22,8 +22,6 @@ use function is_array;
 use function str_replace;
 
 /**
- * Class EntityReferenceExistsValidator
- *
  * @package App\General
  */
 class EntityReferenceExistsValidator extends ConstraintValidator

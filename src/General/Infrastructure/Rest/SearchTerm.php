@@ -22,8 +22,6 @@ use function str_replace;
 use function trim;
 
 /**
- * Class SearchTerm
- *
  * @package App\General
  */
 final class SearchTerm implements SearchTermInterface

@@ -12,8 +12,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 
 /**
- * Class LogLoginFailureRepository
- *
  * @package App\Log
  *
  * @psalm-suppress LessSpecificImplementedReturnType

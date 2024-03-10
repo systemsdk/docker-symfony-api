@@ -10,8 +10,6 @@ use App\Role\Domain\Repository\Interfaces\RoleRepositoryInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Class RoleRepository
- *
  * @package App\Role
  *
  * @psalm-suppress LessSpecificImplementedReturnType

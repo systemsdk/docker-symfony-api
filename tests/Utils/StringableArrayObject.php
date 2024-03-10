@@ -10,8 +10,6 @@ use JsonException;
 use Stringable;
 
 /**
- * Class StringableArrayObject
- *
  * @package App\Tests
  */
 class StringableArrayObject extends ArrayObject implements Stringable

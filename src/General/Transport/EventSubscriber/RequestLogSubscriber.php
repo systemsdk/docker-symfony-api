@@ -20,8 +20,6 @@ use function str_contains;
 use function substr;
 
 /**
- * Class RequestLogSubscriber
- *
  * @package App\General
  *
  * @property array<int, string> $ignoredRoutes

@@ -21,8 +21,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * Class IndexController
- *
  * @package App\User
  */
 #[AsController]

@@ -7,8 +7,6 @@ namespace App\General\Domain\Doctrine\DBAL\Types;
 use App\General\Domain\Enum\Language;
 
 /**
- * Class EnumLanguageType
- *
  * @package App\General
  */
 class EnumLanguageType extends RealEnumType

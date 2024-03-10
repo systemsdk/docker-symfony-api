@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\User\Application\DTO\UserGroup;
 
 /**
- * Class UserGroupPatch
- *
  * @package App\User
  */
 class UserGroupPatch extends UserGroup

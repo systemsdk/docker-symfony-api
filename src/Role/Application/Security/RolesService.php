@@ -15,8 +15,6 @@ use function array_values;
 use function mb_strtolower;
 
 /**
- * Class RolesService
- *
  * @package App\Role
  */
 class RolesService implements RolesServiceInterface

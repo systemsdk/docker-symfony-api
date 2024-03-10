@@ -15,8 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 /**
- * Class RemoveApiKeyCommand
- *
  * @package App\ApiKey
  */
 #[AsCommand(
@@ -27,7 +25,7 @@ class RemoveApiKeyCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    final public const NAME = 'api-key:remove';
+    final public const string NAME = 'api-key:remove';
 
     /**
      * Constructor

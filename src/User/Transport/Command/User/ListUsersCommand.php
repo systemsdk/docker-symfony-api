@@ -22,8 +22,6 @@ use function implode;
 use function sprintf;
 
 /**
- * Class ListUsersCommand
- *
  * @package App\User
  */
 #[AsCommand(
@@ -34,7 +32,7 @@ class ListUsersCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    final public const NAME = 'user:list';
+    final public const string NAME = 'user:list';
 
     /**
      * Constructor

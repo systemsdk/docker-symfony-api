@@ -21,8 +21,6 @@ use function sprintf;
 use function ucfirst;
 
 /**
- * Class RestRequestMapper
- *
  * @package App\General
  */
 abstract class RestRequestMapper implements MapperInterface

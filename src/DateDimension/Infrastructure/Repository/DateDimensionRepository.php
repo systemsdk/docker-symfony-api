@@ -10,8 +10,6 @@ use App\General\Infrastructure\Repository\BaseRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Class DateDimensionRepository
- *
  * @package App\DateDimension
  *
  * @psalm-suppress LessSpecificImplementedReturnType

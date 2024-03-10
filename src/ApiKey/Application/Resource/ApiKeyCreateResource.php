@@ -14,8 +14,6 @@ use App\General\Application\Rest\Traits\Methods\ResourceSaveMethod;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 
 /**
- * Class ApiKeyCreateResource
- *
  * @package App\ApiKey
  *
  * @psalm-suppress LessSpecificImplementedReturnType

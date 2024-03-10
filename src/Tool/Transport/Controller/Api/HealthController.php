@@ -17,8 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
 /**
- * Class HealthController
- *
  * @package App\Tool
  */
 #[AsController]

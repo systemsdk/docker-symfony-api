@@ -14,8 +14,6 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Throwable;
 
 /**
- * Class LoggedInUserValueResolver
- *
  * Example how to use this within your controller;
  *
  *  #[Route(path: 'some-path')]

@@ -10,8 +10,6 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
- * Class IsUserHimselfVoter
- *
  * @package App\User
  *
  * @template TAttribute of string
@@ -21,7 +19,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 class IsUserHimselfVoter extends Voter
 {
-    private const ATTRIBUTE = 'IS_USER_HIMSELF';
+    private const string ATTRIBUTE = 'IS_USER_HIMSELF';
 
     /**
      * {@inheritdoc}

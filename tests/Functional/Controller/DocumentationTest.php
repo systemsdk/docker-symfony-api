@@ -10,8 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class DocumentationTest
- *
  * @package App\Tests
  */
 class DocumentationTest extends WebTestCase

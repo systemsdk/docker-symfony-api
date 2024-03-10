@@ -20,8 +20,6 @@ use Throwable;
 use function preg_match;
 
 /**
- * Class ApiKeyAuthenticator
- *
  * @package App\ApiKey
  */
 class ApiKeyAuthenticator extends AbstractAuthenticator

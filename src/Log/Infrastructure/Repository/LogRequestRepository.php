@@ -10,8 +10,6 @@ use App\Log\Domain\Repository\Interfaces\LogRequestRepositoryInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Class LogRequestRepository
- *
  * @package App\Log
  *
  * @psalm-suppress LessSpecificImplementedReturnType

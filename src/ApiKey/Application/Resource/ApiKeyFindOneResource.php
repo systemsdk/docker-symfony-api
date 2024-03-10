@@ -12,8 +12,6 @@ use App\General\Application\Rest\Traits\Methods\ResourceFindOneByMethod;
 use App\General\Application\Rest\Traits\Methods\ResourceFindOneMethod;
 
 /**
- * Class ApiKeyFindOneResource
- *
  * @package App\ApiKey
  *
  * @psalm-suppress LessSpecificImplementedReturnType

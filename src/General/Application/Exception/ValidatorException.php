@@ -17,8 +17,6 @@ use function array_map;
 use function iterator_to_array;
 
 /**
- * Class ValidatorException
- *
  * @package App\General
  */
 class ValidatorException extends BaseValidatorException implements ClientErrorInterface

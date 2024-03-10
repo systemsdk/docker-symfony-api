@@ -22,8 +22,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Throwable;
 
 /**
- * Class FindOneRoleController
- *
  * @package App\Role
  */
 #[AsController]

@@ -1,9 +1,14 @@
 # See https://github.com/doctrine-extensions/DoctrineExtensions/blob/main/doc/symfony4.md
 services:
-    Gedmo\Timestampable\TimestampableListener:
+    gedmo.listener.timestampable:
+        class: Gedmo\Timestampable\TimestampableListener
         tags:
-            - { name: doctrine.event_subscriber, connection: default }
+            - { name: doctrine.event_listener, event: 'prePersist', connection: default }
+            - { name: doctrine.event_listener, event: 'onFlush', connection: default }
+            - { name: doctrine.event_listener, event: 'loadClassMetadata', connection: default }
 
     Gedmo\Blameable\BlameableListener:
         tags:
-            - { name: doctrine.event_subscriber, connection: default }
+            - { name: doctrine.event_listener, event: 'prePersist', connection: default }
+            - { name: doctrine.event_listener, event: 'onFlush', connection: default }
+            - { name: doctrine.event_listener, event: 'loadClassMetadata', connection: default }

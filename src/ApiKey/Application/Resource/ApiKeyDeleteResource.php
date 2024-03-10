@@ -11,8 +11,6 @@ use App\General\Application\Rest\RestSmallResource;
 use App\General\Application\Rest\Traits\Methods\ResourceDeleteMethod;
 
 /**
- * Class ApiKeyDeleteResource
- *
  * @package App\ApiKey
  *
  * @psalm-suppress LessSpecificImplementedReturnType

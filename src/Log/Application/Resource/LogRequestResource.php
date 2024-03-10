@@ -11,8 +11,6 @@ use App\Log\Domain\Entity\LogRequest as Entity;
 use App\Log\Domain\Repository\Interfaces\LogRequestRepositoryInterface as Repository;
 
 /**
- * Class LogRequestResource
- *
  * @package App\Log
  *
  * @psalm-suppress LessSpecificImplementedReturnType

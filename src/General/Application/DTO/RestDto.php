@@ -18,8 +18,6 @@ use function sprintf;
 use function ucfirst;
 
 /**
- * Class RestDto
- *
  * @package App\General
  */
 abstract class RestDto implements RestDtoInterface

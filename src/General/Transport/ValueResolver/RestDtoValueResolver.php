@@ -19,13 +19,11 @@ use function explode;
 use function in_array;
 
 /**
- * Class RestDtoValueResolver
- *
  * @package App\General
  */
 class RestDtoValueResolver implements ValueResolverInterface
 {
-    private const CONTROLLER_KEY = '_controller';
+    private const string CONTROLLER_KEY = '_controller';
 
     /**
      * @var array<int, string>

@@ -16,8 +16,6 @@ use function hash;
 use function implode;
 
 /**
- * Class JWTDecodedSubscriber
- *
  * @package App\User
  */
 class JWTDecodedSubscriber implements EventSubscriberInterface

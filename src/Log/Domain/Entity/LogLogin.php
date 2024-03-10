@@ -22,8 +22,6 @@ use function implode;
 use function is_array;
 
 /**
- * Class LogLogin
- *
  * @package App\Log
  */
 #[ORM\Entity(readOnly: true)]

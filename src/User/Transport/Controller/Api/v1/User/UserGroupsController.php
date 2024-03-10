@@ -20,8 +20,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * Class UserGroupsController
- *
  * @package App\User
  */
 #[AsController]

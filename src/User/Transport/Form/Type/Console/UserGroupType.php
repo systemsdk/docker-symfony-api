@@ -19,8 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Throwable;
 
 /**
- * Class UserGroupType
- *
  * @package App\User
  */
 class UserGroupType extends AbstractType

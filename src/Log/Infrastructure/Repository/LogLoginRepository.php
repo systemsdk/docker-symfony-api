@@ -10,8 +10,6 @@ use App\Log\Domain\Repository\Interfaces\LogLoginRepositoryInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Class LogLoginRepository
- *
  * @package App\Log
  *
  * @psalm-suppress LessSpecificImplementedReturnType

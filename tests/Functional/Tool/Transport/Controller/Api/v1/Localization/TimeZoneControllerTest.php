@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class TimeZoneControllerTest
- *
  * @package App\Tests
  */
 class TimeZoneControllerTest extends WebTestCase

@@ -26,8 +26,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Throwable;
 
 /**
- * Class User
- *
  * @package App\User
  */
 #[ORM\Entity]
@@ -50,10 +48,10 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
     use UserRelations;
     use Uuid;
 
-    final public const SET_USER_PROFILE = 'set.UserProfile';
-    final public const SET_USER_BASIC = 'set.UserBasic';
+    final public const string SET_USER_PROFILE = 'set.UserProfile';
+    final public const string SET_USER_BASIC = 'set.UserBasic';
 
-    final public const PASSWORD_MIN_LENGTH = 8;
+    final public const int PASSWORD_MIN_LENGTH = 8;
 
     #[ORM\Id]
     #[ORM\Column(

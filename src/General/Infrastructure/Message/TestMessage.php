@@ -7,7 +7,6 @@ namespace App\General\Infrastructure\Message;
 use App\General\Infrastructure\Message\Interfaces\MessageHighInterface;
 
 /**
- * Class TestMessage
  * TODO: This is message example, you can delete it.
  *
  * @package App\General

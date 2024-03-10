@@ -13,8 +13,6 @@ use function in_array;
 use function is_string;
 
 /**
- * Class TimezoneValidator
- *
  * @package App\Tool
  */
 class TimezoneValidator extends ConstraintValidator

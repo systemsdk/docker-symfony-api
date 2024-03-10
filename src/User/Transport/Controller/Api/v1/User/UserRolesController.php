@@ -18,8 +18,6 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
- * Class UserRolesController
- *
  * @package App\User
  */
 #[AsController]

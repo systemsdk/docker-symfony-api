@@ -15,8 +15,6 @@ use PHPUnit\Framework\Attributes\TestDox;
 use Throwable;
 
 /**
- * Class ApiKeyPatchControllerTest
- *
  * @package App\Tests
  */
 class ApiKeyPatchControllerTest extends WebTestCase
@@ -35,7 +33,14 @@ class ApiKeyPatchControllerTest extends WebTestCase
         parent::setUp();
 
         $this->apiKeyFindOneResource = static::getContainer()->get(ApiKeyFindOneResource::class);
-        $this->apiKey = $this->findOrCreateApiKey();
+        /** @var ApiKey $apiKey */
+        $apiKey = $this->apiKeyFindOneResource->findOneBy(
+            criteria: [
+                'description' => 'ApiKey Description: api',
+            ],
+            throwExceptionIfNotFound: true
+        );
+        $this->apiKey = $apiKey;
     }
 
     /**

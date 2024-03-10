@@ -9,8 +9,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 /**
- * Class ResponseSubscriber
- *
  * @package App\General
  */
 class ResponseSubscriber implements EventSubscriberInterface

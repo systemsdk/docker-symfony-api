@@ -8,8 +8,6 @@ use Attribute;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class UniqueEmail
- *
  * Usage example;
  *  App\User\Application\Validator\Constraints\UniqueEmail()
  *
@@ -23,15 +21,15 @@ use Symfony\Component\Validator\Constraint;
 #[Attribute(Attribute::TARGET_CLASS | Attribute::IS_REPEATABLE)]
 class UniqueEmail extends Constraint
 {
-    final public const IS_UNIQUE_EMAIL_ERROR = 'd487278d-8b13-4da0-b4cc-f862e6e99af6';
-    final public const MESSAGE = 'This email is already taken.';
+    final public const string IS_UNIQUE_EMAIL_ERROR = 'd487278d-8b13-4da0-b4cc-f862e6e99af6';
+    final public const string MESSAGE = 'This email is already taken.';
 
     /**
      * {@inheritdoc}
      *
      * @psalm-var array<string, string>
      */
-    protected const ERROR_NAMES = [
+    protected const array ERROR_NAMES = [
         self::IS_UNIQUE_EMAIL_ERROR => 'IS_UNIQUE_EMAIL_ERROR',
     ];
 

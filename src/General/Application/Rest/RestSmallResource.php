@@ -9,8 +9,6 @@ use App\General\Application\Rest\Traits\RestResourceBaseMethods;
 use App\General\Domain\Repository\Interfaces\BaseRepositoryInterface;
 
 /**
- * Class RestSmallResource
- *
  * @package App\General
  */
 abstract class RestSmallResource implements RestSmallResourceInterface

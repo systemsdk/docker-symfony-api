@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class AttachUserControllerTest
- *
  * @package App\Tests
  */
 class AttachUserControllerTest extends WebTestCase
@@ -25,7 +23,6 @@ class AttachUserControllerTest extends WebTestCase
     private string $baseUrl = self::API_URL_PREFIX . '/v1/user_group';
     private UserGroup $userGroup;
     private User $userForAttach;
-    private UserResource $userResource;
     private UserGroupResource $userGroupResource;
 
     /**
@@ -36,7 +33,7 @@ class AttachUserControllerTest extends WebTestCase
         parent::setUp();
 
         $this->userGroupResource = static::getContainer()->get(UserGroupResource::class);
-        $this->userResource = static::getContainer()->get(UserResource::class);
+        $userResource = static::getContainer()->get(UserResource::class);
         /** @var UserGroup|null $userGroup */
         $userGroup = $this->userGroupResource->findOneBy([
             'role' => Role::LOGGED->value,
@@ -48,7 +45,7 @@ class AttachUserControllerTest extends WebTestCase
         $user = $this->userGroup->getUsers()->first();
         self::assertInstanceOf(User::class, $user);
         self::assertEquals('john-logged', $user->getUsername());
-        $userForAttach = $this->userResource->findOneBy([
+        $userForAttach = $userResource->findOneBy([
             'username' => 'john-user',
         ]);
         self::assertInstanceOf(User::class, $userForAttach);
@@ -90,16 +87,6 @@ class AttachUserControllerTest extends WebTestCase
         $userGroup = $this->userGroupResource->findOne($this->userGroup->getId());
         self::assertInstanceOf(UserGroup::class, $userGroup);
         self::assertEquals(2, $userGroup->getUsers()->count());
-
-        // cleanup our actions above in order to have only 1 attached user to the user group
-        /** @var User|null $userForAttach */
-        $userForAttach = $this->userResource->findOneBy([
-            'username' => $this->userForAttach->getUsername(),
-        ]);
-        self::assertInstanceOf(User::class, $userForAttach);
-        $userGroup = $this->userGroupResource->save($userGroup->removeUser($userForAttach), false);
-        $this->userResource->save($userForAttach, true, true);
-        self::assertEquals(1, $userGroup->getUsers()->count());
     }
 
     /**

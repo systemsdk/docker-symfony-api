@@ -19,8 +19,6 @@ use function str_contains;
 use function str_starts_with;
 
 /**
- * Class StopwatchDecorator
- *
  * @package App\General
  */
 class StopwatchDecorator

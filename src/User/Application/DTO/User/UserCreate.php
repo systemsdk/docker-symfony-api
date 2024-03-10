@@ -8,8 +8,6 @@ use App\User\Domain\Entity\User as Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class UserCreate
- *
  * @package App\User
  */
 class UserCreate extends User

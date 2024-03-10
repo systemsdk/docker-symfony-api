@@ -10,8 +10,6 @@ use App\General\Infrastructure\Repository\BaseRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Class ApiKeyRepository
- *
  * @package App\ApiKey
  *
  * @psalm-suppress LessSpecificImplementedReturnType

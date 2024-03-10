@@ -14,8 +14,6 @@ use Throwable;
 use function file_get_contents;
 
 /**
- * Class VersionControllerTest
- *
  * @package App\Tests
  */
 class VersionControllerTest extends WebTestCase

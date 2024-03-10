@@ -8,8 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Throwable;
 
 /**
- * Class ExampleTest
- *
  * @package App\Tests\Unit
  */
 class ExampleTest extends KernelTestCase

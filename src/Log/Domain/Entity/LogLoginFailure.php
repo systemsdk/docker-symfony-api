@@ -17,8 +17,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Throwable;
 
 /**
- * Class LogLoginFailure
- *
  * @package App\Log
  */
 #[ORM\Entity(readOnly: true)]

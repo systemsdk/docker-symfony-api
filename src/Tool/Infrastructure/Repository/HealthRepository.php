@@ -17,8 +17,6 @@ use Exception;
 use Throwable;
 
 /**
- * Class HealthRepository
- *
  * @package App\Tool
  *
  * @psalm-suppress LessSpecificImplementedReturnType

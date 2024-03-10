@@ -9,8 +9,6 @@ use App\Tool\Domain\Repository\Interfaces\HealthRepositoryInterface;
 use Throwable;
 
 /**
- * Class HealthService
- *
  * @package App\Tool
  */
 class HealthService

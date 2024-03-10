@@ -15,8 +15,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * Class UserRelations
- *
  * @package App\User
  */
 trait UserRelations

@@ -11,8 +11,6 @@ use App\User\Domain\Entity\UserGroup as Entity;
 use App\User\Domain\Repository\Interfaces\UserGroupRepositoryInterface as Repository;
 
 /**
- * Class UserGroupResource
- *
  * @package App\User
  *
  * @psalm-suppress LessSpecificImplementedReturnType

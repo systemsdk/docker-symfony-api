@@ -11,8 +11,6 @@ use Symfony\Component\Validator\ConstraintValidator;
 use function in_array;
 
 /**
- * Class LocaleValidator
- *
  * @package App\Tool
  */
 class LocaleValidator extends ConstraintValidator

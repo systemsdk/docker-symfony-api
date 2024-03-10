@@ -14,8 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
 /**
- * Class TimezoneController
- *
  * @package App\Tool
  */
 #[AsController]

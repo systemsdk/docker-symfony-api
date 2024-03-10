@@ -15,21 +15,18 @@ use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use Exception;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class UserGroupControllerTest
- *
  * @package App\Tests
  */
 class UserGroupControllerTest extends WebTestCase
 {
     use UserHelper;
 
-    private const USER_GROUP_NAME_FOR_TEST = 'Test UserGroup controller';
+    private const string USER_GROUP_NAME_FOR_TEST = 'Normal users';
     protected static string $baseUrl = self::API_URL_PREFIX . '/v1/user_group';
     private UserGroupResource $userGroupResource;
 
@@ -137,7 +134,7 @@ class UserGroupControllerTest extends WebTestCase
         $client = $this->getTestClient('john-root', 'password-root');
 
         $requestData = [
-            'name' => self::USER_GROUP_NAME_FOR_TEST,
+            'name' => 'Test UserGroup controller',
             'role' => Role::LOGGED->value,
         ];
         $client->request(method: 'POST', uri: static::$baseUrl, content: JSON::encode($requestData));
@@ -147,13 +144,12 @@ class UserGroupControllerTest extends WebTestCase
         self::assertSame(Response::HTTP_CREATED, $response->getStatusCode(), "Response:\n" . $response);
         $responseData = JSON::decode($content, true);
         $this->checkBasicFieldsInResponse($responseData);
-        self::assertEquals(self::USER_GROUP_NAME_FOR_TEST, $responseData['name']);
+        self::assertEquals($requestData['name'], $responseData['name']);
     }
 
     /**
      * @throws Throwable
      */
-    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
     #[TestDox('Test that `PATCH /api/v1/user_group/{id}` for the root user returns success response.')]
     public function testThatPatchActionForRootUserReturnsSuccessResponse(): void
     {
@@ -183,7 +179,6 @@ class UserGroupControllerTest extends WebTestCase
     /**
      * @throws Throwable
      */
-    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
     #[TestDox('Test that `PUT /api/v1/user_group/{id}` for the root user returns success response.')]
     public function testThatUpdateActionForRootUserReturnsSuccessResponse(): void
     {
@@ -214,14 +209,13 @@ class UserGroupControllerTest extends WebTestCase
     /**
      * @throws Throwable
      */
-    #[Depends('testThatUpdateActionForRootUserReturnsSuccessResponse')]
     #[TestDox('Test that `DELETE /api/v1/user_group/{id}` under the non-root user returns error response.')]
     public function testThatDeleteActionForNonRootUserReturnsForbiddenResponse(): void
     {
         $client = $this->getTestClient('john-root', 'password-root');
 
         $userGroupEntity = $this->userGroupResource->findOneBy([
-            'name' => self::USER_GROUP_NAME_FOR_TEST . ' edited',
+            'name' => self::USER_GROUP_NAME_FOR_TEST,
         ]);
         self::assertInstanceOf(UserGroup::class, $userGroupEntity);
 

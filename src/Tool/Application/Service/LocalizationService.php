@@ -20,8 +20,6 @@ use function floor;
 use function str_replace;
 
 /**
- * Class LocalizationService
- *
  * @package App\Tool
  */
 class LocalizationService implements LocalizationServiceInterface

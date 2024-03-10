@@ -15,8 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 /**
- * Class RemoveUserCommand
- *
  * @package App\User
  */
 #[AsCommand(
@@ -27,7 +25,7 @@ class RemoveUserCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    final public const NAME = 'user:remove';
+    final public const string NAME = 'user:remove';
 
     /**
      * Constructor

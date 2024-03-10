@@ -13,8 +13,6 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class LocaleController
- *
  * @package App\Tool
  */
 #[AsController]

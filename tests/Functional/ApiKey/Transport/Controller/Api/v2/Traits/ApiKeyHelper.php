@@ -4,48 +4,17 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\ApiKey\Transport\Controller\Api\v2\Traits;
 
-use App\ApiKey\Application\DTO\ApiKey\ApiKeyCreate;
-use App\ApiKey\Application\Resource\ApiKeyCreateResource;
 use App\ApiKey\Domain\Entity\ApiKey;
 use App\General\Domain\Utils\JSON;
-use App\User\Application\Resource\UserGroupResource;
-use App\User\Domain\Entity\UserGroup;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Trait ApiKeyHelper
- *
  * @package App\Tests
  */
 trait ApiKeyHelper
 {
-    /**
-     * @throws Throwable
-     */
-    private function findOrCreateApiKey(): ApiKey
-    {
-        /** @var ApiKey|null $apiKey */
-        $apiKey = $this->apiKeyFindOneResource->findOneBy([
-            'description' => 'test api key',
-        ]);
-
-        if (!$apiKey) {
-            /** @var ApiKeyCreateResource $apiKeyCreateResource */
-            $apiKeyCreateResource = static::getContainer()->get(ApiKeyCreateResource::class);
-            /** @var UserGroupResource $userGroupResource */
-            $userGroupResource = static::getContainer()->get(UserGroupResource::class);
-            /** @var UserGroup|null $userGroup */
-            $userGroup = $userGroupResource->findOne(LoadUserGroupData::getUuidByKey('Role-api'));
-            self::assertInstanceOf(UserGroup::class, $userGroup);
-            $dto = (new ApiKeyCreate())->setDescription('test api key')->setUserGroups([$userGroup]);
-            $apiKey = $apiKeyCreateResource->create($dto, true);
-        }
-
-        return $apiKey;
-    }
-
     /**
      * @throws Throwable
      */

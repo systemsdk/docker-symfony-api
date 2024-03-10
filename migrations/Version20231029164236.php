@@ -11,7 +11,7 @@ use Doctrine\Migrations\AbstractMigration;
 use Override;
 
 /**
- * Class Version20231029164236
+ * Changed database structure
  */
 final class Version20231029164236 extends AbstractMigration
 {

@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class GetTokenControllerTest
- *
  * @package App\Tests
  */
 class GetTokenControllerTest extends WebTestCase

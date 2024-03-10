@@ -16,8 +16,6 @@ use function implode;
 use function sprintf;
 
 /**
- * Class ApiKeyHelper
- *
  * @package App\ApiKey
  */
 class ApiKeyHelper

@@ -23,8 +23,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
 
 /**
- * Class DetachUserController
- *
  * @package App\User
  */
 #[AsController]

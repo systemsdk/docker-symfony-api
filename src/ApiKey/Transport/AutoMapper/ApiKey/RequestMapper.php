@@ -12,8 +12,6 @@ use Throwable;
 use function array_map;
 
 /**
- * Class RequestMapper
- *
  * @package App\ApiKey
  */
 class RequestMapper extends RestRequestMapper

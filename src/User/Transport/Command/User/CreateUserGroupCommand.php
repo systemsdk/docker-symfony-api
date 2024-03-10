@@ -23,8 +23,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
 /**
- * Class CreateUserGroupCommand
- *
  * @package App\User
  */
 #[AsCommand(
@@ -36,7 +34,7 @@ class CreateUserGroupCommand extends Command
     use GetApplicationTrait;
     use SymfonyStyleTrait;
 
-    final public const NAME = 'user:create-group';
+    final public const string NAME = 'user:create-group';
 
     /**
      * @var array<int, array<string, string>>

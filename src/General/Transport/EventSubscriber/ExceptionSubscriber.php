@@ -27,8 +27,6 @@ use function in_array;
 use function spl_object_hash;
 
 /**
- * Class ExceptionSubscriber
- *
  * @package App\General
  */
 class ExceptionSubscriber implements EventSubscriberInterface

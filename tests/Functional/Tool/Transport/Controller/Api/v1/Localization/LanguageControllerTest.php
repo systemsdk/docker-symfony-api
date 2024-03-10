@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class LanguageControllerTest
- *
  * @package App\Tests
  */
 class LanguageControllerTest extends WebTestCase

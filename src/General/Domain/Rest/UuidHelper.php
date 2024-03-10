@@ -17,8 +17,6 @@ use Ramsey\Uuid\UuidInterface;
 use function syslog;
 
 /**
- * Class UuidHelper
- *
  * @package App\General
  */
 class UuidHelper

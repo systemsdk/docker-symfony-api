@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class GroupsControllerTest
- *
  * @package App\Tests
  */
 class GroupsControllerTest extends WebTestCase

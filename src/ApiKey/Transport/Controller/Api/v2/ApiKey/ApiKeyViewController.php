@@ -16,8 +16,6 @@ use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
- * Class ApiKeyViewController
- *
  * @package App\ApiKey
  *
  * @method ApiKeyFindOneResource getResource()

@@ -13,8 +13,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Throwable;
 
 /**
- * Class AuthenticationSuccessSubscriber
- *
  * @package App\User
  */
 class AuthenticationSuccessSubscriber implements EventSubscriberInterface

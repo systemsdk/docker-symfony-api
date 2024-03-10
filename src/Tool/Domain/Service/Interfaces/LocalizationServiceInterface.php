@@ -13,7 +13,7 @@ use Throwable;
  */
 interface LocalizationServiceInterface
 {
-    final public const DEFAULT_TIMEZONE = 'Europe/Kyiv';
+    final public const string DEFAULT_TIMEZONE = 'Europe/Kyiv';
 
     /**
      * @return array<int, string>

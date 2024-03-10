@@ -16,8 +16,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Throwable;
 
 /**
- * Class SecurityUserFactory
- *
  * @package App\User
  *
  * @template-implements UserProviderInterface<SecurityUser>

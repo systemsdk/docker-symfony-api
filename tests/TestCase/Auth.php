@@ -25,8 +25,6 @@ use function sys_get_temp_dir;
 use const DIRECTORY_SEPARATOR;
 
 /**
- * Class Auth
- *
  * @package App\Tests
  */
 class Auth

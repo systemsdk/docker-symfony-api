@@ -18,8 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 /**
- * Class EditUserGroupCommand
- *
  * @package App\User
  */
 #[AsCommand(
@@ -30,7 +28,7 @@ class EditUserGroupCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    final public const NAME = 'user:edit-group';
+    final public const string NAME = 'user:edit-group';
 
     /**
      * Constructor

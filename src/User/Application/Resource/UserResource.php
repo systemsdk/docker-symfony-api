@@ -18,8 +18,6 @@ use function array_values;
 use function in_array;
 
 /**
- * Class UserResource
- *
  * @package App\User
  *
  * @psalm-suppress LessSpecificImplementedReturnType

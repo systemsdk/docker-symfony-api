@@ -13,8 +13,6 @@ use App\User\Domain\Entity\UserGroup as Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class UserGroup
- *
  * @package App\User
  *
  * @method self|RestDtoInterface get(string $id)

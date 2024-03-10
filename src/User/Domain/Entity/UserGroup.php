@@ -22,8 +22,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Throwable;
 
 /**
- * Class UserGroup
- *
  * @package App\User
  */
 #[ORM\Entity]
@@ -35,8 +33,8 @@ class UserGroup implements EntityInterface, Stringable
     use Timestampable;
     use Uuid;
 
-    final public const SET_USER_PROFILE_GROUPS = 'set.UserProfileGroups';
-    final public const SET_USER_GROUP_BASIC = 'set.UserGroupBasic';
+    final public const string SET_USER_PROFILE_GROUPS = 'set.UserProfileGroups';
+    final public const string SET_USER_GROUP_BASIC = 'set.UserGroupBasic';
 
     #[ORM\Id]
     #[ORM\Column(

@@ -20,8 +20,6 @@ use Throwable;
 use function floor;
 
 /**
- * Class DateDimension
- *
  * @package App\DateDimension
  */
 #[ORM\Entity(readOnly: true)]

@@ -11,8 +11,6 @@ use App\General\Application\Rest\RestSmallResource;
 use App\General\Application\Rest\Traits\Methods\ResourceFindMethod;
 
 /**
- * Class ApiKeyListResource
- *
  * @package App\ApiKey
  *
  * @psalm-suppress LessSpecificImplementedReturnType

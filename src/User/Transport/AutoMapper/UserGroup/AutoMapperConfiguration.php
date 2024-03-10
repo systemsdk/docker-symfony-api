@@ -10,8 +10,6 @@ use App\User\Application\DTO\UserGroup\UserGroupPatch;
 use App\User\Application\DTO\UserGroup\UserGroupUpdate;
 
 /**
- * Class AutoMapperConfiguration
- *
  * @package App\User
  */
 class AutoMapperConfiguration extends RestAutoMapperConfiguration

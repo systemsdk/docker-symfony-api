@@ -19,8 +19,6 @@ use function array_map;
 use function str_pad;
 
 /**
- * Class LoadApiKeyData
- *
  * @package App\ApiKey
  *
  * @psalm-suppress PropertyNotSetInConstructor

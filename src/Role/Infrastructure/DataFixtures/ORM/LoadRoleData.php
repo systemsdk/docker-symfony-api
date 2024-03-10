@@ -15,8 +15,6 @@ use Throwable;
 use function array_map;
 
 /**
- * Class LoadRoleData
- *
  * @package App\Role
  *
  * @psalm-suppress PropertyNotSetInConstructor

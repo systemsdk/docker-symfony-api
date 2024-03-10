@@ -16,8 +16,6 @@ use Throwable;
 use function array_key_exists;
 
 /**
- * Class CreateOrUpdateTemplateCommand
- *
  * @package App\Tool
  */
 #[AsCommand(
@@ -28,7 +26,7 @@ class CreateOrUpdateTemplateCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    final public const NAME = 'elastic:create-or-update-template';
+    final public const string NAME = 'elastic:create-or-update-template';
 
     /**
      * Constructor

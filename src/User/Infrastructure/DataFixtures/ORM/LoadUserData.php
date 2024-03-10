@@ -20,8 +20,6 @@ use Throwable;
 use function array_map;
 
 /**
- * Class LoadUserData
- *
  * @package App\User
  *
  * @psalm-suppress PropertyNotSetInConstructor

@@ -17,8 +17,6 @@ use function is_array;
 use function is_string;
 
 /**
- * Class VersionService
- *
  * @package App\Tool
  */
 class VersionService

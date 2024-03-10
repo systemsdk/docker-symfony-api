@@ -24,8 +24,6 @@ use Throwable;
 use function sprintf;
 
 /**
- * Class CreateDateDimensionEntitiesCommand
- *
  * @package App\DateDimension
  */
 #[AsCommand(
@@ -34,8 +32,8 @@ use function sprintf;
 )]
 class CreateDateDimensionEntitiesCommand extends Command
 {
-    private const YEAR_MIN = 1970;
-    private const YEAR_MAX = 2999;
+    private const int YEAR_MIN = 1970;
+    private const int YEAR_MAX = 2999;
 
     /**
      * Constructor

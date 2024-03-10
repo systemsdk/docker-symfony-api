@@ -301,6 +301,7 @@ Notes: Please see more commands in Makefile
 * [doctrine-fixtures-bundle](https://github.com/doctrine/DoctrineFixturesBundle)
 * [command-scheduler-bundle](https://packagist.org/packages/dukecity/command-scheduler-bundle)
 * [phpunit](https://github.com/sebastianbergmann/phpunit)
+* [dama/doctrine-test-bundle](https://packagist.org/packages/dama/doctrine-test-bundle)
 * [phpunit-bridge](https://github.com/symfony/phpunit-bridge)
 * [browser-kit](https://github.com/symfony/browser-kit)
 * [css-selector](https://github.com/symfony/css-selector)

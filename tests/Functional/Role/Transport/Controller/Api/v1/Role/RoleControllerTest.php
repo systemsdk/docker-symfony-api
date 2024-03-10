@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class RoleControllerTest
- *
  * @package App\Tests
  */
 class RoleControllerTest extends WebTestCase

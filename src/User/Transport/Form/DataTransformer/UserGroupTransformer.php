@@ -16,8 +16,6 @@ use function is_array;
 use function sprintf;
 
 /**
- * Class UserGroupTransformer
- *
  * @package App\User
  */
 class UserGroupTransformer implements DataTransformerInterface

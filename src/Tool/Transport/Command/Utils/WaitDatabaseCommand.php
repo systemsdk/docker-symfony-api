@@ -14,8 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 /**
- * Class WaitDatabaseCommand
- *
  * @package App\Tool
  */
 #[AsCommand(
@@ -29,7 +27,7 @@ class WaitDatabaseCommand extends Command
     /**
      * Wait sleep time for db connection in seconds
      */
-    private const WAIT_SLEEP_TIME = 2;
+    private const int WAIT_SLEEP_TIME = 2;
 
     /**
      * Constructor

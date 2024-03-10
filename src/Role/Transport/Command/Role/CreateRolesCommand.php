@@ -21,8 +21,6 @@ use function array_sum;
 use function sprintf;
 
 /**
- * Class CreateRolesCommand
- *
  * @package App\Role
  */
 #[AsCommand(
@@ -33,7 +31,7 @@ class CreateRolesCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    final public const NAME = 'user:create-roles';
+    final public const string NAME = 'user:create-roles';
 
     /**
      * Constructor

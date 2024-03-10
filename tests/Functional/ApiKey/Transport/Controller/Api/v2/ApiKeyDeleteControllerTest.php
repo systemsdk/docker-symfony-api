@@ -14,8 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class ApiKeyDeleteControllerTest
- *
  * @package App\Tests
  */
 class ApiKeyDeleteControllerTest extends WebTestCase
@@ -34,7 +32,14 @@ class ApiKeyDeleteControllerTest extends WebTestCase
         parent::setUp();
 
         $this->apiKeyFindOneResource = static::getContainer()->get(ApiKeyFindOneResource::class);
-        $this->apiKey = $this->findOrCreateApiKey();
+        /** @var ApiKey $apiKey */
+        $apiKey = $this->apiKeyFindOneResource->findOneBy(
+            criteria: [
+                'description' => 'ApiKey Description: api',
+            ],
+            throwExceptionIfNotFound: true
+        );
+        $this->apiKey = $apiKey;
     }
 
     /**

@@ -23,8 +23,6 @@ use Throwable;
 use function mb_strlen;
 
 /**
- * Class LogRequest
- *
  * @package App\Log
  */
 #[ORM\Entity(readOnly: true)]

@@ -20,8 +20,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use function sprintf;
 
 /**
- * Class GetTokenController
- *
  * @package App\User
  */
 #[AsController]

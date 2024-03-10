@@ -18,8 +18,6 @@ use Throwable;
 use function array_map;
 
 /**
- * Class LoadUserGroupData
- *
  * @package App\User
  *
  * @psalm-suppress PropertyNotSetInConstructor

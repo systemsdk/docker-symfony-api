@@ -17,8 +17,6 @@ use function in_array;
 use function is_string;
 
 /**
- * Class RealEnumType
- *
  * @package App\General
  */
 abstract class RealEnumType extends Type

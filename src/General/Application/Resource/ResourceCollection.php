@@ -19,8 +19,6 @@ use Throwable;
 use function sprintf;
 
 /**
- * Class ResourceCollection
- *
  * @package App\General
  *
  * @method IteratorAggregate<int, RestResourceInterface|RestSmallResourceInterface> getAll()

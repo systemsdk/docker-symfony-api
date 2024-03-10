@@ -14,8 +14,6 @@ use function is_string;
 use function sprintf;
 
 /**
- * Class RoleTransformer
- *
  * @package App\Role
  */
 class RoleTransformer implements DataTransformerInterface

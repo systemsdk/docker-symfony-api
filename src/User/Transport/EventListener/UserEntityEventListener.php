@@ -13,8 +13,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use function strlen;
 
 /**
- * Class UserEntityEventListener
- *
  * @package App\User
  */
 class UserEntityEventListener

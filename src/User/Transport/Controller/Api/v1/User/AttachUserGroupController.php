@@ -24,8 +24,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
 
 /**
- * Class AttachUserGroupController
- *
  * @package App\User
  */
 #[AsController]

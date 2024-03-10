@@ -9,8 +9,6 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
 /**
- * Class MailerService
- *
  * @package App\General
  */
 class MailerService implements MailerServiceInterface

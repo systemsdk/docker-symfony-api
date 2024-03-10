@@ -11,8 +11,6 @@ use App\General\Application\Rest\RestResource;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 
 /**
- * Class DateDimensionResource
- *
  * @package App\DateDimension
  *
  * @psalm-suppress LessSpecificImplementedReturnType

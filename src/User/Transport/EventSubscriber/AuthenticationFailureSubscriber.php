@@ -14,8 +14,6 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Throwable;
 
 /**
- * Class AuthenticationFailureSubscriber
- *
  * @package App\User
  */
 class AuthenticationFailureSubscriber implements EventSubscriberInterface

@@ -22,8 +22,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Throwable;
 
 /**
- * Class UsersController
- *
  * @package App\User
  */
 #[AsController]

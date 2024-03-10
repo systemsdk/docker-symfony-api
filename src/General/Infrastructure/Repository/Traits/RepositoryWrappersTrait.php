@@ -14,8 +14,6 @@ use UnexpectedValueException;
 use function preg_replace;
 
 /**
- * Class RepositoryWrappersTrait
- *
  * @package App\General
  */
 trait RepositoryWrappersTrait

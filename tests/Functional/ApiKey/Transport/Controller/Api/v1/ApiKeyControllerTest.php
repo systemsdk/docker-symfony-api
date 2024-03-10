@@ -13,14 +13,11 @@ use App\User\Domain\Entity\UserGroup;
 use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class ApiKeyControllerTest
- *
  * @package App\Tests
  */
 class ApiKeyControllerTest extends WebTestCase
@@ -127,7 +124,6 @@ class ApiKeyControllerTest extends WebTestCase
     /**
      * @throws Throwable
      */
-    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
     #[TestDox('Test that `GET /api/v1/api_key/{id}` for the root user returns success response.')]
     public function testThatFindOneActionForRootUserReturnsSuccessResponse(): void
     {
@@ -135,7 +131,7 @@ class ApiKeyControllerTest extends WebTestCase
 
         $resource = static::getContainer()->get(ApiKeyResource::class);
         $apiKeyEntity = $resource->findOneBy([
-            'description' => 'test api key',
+            'description' => 'ApiKey Description: api',
         ]);
         self::assertInstanceOf(ApiKey::class, $apiKeyEntity);
 
@@ -153,7 +149,6 @@ class ApiKeyControllerTest extends WebTestCase
     /**
      * @throws Throwable
      */
-    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
     #[TestDox('Test that `PUT /api/v1/api_key/{id}` for the root user returns success response.')]
     public function testThatUpdateActionForRootUserReturnsSuccessResponse(): void
     {
@@ -161,11 +156,11 @@ class ApiKeyControllerTest extends WebTestCase
 
         $resource = static::getContainer()->get(ApiKeyResource::class);
         $apiKeyEntity = $resource->findOneBy([
-            'description' => 'test api key',
+            'description' => 'ApiKey Description: api',
         ]);
         self::assertInstanceOf(ApiKey::class, $apiKeyEntity);
         $requestData = [
-            'description' => 'test api key',
+            'description' => 'ApiKey Description: api',
             'userGroups' => [
                 LoadUserGroupData::getUuidByKey('Role-logged'),
             ],
@@ -196,7 +191,6 @@ class ApiKeyControllerTest extends WebTestCase
     /**
      * @throws Throwable
      */
-    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
     #[TestDox('Test that `PATCH /api/v1/api_key/{id}` for the root user returns success response.')]
     public function testThatPatchActionForRootUserReturnsSuccessResponse(): void
     {
@@ -204,13 +198,13 @@ class ApiKeyControllerTest extends WebTestCase
 
         $resource = static::getContainer()->get(ApiKeyResource::class);
         $apiKeyEntity = $resource->findOneBy([
-            'description' => 'test api key',
+            'description' => 'ApiKey Description: api',
         ]);
         self::assertInstanceOf(ApiKey::class, $apiKeyEntity);
         $apiKeyUserGroup = $apiKeyEntity->getUserGroups()->first();
         self::assertInstanceOf(UserGroup::class, $apiKeyUserGroup);
         $requestData = [
-            'description' => 'test api key edited',
+            'description' => 'ApiKey Description: api edited',
         ];
 
         $client->request(
@@ -225,7 +219,7 @@ class ApiKeyControllerTest extends WebTestCase
         $responseData = JSON::decode($content, true);
         $this->checkBasicFieldsInResponse($responseData);
         self::assertEquals($apiKeyEntity->getToken(), $responseData['token']);
-        self::assertEquals('test api key edited', $responseData['description']);
+        self::assertEquals('ApiKey Description: api edited', $responseData['description']);
         // tet's check that after patch the entity we have the same userGroup as before
         $apiKeyUpdatedEntity = $resource->findOne((string)$responseData['id']);
         self::assertInstanceOf(ApiKey::class, $apiKeyUpdatedEntity);
@@ -238,7 +232,6 @@ class ApiKeyControllerTest extends WebTestCase
     /**
      * @throws Throwable
      */
-    #[Depends('testThatPatchActionForRootUserReturnsSuccessResponse')]
     #[TestDox('Test that `DELETE /api/v1/api_key/{id}` for the root user returns success response.')]
     public function testThatDeleteActionForRootUserReturnsSuccessResponse(): void
     {
@@ -246,7 +239,7 @@ class ApiKeyControllerTest extends WebTestCase
 
         $resource = static::getContainer()->get(ApiKeyResource::class);
         $apiKeyEntity = $resource->findOneBy([
-            'description' => 'test api key edited',
+            'description' => 'ApiKey Description: api',
         ]);
         self::assertInstanceOf(ApiKey::class, $apiKeyEntity);
 

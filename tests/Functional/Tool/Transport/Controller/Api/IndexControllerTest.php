@@ -10,8 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class IndexControllerTest
- *
  * @package App\Tests
  */
 class IndexControllerTest extends WebTestCase

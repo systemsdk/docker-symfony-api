@@ -24,8 +24,6 @@ use function count;
 use function is_string;
 
 /**
- * Class LockedUserSubscriber
- *
  * @package App\User
  */
 class LockedUserSubscriber implements EventSubscriberInterface

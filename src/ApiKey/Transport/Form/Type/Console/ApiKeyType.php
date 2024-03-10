@@ -18,8 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Throwable;
 
 /**
- * Class ApiKeyType
- *
  * @package App\ApiKey
  */
 class ApiKeyType extends AbstractType

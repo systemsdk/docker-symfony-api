@@ -26,8 +26,6 @@ use function strtolower;
 use function syslog;
 
 /**
- * Class RepositoryHelper
- *
  * @package App\General
  */
 class RepositoryHelper

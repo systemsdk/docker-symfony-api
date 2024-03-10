@@ -17,8 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class FindOneRoleControllerTest
- *
  * @package App\Tests
  */
 class FindOneRoleControllerTest extends WebTestCase

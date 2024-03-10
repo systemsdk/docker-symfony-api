@@ -15,8 +15,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 /**
- * Class CleanupLogsCommand
- *
  * @package App\Log
  */
 #[AsCommand(
@@ -27,7 +25,7 @@ class CleanupLogsCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    final public const NAME = 'logs:cleanup';
+    final public const string NAME = 'logs:cleanup';
 
     /**
      * Constructor

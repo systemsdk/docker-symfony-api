@@ -15,8 +15,6 @@ use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use function sprintf;
 
 /**
- * Class ControllerCollection
- *
  * @package App\General
  *
  * @method ControllerInterface get(string $className)

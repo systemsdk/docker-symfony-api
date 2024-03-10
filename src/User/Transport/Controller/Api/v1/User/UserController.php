@@ -18,8 +18,6 @@ use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
- * Class UserController
- *
  * @package App\User
  *
  * @method UserResource getResource()

@@ -19,8 +19,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * Class GroupsController
- *
  * @package App\User
  */
 #[AsController]

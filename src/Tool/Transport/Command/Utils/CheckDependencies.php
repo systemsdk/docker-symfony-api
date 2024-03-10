@@ -40,8 +40,6 @@ use function strlen;
 use const DIRECTORY_SEPARATOR;
 
 /**
- * Class CheckDependencies
- *
  * @package App\Tool
  */
 #[AsCommand(

@@ -13,8 +13,6 @@ use App\User\Domain\Entity\User;
 use Throwable;
 
 /**
- * Class LogLoginFailureResource
- *
  * @package App\Log
  *
  * @psalm-suppress LessSpecificImplementedReturnType

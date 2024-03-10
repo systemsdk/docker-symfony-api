@@ -17,8 +17,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
 /**
- * Class CreateRolesWithUserGroupsCommand
- *
  * @package App\Role
  */
 class CreateRolesWithUserGroupsCommand extends Command

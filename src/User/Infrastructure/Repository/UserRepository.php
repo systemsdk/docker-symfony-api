@@ -15,8 +15,6 @@ use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use function array_key_exists;
 
 /**
- * Class UserRepository
- *
  * @package App\User
  *
  * @psalm-suppress LessSpecificImplementedReturnType

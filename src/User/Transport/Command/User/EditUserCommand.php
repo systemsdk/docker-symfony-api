@@ -18,8 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 /**
- * Class EditUserCommand
- *
  * @package App\User
  */
 #[AsCommand(
@@ -30,7 +28,7 @@ class EditUserCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    final public const NAME = 'user:edit';
+    final public const string NAME = 'user:edit';
 
     /**
      * Constructor

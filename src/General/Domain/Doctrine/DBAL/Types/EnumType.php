@@ -15,8 +15,6 @@ use function is_string;
 use function sprintf;
 
 /**
- * Class EnumType
- *
  * @package App\General
  */
 abstract class EnumType extends Type

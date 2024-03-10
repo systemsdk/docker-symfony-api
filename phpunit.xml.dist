@@ -47,6 +47,9 @@
         <env name="SHELL_VERBOSITY" value="-1" />
         <env name="APP_DEBUG" value="false" force="true" />
     </php>
+    <extensions>
+        <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+    </extensions>
     <testsuites>
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>

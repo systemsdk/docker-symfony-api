@@ -12,8 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
 /**
- * Class IndexController
- *
  * @package App\Tool
  */
 #[AsController]

@@ -10,8 +10,6 @@ use function json_decode;
 use function json_encode;
 
 /**
- * Class JSON
- *
  * @package App\General
  */
 class JSON

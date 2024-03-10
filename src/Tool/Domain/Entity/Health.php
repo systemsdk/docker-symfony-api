@@ -17,8 +17,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Throwable;
 
 /**
- * Class Health
- *
  * @package App\Tool
  */
 #[ORM\Entity]

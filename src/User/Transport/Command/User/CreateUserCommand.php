@@ -23,8 +23,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
 /**
- * Class CreateUserCommand
- *
  * @package App\User
  */
 #[AsCommand(
@@ -36,9 +34,9 @@ class CreateUserCommand extends Command
     use ApiKeyUserManagementHelperTrait;
     use SymfonyStyleTrait;
 
-    final public const NAME = 'user:create';
-    private const PARAMETER_NAME = 'name';
-    private const PARAMETER_DESCRIPTION = 'description';
+    final public const string NAME = 'user:create';
+    private const string PARAMETER_NAME = 'name';
+    private const string PARAMETER_DESCRIPTION = 'description';
 
     /**
      * @var array<int, array<string, string>>

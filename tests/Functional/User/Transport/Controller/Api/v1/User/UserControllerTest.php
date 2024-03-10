@@ -18,21 +18,18 @@ use App\User\Infrastructure\DataFixtures\ORM\LoadUserGroupData;
 use Exception;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class UserControllerTest
- *
  * @package App\Tests
  */
 class UserControllerTest extends WebTestCase
 {
     use UserHelper;
 
-    private const USERNAME_FOR_TEST = 'test-user-controller';
+    private const string USERNAME_FOR_TEST = 'john-logged';
     protected static string $baseUrl = self::API_URL_PREFIX . '/v1/user';
     private UserResource $userResource;
 
@@ -159,10 +156,10 @@ class UserControllerTest extends WebTestCase
         $client = $this->getTestClient('john-root', 'password-root');
 
         $requestData = [
-            'username' => self::USERNAME_FOR_TEST,
+            'username' => 'test-user-controller',
             'firstName' => 'Name',
             'lastName' => 'Last name',
-            'email' => self::USERNAME_FOR_TEST . '@test.com',
+            'email' => 'test-user-controller@test.com',
             'userGroups' => [
                 LoadUserGroupData::getUuidByKey('Role-logged'),
             ],
@@ -184,7 +181,6 @@ class UserControllerTest extends WebTestCase
     /**
      * @throws Throwable
      */
-    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
     #[TestDox('Test that `PATCH /api/v1/user/{id}` for the root user returns success response.')]
     public function testThatPatchActionForRootUserReturnsSuccessResponse(): void
     {
@@ -230,7 +226,6 @@ class UserControllerTest extends WebTestCase
     /**
      * @throws Throwable
      */
-    #[Depends('testThatCreateActionForRootUserReturnsSuccessResponse')]
     #[TestDox('Test that `PUT /api/v1/user/{id}` for the root user returns success response.')]
     public function testThatUpdateActionForRootUserReturnsSuccessResponse(): void
     {
@@ -265,9 +260,6 @@ class UserControllerTest extends WebTestCase
         $responseData = JSON::decode($content, true);
         $this->checkBasicFieldsInResponse($responseData);
         $this->checkThatRequestEqualsResponseData($requestData, $responseData);
-
-        // let's delete our test user for cleanup user group users
-        $this->userResource->delete($responseData['id']);
     }
 
     /**

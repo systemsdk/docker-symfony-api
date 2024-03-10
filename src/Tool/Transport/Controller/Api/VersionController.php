@@ -15,8 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
 /**
- * Class VersionController
- *
  * @package App\Tool
  */
 #[AsController]

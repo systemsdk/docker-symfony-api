@@ -18,8 +18,6 @@ use Symfony\Component\Routing\Requirement\EnumRequirement;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
- * Class InheritedRolesController
- *
  * @package App\Role
  */
 #[AsController]

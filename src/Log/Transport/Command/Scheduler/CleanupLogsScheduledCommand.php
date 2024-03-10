@@ -17,8 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 /**
- * Class CleanupLogsScheduledCommand
- *
  * @package App\Log
  */
 #[AsCommand(
@@ -29,7 +27,7 @@ class CleanupLogsScheduledCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    final public const NAME = 'scheduler:cleanup-logs';
+    final public const string NAME = 'scheduler:cleanup-logs';
 
     /**
      * Constructor

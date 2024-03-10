@@ -16,8 +16,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Throwable;
 
 /**
- * Class ApiKeyUserProvider
- *
  * @package App\ApiKey
  *
  * @template-implements UserProviderInterface<ApiKeyUser>

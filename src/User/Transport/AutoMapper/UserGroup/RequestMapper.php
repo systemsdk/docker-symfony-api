@@ -10,8 +10,6 @@ use App\Role\Domain\Entity\Role;
 use Throwable;
 
 /**
- * Class RequestMapper
- *
  * @package App\User
  */
 class RequestMapper extends RestRequestMapper

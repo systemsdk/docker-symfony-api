@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Class InheritedRolesControllerTest
- *
  * @package App\Tests
  */
 class InheritedRolesControllerTest extends WebTestCase

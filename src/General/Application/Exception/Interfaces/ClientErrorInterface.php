@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\General\Application\Exception\Interfaces;
 
 /**
- * Class ClientErrorInterface
- *
  * If you want to expose _your_ exception class message as-is on `prod` environment that should
  * implement either this interface or `Symfony\Component\HttpKernel\HttpKernelInterface` to get
  * that message to frontend side - otherwise you will just get `Internal server error.` message

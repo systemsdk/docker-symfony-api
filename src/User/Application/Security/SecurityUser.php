@@ -11,8 +11,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * Class SecurityUser
- *
  * @package App\User
  */
 class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
