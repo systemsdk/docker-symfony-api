@@ -86,7 +86,7 @@ final class LoadApiKeyData extends Fixture implements OrderedFixtureInterface
         // Create new entity
         $entity = (new ApiKey())
             ->setDescription('ApiKey Description: ' . ($role === null ? '' : $this->rolesService->getShort($role)))
-            ->setToken(str_pad($role === null ? '' : $this->rolesService->getShort($role), 40, '_'));
+            ->setToken(str_pad($role === null ? '' : $this->rolesService->getShort($role), ApiKey::TOKEN_LENGTH, '_'));
         $suffix = '';
 
         if ($role !== null) {

@@ -16,7 +16,12 @@ use Throwable;
  */
 interface ApiKeyUserProviderInterface
 {
-    public function __construct(ApiKeyRepositoryInterface $apiKeyRepository, RolesService $rolesService);
+    public function __construct(
+        bool $apiKeyTokenOpenSslEncrypt,
+        string $apiKeyTokenHashAlgo,
+        ApiKeyRepositoryInterface $apiKeyRepository,
+        RolesService $rolesService
+    );
 
     /**
      * Method to fetch ApiKey entity for specified token.

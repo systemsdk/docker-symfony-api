@@ -1,0 +1,7 @@
+OS does not support crypt algorithm: OS не підтримує алгоритм шифрування.
+Missing or wrong data for decrypt: Відсутні або невірні дані для розшифрування.
+Can not generate ivLen param for crypt: Неможливо згенерувати ivLen параметр для шифрування.
+Can not generate iv param for crypt: Неможливо згенерувати iv параметр для шифрування.
+Can not encrypt data: Неможливо зашифрувати дані.
+Can not convert iv or tag param for decrypt: Неможливо конвертувати iv або tag параметр для розшифрування.
+Can not decrypt data: Неможливо розшифрувати дані.

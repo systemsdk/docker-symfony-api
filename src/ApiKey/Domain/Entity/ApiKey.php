@@ -46,6 +46,8 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
     use Timestampable;
     use Uuid;
 
+    final public const int TOKEN_LENGTH = 40;
+
     #[ORM\Id]
     #[ORM\Column(
         name: 'id',
@@ -64,7 +66,7 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
     #[ORM\Column(
         name: 'token',
         type: Types::STRING,
-        length: 40,
+        length: 255,
         options: [
             'comment' => 'Generated API key string for authentication',
         ],
@@ -75,8 +77,38 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
     ])]
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    #[Assert\Length(exactly: 40)]
+    #[Assert\Length(min: self::TOKEN_LENGTH)]
     private string $token = '';
+
+    #[ORM\Column(
+        name: 'token_hash',
+        type: Types::STRING,
+        length: 255,
+        nullable: true,
+        options: [
+            'comment' => 'Token hash (when encrypted)',
+        ],
+    )]
+    #[Groups([
+        'ApiKey.tokenHash',
+    ])]
+    private ?string $tokenHash = null;
+
+    /**
+     * @var array<string, string>|null
+     */
+    #[ORM\Column(
+        name: 'token_parameters',
+        type: Types::JSON,
+        nullable: true,
+        options: [
+            'comment' => 'Token decrypt parameters (when encrypted)',
+        ],
+    )]
+    #[Groups([
+        'ApiKey.tokenParameters',
+    ])]
+    private ?array $tokenParameters = null;
 
     #[ORM\Column(
         name: 'description',
@@ -150,7 +182,37 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
      */
     public function generateToken(): self
     {
-        return $this->setToken(ByteString::fromRandom(40)->toString());
+        return $this->setToken(ByteString::fromRandom(self::TOKEN_LENGTH)->toString());
+    }
+
+    public function getTokenHash(): ?string
+    {
+        return $this->tokenHash;
+    }
+
+    public function setTokenHash(string $tokenHash): self
+    {
+        $this->tokenHash = $tokenHash;
+
+        return $this;
+    }
+
+    /**
+     * @return array<string, string>|null
+     */
+    public function getTokenParameters(): ?array
+    {
+        return $this->tokenParameters;
+    }
+
+    /**
+     * @param array<string, string> $tokenParameters
+     */
+    public function setTokenParameters(array $tokenParameters): self
+    {
+        $this->tokenParameters = $tokenParameters;
+
+        return $this;
     }
 
     public function getDescription(): string

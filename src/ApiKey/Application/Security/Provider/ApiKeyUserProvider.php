@@ -26,6 +26,8 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInt
      * @param \App\ApiKey\Infrastructure\Repository\ApiKeyRepository $apiKeyRepository
      */
     public function __construct(
+        private readonly bool $apiKeyTokenOpenSslEncrypt,
+        private readonly string $apiKeyTokenHashAlgo,
         private readonly ApiKeyRepositoryInterface $apiKeyRepository,
         private readonly RolesService $rolesService,
     ) {
@@ -66,8 +68,16 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInt
      */
     public function getApiKeyForToken(string $token): ?ApiKey
     {
-        return $this->apiKeyRepository->findOneBy([
+        $searchParams = [
             'token' => $token,
-        ]);
+        ];
+
+        if ($this->apiKeyTokenOpenSslEncrypt) {
+            $searchParams = [
+                'tokenHash' => hash($this->apiKeyTokenHashAlgo, $token),
+            ];
+        }
+
+        return $this->apiKeyRepository->findOneBy($searchParams);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\General\Transport\EventSubscriber;
 
 use App\General\Application\Exception\Interfaces\ClientErrorInterface;
+use App\General\Domain\Exception\Interfaces\TranslatableExceptionInterface;
 use App\General\Domain\Utils\JSON;
 use App\User\Application\Security\UserTypeIdentification;
 use Doctrine\DBAL\Exception;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Throwable;
 
 use function array_intersect;
@@ -47,6 +49,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly LoggerInterface $logger,
         private readonly UserTypeIdentification $userService,
+        private readonly TranslatorInterface $translator,
         private readonly string $environment,
     ) {
     }
@@ -99,9 +102,12 @@ class ExceptionSubscriber implements EventSubscriberInterface
      */
     private function getErrorMessage(Throwable $exception, Response $response): array
     {
+        $message = $exception instanceof TranslatableExceptionInterface
+            ? $this->translator->trans($exception->getMessage(), $exception->getParameters(), $exception->getDomain())
+            : $this->getExceptionMessage($exception);
         // Set base of error message
         $error = [
-            'message' => $this->getExceptionMessage($exception),
+            'message' => $message,
             'code' => $exception->getCode(),
             'status' => $response->getStatusCode(),
         ];

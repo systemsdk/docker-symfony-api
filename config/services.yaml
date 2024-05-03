@@ -68,6 +68,16 @@ services:
         arguments:
             $ignoredRoutes: '%env(json:REQUEST_LOG_IGNORED_ROUTES)%'
 
+    App\ApiKey\Application\Security\Provider\ApiKeyUserProvider:
+        arguments:
+            $apiKeyTokenOpenSslEncrypt: '%env(bool:API_KEY_TOKEN_OPEN_SSL_ENCRYPT)%'
+            $apiKeyTokenHashAlgo: '%env(API_KEY_TOKEN_HASH_ALGO)%'
+
+    App\Tool\Domain\Service\Crypt\OpenSslCryptService:
+        arguments:
+            $algorithm: '%env(OPEN_SSL_ALGORITHM)%'
+            $openSslKey: '%env(OPEN_SSL_KEY)%'
+
     App\General\Domain\Service\Interfaces\ElasticsearchServiceInterface:
         class: App\General\Infrastructure\Service\ElasticsearchService
         arguments:

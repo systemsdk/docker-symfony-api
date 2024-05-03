@@ -13,3 +13,14 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
+
+    App\ApiKey\Transport\EventListener\ApiKeyEntityEventListener:
+        arguments:
+            $apiKeyTokenOpenSslEncrypt: '%env(bool:API_KEY_TOKEN_OPEN_SSL_ENCRYPT)%'
+            $apiKeyTokenHashAlgo: '%env(API_KEY_TOKEN_HASH_ALGO)%'
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: postLoad }

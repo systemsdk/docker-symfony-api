@@ -375,6 +375,10 @@
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/string" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/var-dumper" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/var-exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/04_php-coveralls/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/06_phpmd/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/09_composer/vendor/symfony/process" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

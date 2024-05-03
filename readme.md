@@ -338,6 +338,7 @@ Notes: Please see more commands in Makefile
 
 ## Guidelines
 * [Commands](docs/commands.md)
+* [Api Key](docs/api-key.md)
 * [Development](docs/development.md)
 * [Testing](docs/testing.md)
 * [IDE PhpStorm configuration](docs/phpstorm.md)

@@ -1,0 +1,7 @@
+OS does not support crypt algorithm: OS does not support crypt algorithm.
+Missing or wrong data for decrypt: Missing or wrong data for decrypt.
+Can not generate ivLen param for crypt: Can not generate ivLen param for crypt.
+Can not generate iv param for crypt: Can not generate iv param for crypt.
+Can not encrypt data: Can not encrypt data.
+Can not convert iv or tag param for decrypt: Can not convert iv or tag param for decrypt.
+Can not decrypt data: Can not decrypt data.
