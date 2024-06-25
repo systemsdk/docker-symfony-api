@@ -33,7 +33,7 @@ services:
             tags: [ 'app.stopwatch' ]
         Symfony\Component\EventDispatcher\EventSubscriberInterface:
             tags: [ 'app.stopwatch' ]
-        Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface:
+        Symfony\Component\HttpKernel\Controller\ValueResolverInterface:
             tags: [ 'app.stopwatch' ]
         App\General\Application\Utils\Interfaces\MailSenderInterface:
             calls:
@@ -60,9 +60,6 @@ services:
     App\Log\Application\Service\RequestLoggerService:
         arguments:
             $sensitiveProperties: '%env(json:REQUEST_LOG_SENSITIVE_PROPERTIES)%'
-
-    App\General\Application\Resource\ResourceCollection:
-        arguments: [ !tagged app.rest.resource ]
 
     App\General\Transport\EventSubscriber\RequestLogSubscriber:
         arguments:

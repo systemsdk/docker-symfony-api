@@ -7,6 +7,7 @@ namespace App\Log\Application\Service;
 use App\Log\Application\Resource\LogLoginResource;
 use App\Log\Application\Service\Interfaces\LoginLoggerServiceInterface;
 use App\Log\Domain\Entity\LogLogin;
+use App\Log\Domain\Enum\LogLogin as LogLoginEnum;
 use App\User\Domain\Entity\User;
 use BadMethodCallException;
 use DeviceDetector\DeviceDetector;
@@ -42,7 +43,7 @@ class LoginLoggerService implements LoginLoggerServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function process(string $type): void
+    public function process(LogLoginEnum $type): void
     {
         // Get current request
         $request = $this->requestStack->getCurrentRequest();
@@ -63,7 +64,7 @@ class LoginLoggerService implements LoginLoggerServiceInterface
      *
      * @throws Throwable
      */
-    private function createEntry(string $type, Request $request): void
+    private function createEntry(LogLoginEnum $type, Request $request): void
     {
         $entry = new LogLogin($type, $request, $this->deviceDetector, $this->user);
         // And store entry to database

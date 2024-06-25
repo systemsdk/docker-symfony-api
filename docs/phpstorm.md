@@ -51,7 +51,7 @@ In order to use Xdebug as debugging tool please follow [Using Xdebug](xdebug.md)
 ### Code Style
 This environment has committed `.idea/` catalog, so most IDE configs should be available out of the box. But if you want to have own configs, you can put `./idea` in gitignore and delete folder from the git repository.
 Anyway you can always import our recommended code style if you don't have committed `./idea` folder inside your repository: 
-* Go to `Settings -> Editor -> Code Style` and import scheme `Project` (CodeStyle.xml) from [docs/phpstorm](phpstorm):
+* Go to `Settings -> Editor -> Code Style -> PHP` and import scheme `Project` (CodeStyle.xml) from [docs/phpstorm](phpstorm):
 
 ![Path mappings](images/phpstorm_code_style.png)
 
@@ -59,15 +59,20 @@ Anyway you can always import our recommended code style if you don't have commit
 * Go to `Settings -> PHP -> Quality tools` and configure next:
 
 ![Path mappings](images/phpstorm_06.png)
-![Path mappings](images/phpstorm_07.png)
-![Path mappings](images/phpstorm_08.png)
-![Path mappings](images/phpstorm_09.png)
-![Path mappings](images/phpstorm_10.png)
+![Path mappings](images/phpstorm_php_code_sniffer_1.png)
+![Path mappings](images/phpstorm_php_code_sniffer_2.png)
+![Path mappings](images/phpstorm_php_cs_fixer_1.png)
 
-* Set other configurations for code quality tools and make sure that you have proper path for the MessDetector ruleset `phpmd_ruleset.xml`:
+Note: make sure that you have proper local path for the PHP CS Fixer ruleset `.php-cs-fixer.dist.php`.
 
-![Path mappings](images/phpstorm_11_1.png)
-![Path mappings](images/phpstorm_11_2.png)
+![Path mappings](images/phpstorm_php_cs_fixer_2.png)
+![Path mappings](images/phpstorm_phpstan_1.png)
+![Path mappings](images/phpstorm_phpstan_2.png)
+![Path mappings](images/phpstorm_phpmd_1.png)
+
+Note: make sure that you have proper local path for the MessDetector ruleset `phpmd_ruleset.xml`.
+
+![Path mappings](images/phpstorm_phpmd_2.png)
 
 * If you don't have committed folder `.idea/`, go to `Settings -> Editor -> Inspections` and import profile `Project Default` (Inspections.xml) from [docs/phpstorm](phpstorm):
 

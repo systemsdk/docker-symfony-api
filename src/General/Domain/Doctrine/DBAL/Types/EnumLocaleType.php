@@ -9,7 +9,7 @@ use App\General\Domain\Enum\Locale;
 /**
  * @package App\General
  */
-class EnumLocaleType extends RealEnumType
+class EnumLocaleType extends EnumType
 {
     protected static string $name = Types::ENUM_LOCALE;
     protected static string $enum = Locale::class;

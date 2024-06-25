@@ -4,11 +4,11 @@ parameters:
         - src
         - tests
     editorUrl: '%%file%%:%%line%%'
-    checkGenericClassInNonGenericObjectType: false
     symfony:
         container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
     checkExplicitMixed: false
     ignoreErrors:
+        - identifier: missingType.generics
         - '#Trait [a-zA-Z0-9\\_]+ is used zero times and is not analysed.#'
 includes:
     - tools/02_phpstan/vendor/phpstan/phpstan/conf/bleedingEdge.neon

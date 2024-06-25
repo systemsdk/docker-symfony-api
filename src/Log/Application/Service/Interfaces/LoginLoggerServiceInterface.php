@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Log\Application\Service\Interfaces;
 
 use App\Log\Application\Resource\LogLoginResource;
+use App\Log\Domain\Enum\LogLogin;
 use App\User\Domain\Entity\User;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Throwable;
@@ -28,5 +29,5 @@ interface LoginLoggerServiceInterface
      *
      * @throws Throwable
      */
-    public function process(string $type): void;
+    public function process(LogLogin $type): void;
 }

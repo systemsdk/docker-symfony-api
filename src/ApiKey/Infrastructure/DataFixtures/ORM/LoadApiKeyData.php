@@ -12,7 +12,6 @@ use App\User\Domain\Entity\UserGroup;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Throwable;
 
 use function array_map;
@@ -23,7 +22,6 @@ use function str_pad;
  *
  * @psalm-suppress PropertyNotSetInConstructor
  */
-#[AutoconfigureTag('doctrine.fixture.orm')]
 final class LoadApiKeyData extends Fixture implements OrderedFixtureInterface
 {
     /**

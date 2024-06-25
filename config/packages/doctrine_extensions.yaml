@@ -1,7 +1,6 @@
 # See https://github.com/doctrine-extensions/DoctrineExtensions/blob/main/doc/symfony4.md
 services:
-    gedmo.listener.timestampable:
-        class: Gedmo\Timestampable\TimestampableListener
+    Gedmo\Timestampable\TimestampableListener:
         tags:
             - { name: doctrine.event_listener, event: 'prePersist', connection: default }
             - { name: doctrine.event_listener, event: 'onFlush', connection: default }

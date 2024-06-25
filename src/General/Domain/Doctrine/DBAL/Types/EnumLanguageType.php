@@ -9,7 +9,7 @@ use App\General\Domain\Enum\Language;
 /**
  * @package App\General
  */
-class EnumLanguageType extends RealEnumType
+class EnumLanguageType extends EnumType
 {
     protected static string $name = Types::ENUM_LANGUAGE;
     protected static string $enum = Language::class;

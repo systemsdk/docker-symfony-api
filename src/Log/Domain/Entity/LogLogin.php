@@ -8,6 +8,7 @@ use App\General\Domain\Doctrine\DBAL\Types\Types as AppTypes;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 use App\General\Domain\Entity\Traits\Uuid;
 use App\Log\Domain\Entity\Traits\LogEntityTrait;
+use App\Log\Domain\Enum\LogLogin as LogLoginEnum;
 use App\User\Domain\Entity\User;
 use DeviceDetector\DeviceDetector;
 use Doctrine\DBAL\Types\Types;
@@ -223,7 +224,7 @@ class LogLogin implements EntityInterface
             'LogLogin',
             'LogLogin.type',
         ])]
-        private readonly string $type,
+        private readonly LogLoginEnum $type,
         Request $request,
         private readonly DeviceDetector $deviceDetector,
         #[ORM\ManyToOne(
@@ -260,7 +261,7 @@ class LogLogin implements EntityInterface
         return $this->user;
     }
 
-    public function getType(): string
+    public function getType(): LogLoginEnum
     {
         return $this->type;
     }

@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\User\Transport\EventSubscriber;
 
-use App\General\Domain\Doctrine\DBAL\Types\EnumLogLoginType;
 use App\Log\Application\Service\LoginLoggerService;
+use App\Log\Domain\Enum\LogLogin;
 use App\User\Domain\Repository\Interfaces\UserRepositoryInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Throwable;
 
 /**
@@ -50,9 +49,7 @@ class AuthenticationFailureSubscriber implements EventSubscriberInterface
      */
     public function onAuthenticationFailure(AuthenticationFailureEvent $event): void
     {
-        /** @var AuthenticationException|null $exception */
-        $exception = $event->getException();
-        $token = $exception?->getToken();
+        $token = $event->getException()->getToken();
         $user = $token?->getUser();
 
         // Fetch user entity
@@ -61,6 +58,6 @@ class AuthenticationFailureSubscriber implements EventSubscriberInterface
             $this->loginLoggerService->setUser($this->userRepository->loadUserByIdentifier($identifier, false));
         }
 
-        $this->loginLoggerService->process(EnumLogLoginType::TYPE_FAILURE);
+        $this->loginLoggerService->process(LogLogin::FAILURE);
     }
 }

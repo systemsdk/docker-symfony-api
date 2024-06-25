@@ -9,7 +9,15 @@ namespace App\General\Application\Rest\Interfaces;
  *
  * @package App\General
  */
-// phpcs:ignore
-interface RestResourceInterface extends BaseRestResourceInterface, RestCountResourceInterface, RestCreateResourceInterface, RestDeleteResourceInterface, RestIdsResourceInterface, RestListResourceInterface, RestPatchResourceInterface, RestUpdateResourceInterface, RestFindOneResourceInterface
+interface RestResourceInterface extends
+    BaseRestResourceInterface,
+    RestCountResourceInterface,
+    RestCreateResourceInterface,
+    RestDeleteResourceInterface,
+    RestIdsResourceInterface,
+    RestListResourceInterface,
+    RestPatchResourceInterface,
+    RestUpdateResourceInterface,
+    RestFindOneResourceInterface
 {
 }
