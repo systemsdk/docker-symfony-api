@@ -242,6 +242,7 @@ make generate-jwt-keys
 
 make ssh
 make ssh-root
+make fish
 make ssh-nginx
 make ssh-supervisord
 make ssh-mysql
