@@ -8,8 +8,6 @@ use App\General\Application\Rest\Traits\RestResourceDelete as DeleteLifeCycle;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 
 /**
- * Trait RestResourceDeleteMethod
- *
  * @package App\General
  */
 trait ResourceDeleteMethod

@@ -20,8 +20,6 @@ use InvalidArgumentException;
 use Throwable;
 
 /**
- * Interface BaseRepositoryInterface
- *
  * @package App\General
  */
 interface BaseRepositoryInterface

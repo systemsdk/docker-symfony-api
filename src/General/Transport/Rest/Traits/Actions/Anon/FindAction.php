@@ -13,8 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
 /**
- * Trait FindAction
- *
  * Trait to add 'findAction' for REST controllers for anonymous users.
  *
  * @see \App\General\Transport\Rest\Traits\Methods\FindMethod for detailed documents.

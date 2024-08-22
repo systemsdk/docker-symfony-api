@@ -9,8 +9,6 @@ use Ramsey\Uuid\UuidInterface;
 use Throwable;
 
 /**
- * Trait Uuid
- *
  * @package App\General
  */
 trait Uuid

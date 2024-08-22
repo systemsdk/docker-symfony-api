@@ -7,8 +7,6 @@ namespace App\General\Application\Rest\Traits;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 
 /**
- * Trait RestResourceFindOne
- *
  * @SuppressWarnings("unused")
  *
  * @package App\General

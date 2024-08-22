@@ -16,8 +16,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Throwable;
 
 /**
- * Trait FindAction
- *
  * Trait to add 'findAction' for REST controllers for 'ROLE_ADMIN' users.
  *
  * @see \App\General\Transport\Rest\Traits\Methods\FindMethod for detailed documents.

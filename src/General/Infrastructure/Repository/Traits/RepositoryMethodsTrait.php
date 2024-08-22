@@ -25,8 +25,6 @@ use function array_column;
 use function assert;
 
 /**
- * Trait RepositoryMethodsTrait
- *
  * @package App\General
  */
 trait RepositoryMethodsTrait

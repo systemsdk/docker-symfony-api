@@ -33,8 +33,6 @@ class ListApiKeysCommand extends Command
     final public const string NAME = 'api-key:list';
 
     /**
-     * Constructor
-     *
      * @throws LogicException
      */
     public function __construct(

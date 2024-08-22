@@ -31,8 +31,6 @@ class EditUserCommand extends Command
     final public const string NAME = 'user:edit';
 
     /**
-     * Constructor
-     *
      * @throws LogicException
      */
     public function __construct(

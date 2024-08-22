@@ -14,8 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
 /**
- * Trait CountAction
- *
  * Trait to add 'countAction' for REST controllers for anonymous users.
  *
  * @see \App\General\Transport\Rest\Traits\Methods\CountMethod for detailed documents.

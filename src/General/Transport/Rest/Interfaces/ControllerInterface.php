@@ -15,8 +15,6 @@ use Throwable;
 use UnexpectedValueException;
 
 /**
- * Interface ControllerInterface
- *
  * @package App\General
  */
 #[AutoconfigureTag('app.rest.controller')]

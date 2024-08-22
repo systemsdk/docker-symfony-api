@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\General\Domain\Service\Interfaces;
 
 /**
- * Interface ElasticsearchServiceInterface
- *
  * @package App\General
  */
 interface ElasticsearchServiceInterface

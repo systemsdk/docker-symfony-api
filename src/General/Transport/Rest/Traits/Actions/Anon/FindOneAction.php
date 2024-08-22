@@ -14,8 +14,6 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Throwable;
 
 /**
- * Trait FindOneAction
- *
  * Trait to add 'findOneAction' for REST controllers for anonymous users.
  *
  * @see \App\General\Transport\Rest\Traits\Methods\FindOneMethod for detailed documents.

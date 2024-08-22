@@ -8,8 +8,6 @@ use App\General\Application\Rest\Traits\RestResourceFindOneBy as FindOneByLifeCy
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 
 /**
- * Trait RestResourceFindOneByMethod
- *
  * @package App\General
  */
 trait ResourceFindOneByMethod

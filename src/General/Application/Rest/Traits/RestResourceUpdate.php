@@ -8,8 +8,6 @@ use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 
 /**
- * Trait RestResourceUpdate
- *
  * @SuppressWarnings("unused")
  *
  * @package App\General

@@ -129,8 +129,6 @@ class UserGroup implements EntityInterface, Stringable
     private Collection | ArrayCollection $apiKeys;
 
     /**
-     * Constructor
-     *
      * @throws Throwable
      */
     public function __construct()

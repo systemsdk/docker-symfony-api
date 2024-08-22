@@ -17,8 +17,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Throwable;
 
 /**
- * Trait FindOneAction
- *
  * Trait to add 'findOneAction' for REST controllers for authenticated users.
  *
  * @see \App\General\Transport\Rest\Traits\Methods\FindOneMethod for detailed documents.

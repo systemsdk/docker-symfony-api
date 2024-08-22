@@ -28,8 +28,6 @@ class RemoveUserGroupCommand extends Command
     final public const string NAME = 'user:remove-group';
 
     /**
-     * Constructor
-     *
      * @throws LogicException
      */
     public function __construct(

@@ -31,8 +31,6 @@ class EditApiKeyCommand extends Command
     final public const string NAME = 'api-key:edit';
 
     /**
-     * Constructor
-     *
      * @throws LogicException
      */
     public function __construct(

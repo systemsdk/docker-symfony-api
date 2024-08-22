@@ -50,8 +50,6 @@ class Health implements EntityInterface
     private DateTimeImmutable $timestamp;
 
     /**
-     * Constructor
-     *
      * @throws Throwable
      */
     public function __construct()

@@ -35,8 +35,6 @@ class ListUsersCommand extends Command
     final public const string NAME = 'user:list';
 
     /**
-     * Constructor
-     *
      * @throws LogicException
      */
     public function __construct(

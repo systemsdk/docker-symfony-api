@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Trait DeleteMethod
- *
  * @package App\General
  *
  * @method ResponseHandler getResponseHandler()

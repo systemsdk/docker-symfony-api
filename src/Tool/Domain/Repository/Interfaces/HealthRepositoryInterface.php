@@ -10,8 +10,6 @@ use Exception;
 use Throwable;
 
 /**
- * HealthRepositoryInterface
- *
  * @package App\Tool
  */
 interface HealthRepositoryInterface

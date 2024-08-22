@@ -15,8 +15,6 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Throwable;
 
 /**
- * Trait PatchAction
- *
  * Trait to add 'patchAction' for REST controllers for anonymous users.
  *
  * @see \App\General\Transport\Rest\Traits\Methods\PatchMethod for detailed documents.

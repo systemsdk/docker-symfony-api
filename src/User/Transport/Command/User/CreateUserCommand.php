@@ -69,8 +69,6 @@ class CreateUserCommand extends Command
     ];
 
     /**
-     * Constructor
-     *
      * @param \App\Role\Infrastructure\Repository\RoleRepository $roleRepository
      *
      * @throws LogicException

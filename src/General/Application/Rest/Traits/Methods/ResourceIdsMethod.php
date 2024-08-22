@@ -7,8 +7,6 @@ namespace App\General\Application\Rest\Traits\Methods;
 use App\General\Application\Rest\Traits\RestResourceIds as IdsLifeCycle;
 
 /**
- * Trait RestResourceIdsMethod
- *
  * @package App\General
  */
 trait ResourceIdsMethod

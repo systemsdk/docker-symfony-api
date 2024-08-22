@@ -22,8 +22,6 @@ use function iterator_to_array;
 class ValidatorException extends BaseValidatorException implements ClientErrorInterface
 {
     /**
-     * Constructor
-     *
      * @throws JsonException
      */
     public function __construct(string $target, ConstraintViolationListInterface $errors)

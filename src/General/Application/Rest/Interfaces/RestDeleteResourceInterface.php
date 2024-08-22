@@ -8,8 +8,6 @@ use App\General\Domain\Entity\Interfaces\EntityInterface;
 use Throwable;
 
 /**
- * Interface RestDeleteResourceInterface
- *
  * @package App\General
  */
 interface RestDeleteResourceInterface extends RestSmallResourceInterface

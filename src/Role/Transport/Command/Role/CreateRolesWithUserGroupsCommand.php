@@ -26,8 +26,6 @@ class CreateRolesWithUserGroupsCommand extends Command
     use SymfonyStyleTrait;
 
     /**
-     * Constructor
-     *
      * @param \App\Role\Infrastructure\Repository\RoleRepository $roleRepository
      *
      * @throws LogicException

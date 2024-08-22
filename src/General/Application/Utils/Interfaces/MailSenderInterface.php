@@ -9,8 +9,6 @@ use Throwable;
 use Twig\Environment as Twig;
 
 /**
- * Interface MailSenderInterface
- *
  * @package App\General
  */
 interface MailSenderInterface

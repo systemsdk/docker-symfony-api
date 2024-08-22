@@ -11,8 +11,6 @@ use Throwable;
 use function array_map;
 
 /**
- * Trait UserGroupChoices
- *
  * @package App\User
  *
  * @property UserGroupResource $userGroupResource

@@ -94,8 +94,6 @@ class LogRequest implements EntityInterface
     private bool $mainRequest;
 
     /**
-     * Constructor
-     *
      * @param array<int, string> $sensitiveProperties
      *
      * @throws Throwable

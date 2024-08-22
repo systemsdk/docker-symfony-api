@@ -14,8 +14,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Throwable;
 
 /**
- * Trait LogEntityTrait
- *
  * @package App\Log
  *
  * @property User|null $user

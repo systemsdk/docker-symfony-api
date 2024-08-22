@@ -8,8 +8,6 @@ use App\User\Domain\Entity\User as Entity;
 use Doctrine\ORM\NonUniqueResultException;
 
 /**
- * UserRepositoryInterface
- *
  * @package App\User
  */
 interface UserRepositoryInterface

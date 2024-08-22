@@ -7,8 +7,6 @@ namespace App\ApiKey\Application\Resource\Interfaces;
 use App\General\Application\Rest\Interfaces\RestUpdateResourceInterface;
 
 /**
- * ApiKeyUpdateResourceInterface
- *
  * @package App\ApiKey
  */
 interface ApiKeyUpdateResourceInterface extends RestUpdateResourceInterface

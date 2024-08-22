@@ -26,8 +26,6 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     private bool $mainRequest = false;
 
     /**
-     * Constructor
-     *
      * @param array<int, string> $sensitiveProperties
      */
     public function __construct(

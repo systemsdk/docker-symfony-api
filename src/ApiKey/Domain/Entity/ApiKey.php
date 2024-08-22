@@ -147,8 +147,6 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
     private Collection | ArrayCollection $logsRequest;
 
     /**
-     * Constructor
-     *
      * @throws Throwable
      */
     public function __construct()

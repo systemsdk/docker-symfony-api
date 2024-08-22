@@ -16,8 +16,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Throwable;
 
 /**
- * Trait IdsAction
- *
  * Trait to add 'idsAction' for REST controllers for 'ROLE_ADMIN' users.
  *
  * @see \App\General\Transport\Rest\Traits\Methods\IdsMethod for detailed documents.

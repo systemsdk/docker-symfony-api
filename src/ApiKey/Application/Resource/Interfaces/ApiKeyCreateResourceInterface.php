@@ -7,8 +7,6 @@ namespace App\ApiKey\Application\Resource\Interfaces;
 use App\General\Application\Rest\Interfaces\RestCreateResourceInterface;
 
 /**
- * ApiKeyCreateResourceInterface
- *
  * @package App\ApiKey
  */
 interface ApiKeyCreateResourceInterface extends RestCreateResourceInterface

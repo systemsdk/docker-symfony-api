@@ -7,8 +7,6 @@ namespace App\Log\Domain\Repository\Interfaces;
 use Exception;
 
 /**
- * LogRequestRepositoryInterface
- *
  * @package App\Log
  */
 interface LogRequestRepositoryInterface

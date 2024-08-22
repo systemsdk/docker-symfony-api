@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\General\Transport\Form\Type\Interfaces;
 
 /**
- * Interface FormTypeLabelInterface
- *
  * @package App\General
  */
 interface FormTypeLabelInterface

@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Trait CountMethod
- *
  * @package App\General
  *
  * @method ResponseHandler getResponseHandler()

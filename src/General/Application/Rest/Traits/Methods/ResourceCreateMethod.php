@@ -13,8 +13,6 @@ use UnexpectedValueException;
 use function assert;
 
 /**
- * Trait RestResourceCreateMethod
- *
  * @package App\General
  */
 trait ResourceCreateMethod

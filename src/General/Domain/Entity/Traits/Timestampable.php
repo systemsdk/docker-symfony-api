@@ -11,8 +11,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * Trait Timestampable
- *
  * @package App\General
  */
 trait Timestampable

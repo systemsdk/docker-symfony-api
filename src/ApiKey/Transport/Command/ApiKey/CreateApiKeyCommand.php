@@ -48,8 +48,6 @@ class CreateApiKeyCommand extends Command
     ];
 
     /**
-     * Constructor
-     *
      * @throws LogicException
      */
     public function __construct(

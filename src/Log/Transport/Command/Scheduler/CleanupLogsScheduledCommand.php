@@ -30,8 +30,6 @@ class CleanupLogsScheduledCommand extends Command
     final public const string NAME = 'scheduler:cleanup-logs';
 
     /**
-     * Constructor
-     *
      * @throws LogicException
      */
     public function __construct(

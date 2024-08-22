@@ -36,8 +36,6 @@ class CreateDateDimensionEntitiesCommand extends Command
     private const int YEAR_MAX = 2999;
 
     /**
-     * Constructor
-     *
      * @throws LogicException
      */
     public function __construct(

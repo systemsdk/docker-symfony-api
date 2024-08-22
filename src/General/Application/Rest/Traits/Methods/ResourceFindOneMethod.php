@@ -8,8 +8,6 @@ use App\General\Application\Rest\Traits\RestResourceFindOne as FindOneLifeCycle;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 
 /**
- * Trait RestResourceFindOneMethod
- *
  * @package App\General
  */
 trait ResourceFindOneMethod

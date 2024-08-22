@@ -18,8 +18,6 @@ use function array_keys;
 use function sprintf;
 
 /**
- * Trait RestResourceBaseMethods
- *
  * @package App\General
  */
 trait RestResourceBaseMethods

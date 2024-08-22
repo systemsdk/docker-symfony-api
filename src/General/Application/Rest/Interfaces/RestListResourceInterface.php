@@ -8,8 +8,6 @@ use App\General\Domain\Entity\Interfaces\EntityInterface;
 use Throwable;
 
 /**
- * Interface RestListResourceInterface
- *
  * @package App\General
  */
 interface RestListResourceInterface extends RestSmallResourceInterface

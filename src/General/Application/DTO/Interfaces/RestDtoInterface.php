@@ -8,8 +8,6 @@ use App\General\Domain\Entity\Interfaces\EntityInterface;
 use Throwable;
 
 /**
- * Interface RestDtoInterface
- *
  * @package App\General
  */
 interface RestDtoInterface

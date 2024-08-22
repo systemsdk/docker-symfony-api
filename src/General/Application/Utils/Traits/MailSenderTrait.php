@@ -9,8 +9,6 @@ use Throwable;
 use Twig\Environment as Twig;
 
 /**
- * Trait MailSenderTrait
- *
  * @package App\General
  */
 trait MailSenderTrait

@@ -47,8 +47,6 @@ class RestDtoValueResolver implements ValueResolverInterface
     private ?string $actionName = null;
 
     /**
-     * Constructor
-     *
      * @param ControllerCollection<Controller> $controllerCollection
      */
     public function __construct(

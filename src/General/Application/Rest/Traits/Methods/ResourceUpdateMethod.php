@@ -9,8 +9,6 @@ use App\General\Application\Rest\Traits\RestResourceUpdate as UpdateLifeCycle;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 
 /**
- * Trait RestResourceUpdateMethod
- *
  * @package App\General
  */
 trait ResourceUpdateMethod

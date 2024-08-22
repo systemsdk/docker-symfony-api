@@ -9,8 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Trait UserHelper
- *
  * @package App\Tests
  */
 trait UserHelper

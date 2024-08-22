@@ -8,8 +8,6 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Exception\RuntimeException;
 
 /**
- * Trait GetApplicationTrait
- *
  * @package App\General
  */
 trait GetApplicationTrait

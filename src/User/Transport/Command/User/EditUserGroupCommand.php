@@ -31,8 +31,6 @@ class EditUserGroupCommand extends Command
     final public const string NAME = 'user:edit-group';
 
     /**
-     * Constructor
-     *
      * @throws LogicException
      */
     public function __construct(

@@ -234,8 +234,6 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
     private string $plainPassword = '';
 
     /**
-     * Constructor
-     *
      * @throws Throwable
      */
     public function __construct()

@@ -15,8 +15,6 @@ use Symfony\Component\Routing\Requirement\Requirement;
 use Throwable;
 
 /**
- * Trait UpdateAction
- *
  * Trait to add 'updateAction' for REST controllers for anonymous users.
  *
  * @see \App\General\Transport\Rest\Traits\Methods\UpdateMethod for detailed documents.

@@ -14,8 +14,6 @@ use Throwable;
 use function iterator_count;
 
 /**
- * Trait CollectionTrait
- *
  * @package App\General
  */
 trait CollectionTrait

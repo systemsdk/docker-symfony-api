@@ -14,8 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
 /**
- * Trait CreateAction
- *
  * Trait to add 'createAction' for REST controllers for anonymous users.
  *
  * @see \App\General\Transport\Rest\Traits\Methods\CreateMethod for detailed documents.

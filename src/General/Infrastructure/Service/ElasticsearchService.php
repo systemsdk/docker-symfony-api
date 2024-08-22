@@ -20,9 +20,6 @@ class ElasticsearchService implements ElasticsearchServiceInterface
 
     private Client $client;
 
-    /**
-     * Constructor
-     */
     public function __construct(
         private readonly string $host,
         private readonly string $username,

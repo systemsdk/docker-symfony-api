@@ -10,8 +10,6 @@ use App\User\Domain\Entity\UserGroup as UserGroupEntity;
 use function array_map;
 
 /**
- * Trait PatchUserGroups
- *
  * @package App\User
  */
 trait PatchUserGroups

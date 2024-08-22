@@ -10,8 +10,6 @@ use App\General\Domain\Entity\Interfaces\EntityInterface;
 use Throwable;
 
 /**
- * Trait RestResourceSaveMethod
- *
  * @package App\General
  */
 trait ResourceSaveMethod

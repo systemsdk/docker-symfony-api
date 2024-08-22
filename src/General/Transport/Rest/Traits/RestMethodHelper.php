@@ -27,8 +27,6 @@ use function is_int;
 use function sprintf;
 
 /**
- * Trait RestMethodHelper
- *
  * @package App\General
  */
 trait RestMethodHelper

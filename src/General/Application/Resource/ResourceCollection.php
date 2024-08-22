@@ -29,8 +29,6 @@ class ResourceCollection implements Countable
     use CollectionTrait;
 
     /**
-     * Constructor
-     *
      * @param IteratorAggregate<int, RestResourceInterface|RestSmallResourceInterface> $items
      */
     public function __construct(

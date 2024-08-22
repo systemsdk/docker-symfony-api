@@ -29,8 +29,6 @@ class CreateOrUpdateTemplateCommand extends Command
     final public const string NAME = 'elastic:create-or-update-template';
 
     /**
-     * Constructor
-     *
      * @param \App\General\Infrastructure\Service\ElasticsearchService $elasticsearchService
      *
      * @throws LogicException

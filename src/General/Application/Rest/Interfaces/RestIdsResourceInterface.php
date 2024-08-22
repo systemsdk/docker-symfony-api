@@ -7,8 +7,6 @@ namespace App\General\Application\Rest\Interfaces;
 use Throwable;
 
 /**
- * Interface RestIdsResourceInterface
- *
  * @package App\General
  */
 interface RestIdsResourceInterface extends RestSmallResourceInterface

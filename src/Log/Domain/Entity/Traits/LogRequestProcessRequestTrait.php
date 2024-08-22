@@ -25,8 +25,6 @@ use function preg_replace;
 use function str_contains;
 
 /**
- * Trait LogRequestProcessRequestTrait
- *
  * @package App\Log
  *
  * @method array getSensitiveProperties();

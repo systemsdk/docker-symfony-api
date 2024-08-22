@@ -10,8 +10,6 @@ use App\Role\Application\Security\RolesService;
 use Throwable;
 
 /**
- * Interface ApiKeyUserProviderInterface
- *
  * @package App\ApiKey
  */
 interface ApiKeyUserProviderInterface

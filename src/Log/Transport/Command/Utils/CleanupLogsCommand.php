@@ -28,8 +28,6 @@ class CleanupLogsCommand extends Command
     final public const string NAME = 'logs:cleanup';
 
     /**
-     * Constructor
-     *
      * @param \App\Log\Infrastructure\Repository\LogLoginRepository $logLoginRepository
      * @param \App\Log\Infrastructure\Repository\LogRequestRepository $logRequestRepository
      *

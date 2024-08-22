@@ -28,8 +28,6 @@ class RemoveApiKeyCommand extends Command
     final public const string NAME = 'api-key:remove';
 
     /**
-     * Constructor
-     *
      * @throws LogicException
      */
     public function __construct(

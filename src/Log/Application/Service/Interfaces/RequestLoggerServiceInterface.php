@@ -12,15 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Interface RequestLoggerServiceInterface
- *
  * @package App\Log
  */
 interface RequestLoggerServiceInterface
 {
     /**
-     * Constructor
-     *
      * @param array<int, string> $sensitiveProperties
      */
     public function __construct(

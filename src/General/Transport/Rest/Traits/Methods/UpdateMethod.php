@@ -14,8 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Trait UpdateMethod
- *
  * @package App\General
  *
  * @method ResponseHandler getResponseHandler()

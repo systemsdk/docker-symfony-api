@@ -11,8 +11,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Throwable;
 
 /**
- * Interface LoginLoggerServiceInterface
- *
  * @package App\Log
  */
 interface LoginLoggerServiceInterface

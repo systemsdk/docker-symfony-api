@@ -28,8 +28,6 @@ class RemoveUserCommand extends Command
     final public const string NAME = 'user:remove';
 
     /**
-     * Constructor
-     *
      * @throws LogicException
      */
     public function __construct(

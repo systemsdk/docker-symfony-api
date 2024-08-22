@@ -34,8 +34,6 @@ class ListUserGroupsCommand extends Command
     final public const string NAME = 'user:list-groups';
 
     /**
-     * Constructor
-     *
      * @throws LogicException
      */
     public function __construct(

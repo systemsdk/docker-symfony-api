@@ -9,8 +9,6 @@ use App\General\Domain\Entity\Interfaces\EntityInterface;
 use Throwable;
 
 /**
- * Interface RestCreateResourceInterface
- *
  * @package App\General
  */
 interface RestCreateResourceInterface extends RestSaveResourceInterface

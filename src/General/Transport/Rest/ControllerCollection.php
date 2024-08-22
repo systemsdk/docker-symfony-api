@@ -27,8 +27,6 @@ class ControllerCollection implements Countable
     use CollectionTrait;
 
     /**
-     * Constructor
-     *
      * @phpstan-param IteratorAggregate<int, ControllerInterface> $items
      */
     public function __construct(

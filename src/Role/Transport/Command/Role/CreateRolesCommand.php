@@ -34,8 +34,6 @@ class CreateRolesCommand extends Command
     final public const string NAME = 'user:create-roles';
 
     /**
-     * Constructor
-     *
      * @param \App\Role\Infrastructure\Repository\RoleRepository $roleRepository
      *
      * @throws LogicException

@@ -211,8 +211,6 @@ class LogLogin implements EntityInterface
     private ?string $model = null;
 
     /**
-     * Constructor
-     *
      * @throws Throwable
      */
     public function __construct(

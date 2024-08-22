@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\General\Infrastructure\Rest\Interfaces;
 
 /**
- * Interface SearchTermInterface
- *
  * @package App\General
  */
 interface SearchTermInterface

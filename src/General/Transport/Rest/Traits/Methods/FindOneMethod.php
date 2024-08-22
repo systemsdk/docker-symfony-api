@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 /**
- * Trait FindOneMethod
- *
  * @package App\General
  *
  * @method ResponseHandler getResponseHandler()

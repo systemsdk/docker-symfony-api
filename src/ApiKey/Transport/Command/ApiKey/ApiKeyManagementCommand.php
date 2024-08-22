@@ -21,8 +21,6 @@ class ApiKeyManagementCommand extends Command
     use ExecuteMultipleCommandTrait;
 
     /**
-     * Constructor
-     *
      * @throws LogicException
      */
     public function __construct()

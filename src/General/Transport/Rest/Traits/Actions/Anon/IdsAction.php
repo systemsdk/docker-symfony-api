@@ -13,8 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 
 /**
- * Trait IdsAction
- *
  * Trait to add 'idsAction' for REST controllers for anonymous users.
  *
  * @see \App\General\Transport\Rest\Traits\Methods\IdsMethod for detailed documents.

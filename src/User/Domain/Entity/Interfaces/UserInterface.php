@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\User\Domain\Entity\Interfaces;
 
 /**
- * Interface UserInterface
- *
  * @package App\User
  */
 interface UserInterface

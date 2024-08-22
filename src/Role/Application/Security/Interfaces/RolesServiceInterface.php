@@ -7,8 +7,6 @@ namespace App\Role\Application\Security\Interfaces;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 /**
- * Interface RolesServiceInterface
- *
  * @package App\Role
  */
 interface RolesServiceInterface
