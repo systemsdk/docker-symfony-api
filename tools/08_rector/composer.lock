@@ -9,16 +9,16 @@
     "packages-dev": [
         {
             "name": "phpstan/phpstan",
-            "version": "1.11.11",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "707c2aed5d8d0075666e673a5e71440c1d01a5a3"
+                "reference": "384af967d35b2162f69526c7276acadce534d0e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/707c2aed5d8d0075666e673a5e71440c1d01a5a3",
-                "reference": "707c2aed5d8d0075666e673a5e71440c1d01a5a3",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/384af967d35b2162f69526c7276acadce534d0e1",
+                "reference": "384af967d35b2162f69526c7276acadce534d0e1",
                 "shasum": ""
             },
             "require": {
@@ -63,25 +63,25 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-19T14:37:29+00:00"
+            "time": "2024-08-27T09:18:05+00:00"
         },
         {
             "name": "rector/rector",
-            "version": "1.2.3",
+            "version": "1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "2433e95410aef1b34b15d7f1b6a134365a4ddb39"
+                "reference": "42a4aa23b48b4cfc8ebfeac2b570364e27744381"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/2433e95410aef1b34b15d7f1b6a134365a4ddb39",
-                "reference": "2433e95410aef1b34b15d7f1b6a134365a4ddb39",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/42a4aa23b48b4cfc8ebfeac2b570364e27744381",
+                "reference": "42a4aa23b48b4cfc8ebfeac2b570364e27744381",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2|^8.0",
-                "phpstan/phpstan": "^1.11.9"
+                "phpstan/phpstan": "^1.11.11"
             },
             "conflict": {
                 "rector/rector-doctrine": "*",
@@ -114,7 +114,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/1.2.3"
+                "source": "https://github.com/rectorphp/rector/tree/1.2.4"
             },
             "funding": [
                 {
@@ -122,7 +122,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-12T16:36:46+00:00"
+            "time": "2024-08-23T09:03:01+00:00"
         },
         {
             "name": "roave/security-advisories",
@@ -130,12 +130,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "8938260885863ec2dd9f2aaf9a79ba14e58a92f6"
+                "reference": "f6f9a938afd75c2344952b0566983700829c7440"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/8938260885863ec2dd9f2aaf9a79ba14e58a92f6",
-                "reference": "8938260885863ec2dd9f2aaf9a79ba14e58a92f6",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/f6f9a938afd75c2344952b0566983700829c7440",
+                "reference": "f6f9a938afd75c2344952b0566983700829c7440",
                 "shasum": ""
             },
             "conflict": {
@@ -346,7 +346,7 @@
                 "friendsoftypo3/mediace": ">=7.6.2,<7.6.5",
                 "friendsoftypo3/openid": ">=4.5,<4.5.31|>=4.7,<4.7.16|>=6,<6.0.11|>=6.1,<6.1.6",
                 "froala/wysiwyg-editor": "<3.2.7|>=4.0.1,<=4.1.3",
-                "froxlor/froxlor": "<2.1.9",
+                "froxlor/froxlor": "<=2.2.0.0-RC3",
                 "frozennode/administrator": "<=5.0.12",
                 "fuel/core": "<1.8.1",
                 "funadmin/funadmin": "<=3.2|>=3.3.2,<=3.3.3",
@@ -401,6 +401,7 @@
                 "in2code/femanager": "<5.5.3|>=6,<6.3.4|>=7,<7.2.3",
                 "in2code/ipandlanguageredirect": "<5.1.2",
                 "in2code/lux": "<17.6.1|>=18,<24.0.2",
+                "in2code/powermail": "<7.5|>=8,<8.5|>=9,<10.9|>=12,<12.4",
                 "innologi/typo3-appointments": "<2.0.6",
                 "intelliants/subrion": "<4.2.2",
                 "inter-mediator/inter-mediator": "==5.5",
@@ -939,7 +940,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-08-19T21:04:39+00:00"
+            "time": "2024-08-28T08:05:44+00:00"
         }
     ],
     "aliases": [],
