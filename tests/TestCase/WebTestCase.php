@@ -94,7 +94,7 @@ abstract class WebTestCase extends BaseWebTestCase
         $server = array_merge(
             $role === null
                 ? [
-                    'HTTP_AUTHORIZATION' => 'ApiKey invalid-api-key',
+                    'HTTP_AUTHORIZATION' => 'ApiKey invalidApiKey',
                 ]
                 : $authService->getAuthorizationHeadersForApiKey($role),
             $this->getJsonHeaders(),

@@ -7,6 +7,7 @@ namespace App\Tests\Application\User\Transport\Controller\Api\v1\User;
 use App\General\Domain\Enum\Language;
 use App\General\Domain\Enum\Locale;
 use App\General\Domain\Utils\JSON;
+use App\Role\Domain\Enum\Role;
 use App\Tests\Application\User\Transport\Controller\Api\v1\Traits\UserHelper;
 use App\Tests\TestCase\WebTestCase;
 use App\Tool\Domain\Service\Interfaces\LocalizationServiceInterface;
@@ -97,6 +98,44 @@ class UserControllerTest extends WebTestCase
     public function testThatCountActionForAdminUserReturnsSuccessResponse(): void
     {
         $this->countActionForAdminUserReturnsSuccessResponse();
+    }
+
+    /**
+     * @throws Throwable
+     */
+    #[TestDox('Test that `GET /api/v1/user/count` for the api key with admin role returns success response.')]
+    public function testThatCountActionForApiKeyReturnsSuccessResponse(): void
+    {
+        $client = $this->getApiKeyClient(Role::ADMIN->value);
+
+        $client->request(method: 'GET', uri: static::$baseUrl . '/count');
+        $response = $client->getResponse();
+        $content = $response->getContent();
+        self::assertNotFalse($content);
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode(), "Response:\n" . $response);
+        $responseData = JSON::decode($content, true);
+        self::assertIsArray($responseData);
+        self::assertArrayHasKey('count', $responseData);
+        self::assertGreaterThan(0, $responseData['count']);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    #[TestDox('Test that `GET /api/v1/user/count` for the wrong api key returns error response.')]
+    public function testThatCountActionForWrongApiKeyReturnsErrorResponse(): void
+    {
+        $client = $this->getApiKeyClient();
+
+        $client->request(method: 'GET', uri: static::$baseUrl . '/count');
+        $response = $client->getResponse();
+        $content = $response->getContent();
+        self::assertNotFalse($content);
+        self::assertSame(Response::HTTP_UNAUTHORIZED, $response->getStatusCode(), "Response:\n" . $response);
+        $responseData = JSON::decode($content, true);
+        self::assertIsArray($responseData);
+        self::assertArrayHasKey('message', $responseData);
+        self::assertStringContainsString('Invalid ApiKey', $responseData['message']);
     }
 
     /**

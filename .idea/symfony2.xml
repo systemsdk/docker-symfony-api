@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Symfony2PluginSettings">
-    <option name="directoryToWeb" value="public" />
     <option name="pluginEnabled" value="true" />
     <option name="profilerCsvPath" value="" />
+    <option name="containerFiles">
+      <list>
+        <container_file path="var/cache/dev/App_KernelDevDebugContainer.xml" />
+      </list>
+    </option>
   </component>
 </project>

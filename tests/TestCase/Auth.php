@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\TestCase;
 
+use App\ApiKey\Domain\Entity\ApiKey;
 use App\General\Domain\Utils\JSON;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use JsonException;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -31,6 +33,7 @@ class Auth
 {
     public function __construct(
         private readonly KernelInterface $kernel,
+        private readonly RolesServiceInterface $rolesService
     ) {
     }
 
@@ -57,7 +60,8 @@ class Auth
         return [
             ...$this->getContentTypeHeader(),
             ...[
-                'HTTP_AUTHORIZATION' => 'ApiKey ' . str_pad($role, 40, '_'),
+                'HTTP_AUTHORIZATION' => 'ApiKey '
+                    . str_pad($this->rolesService->getShort($role), ApiKey::TOKEN_LENGTH, '_'),
             ],
         ];
     }
