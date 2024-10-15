@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\General\Infrastructure\MessageHandler;
+namespace App\Tool\Transport\MessageHandler;
 
-use App\General\Infrastructure\Message\TestMessage;
+use App\Tool\Domain\Message\TestMessage;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Throwable;
@@ -13,7 +13,7 @@ use Throwable;
  * If you need handling multiple - follow https://symfony.com/doc/current/messenger.html#handling-multiple-messages
  * TODO: This is handler example, you can delete it.
  *
- * @package App\General
+ * @package App\Tool
  */
 #[AsMessageHandler]
 class TestHandler

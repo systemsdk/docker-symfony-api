@@ -58,17 +58,30 @@ framework:
                     # e.g. 1 second delay, 2 seconds, 4 seconds
                     multiplier: 2
                     max_delay: 0
-
-            # Uncomment the following line to enable a transport named "amqp"
-            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
-            failed: 'doctrine://default?queue_name=failed'
+            async_external:
+                dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
+                options:
+                    exchange:
+                        name: external
+                    queues:
+                        messages_external: ~
+                serializer: App\Tool\Transport\Serializer\ExternalMessageSerializer
+                retry_strategy:
+                    max_retries: 3
+                    # milliseconds delay
+                    delay: 5000
+                    # causes the delay to be higher before each retry
+                    # e.g. 1 second delay, 2 seconds, 4 seconds
+                    multiplier: 2
+                    max_delay: 0
+            failed:
+                dsn: 'doctrine://default?queue_name=failed'
+                retry_strategy:
+                    service: App\General\Infrastructure\Messenger\Strategy\FailedRetry
 
         routing:
-            App\General\Infrastructure\Message\Interfaces\MessageHighInterface: async_priority_high
-            App\General\Infrastructure\Message\Interfaces\MessageLowInterface: async_priority_low
-
-            # Route your messages to the transports
-            # 'App\General\Infrastructure\Message\YourMessage': async
+            App\General\Domain\Message\Interfaces\MessageHighInterface: async_priority_high
+            App\General\Domain\Message\Interfaces\MessageLowInterface: async_priority_low
 
 when@test:
     framework:
@@ -76,3 +89,4 @@ when@test:
             transports:
                 async_priority_high: 'in-memory://'
                 async_priority_low: 'in-memory://'
+                async_external: 'in-memory://'

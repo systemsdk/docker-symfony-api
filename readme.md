@@ -87,7 +87,7 @@ make composer-install
 make generate-jwt-keys
 ```
 
-7.Make sure that you have installed migrations / created roles and groups / messenger transports / elastic template:
+7.Make sure that you have installed migrations / created roles and groups / cron jobs / messenger transports / elastic template:
 ```bash
 make migrate
 make create-roles-groups
@@ -125,7 +125,7 @@ make start-staging
 make generate-jwt-keys
 ```
 
-4.Make sure that you have installed migrations / created roles and groups / messenger transports / elastic template:
+4.Make sure that you have installed migrations / created roles and groups / cron jobs / messenger transports / elastic template:
 ```bash
 make migrate-no-test
 make create-roles-groups
@@ -161,7 +161,7 @@ make start-prod
 make generate-jwt-keys
 ```
 
-6.Make sure that you have installed migrations / created roles and groups / messenger transports / elastic template:
+6.Make sure that you have installed migrations / created roles and groups / cron jobs / messenger transports / elastic template:
 ```bash
 make migrate-no-test
 make create-roles-groups

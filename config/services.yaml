@@ -18,6 +18,7 @@ services:
             $databaseHealthHistoryDays: '%env(int:DATABASE_HEALTH_HISTORY_DAYS)%'
             $databaseLogLoginHistoryDays: '%env(int:DATABASE_LOG_LOGIN_HISTORY_DAYS)%'
             $databaseLogRequestHistoryDays: '%env(int:DATABASE_LOG_REQUEST_HISTORY_DAYS)%'
+            $messengerMessagesHistoryDays: '%env(int:MESSENGER_MESSAGES_HISTORY_DAYS)%'
             $elasticNumberOfShards: '%env(int:ELASTICSEARCH_NUMBER_OF_SHARDS)%'
             $elasticNumberOfReplicas: '%env(int:ELASTICSEARCH_NUMBER_OF_REPLICAS)%'
             $lockUserOnLoginFailureAttempts: '%env(int:LOCK_USER_ON_LOGIN_FAILURE_ATTEMPTS)%'
@@ -75,6 +76,11 @@ services:
             $algorithm: '%env(OPEN_SSL_ALGORITHM)%'
             $openSslKey: '%env(OPEN_SSL_KEY)%'
 
+    App\General\Infrastructure\Messenger\Strategy\FailedRetry:
+        arguments:
+            $isRetryable: '%env(bool:MESSENGER_FAILED_IS_RETRYABLE)%'
+            $retryWaitingTime: '%env(int:MESSENGER_FAILED_RETRY_WAITING_TIME)%'
+
     App\General\Domain\Service\Interfaces\ElasticsearchServiceInterface:
         class: App\General\Infrastructure\Service\ElasticsearchService
         arguments:
@@ -82,6 +88,41 @@ services:
             $username: '%env(ELASTICSEARCH_USERNAME)%'
             $password: '%env(ELASTICSEARCH_PASSWORD)%'
         #lazy: true
+
+    app.serializer.normalizer.object.external_message:
+        class: Symfony\Component\Serializer\Normalizer\ObjectNormalizer
+        autoconfigure: false
+        arguments:
+            $nameConverter: '@serializer.name_converter.camel_case_to_snake_case'
+
+    app.serializer.denormalizer.array.external_message:
+        class: Symfony\Component\Serializer\Normalizer\ArrayDenormalizer
+        autoconfigure: false
+
+    app.serializer.normalizer.date_time.external_message:
+        class: Symfony\Component\Serializer\Normalizer\DateTimeNormalizer
+        autoconfigure: false
+        arguments:
+            - { datetime_format: 'Y-m-d H:i:s' }
+
+    app.serializer.encoder.json.external_message:
+        class: Symfony\Component\Serializer\Encoder\JsonEncoder
+        autoconfigure: false
+
+    app.serializer.external_message:
+        class: Symfony\Component\Serializer\Serializer
+        autoconfigure: false
+        arguments:
+            $normalizers:
+                - '@app.serializer.normalizer.date_time.external_message'
+                - '@app.serializer.normalizer.object.external_message'
+                - '@app.serializer.denormalizer.array.external_message'
+            $encoders:
+                - '@app.serializer.encoder.json.external_message'
+
+    App\Tool\Transport\Serializer\ExternalMessageSerializer:
+        arguments:
+            $serializer: '@app.serializer.external_message'
 
 when@dev:
     services:

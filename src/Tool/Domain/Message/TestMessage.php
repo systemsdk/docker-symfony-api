@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\General\Infrastructure\Message;
+namespace App\Tool\Domain\Message;
 
-use App\General\Infrastructure\Message\Interfaces\MessageHighInterface;
+use App\General\Domain\Message\Interfaces\MessageHighInterface;
 
 /**
  * TODO: This is message example, you can delete it.
  *
- * @package App\General
+ * @package App\Tool
  */
 class TestMessage implements MessageHighInterface
 {

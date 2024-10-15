@@ -14,7 +14,7 @@
 		"Elasticsearch"
 	],
 	"homepage": "https://github.com/systemsdk/docker-symfony-api",
-	"version": "v3.1.4",
+	"version": "v3.2.0",
 	"license": "MIT",
 	"authors": [
 		{
@@ -153,6 +153,7 @@
 			"Symfony\\Bridge\\PhpUnit\\": "tools/01_phpunit/vendor/symfony/phpunit-bridge",
 			"PHPMD\\": "tools/06_phpmd/vendor/phpmd/phpmd/src/bin",
 			"PhpCsFixer\\": "tools/03_ecs/vendor/symplify/easy-coding-standard/vendor/friendsofphp/php-cs-fixer/src",
+			"PHP_CodeSniffer\\": "tools/03_ecs/vendor/symplify/easy-coding-standard/vendor/squizlabs/php_codesniffer/src",
 			"Symplify\\CodingStandard\\": "tools/03_ecs/vendor/symplify/easy-coding-standard/vendor/symplify/coding-standard/src",
 			"Symplify\\EasyCodingStandard\\": "tools/03_ecs/vendor/symplify/easy-coding-standard/src",
 			"ECSPrefix20210928\\Symplify\\RuleDocGenerator\\": "tools/03_ecs/vendor/symplify/easy-coding-standard/vendor/symplify/rule-doc-generator-contracts/src",

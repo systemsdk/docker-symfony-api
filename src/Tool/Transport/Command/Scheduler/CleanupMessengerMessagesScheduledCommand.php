@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Log\Transport\Command\Scheduler;
+namespace App\Tool\Transport\Command\Scheduler;
 
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
-use App\Log\Transport\Command\Utils\CleanupLogsCommand;
 use App\Tool\Application\Service\Interfaces\ScheduledCommandServiceInterface;
+use App\Tool\Transport\Command\Utils\CleanupMessengerMessagesCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
@@ -15,17 +15,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 
 /**
- * @package App\Log
+ * @package App\Tool
  */
 #[AsCommand(
     name: self::NAME,
-    description: 'Command to run a cron job for cleanup logs by schedule.',
+    description: 'Command to create a cron job for cleanup messenger_messages table by schedule.',
 )]
-class CleanupLogsScheduledCommand extends Command
+class CleanupMessengerMessagesScheduledCommand extends Command
 {
     use SymfonyStyleTrait;
 
-    final public const string NAME = 'scheduler:cleanup-logs';
+    final public const string NAME = 'scheduler:cleanup-messenger-messages';
 
     /**
      * @throws LogicException
@@ -46,7 +46,7 @@ class CleanupLogsScheduledCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);
-        $message = $this->createScheduledCommand();
+        $message = $this->process();
 
         if ($input->isInteractive()) {
             $io->success($message);
@@ -58,12 +58,12 @@ class CleanupLogsScheduledCommand extends Command
     /**
      * @throws Throwable
      */
-    private function createScheduledCommand(): string
+    private function process(): string
     {
-        $entity = $this->scheduledCommandService->findByCommand(CleanupLogsCommand::NAME);
+        $entity = $this->scheduledCommandService->findByCommand(CleanupMessengerMessagesCommand::NAME);
 
-        if ($entity !== null) {
-            return "The job CleanupLogs is already present [id='{$entity->getId()}'] - have a nice day";
+        if ($entity) {
+            return "The job CleanupMessengerMessages is already present [id='{$entity->getId()}']";
         }
 
         // ┌───────────── minute (0 - 59)
@@ -76,12 +76,12 @@ class CleanupLogsScheduledCommand extends Command
         // Run once a day, 00:00
         $cronExpression = '0 0 * * *';
         $this->scheduledCommandService->create(
-            'Cleanup logs in tables log_login, log_request',
-            CleanupLogsCommand::NAME,
+            'Cleanup table messenger_messages',
+            CleanupMessengerMessagesCommand::NAME,
             $cronExpression,
-            '/cleanup-logs.log'
+            '/cleanup-messenger-messages.log'
         );
 
-        return 'The job CleanupLogs is created - have a nice day';
+        return 'The job CleanupMessengerMessages is created';
     }
 }

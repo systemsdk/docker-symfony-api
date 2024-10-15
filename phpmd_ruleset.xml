@@ -19,8 +19,14 @@
         </properties>
     </rule>
     <rule ref="rulesets/naming.xml">
+        <exclude name="LongClassName"/>
         <exclude name="ShortVariable"/>
         <exclude name="LongVariable"/>
+    </rule>
+    <rule ref="rulesets/naming.xml/LongClassName">
+        <properties>
+            <property name="maximum" value="50" />
+        </properties>
     </rule>
     <rule ref="rulesets/naming.xml/ShortVariable">
         <properties>

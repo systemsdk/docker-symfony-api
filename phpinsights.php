@@ -131,7 +131,7 @@ return [
                 'src/Tool/Application/Validator/Constraints/TimezoneValidator.php',
                 'src/User/Application/Validator/Constraints/UniqueEmailValidator.php',
                 'src/User/Application/Validator/Constraints/UniqueUsernameValidator.php',
-                'src/General/Infrastructure/MessageHandler/TestHandler.php',
+                'src/Tool/Transport/MessageHandler/TestHandler.php',
             ],
         ],
         SlevomatCodingStandard\Sniffs\Namespaces\UnusedUsesSniff::class => [

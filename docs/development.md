@@ -18,7 +18,7 @@ This document contains basic information and recommendation for development.
 
 Within this application the base workflow is following:
 
-`Controller/Command(Transport layer) <--> Resource(Application layer) <--> Repository(Infrastructure layer) <--> Entity(Domain layer)`
+`Controller/Command/EventSubscriber/MessageHandler(Transport layer) <--> Resource/Service(Application layer) <--> Repository/Service(Infrastructure layer) <--> Entity/Message/Service(Domain layer)`
 
 #### Exceptions
 * All Exceptions that should terminate the current request (and return an error message to the user) should be handled

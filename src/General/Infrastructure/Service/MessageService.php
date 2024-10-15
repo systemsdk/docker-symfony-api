@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\General\Infrastructure\Service;
 
+use App\General\Domain\Message\Interfaces\MessageHighInterface;
+use App\General\Domain\Message\Interfaces\MessageLowInterface;
 use App\General\Domain\Service\Interfaces\MessageServiceInterface;
-use App\General\Infrastructure\Message\TestMessage;
 use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 /**
@@ -20,11 +22,13 @@ class MessageService implements MessageServiceInterface
     }
 
     /**
-     * TODO: This is example for creating test message, you can delete it.
+     * {@inheritdoc}
+     *
+     * @throws ExceptionInterface
      */
-    public function sendTestMessage(string $someId): self
+    public function sendMessage(MessageHighInterface|MessageLowInterface $message): self
     {
-        $this->bus->dispatch(new Envelope(new TestMessage($someId)));
+        $this->bus->dispatch(new Envelope($message));
 
         return $this;
     }
