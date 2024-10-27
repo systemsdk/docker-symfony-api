@@ -9,7 +9,7 @@ use App\General\Transport\Rest\Traits\Methods;
 use App\Role\Application\Resource\RoleResource;
 use App\Role\Domain\Entity\Role as RoleEntity;
 use App\Role\Domain\Enum\Role;
-use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use OpenApi\Attributes\JsonContent;
 use OpenApi\Attributes\Property;

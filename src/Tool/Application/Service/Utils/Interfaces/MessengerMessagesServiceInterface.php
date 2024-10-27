@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tool\Application\Service\Interfaces;
+namespace App\Tool\Application\Service\Utils\Interfaces;
 
 use Exception;
 

@@ -10,7 +10,7 @@ use App\ApiKey\Transport\Form\Type\Console\ApiKeyType;
 use App\General\Transport\Command\HelperConfigure;
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
 use App\Role\Application\Resource\RoleResource;
-use App\Role\Application\Security\RolesService;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Transport\Command\Traits\ApiKeyUserManagementHelperTrait;
 use Matthias\SymfonyConsoleForm\Console\Helper\FormHelper;
@@ -54,13 +54,13 @@ class CreateApiKeyCommand extends Command
         private readonly ApiKeyHelper $apiKeyHelper,
         private readonly ApiKeyResource $apiKeyResource,
         private readonly UserGroupResource $userGroupResource,
-        private readonly RolesService $rolesService,
+        private readonly RolesServiceInterface $rolesService,
         private readonly RoleResource $roleResource,
     ) {
         parent::__construct();
     }
 
-    public function getRolesService(): RolesService
+    public function getRolesService(): RolesServiceInterface
     {
         return $this->rolesService;
     }

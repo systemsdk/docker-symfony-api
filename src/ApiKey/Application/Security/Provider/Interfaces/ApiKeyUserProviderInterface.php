@@ -6,7 +6,7 @@ namespace App\ApiKey\Application\Security\Provider\Interfaces;
 
 use App\ApiKey\Domain\Entity\ApiKey;
 use App\ApiKey\Domain\Repository\Interfaces\ApiKeyRepositoryInterface;
-use App\Role\Application\Security\RolesService;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use Throwable;
 
 /**
@@ -18,7 +18,7 @@ interface ApiKeyUserProviderInterface
         bool $apiKeyTokenOpenSslEncrypt,
         string $apiKeyTokenHashAlgo,
         ApiKeyRepositoryInterface $apiKeyRepository,
-        RolesService $rolesService
+        RolesServiceInterface $rolesService
     );
 
     /**

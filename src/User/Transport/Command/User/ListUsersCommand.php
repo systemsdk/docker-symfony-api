@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\User\Transport\Command\User;
 
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
-use App\Role\Application\Security\RolesService;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Entity\UserGroup;
@@ -39,7 +39,7 @@ class ListUsersCommand extends Command
      */
     public function __construct(
         private readonly UserResource $userResource,
-        private readonly RolesService $roles,
+        private readonly RolesServiceInterface $roles,
     ) {
         parent::__construct();
     }

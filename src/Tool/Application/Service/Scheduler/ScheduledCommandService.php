@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tool\Application\Service;
+namespace App\Tool\Application\Service\Scheduler;
 
-use App\Tool\Application\Service\Interfaces\ScheduledCommandServiceInterface;
+use App\Tool\Application\Service\Scheduler\Interfaces\ScheduledCommandServiceInterface;
 use App\Tool\Domain\Repository\Interfaces\ScheduledCommandRepositoryInterface;
 use DateTime;
-use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\OptimisticLockException;
 use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand;
 
 /**
@@ -27,8 +25,7 @@ class ScheduledCommandService implements ScheduledCommandServiceInterface
     }
 
     /**
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * {@inheritdoc}
      */
     public function create(
         string $name,

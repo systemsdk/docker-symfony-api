@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\User\Transport\Controller\Api\v1\Profile;
 
 use App\General\Domain\Utils\JSON;
-use App\Role\Application\Security\RolesService;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\User\Domain\Entity\User;
 use JsonException;
-use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use OpenApi\Attributes\JsonContent;
 use OpenApi\Attributes\Property;
@@ -29,7 +29,7 @@ class IndexController
 {
     public function __construct(
         private readonly SerializerInterface $serializer,
-        private readonly RolesService $rolesService,
+        private readonly RolesServiceInterface $rolesService,
     ) {
     }
 

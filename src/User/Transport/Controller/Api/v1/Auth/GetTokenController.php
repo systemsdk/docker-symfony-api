@@ -7,7 +7,7 @@ namespace App\User\Transport\Controller\Api\v1\Auth;
 use App\General\Domain\Utils\JSON;
 use App\User\Domain\Entity\User;
 use JsonException;
-use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use OpenApi\Attributes\JsonContent;
 use OpenApi\Attributes\Property;

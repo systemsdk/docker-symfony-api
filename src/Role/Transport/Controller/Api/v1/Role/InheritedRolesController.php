@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Role\Transport\Controller\Api\v1\Role;
 
-use App\Role\Application\Security\RolesService;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\Role\Domain\Entity\Role;
 use App\Role\Domain\Enum\Role as RoleEnum;
 use OpenApi\Attributes as OA;
@@ -25,7 +25,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class InheritedRolesController
 {
     public function __construct(
-        private readonly RolesService $rolesService,
+        private readonly RolesServiceInterface $rolesService,
     ) {
     }
 

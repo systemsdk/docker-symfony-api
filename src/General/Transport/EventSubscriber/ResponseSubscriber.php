@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\General\Transport\EventSubscriber;
 
-use App\Tool\Application\Service\VersionService;
+use App\Tool\Application\Service\Interfaces\VersionServiceInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 class ResponseSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly VersionService $version,
+        private readonly VersionServiceInterface $version,
     ) {
     }
 

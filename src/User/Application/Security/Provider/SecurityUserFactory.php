@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Application\Security\Provider;
 
-use App\Role\Application\Security\RolesService;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\User\Application\Security\SecurityUser;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Repository\Interfaces\UserRepositoryInterface;
@@ -14,6 +14,8 @@ use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Throwable;
+
+use function sprintf;
 
 /**
  * @package App\User
@@ -27,7 +29,7 @@ class SecurityUserFactory implements UserProviderInterface
      */
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
-        private readonly RolesService $rolesService,
+        private readonly RolesServiceInterface $rolesService,
     ) {
     }
 

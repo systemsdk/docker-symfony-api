@@ -6,7 +6,7 @@ namespace App\Tool\Transport\Controller\Api;
 
 use App\General\Transport\Rest\Interfaces\ResponseHandlerInterface;
 use App\General\Transport\Rest\ResponseHandler;
-use App\Tool\Application\Service\HealthService;
+use App\Tool\Application\Service\Interfaces\HealthServiceInterface;
 use OpenApi\Attributes as OA;
 use OpenApi\Attributes\JsonContent;
 use OpenApi\Attributes\Property;
@@ -25,7 +25,7 @@ class HealthController
 {
     public function __construct(
         private readonly ResponseHandler $responseHandler,
-        private readonly HealthService $healthService,
+        private readonly HealthServiceInterface $healthService,
     ) {
     }
 

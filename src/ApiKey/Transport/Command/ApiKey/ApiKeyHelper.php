@@ -6,7 +6,7 @@ namespace App\ApiKey\Transport\Command\ApiKey;
 
 use App\ApiKey\Application\Resource\ApiKeyResource;
 use App\ApiKey\Domain\Entity\ApiKey as ApiKeyEntity;
-use App\Role\Application\Security\RolesService;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use Closure;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
@@ -22,7 +22,7 @@ class ApiKeyHelper
 {
     public function __construct(
         private readonly ApiKeyResource $apiKeyResource,
-        private readonly RolesService $rolesService,
+        private readonly RolesServiceInterface $rolesService,
     ) {
     }
 

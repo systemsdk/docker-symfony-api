@@ -9,4 +9,10 @@ namespace App\Role\Domain\Repository\Interfaces;
  */
 interface RoleRepositoryInterface
 {
+    /**
+     * Method to clean existing roles from database that does not really exists.
+     *
+     * @param array<int, string> $roles
+     */
+    public function clearRoles(array $roles): int;
 }

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tool\Application\Service;
+namespace App\Tool\Application\Service\Utils;
 
-use App\Tool\Application\Service\Interfaces\MessengerMessagesServiceInterface;
+use App\Tool\Application\Service\Utils\Interfaces\MessengerMessagesServiceInterface;
 use App\Tool\Domain\Repository\Interfaces\MessengerMessagesRepositoryInterface;
 
 /**

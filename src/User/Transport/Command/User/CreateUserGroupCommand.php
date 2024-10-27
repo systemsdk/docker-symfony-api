@@ -7,7 +7,7 @@ namespace App\User\Transport\Command\User;
 use App\General\Transport\Command\HelperConfigure;
 use App\General\Transport\Command\Traits\GetApplicationTrait;
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
-use App\Role\Domain\Repository\Interfaces\RoleRepositoryInterface;
+use App\Role\Application\Resource\RoleResource;
 use App\User\Application\DTO\UserGroup\UserGroupCreate as UserGroupDto;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Transport\Form\Type\Console\UserGroupType;
@@ -51,13 +51,11 @@ class CreateUserGroupCommand extends Command
     ];
 
     /**
-     * @param \App\Role\Infrastructure\Repository\RoleRepository $roleRepository
-     *
      * @throws LogicException
      */
     public function __construct(
         private readonly UserGroupResource $userGroupResource,
-        private readonly RoleRepositoryInterface $roleRepository,
+        private readonly RoleResource $roleResource,
     ) {
         parent::__construct();
     }
@@ -108,7 +106,7 @@ class CreateUserGroupCommand extends Command
      */
     private function checkRoles(OutputInterface $output, bool $interactive, SymfonyStyle $io): void
     {
-        if ($this->roleRepository->countAdvanced() !== 0) {
+        if ($this->roleResource->getRepository()->countAdvanced() !== 0) {
             return;
         }
 

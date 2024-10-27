@@ -14,10 +14,6 @@ use Elasticsearch\ClientBuilder;
  */
 class ElasticsearchService implements ElasticsearchServiceInterface
 {
-    final public const string INDEX_PREFIX = 'index';
-    final public const string INDEX_DATE_FORMAT = 'Y_m_d';
-    final public const string TEMPLATE_NAME = 'template_1';
-
     private Client $client;
 
     public function __construct(
@@ -94,8 +90,11 @@ class ElasticsearchService implements ElasticsearchServiceInterface
      */
     public static function generateIndexName(?int $timestamp = null): string
     {
-        return self::INDEX_PREFIX . '_' .
-            ($timestamp ? date(self::INDEX_DATE_FORMAT, $timestamp) : date(self::INDEX_DATE_FORMAT));
+        $date = $timestamp
+            ? date(ElasticsearchServiceInterface::INDEX_DATE_FORMAT, $timestamp)
+            : date(ElasticsearchServiceInterface::INDEX_DATE_FORMAT);
+
+        return self::INDEX_PREFIX . '_' . $date;
     }
 
     /**

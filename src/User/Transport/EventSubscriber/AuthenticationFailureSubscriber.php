@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Transport\EventSubscriber;
 
-use App\Log\Application\Service\LoginLoggerService;
+use App\Log\Application\Service\Interfaces\LoginLoggerServiceInterface;
 use App\Log\Domain\Enum\LogLogin;
 use App\User\Domain\Repository\Interfaces\UserRepositoryInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
@@ -21,7 +21,7 @@ class AuthenticationFailureSubscriber implements EventSubscriberInterface
      * @param \App\User\Infrastructure\Repository\UserRepository $userRepository
      */
     public function __construct(
-        private readonly LoginLoggerService $loginLoggerService,
+        private readonly LoginLoggerServiceInterface $loginLoggerService,
         private readonly UserRepositoryInterface $userRepository,
     ) {
     }

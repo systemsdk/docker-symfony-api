@@ -8,7 +8,7 @@ use App\ApiKey\Application\Security\ApiKeyUser;
 use App\ApiKey\Application\Security\Provider\Interfaces\ApiKeyUserProviderInterface;
 use App\ApiKey\Domain\Entity\ApiKey;
 use App\ApiKey\Domain\Repository\Interfaces\ApiKeyRepositoryInterface;
-use App\Role\Application\Security\RolesService;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,7 +29,7 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInt
         private readonly bool $apiKeyTokenOpenSslEncrypt,
         private readonly string $apiKeyTokenHashAlgo,
         private readonly ApiKeyRepositoryInterface $apiKeyRepository,
-        private readonly RolesService $rolesService,
+        private readonly RolesServiceInterface $rolesService,
     ) {
     }
 

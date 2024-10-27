@@ -9,6 +9,10 @@ namespace App\General\Domain\Service\Interfaces;
  */
 interface ElasticsearchServiceInterface
 {
+    final public const string INDEX_PREFIX = 'index';
+    final public const string INDEX_DATE_FORMAT = 'Y_m_d';
+    final public const string TEMPLATE_NAME = 'template_1';
+
     /**
      * Instantiate client instance
      */

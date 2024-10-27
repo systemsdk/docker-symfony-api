@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Role\Transport\Command\Role;
 
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
-use App\Role\Application\Security\RolesService;
-use App\Role\Domain\Repository\Interfaces\RoleRepositoryInterface;
+use App\Role\Application\Resource\RoleResource;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Transport\Command\Traits\ApiKeyUserManagementHelperTrait;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,31 +20,32 @@ use Throwable;
 /**
  * @package App\Role
  */
+#[AsCommand(
+    name: self::NAME,
+    description: 'Console command to create roles with user groups to database',
+)]
 class CreateRolesWithUserGroupsCommand extends Command
 {
-    // Traits
     use ApiKeyUserManagementHelperTrait;
     use SymfonyStyleTrait;
 
+    final public const string NAME = 'user:create-roles-groups';
+
     /**
-     * @param \App\Role\Infrastructure\Repository\RoleRepository $roleRepository
-     *
      * @throws LogicException
      */
     public function __construct(
         private readonly UserGroupResource $userGroupResource,
-        private readonly RolesService $rolesService,
-        private readonly RoleRepositoryInterface $roleRepository,
+        private readonly RoleResource $roleResource,
+        private readonly RolesServiceInterface $rolesService,
     ) {
-        parent::__construct('user:create-roles-groups');
-
-        $this->setDescription('Console command to create roles with user groups to database');
+        parent::__construct();
     }
 
     /**
      * Getter for RolesService
      */
-    public function getRolesService(): RolesService
+    public function getRolesService(): RolesServiceInterface
     {
         return $this->rolesService;
     }
@@ -65,7 +67,7 @@ class CreateRolesWithUserGroupsCommand extends Command
             $io->success('Roles with user groups processed - have a nice day');
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     /**
@@ -91,7 +93,7 @@ class CreateRolesWithUserGroupsCommand extends Command
         }
 
         // Reset roles
-        $this->roleRepository->reset();
+        $this->roleResource->getRepository()->reset();
         // Create user groups for each role
         $this->createUserGroups($output);
 

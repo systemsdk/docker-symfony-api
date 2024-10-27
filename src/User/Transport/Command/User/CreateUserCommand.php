@@ -6,8 +6,8 @@ namespace App\User\Transport\Command\User;
 
 use App\General\Transport\Command\HelperConfigure;
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
-use App\Role\Application\Security\RolesService;
-use App\Role\Domain\Repository\Interfaces\RoleRepositoryInterface;
+use App\Role\Application\Resource\RoleResource;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\User\Application\DTO\User\UserCreate as UserDto;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Application\Resource\UserResource;
@@ -69,20 +69,18 @@ class CreateUserCommand extends Command
     ];
 
     /**
-     * @param \App\Role\Infrastructure\Repository\RoleRepository $roleRepository
-     *
      * @throws LogicException
      */
     public function __construct(
         private readonly UserResource $userResource,
         private readonly UserGroupResource $userGroupResource,
-        private readonly RolesService $rolesService,
-        private readonly RoleRepositoryInterface $roleRepository,
+        private readonly RoleResource $roleResource,
+        private readonly RolesServiceInterface $rolesService,
     ) {
         parent::__construct();
     }
 
-    public function getRolesService(): RolesService
+    public function getRolesService(): RolesServiceInterface
     {
         return $this->rolesService;
     }
@@ -141,7 +139,7 @@ class CreateUserCommand extends Command
         }
 
         // Reset roles
-        $this->roleRepository->reset();
+        $this->roleResource->getRepository()->reset();
         // Create user groups for each role
         $this->createUserGroups($output);
     }

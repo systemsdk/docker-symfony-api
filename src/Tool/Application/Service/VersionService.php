@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tool\Application\Service;
 
 use App\General\Domain\Utils\JSON;
+use App\Tool\Application\Service\Interfaces\VersionServiceInterface;
 use Closure;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -19,7 +20,7 @@ use function is_string;
 /**
  * @package App\Tool
  */
-class VersionService
+class VersionService implements VersionServiceInterface
 {
     public function __construct(
         private readonly string $projectDir,
@@ -29,8 +30,7 @@ class VersionService
     }
 
     /**
-     * Method to get application version from cache or create new entry to cache with version value from
-     * composer.json file.
+     * {@inheritdoc}
      */
     public function get(): string
     {

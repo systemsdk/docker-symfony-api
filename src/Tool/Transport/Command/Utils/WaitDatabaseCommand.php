@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tool\Transport\Command\Utils;
 
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Tool\Application\Service\Utils\Interfaces\WaitDatabaseServiceInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
@@ -33,7 +33,7 @@ class WaitDatabaseCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private readonly EntityManagerInterface $em,
+        private readonly WaitDatabaseServiceInterface $waitDatabaseService,
     ) {
         parent::__construct();
     }
@@ -48,12 +48,10 @@ class WaitDatabaseCommand extends Command
         $io = $this->getSymfonyStyle($input, $output);
         for ($i = 0; $i < 60; $i += self::WAIT_SLEEP_TIME) {
             try {
-                $connection = $this->em->getConnection();
-                $statement = $connection->prepare('SHOW TABLES');
-                $statement->executeQuery();
+                $this->waitDatabaseService->checkConnection();
                 $io->success('Connection to the database is ok!');
 
-                return 0;
+                return Command::SUCCESS;
             } catch (Throwable) {
                 $io->comment('Trying to connect to the database seconds:' . $i);
                 sleep(self::WAIT_SLEEP_TIME);
@@ -64,6 +62,6 @@ class WaitDatabaseCommand extends Command
 
         $io->error('Can not connect to the database');
 
-        return 1;
+        return Command::FAILURE;
     }
 }

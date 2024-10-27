@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tool\Transport\Controller\Api\v1\Localization;
 
-use App\Tool\Application\Service\LocalizationService;
+use App\Tool\Domain\Service\Interfaces\LocalizationServiceInterface;
 use OpenApi\Attributes as OA;
 use OpenApi\Attributes\JsonContent;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class LocaleController
 {
     public function __construct(
-        private readonly LocalizationService $localization,
+        private readonly LocalizationServiceInterface $localization,
     ) {
     }
 

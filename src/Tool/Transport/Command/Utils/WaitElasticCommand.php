@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tool\Transport\Command\Utils;
 
-use App\General\Domain\Service\Interfaces\ElasticsearchServiceInterface;
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
+use App\Tool\Application\Service\Utils\Interfaces\WaitElasticServiceInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
@@ -33,7 +33,7 @@ class WaitElasticCommand extends Command
      * @throws LogicException
      */
     public function __construct(
-        private readonly ElasticsearchServiceInterface $elasticsearchService,
+        private readonly WaitElasticServiceInterface $waitElasticService,
     ) {
         parent::__construct();
     }
@@ -49,14 +49,13 @@ class WaitElasticCommand extends Command
         for ($i = 0; $i < 120; $i += self::WAIT_SLEEP_TIME) {
             try {
                 /** @var array<string, mixed> $data */
-                $data = $this->elasticsearchService->info();
+                $data = $this->waitElasticService->getInfo();
                 $io->success('Connection to elastic ' . $data['version']['number'] . ' is ok!');
 
-                return 0;
+                return Command::SUCCESS;
             } catch (Throwable) {
                 $io->comment('Trying to connect to elastic seconds:' . $i);
                 sleep(self::WAIT_SLEEP_TIME);
-                $this->elasticsearchService->instantiate();
 
                 continue;
             }
@@ -64,6 +63,6 @@ class WaitElasticCommand extends Command
 
         $io->error('Can not connect to elastic');
 
-        return 1;
+        return Command::FAILURE;
     }
 }

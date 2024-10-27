@@ -7,7 +7,7 @@ namespace App\User\Application\Resource;
 use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Application\Rest\RestResource;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
-use App\Role\Application\Security\RolesService;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\User\Domain\Entity\User as Entity;
 use App\User\Domain\Entity\UserGroup;
 use App\User\Domain\Repository\Interfaces\UserRepositoryInterface as Repository;
@@ -43,7 +43,7 @@ class UserResource extends RestResource
      */
     public function __construct(
         Repository $repository,
-        private readonly RolesService $rolesService,
+        private readonly RolesServiceInterface $rolesService,
     ) {
         parent::__construct($repository);
     }

@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace App\Log\Transport\Command\Utils;
 
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
-use App\Log\Domain\Repository\Interfaces\LogLoginRepositoryInterface;
-use App\Log\Domain\Repository\Interfaces\LogRequestRepositoryInterface;
+use App\Log\Application\Service\Utils\Interfaces\CleanupLogServiceInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
@@ -28,14 +27,10 @@ class CleanupLogsCommand extends Command
     final public const string NAME = 'logs:cleanup';
 
     /**
-     * @param \App\Log\Infrastructure\Repository\LogLoginRepository $logLoginRepository
-     * @param \App\Log\Infrastructure\Repository\LogRequestRepository $logRequestRepository
-     *
      * @throws LogicException
      */
     public function __construct(
-        private readonly LogLoginRepositoryInterface $logLoginRepository,
-        private readonly LogRequestRepositoryInterface $logRequestRepository,
+        private readonly CleanupLogServiceInterface $cleanupLogService
     ) {
         parent::__construct();
     }
@@ -50,25 +45,12 @@ class CleanupLogsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);
-        $result = $this->cleanUpDbTables();
+        $result = $this->cleanupLogService->cleanup();
 
         if ($result && $input->isInteractive()) {
             $io->success('Logs cleanup processed - have a nice day');
         }
 
-        return 0;
-    }
-
-    /**
-     * Cleanup db tables
-     *
-     * @throws Throwable
-     */
-    private function cleanUpDbTables(): bool
-    {
-        $this->logLoginRepository->cleanHistory();
-        $this->logRequestRepository->cleanHistory();
-
-        return true;
+        return Command::SUCCESS;
     }
 }

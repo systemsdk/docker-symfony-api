@@ -17,7 +17,6 @@ services:
     App\ApiKey\Transport\EventListener\ApiKeyEntityEventListener:
         arguments:
             $apiKeyTokenOpenSslEncrypt: '%env(bool:API_KEY_TOKEN_OPEN_SSL_ENCRYPT)%'
-            $apiKeyTokenHashAlgo: '%env(API_KEY_TOKEN_HASH_ALGO)%'
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: postPersist }

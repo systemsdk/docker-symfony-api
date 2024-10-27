@@ -21,6 +21,8 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 use Throwable;
 
+use function sprintf;
+
 /**
  * @package App\Tests
  */

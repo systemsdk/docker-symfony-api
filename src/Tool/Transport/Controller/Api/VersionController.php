@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tool\Transport\Controller\Api;
 
-use App\Tool\Application\Service\VersionService;
+use App\Tool\Application\Service\Interfaces\VersionServiceInterface;
 use OpenApi\Attributes as OA;
 use OpenApi\Attributes\JsonContent;
 use OpenApi\Attributes\Property;
@@ -22,7 +22,7 @@ use Throwable;
 class VersionController
 {
     public function __construct(
-        private readonly VersionService $versionService,
+        private readonly VersionServiceInterface $versionService,
     ) {
     }
 

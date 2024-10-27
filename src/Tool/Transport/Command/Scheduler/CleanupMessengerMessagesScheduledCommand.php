@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tool\Transport\Command\Scheduler;
 
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
-use App\Tool\Application\Service\Interfaces\ScheduledCommandServiceInterface;
+use App\Tool\Application\Service\Scheduler\Interfaces\ScheduledCommandServiceInterface;
 use App\Tool\Transport\Command\Utils\CleanupMessengerMessagesCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

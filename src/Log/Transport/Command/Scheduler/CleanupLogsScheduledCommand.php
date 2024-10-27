@@ -6,7 +6,7 @@ namespace App\Log\Transport\Command\Scheduler;
 
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
 use App\Log\Transport\Command\Utils\CleanupLogsCommand;
-use App\Tool\Application\Service\Interfaces\ScheduledCommandServiceInterface;
+use App\Tool\Application\Service\Scheduler\Interfaces\ScheduledCommandServiceInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;

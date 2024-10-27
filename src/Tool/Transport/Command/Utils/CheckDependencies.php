@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Tool\Transport\Command\Utils;
 
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
-use Exception;
+use App\Tool\Application\Service\Utils\Interfaces\CheckDependenciesServiceInterface;
 use JsonException;
-use SplFileInfo;
 use stdClass;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -19,10 +18,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 use Throwable;
-use Traversable;
 
 use function array_filter;
 use function array_map;
@@ -31,13 +28,9 @@ use function count;
 use function dirname;
 use function implode;
 use function is_array;
-use function iterator_to_array;
-use function sort;
 use function sprintf;
 use function str_replace;
 use function strlen;
-
-use const DIRECTORY_SEPARATOR;
 
 /**
  * @package App\Tool
@@ -52,6 +45,7 @@ class CheckDependencies extends Command
 
     public function __construct(
         private readonly string $projectDir,
+        private readonly CheckDependenciesServiceInterface $checkDependenciesService,
     ) {
         parent::__construct();
 
@@ -89,7 +83,7 @@ class CheckDependencies extends Command
                 default => 'Checking for latest version updates',
             },
         ]);
-        $directories = $this->getNamespaceDirectories();
+        $directories = $this->checkDependenciesService->getNamespaceDirectories();
         array_unshift($directories, $this->projectDir);
         $rows = $this->determineTableRows($io, $directories, $onlyMinor, $onlyPatch);
 
@@ -112,32 +106,7 @@ class CheckDependencies extends Command
             ? $io->success('Good news, there is no any vendor dependency to update at this time!')
             : $table->render();
 
-        return 0;
-    }
-
-    /**
-     * Method to determine all namespace directories under 'tools' directory.
-     *
-     * @throws Exception
-     *
-     * @return array<int, string>
-     */
-    private function getNamespaceDirectories(): array
-    {
-        // Find all main namespace directories under 'tools' directory
-        $finder = (new Finder())
-            ->depth(1)
-            ->ignoreDotFiles(true)
-            ->directories()
-            ->in($this->projectDir . DIRECTORY_SEPARATOR . 'tools/');
-        $closure = static fn (SplFileInfo $fileInfo): string => $fileInfo->getPath();
-        /** @var Traversable<SplFileInfo> $iterator */
-        $iterator = $finder->getIterator();
-        // Determine namespace directories
-        $directories = array_map($closure, iterator_to_array($iterator));
-        sort($directories);
-
-        return $directories;
+        return Command::SUCCESS;
     }
 
     /**

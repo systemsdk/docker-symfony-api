@@ -6,7 +6,7 @@ namespace App\ApiKey\Transport\Command\ApiKey;
 
 use App\ApiKey\Application\Resource\ApiKeyResource;
 use App\ApiKey\Domain\Entity\ApiKey;
-use App\Role\Application\Security\RolesService;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\User\Domain\Entity\UserGroup;
 use Closure;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -37,7 +37,7 @@ class ListApiKeysCommand extends Command
      */
     public function __construct(
         private readonly ApiKeyResource $apiKeyResource,
-        private readonly RolesService $rolesService,
+        private readonly RolesServiceInterface $rolesService,
     ) {
         parent::__construct();
     }

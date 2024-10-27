@@ -15,6 +15,8 @@ use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface as M
 use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
 
+use function sprintf;
+
 /**
  * @package App\Tool
  */

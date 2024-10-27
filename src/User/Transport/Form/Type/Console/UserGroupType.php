@@ -7,7 +7,7 @@ namespace App\User\Transport\Form\Type\Console;
 use App\General\Transport\Form\Type\Interfaces\FormTypeLabelInterface;
 use App\General\Transport\Form\Type\Traits\AddBasicFieldToForm;
 use App\Role\Application\Resource\RoleResource;
-use App\Role\Application\Security\RolesService;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\Role\Domain\Entity\Role as RoleEntity;
 use App\Role\Transport\Form\DataTransformer\RoleTransformer;
 use App\User\Application\DTO\UserGroup\UserGroup;
@@ -43,7 +43,7 @@ class UserGroupType extends AbstractType
     ];
 
     public function __construct(
-        private readonly RolesService $rolesService,
+        private readonly RolesServiceInterface $rolesService,
         private readonly RoleResource $roleResource,
         private readonly RoleTransformer $roleTransformer,
     ) {

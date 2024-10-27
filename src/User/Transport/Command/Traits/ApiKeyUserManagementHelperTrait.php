@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\User\Transport\Command\Traits;
 
 use App\General\Transport\Command\Traits\GetApplicationTrait;
-use App\Role\Application\Security\RolesService;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
@@ -17,7 +17,7 @@ trait ApiKeyUserManagementHelperTrait
 {
     use GetApplicationTrait;
 
-    abstract public function getRolesService(): RolesService;
+    abstract public function getRolesService(): RolesServiceInterface;
 
     /**
      * Method to create user groups via existing 'user:create-group' command.

@@ -9,7 +9,7 @@ use App\User\Application\Resource\UserGroupResource;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Entity\UserGroup;
-use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use OpenApi\Attributes\JsonContent;
 use OpenApi\Attributes\Property;

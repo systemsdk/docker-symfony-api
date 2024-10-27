@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Transport\Controller\Api\v1\Profile;
 
-use App\Role\Application\Security\RolesService;
+use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\User\Domain\Entity\User;
 use OpenApi\Attributes as OA;
 use OpenApi\Attributes\JsonContent;
@@ -24,7 +24,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class RolesController
 {
     public function __construct(
-        private readonly RolesService $rolesService,
+        private readonly RolesServiceInterface $rolesService,
     ) {
     }
 

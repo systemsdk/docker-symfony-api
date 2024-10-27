@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Tool\Application\Service;
 
+use App\Tool\Application\Service\Interfaces\HealthServiceInterface;
 use App\Tool\Domain\Entity\Health;
 use App\Tool\Domain\Repository\Interfaces\HealthRepositoryInterface;
-use Throwable;
 
 /**
  * @package App\Tool
  */
-class HealthService
+class HealthService implements HealthServiceInterface
 {
     /**
      * @param \App\Tool\Infrastructure\Repository\HealthRepository $repository
@@ -22,14 +22,7 @@ class HealthService
     }
 
     /**
-     * Method to check that "all" is ok within our application. This will try to do following:
-     *  1) Remove data from database
-     *  2) Create data to database
-     *  3) Read data from database
-     *
-     * These steps should make sure that at least application database is working as expected.
-     *
-     * @throws Throwable
+     * {@inheritdoc}
      */
     public function check(): ?Health
     {

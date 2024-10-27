@@ -35,4 +35,17 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
         protected ManagerRegistry $managerRegistry,
     ) {
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clearRoles(array $roles): int
+    {
+        return $this->createQueryBuilder('role')
+            ->delete()
+            ->where('role.id NOT IN(:roles)')
+            ->setParameter(':roles', $roles)
+            ->getQuery()
+            ->execute();
+    }
 }

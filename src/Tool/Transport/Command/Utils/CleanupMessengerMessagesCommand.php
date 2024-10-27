@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace App\Tool\Transport\Command\Utils;
 
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
-use App\Tool\Application\Service\Interfaces\MessengerMessagesServiceInterface;
+use App\Tool\Application\Service\Utils\Interfaces\MessengerMessagesServiceInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
+
+use function sprintf;
 
 /**
  * @package App\Tool
