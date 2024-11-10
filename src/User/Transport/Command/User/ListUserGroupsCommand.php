@@ -9,6 +9,7 @@ use App\User\Application\Resource\UserGroupResource;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Entity\UserGroup;
 use Closure;
+use Override;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
@@ -49,6 +50,7 @@ class ListUserGroupsCommand extends Command
      *
      * @throws Throwable
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);

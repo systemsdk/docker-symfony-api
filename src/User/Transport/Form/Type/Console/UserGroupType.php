@@ -11,6 +11,7 @@ use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\Role\Domain\Entity\Role as RoleEntity;
 use App\Role\Transport\Form\DataTransformer\RoleTransformer;
 use App\User\Application\DTO\UserGroup\UserGroup;
+use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -54,6 +55,7 @@ class UserGroupType extends AbstractType
      *
      * @throws Throwable
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
@@ -77,6 +79,7 @@ class UserGroupType extends AbstractType
      *
      * @throws AccessException
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

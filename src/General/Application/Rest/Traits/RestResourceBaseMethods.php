@@ -8,6 +8,7 @@ use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Application\Exception\ValidatorException;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 use App\General\Domain\Repository\Interfaces\BaseRepositoryInterface;
+use Override;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -28,6 +29,7 @@ trait RestResourceBaseMethods
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getSerializerContext(): array
     {
         return [];
@@ -36,6 +38,7 @@ trait RestResourceBaseMethods
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getRepository(): BaseRepositoryInterface
     {
         return $this->repository;
@@ -44,6 +47,7 @@ trait RestResourceBaseMethods
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getValidator(): ValidatorInterface
     {
         return $this->validator;
@@ -52,6 +56,7 @@ trait RestResourceBaseMethods
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setValidator(ValidatorInterface $validator): self
     {
         $this->validator = $validator;
@@ -62,6 +67,7 @@ trait RestResourceBaseMethods
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDtoClass(): string
     {
         if ($this->dtoClass === '') {
@@ -79,6 +85,7 @@ trait RestResourceBaseMethods
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setDtoClass(string $dtoClass): self
     {
         $this->dtoClass = $dtoClass;
@@ -89,6 +96,7 @@ trait RestResourceBaseMethods
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getEntityName(): string
     {
         return $this->getRepository()->getEntityName();
@@ -97,6 +105,7 @@ trait RestResourceBaseMethods
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getReference(string $id, ?string $entityManagerName = null): ?object
     {
         return $this->getRepository()->getReference($id, $entityManagerName);
@@ -105,6 +114,7 @@ trait RestResourceBaseMethods
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getAssociations(?string $entityManagerName = null): array
     {
         return array_keys($this->getRepository()->getAssociations($entityManagerName));
@@ -113,6 +123,7 @@ trait RestResourceBaseMethods
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDtoForEntity(
         string $id,
         string $dtoClass,

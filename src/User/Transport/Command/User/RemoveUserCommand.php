@@ -7,6 +7,7 @@ namespace App\User\Transport\Command\User;
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
 use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User;
+use Override;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
@@ -44,6 +45,7 @@ class RemoveUserCommand extends Command
      *
      * @throws Throwable
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);

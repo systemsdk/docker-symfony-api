@@ -11,6 +11,7 @@ use App\Log\Domain\Enum\LogLogin as LogLoginEnum;
 use App\User\Domain\Entity\User;
 use BadMethodCallException;
 use DeviceDetector\DeviceDetector;
+use Override;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Throwable;
@@ -33,6 +34,7 @@ class LoginLoggerService implements LoginLoggerServiceInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setUser(?User $user = null): self
     {
         $this->user = $user;
@@ -43,6 +45,7 @@ class LoginLoggerService implements LoginLoggerServiceInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function process(LogLoginEnum $type): void
     {
         // Get current request

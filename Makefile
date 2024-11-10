@@ -277,6 +277,9 @@ composer-install: ## Installs composer dependencies
 composer-update: ## Updates composer dependencies
 	@make exec-bash cmd="COMPOSER_MEMORY_LIMIT=-1 composer update"
 
+composer-audit: ## Checks for security vulnerability advisories for installed packages
+	@make exec-bash cmd="COMPOSER_MEMORY_LIMIT=-1 composer audit"
+
 info: ## Shows Php and Symfony version
 	@make exec cmd="php --version"
 	@make exec cmd="bin/console about"

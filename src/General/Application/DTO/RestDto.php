@@ -8,6 +8,7 @@ use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 use BadMethodCallException;
 use LogicException;
+use Override;
 
 use function array_filter;
 use function array_key_exists;
@@ -48,6 +49,7 @@ abstract class RestDto implements RestDtoInterface
      */
     private array $visited = [];
 
+    #[Override]
     public function setId(string $id): self
     {
         $this->setVisited('id');
@@ -61,11 +63,13 @@ abstract class RestDto implements RestDtoInterface
         return $this->id;
     }
 
+    #[Override]
     public function getVisited(): array
     {
         return array_filter($this->visited, static fn (string $property): bool => $property !== 'id');
     }
 
+    #[Override]
     public function setVisited(string $property): self
     {
         $this->visited[] = $property;
@@ -76,6 +80,7 @@ abstract class RestDto implements RestDtoInterface
     /**
      * Method to update specified entity with DTO data.
      */
+    #[Override]
     public function update(EntityInterface $entity): EntityInterface
     {
         foreach ($this->getVisited() as $property) {
@@ -99,6 +104,7 @@ abstract class RestDto implements RestDtoInterface
      *
      * @throws LogicException|BadMethodCallException
      */
+    #[Override]
     public function patch(RestDtoInterface $dto): self
     {
         foreach ($dto->getVisited() as $property) {

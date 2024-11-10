@@ -8,6 +8,7 @@ use App\General\Application\Resource\ResourceCollection;
 use App\General\Application\Rest\Interfaces\RestFindOneResourceInterface;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 use Generator;
+use Override;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -76,6 +77,7 @@ class EntityValueResolver implements ValueResolverInterface
      *
      * @throws Throwable
      */
+    #[Override]
     public function resolve(Request $request, ArgumentMetadata $argument): Generator
     {
         if (!$this->supports($request, $argument)) {

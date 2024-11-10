@@ -10,6 +10,7 @@ use App\User\Application\Resource\UserResource;
 use App\User\Domain\Entity\User as UserEntity;
 use App\User\Transport\Form\Type\Console\UserType;
 use Matthias\SymfonyConsoleForm\Console\Helper\FormHelper;
+use Override;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
@@ -47,6 +48,7 @@ class EditUserCommand extends Command
      *
      * @throws Throwable
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);

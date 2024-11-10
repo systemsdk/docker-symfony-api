@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.7-labs
 FROM php:8.3-fpm
 
 # set main params
@@ -42,6 +43,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
       libzip-dev \
       wget \
       librabbitmq-dev \
+      debsecan \
     && pecl install amqp \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
     && docker-php-ext-configure intl \
@@ -53,6 +55,8 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
       opcache \
       zip \
     && docker-php-ext-enable amqp \
+    && apt-get install --no-install-recommends -y \
+        $(debsecan --suite bookworm --format packages --only-fixed) \
     && rm -rf /tmp/* \
     && rm -rf /var/list/apt/* \
     && rm -rf /var/lib/apt/lists/* \
@@ -73,10 +77,6 @@ COPY ./docker/$BUILD_ARGUMENT_ENV/php.ini /usr/local/etc/php/php.ini
 COPY ./docker/general/do_we_need_xdebug.sh /tmp/
 COPY ./docker/dev/xdebug-${XDEBUG_CONFIG}.ini /tmp/xdebug.ini
 RUN chmod u+x /tmp/do_we_need_xdebug.sh && /tmp/do_we_need_xdebug.sh
-
-# install security-checker in case dev/test environment
-COPY ./docker/general/do_we_need_security-checker.sh /tmp/
-RUN chmod u+x /tmp/do_we_need_security-checker.sh && /tmp/do_we_need_security-checker.sh
 
 # install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -112,6 +112,10 @@ COPY --chown=${USERNAME}:${USERNAME} . $APP_HOME/
 # install all PHP dependencies
 RUN if [ "$BUILD_ARGUMENT_ENV" = "dev" ] || [ "$BUILD_ARGUMENT_ENV" = "test" ]; then COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress; \
     else export APP_ENV=$BUILD_ARGUMENT_ENV && COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress --no-dev; \
+    fi
+
+# checks for security vulnerability advisories for installed packages in case dev/test environment
+RUN if [ "$BUILD_ARGUMENT_ENV" = "dev" ] || [ "$BUILD_ARGUMENT_ENV" = "test" ]; then COMPOSER_MEMORY_LIMIT=-1 composer audit; \
     fi
 
 # create cached config file .env.local.php in case staging/prod environment

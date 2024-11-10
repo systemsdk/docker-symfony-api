@@ -16,6 +16,7 @@ use App\User\Application\Validator\Constraints as UserAppAssert;
 use App\User\Domain\Entity\Interfaces\UserGroupAwareInterface;
 use App\User\Domain\Entity\User as Entity;
 use App\User\Domain\Entity\UserGroup as UserGroupEntity;
+use Override;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use function array_map;
@@ -221,6 +222,7 @@ class User extends RestDto
      *
      * @param EntityInterface|Entity $entity
      */
+    #[Override]
     public function load(EntityInterface $entity): self
     {
         if ($entity instanceof Entity) {

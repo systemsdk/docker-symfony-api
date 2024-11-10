@@ -6,6 +6,7 @@ namespace App\Role\Transport\Form\DataTransformer;
 
 use App\Role\Application\Resource\RoleResource;
 use App\Role\Domain\Entity\Role;
+use Override;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Throwable;
@@ -30,6 +31,7 @@ class RoleTransformer implements DataTransformerInterface
      *
      * @psalm-param Role|mixed $value
      */
+    #[Override]
     public function transform(mixed $value): string
     {
         return $value instanceof Role ? $value->getId() : '';
@@ -44,6 +46,7 @@ class RoleTransformer implements DataTransformerInterface
      *
      * @throws Throwable
      */
+    #[Override]
     public function reverseTransform(mixed $value): ?Role
     {
         return is_string($value)

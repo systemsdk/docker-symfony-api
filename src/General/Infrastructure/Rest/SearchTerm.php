@@ -6,6 +6,7 @@ namespace App\General\Infrastructure\Rest;
 
 use App\General\Infrastructure\Rest\Interfaces\SearchTermInterface;
 use Closure;
+use Override;
 
 use function array_filter;
 use function array_map;
@@ -29,6 +30,7 @@ final class SearchTerm implements SearchTermInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getCriteria(
         array | string | null $column,
         array | string | null $search,

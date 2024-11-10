@@ -14,6 +14,7 @@ use App\User\Application\DTO\User\User as UserDto;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Transport\Form\DataTransformer\UserGroupTransformer;
 use App\User\Transport\Form\Type\Traits\UserGroupChoices;
+use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -103,6 +104,7 @@ class UserType extends AbstractType
      *
      * @throws Throwable
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
@@ -132,6 +134,7 @@ class UserType extends AbstractType
      *
      * @throws AccessException
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

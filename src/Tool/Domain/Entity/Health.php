@@ -11,6 +11,7 @@ use DateTimeZone;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use OpenApi\Attributes as OA;
+use Override;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -58,6 +59,7 @@ class Health implements EntityInterface
         $this->timestamp = new DateTimeImmutable(timezone: new DateTimeZone('UTC'));
     }
 
+    #[Override]
     public function getId(): string
     {
         return $this->id->toString();
@@ -75,6 +77,7 @@ class Health implements EntityInterface
         return $this;
     }
 
+    #[Override]
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->timestamp;

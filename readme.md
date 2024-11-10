@@ -253,6 +253,7 @@ make ssh-kibana
 make composer-install-no-dev
 make composer-install
 make composer-update
+make composer-audit
 
 make info
 make help

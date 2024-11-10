@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\General\Transport\EventSubscriber;
 
 use App\Tool\Application\Service\Interfaces\VersionServiceInterface;
+use Override;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
@@ -21,6 +22,7 @@ class ResponseSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

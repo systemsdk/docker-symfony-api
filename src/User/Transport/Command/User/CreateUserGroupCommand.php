@@ -12,6 +12,7 @@ use App\User\Application\DTO\UserGroup\UserGroupCreate as UserGroupDto;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Transport\Form\Type\Console\UserGroupType;
 use Matthias\SymfonyConsoleForm\Console\Helper\FormHelper;
+use Override;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
@@ -65,6 +66,7 @@ class CreateUserGroupCommand extends Command
      *
      * @throws InvalidArgumentException
      */
+    #[Override]
     protected function configure(): void
     {
         parent::configure();
@@ -79,6 +81,7 @@ class CreateUserGroupCommand extends Command
      *
      * @throws Throwable
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);

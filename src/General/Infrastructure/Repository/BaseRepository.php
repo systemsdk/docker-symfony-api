@@ -11,6 +11,7 @@ use App\General\Infrastructure\Repository\Traits\RepositoryWrappersTrait;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Override;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 use function array_map;
@@ -79,6 +80,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      *
      * @psalm-return class-string
      */
+    #[Override]
     public function getEntityName(): string
     {
         return static::$entityName;
@@ -87,6 +89,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getSearchColumns(): array
     {
         return static::$searchColumns;
@@ -95,6 +98,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function save(EntityInterface $entity, ?bool $flush = null, ?string $entityManagerName = null): self
     {
         $flush ??= true;
@@ -111,6 +115,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function remove(EntityInterface $entity, ?bool $flush = null, ?string $entityManagerName = null): self
     {
         $flush ??= true;
@@ -127,6 +132,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function processQueryBuilder(QueryBuilder $queryBuilder): void
     {
         // Reset processed joins and callbacks
@@ -142,6 +148,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function addLeftJoin(array $parameters): self
     {
         if ($parameters !== []) {
@@ -154,6 +161,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function addInnerJoin(array $parameters): self
     {
         if ($parameters !== []) {
@@ -166,6 +174,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function addCallback(callable $callable, ?array $args = null): self
     {
         $args ??= [];

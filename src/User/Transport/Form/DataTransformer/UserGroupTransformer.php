@@ -6,6 +6,7 @@ namespace App\User\Transport\Form\DataTransformer;
 
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Domain\Entity\UserGroup;
+use Override;
 use Stringable;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -34,6 +35,7 @@ class UserGroupTransformer implements DataTransformerInterface
      *
      * @psalm-return array<array-key, string>
      */
+    #[Override]
     public function transform(mixed $value): array
     {
         $callback = static fn (UserGroup | Stringable $userGroup): string =>
@@ -53,6 +55,7 @@ class UserGroupTransformer implements DataTransformerInterface
      *
      * @psalm-return array<array-key, UserGroup>|null
      */
+    #[Override]
     public function reverseTransform(mixed $value): ?array
     {
         return is_array($value)

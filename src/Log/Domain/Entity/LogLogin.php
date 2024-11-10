@@ -13,6 +13,7 @@ use App\User\Domain\Entity\User;
 use DeviceDetector\DeviceDetector;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -249,6 +250,7 @@ class LogLogin implements EntityInterface
         }
     }
 
+    #[Override]
     public function getId(): string
     {
         return $this->id->toString();

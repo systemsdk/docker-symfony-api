@@ -11,6 +11,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -75,6 +76,7 @@ class LogLoginFailure implements EntityInterface
         $this->timestamp = new DateTimeImmutable(timezone: new DateTimeZone('UTC'));
     }
 
+    #[Override]
     public function getId(): string
     {
         return $this->id->toString();
@@ -90,6 +92,7 @@ class LogLoginFailure implements EntityInterface
         return $this->getCreatedAt();
     }
 
+    #[Override]
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->timestamp;

@@ -6,6 +6,7 @@ namespace App\User\Transport\EventSubscriber;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTDecodedEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
+use Override;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +32,7 @@ class JWTDecodedSubscriber implements EventSubscriberInterface
      *
      * @return array<string, string>
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

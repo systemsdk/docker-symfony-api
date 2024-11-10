@@ -9,6 +9,7 @@ use App\Log\Application\Resource\LogRequestResource;
 use App\Log\Application\Service\Interfaces\RequestLoggerServiceInterface;
 use App\Log\Domain\Entity\LogRequest;
 use App\User\Application\Resource\UserResource;
+use Override;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,6 +41,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setResponse(Response $response): self
     {
         $this->response = $response;
@@ -50,6 +52,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setRequest(Request $request): self
     {
         $this->request = $request;
@@ -60,6 +63,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setUserId(string $userId): self
     {
         $this->userId = $userId;
@@ -70,6 +74,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setApiKeyId(string $apiKeyId): self
     {
         $this->apiKeyId = $apiKeyId;
@@ -80,6 +85,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function setMainRequest(bool $mainRequest): self
     {
         $this->mainRequest = $mainRequest;
@@ -90,6 +96,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     /**
      * Method to handle current response and log it to database.
      */
+    #[Override]
     public function handle(): void
     {
         // Just check that we have all that we need

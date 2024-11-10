@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\ApiKey\Application\Security\Authenticator;
 
 use App\ApiKey\Application\Security\Provider\ApiKeyUserProvider;
+use Override;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,7 @@ class ApiKeyAuthenticator extends AbstractAuthenticator
     ) {
     }
 
+    #[Override]
     public function supports(Request $request): ?bool
     {
         return $this->getToken($request) !== '';
@@ -37,6 +39,7 @@ class ApiKeyAuthenticator extends AbstractAuthenticator
     /**
      * @throws Throwable
      */
+    #[Override]
     public function authenticate(Request $request): Passport
     {
         $token = $this->getToken($request);
@@ -49,6 +52,7 @@ class ApiKeyAuthenticator extends AbstractAuthenticator
         return new SelfValidatingPassport(new UserBadge($token));
     }
 
+    #[Override]
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         return null;

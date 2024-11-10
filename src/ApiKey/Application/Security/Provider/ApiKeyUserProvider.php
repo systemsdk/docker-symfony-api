@@ -9,6 +9,7 @@ use App\ApiKey\Application\Security\Provider\Interfaces\ApiKeyUserProviderInterf
 use App\ApiKey\Domain\Entity\ApiKey;
 use App\ApiKey\Domain\Repository\Interfaces\ApiKeyRepositoryInterface;
 use App\Role\Application\Security\Interfaces\RolesServiceInterface;
+use Override;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -36,6 +37,7 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInt
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function supportsClass(string $class): bool
     {
         return $class === ApiKeyUser::class;
@@ -44,6 +46,7 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInt
     /**
      * @throws Throwable
      */
+    #[Override]
     public function loadUserByIdentifier(string $identifier): ApiKeyUser
     {
         $apiKey = $this->getApiKeyForToken($identifier);
@@ -58,6 +61,7 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInt
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function refreshUser(UserInterface $user): UserInterface
     {
         throw new UnsupportedUserException('API key cannot refresh user');
@@ -66,6 +70,7 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInt
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getApiKeyForToken(string $token): ?ApiKey
     {
         $searchParams = [

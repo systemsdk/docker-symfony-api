@@ -10,6 +10,7 @@ use App\General\Transport\Rest\Interfaces\ControllerInterface;
 use App\General\Transport\Rest\Interfaces\ResponseHandlerInterface;
 use App\General\Transport\Rest\Traits\Actions\RestActionBase;
 use App\General\Transport\Rest\Traits\RestMethodHelper;
+use Override;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Service\Attribute\Required;
 use UnexpectedValueException;
@@ -52,6 +53,7 @@ abstract class Controller implements ControllerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getResource(): RestResourceInterface|RestSmallResourceInterface
     {
         return $this->resource
@@ -61,6 +63,7 @@ abstract class Controller implements ControllerInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getResponseHandler(): ResponseHandlerInterface
     {
         return $this->responseHandler
@@ -74,6 +77,7 @@ abstract class Controller implements ControllerInterface
      * {@inheritdoc}
      */
     #[Required]
+    #[Override]
     public function setResponseHandler(ResponseHandler $responseHandler): static
     {
         $this->responseHandler = $responseHandler;

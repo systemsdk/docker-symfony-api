@@ -7,6 +7,7 @@ namespace App\User\Transport\EventSubscriber;
 use App\User\Application\Security\UserTypeIdentification;
 use Doctrine\ORM\NonUniqueResultException;
 use Gedmo\Blameable\BlameableListener;
+use Override;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
@@ -26,6 +27,7 @@ class DoctrineExtensionSubscriber implements EventSubscriberInterface
      *
      * @return array<string, string>
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

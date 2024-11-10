@@ -7,6 +7,7 @@ namespace App\Tool\Transport\Command\Utils;
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
 use App\Tool\Application\Service\Utils\Interfaces\CheckDependenciesServiceInterface;
 use JsonException;
+use Override;
 use stdClass;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -69,6 +70,7 @@ class CheckDependencies extends Command
      *
      * @throws Throwable
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $onlyMinor = $input->getOption('minor');

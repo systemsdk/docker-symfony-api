@@ -9,6 +9,7 @@ use App\Log\Domain\Enum\LogLogin;
 use App\User\Domain\Repository\Interfaces\UserRepositoryInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
+use Override;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Throwable;
 
@@ -31,6 +32,7 @@ class AuthenticationFailureSubscriber implements EventSubscriberInterface
      *
      * @return array<string, string>
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

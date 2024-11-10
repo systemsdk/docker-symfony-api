@@ -6,6 +6,7 @@ namespace App\Role\Transport\Command\Role;
 
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
 use App\Role\Application\Service\Role\Interfaces\SyncRolesServiceInterface;
+use Override;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
@@ -44,6 +45,7 @@ class CreateRolesCommand extends Command
      *
      * @throws Throwable
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);

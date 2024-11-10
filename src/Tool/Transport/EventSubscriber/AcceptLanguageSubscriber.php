@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tool\Transport\EventSubscriber;
 
 use App\General\Domain\Enum\Language;
+use Override;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
@@ -23,6 +24,7 @@ class AcceptLanguageSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

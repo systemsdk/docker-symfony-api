@@ -11,13 +11,13 @@ use App\Tool\Domain\Repository\Interfaces\HealthRepositoryInterface;
 /**
  * @package App\Tool
  */
-class HealthService implements HealthServiceInterface
+readonly class HealthService implements HealthServiceInterface
 {
     /**
      * @param \App\Tool\Infrastructure\Repository\HealthRepository $repository
      */
     public function __construct(
-        private readonly HealthRepositoryInterface $repository,
+        private HealthRepositoryInterface $repository,
     ) {
     }
 

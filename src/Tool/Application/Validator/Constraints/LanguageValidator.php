@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tool\Application\Validator\Constraints;
 
 use App\Tool\Application\Service\LocalizationService;
+use Override;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -23,6 +24,7 @@ class LanguageValidator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (in_array($value, $this->localization->getLanguages(), true) !== true) {

@@ -8,6 +8,7 @@ use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use AutoMapperPlus\MapperInterface;
 use InvalidArgumentException;
 use LengthException;
+use Override;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionNamedType;
@@ -40,6 +41,7 @@ abstract class RestRequestMapper implements MapperInterface
      *
      * @throws ReflectionException
      */
+    #[Override]
     public function map($source, string $targetClass, array $context = []): RestDtoInterface
     {
         /** @psalm-var class-string $targetClass */
@@ -59,6 +61,7 @@ abstract class RestRequestMapper implements MapperInterface
      * @throws LengthException
      * @throws ReflectionException
      */
+    #[Override]
     public function mapToObject($source, $destination, array $context = []): RestDtoInterface
     {
         if (!is_object($source)) {

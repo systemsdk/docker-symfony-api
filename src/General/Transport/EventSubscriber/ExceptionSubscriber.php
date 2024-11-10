@@ -11,6 +11,7 @@ use App\User\Application\Security\UserTypeIdentification;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\Exception\ORMException;
 use JsonException;
+use Override;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,6 +58,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

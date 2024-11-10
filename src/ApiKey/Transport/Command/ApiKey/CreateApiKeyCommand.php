@@ -14,6 +14,7 @@ use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Transport\Command\Traits\ApiKeyUserManagementHelperTrait;
 use Matthias\SymfonyConsoleForm\Console\Helper\FormHelper;
+use Override;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
@@ -70,6 +71,7 @@ class CreateApiKeyCommand extends Command
      *
      * @throws InvalidArgumentException
      */
+    #[Override]
     protected function configure(): void
     {
         parent::configure();
@@ -84,6 +86,7 @@ class CreateApiKeyCommand extends Command
      *
      * @throws Throwable
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);

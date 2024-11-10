@@ -10,7 +10,7 @@ Symfony's Messenger is much powerful bundle, that supports by the symfony core t
 This environment is using [RabbitMQ](https://hub.docker.com/_/rabbitmq) message broker software. RabbitMQ is open source message broker software (sometimes called message-oriented middleware) that implements the Advanced Message Queuing Protocol (AMQP). The RabbitMQ server is written in the Erlang programming language and is built on the Open Telecom Platform framework for clustering and failover. Client libraries to interface with the broker are available for all major programming languages.
 
 ### Admin panel
-You can use your browser in order to manage/view messages. Just open next url in your browser: [http://localhost:15672](http://localhost:15672). Default login - `guest` and password - `guest` (you are able to change it inside `.env` configuration file). You can change it in compose file if it is necessary.
+You can use your browser in order to manage/view messages. Just open next url in your browser: [http://localhost:15672](http://localhost:15672). Default login - `guest` and password - `guest` (you are able to change it inside `.env` configuration file).
 
 ### Consuming Messages
 Once your messages have been routed, it will be consumed. In case any issue just make sure that program:messenger is working in supervisord. You can use make command `make logs-supervisord` for these needs.

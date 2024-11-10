@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\User\Application\Validator\Constraints;
 
 use Attribute;
+use Override;
 use Symfony\Component\Validator\Constraint;
 
 /**
@@ -33,6 +34,7 @@ class UniqueUsername extends Constraint
         self::IS_UNIQUE_USERNAME_ERROR => 'IS_UNIQUE_USERNAME_ERROR',
     ];
 
+    #[Override]
     public function getTargets(): string
     {
         $output = null;

@@ -7,6 +7,7 @@ namespace App\ApiKey\Application\Security;
 use App\ApiKey\Application\Security\Interfaces\ApiKeyUserInterface;
 use App\ApiKey\Domain\Entity\ApiKey;
 use App\Role\Domain\Enum\Role;
+use Override;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use function array_unique;
@@ -34,6 +35,7 @@ class ApiKeyUser implements ApiKeyUserInterface, UserInterface
         $this->roles = array_unique([...$roles, Role::API->value]);
     }
 
+    #[Override]
     public function getUserIdentifier(): string
     {
         return $this->identifier;
@@ -44,6 +46,7 @@ class ApiKeyUser implements ApiKeyUserInterface, UserInterface
         return $this->apiKeyIdentifier;
     }
 
+    #[Override]
     public function getRoles(): array
     {
         return $this->roles;
@@ -70,6 +73,7 @@ class ApiKeyUser implements ApiKeyUserInterface, UserInterface
      *
      * @codeCoverageIgnore
      */
+    #[Override]
     public function eraseCredentials(): void
     {
     }

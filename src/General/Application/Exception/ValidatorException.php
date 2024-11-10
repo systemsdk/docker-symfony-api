@@ -8,6 +8,7 @@ use App\General\Application\Exception\Interfaces\ClientErrorInterface;
 use App\General\Application\Exception\Models\ValidatorError;
 use App\General\Domain\Utils\JSON;
 use JsonException;
+use Override;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -40,6 +41,7 @@ class ValidatorException extends BaseValidatorException implements ClientErrorIn
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getStatusCode(): int
     {
         return Response::HTTP_BAD_REQUEST;

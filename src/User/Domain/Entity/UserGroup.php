@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
 use Ramsey\Uuid\UuidInterface;
 use Stringable;
@@ -138,11 +139,13 @@ class UserGroup implements EntityInterface, Stringable
         $this->apiKeys = new ArrayCollection();
     }
 
+    #[Override]
     public function __toString(): string
     {
         return self::class;
     }
 
+    #[Override]
     public function getId(): string
     {
         return $this->id->toString();

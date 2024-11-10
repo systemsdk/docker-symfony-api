@@ -7,6 +7,7 @@ namespace App\General\Transport\AutoMapper;
 use AutoMapperPlus\AutoMapperPlusBundle\AutoMapperConfiguratorInterface;
 use AutoMapperPlus\Configuration\AutoMapperConfigInterface;
 use AutoMapperPlus\MapperInterface;
+use Override;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,6 +32,7 @@ abstract class RestAutoMapperConfiguration implements AutoMapperConfiguratorInte
      *
      * @psalm-suppress UndefinedThisPropertyFetch
      */
+    #[Override]
     public function configure(AutoMapperConfigInterface $config): void
     {
         foreach (static::$requestMapperClasses as $requestMapperClass) {

@@ -7,6 +7,7 @@ namespace App\ApiKey\Transport\Command\ApiKey;
 use App\ApiKey\Application\Resource\ApiKeyResource;
 use App\ApiKey\Domain\Entity\ApiKey as ApiKeyEntity;
 use App\General\Transport\Command\Traits\SymfonyStyleTrait;
+use Override;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
@@ -44,6 +45,7 @@ class ChangeTokenCommand extends Command
      *
      * @throws Throwable
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = $this->getSymfonyStyle($input, $output);

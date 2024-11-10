@@ -10,6 +10,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use InvalidArgumentException;
+use Override;
 
 use function array_map;
 use function gettype;
@@ -40,6 +41,7 @@ abstract class EnumType extends Type
     /**
      * Gets the SQL declaration snippet for a field of this type.
      */
+    #[Override]
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         $enumDefinition = implode(
@@ -53,6 +55,7 @@ abstract class EnumType extends Type
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
         if (is_string($value) && in_array($value, static::$enum::getValues(), true)) {
@@ -75,6 +78,7 @@ abstract class EnumType extends Type
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function convertToPHPValue($value, AbstractPlatform $platform): DatabaseEnumInterface
     {
         $value = (string)parent::convertToPHPValue($value, $platform);
@@ -96,6 +100,7 @@ abstract class EnumType extends Type
      *
      * @codeCoverageIgnore
      */
+    #[Override]
     public function getName(): string
     {
         return '';

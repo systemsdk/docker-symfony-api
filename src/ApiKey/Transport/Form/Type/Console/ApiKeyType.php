@@ -10,6 +10,7 @@ use App\General\Transport\Form\Type\Traits\AddBasicFieldToForm;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Transport\Form\DataTransformer\UserGroupTransformer;
 use App\User\Transport\Form\Type\Traits\UserGroupChoices;
+use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -53,6 +54,7 @@ class ApiKeyType extends AbstractType
      *
      * @throws Throwable
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
@@ -79,6 +81,7 @@ class ApiKeyType extends AbstractType
      *
      * @throws AccessException
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

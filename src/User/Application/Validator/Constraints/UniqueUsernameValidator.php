@@ -8,6 +8,7 @@ use App\User\Application\DTO\User\User as UserDto;
 use App\User\Domain\Entity\Interfaces\UserInterface;
 use App\User\Domain\Repository\Interfaces\UserRepositoryInterface;
 use Doctrine\ORM\NonUniqueResultException;
+use Override;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -29,6 +30,7 @@ class UniqueUsernameValidator extends ConstraintValidator
      *
      * @throws NonUniqueResultException
      */
+    #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (
