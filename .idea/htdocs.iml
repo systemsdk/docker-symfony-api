@@ -234,6 +234,7 @@
       <excludeFolder url="file://$MODULE_DIR$/tools/08_rector" />
       <excludeFolder url="file://$MODULE_DIR$/tools/09_composer" />
       <excludeFolder url="file://$MODULE_DIR$/var" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/staabm/side-effects-detector" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

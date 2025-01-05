@@ -12,7 +12,7 @@ interface OpenSslCryptServiceInterface extends CryptServiceInterface
     /**
      * {@inheritdoc}
      *
-     * @return array{data: string, params: array{iv: string, tag: string}}
+     * @return array{data: non-empty-string, params: array{iv: string, tag: string}}
      */
     public function encrypt(string $textForEncrypt): array;
 

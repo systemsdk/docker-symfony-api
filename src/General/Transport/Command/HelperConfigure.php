@@ -30,7 +30,7 @@ class HelperConfigure
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException @phpstan-ignore throws.unusedType
      */
     private static function getParameterIterator(): Closure
     {

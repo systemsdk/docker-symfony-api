@@ -9,6 +9,7 @@ use App\Role\Application\Resource\RoleResource;
 use App\Role\Application\Security\Interfaces\RolesServiceInterface;
 use App\User\Application\Resource\UserGroupResource;
 use App\User\Transport\Command\Traits\ApiKeyUserManagementHelperTrait;
+use Override;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
@@ -45,6 +46,7 @@ class CreateRolesWithUserGroupsCommand extends Command
     /**
      * Getter for RolesService
      */
+    #[Override]
     public function getRolesService(): RolesServiceInterface
     {
         return $this->rolesService;

@@ -18,7 +18,7 @@ interface CryptServiceInterface
      *
      * @throws Exception
      *
-     * @return array<string, string|array<string, string>|null>
+     * @return array<string, non-empty-string|array<string, string>|null>
      */
     public function encrypt(string $textForEncrypt): array;
 
@@ -30,6 +30,8 @@ interface CryptServiceInterface
      * @param array<string, string|array<string, string>|null> $dataForDecrypt
      *
      * @throws Exception
+     *
+     * @return non-empty-string
      */
     public function decrypt(array $dataForDecrypt): string;
 }

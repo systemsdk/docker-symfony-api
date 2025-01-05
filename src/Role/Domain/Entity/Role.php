@@ -55,6 +55,9 @@ class Role implements EntityInterface
     ])]
     private Collection | ArrayCollection $userGroups;
 
+    /**
+     * @param non-empty-string $id
+     */
     public function __construct(
         #[ORM\Id]
         #[ORM\Column(

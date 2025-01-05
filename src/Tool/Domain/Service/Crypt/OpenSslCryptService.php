@@ -49,6 +49,7 @@ class OpenSslCryptService implements OpenSslCryptServiceInterface
             // @codeCoverageIgnoreEnd
         }
 
+        /** @var false|non-empty-string $encryptedText */
         $encryptedText = openssl_encrypt(
             data: $textForEncrypt,
             cipher_algo: $this->algorithm,
@@ -92,6 +93,7 @@ class OpenSslCryptService implements OpenSslCryptServiceInterface
             // @codeCoverageIgnoreEnd
         }
 
+        /** @var false|non-empty-string $originalText */
         $originalText = openssl_decrypt(
             data: $dataForDecrypt['data'],
             cipher_algo: $this->algorithm,

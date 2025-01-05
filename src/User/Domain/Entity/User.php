@@ -248,6 +248,9 @@ class User implements EntityInterface, UserInterface, UserGroupAwareInterface
         $this->logsLoginFailure = new ArrayCollection();
     }
 
+    /**
+     * @return non-empty-string
+     */
     #[Override]
     public function getId(): string
     {

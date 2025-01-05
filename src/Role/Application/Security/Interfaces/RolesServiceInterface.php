@@ -16,7 +16,7 @@ interface RolesServiceInterface
     /**
      * Getter method to return all roles in single dimensional array.
      *
-     * @return array<int, string>
+     * @return array<int, non-empty-string>
      */
     public function getRoles(): array;
 

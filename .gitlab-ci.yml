@@ -37,6 +37,7 @@ build:
     - make elastic-create-or-update-template
     - *general_scripts
     - make phpunit
+    - make composer-audit
     - make ecs
     - make phpcs
     - make phpstan

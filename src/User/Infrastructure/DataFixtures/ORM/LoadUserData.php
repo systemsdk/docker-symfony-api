@@ -27,7 +27,7 @@ use function array_map;
 final class LoadUserData extends Fixture implements OrderedFixtureInterface
 {
     /**
-     * @var array<string, string>
+     * @var array<non-empty-string, non-empty-string>
      */
     public static array $uuids = [
         'john' => '20000000-0000-1000-8000-000000000001',

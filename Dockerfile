@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.7-labs
-FROM php:8.3-fpm
+FROM php:8.4-fpm
 
 # set main params
 ARG BUILD_ARGUMENT_ENV=dev
@@ -12,8 +12,9 @@ ARG INSIDE_DOCKER_CONTAINER=1
 ENV INSIDE_DOCKER_CONTAINER=$INSIDE_DOCKER_CONTAINER
 ARG XDEBUG_CONFIG=main
 ENV XDEBUG_CONFIG=$XDEBUG_CONFIG
-ARG XDEBUG_VERSION=3.3.2
+ARG XDEBUG_VERSION=3.4.0
 ENV XDEBUG_VERSION=$XDEBUG_VERSION
+ENV PHP_CS_FIXER_IGNORE_ENV=1
 
 # check environment
 RUN if [ "$BUILD_ARGUMENT_ENV" = "default" ]; then echo "Set BUILD_ARGUMENT_ENV in docker build-args like --build-arg BUILD_ARGUMENT_ENV=dev" && exit 2; \
@@ -112,10 +113,6 @@ COPY --chown=${USERNAME}:${USERNAME} . $APP_HOME/
 # install all PHP dependencies
 RUN if [ "$BUILD_ARGUMENT_ENV" = "dev" ] || [ "$BUILD_ARGUMENT_ENV" = "test" ]; then COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress; \
     else export APP_ENV=$BUILD_ARGUMENT_ENV && COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress --no-dev; \
-    fi
-
-# checks for security vulnerability advisories for installed packages in case dev/test environment
-RUN if [ "$BUILD_ARGUMENT_ENV" = "dev" ] || [ "$BUILD_ARGUMENT_ENV" = "test" ]; then COMPOSER_MEMORY_LIMIT=-1 composer audit; \
     fi
 
 # create cached config file .env.local.php in case staging/prod environment

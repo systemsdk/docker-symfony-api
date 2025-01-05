@@ -26,7 +26,7 @@ use function str_pad;
 final class LoadApiKeyData extends Fixture implements OrderedFixtureInterface
 {
     /**
-     * @var array<string, string>
+     * @var array<string, non-empty-string>
      */
     public static array $uuids = [
         '' => '30000000-0000-1000-8000-000000000001',

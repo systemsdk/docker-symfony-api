@@ -9,6 +9,7 @@ use App\General\Transport\Rest\Interfaces\ControllerInterface;
 use Closure;
 use Countable;
 use IteratorAggregate;
+use Override;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
@@ -20,7 +21,7 @@ use function sprintf;
  * @method ControllerInterface get(string $className)
  * @method IteratorAggregate<int, ControllerInterface> getAll()
  *
- * @template T<ControllerInterface>
+ * @template T of ControllerInterface
  */
 class ControllerCollection implements Countable
 {
@@ -39,6 +40,7 @@ class ControllerCollection implements Countable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getErrorMessage(string $className): string
     {
         return sprintf('REST controller \'%s\' does not exist', $className);
@@ -47,6 +49,7 @@ class ControllerCollection implements Countable
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function filter(string $className): Closure
     {
         return static fn (ControllerInterface $restController): bool => $restController instanceof $className;

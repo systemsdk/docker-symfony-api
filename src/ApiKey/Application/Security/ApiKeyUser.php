@@ -17,6 +17,9 @@ use function array_unique;
  */
 class ApiKeyUser implements ApiKeyUserInterface, UserInterface
 {
+    /**
+     * @var non-empty-string
+     */
     private readonly string $identifier;
     private readonly string $apiKeyIdentifier;
 

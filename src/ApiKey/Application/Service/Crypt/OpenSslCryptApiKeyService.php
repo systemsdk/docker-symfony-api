@@ -28,7 +28,7 @@ class OpenSslCryptApiKeyService implements OpenSslCryptApiKeyServiceInterface
     {
         $token = $apiKey->getToken();
 
-        if ($token === '' || strlen($token) !== ApiKey::TOKEN_LENGTH) {
+        if (strlen($token) !== ApiKey::TOKEN_LENGTH) {
             return;
         }
 
@@ -48,7 +48,7 @@ class OpenSslCryptApiKeyService implements OpenSslCryptApiKeyServiceInterface
         /** @var array{iv: string, tag: string}|null $tokenParams */
         $tokenParams = $apiKey->getTokenParameters();
 
-        if ($token === '' || $tokenParams === null || strlen($token) === ApiKey::TOKEN_LENGTH) {
+        if ($tokenParams === null || strlen($token) === ApiKey::TOKEN_LENGTH) {
             return;
         }
 

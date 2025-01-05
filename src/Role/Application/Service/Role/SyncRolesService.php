@@ -51,6 +51,8 @@ class SyncRolesService implements SyncRolesServiceInterface
      * Method to check if specified role exists on database and if not create and persist it to database.
      *
      * @throws Throwable
+     *
+     * @param non-empty-string $role
      */
     private function createRole(string $role): int
     {

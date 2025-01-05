@@ -18,10 +18,10 @@ use function mb_strtolower;
 /**
  * @package App\Role
  */
-class RolesService implements RolesServiceInterface
+readonly class RolesService implements RolesServiceInterface
 {
     public function __construct(
-        private readonly RoleHierarchyInterface $roleHierarchy,
+        private RoleHierarchyInterface $roleHierarchy,
     ) {
     }
 
