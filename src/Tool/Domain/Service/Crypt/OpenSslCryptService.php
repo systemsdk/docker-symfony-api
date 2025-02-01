@@ -69,7 +69,7 @@ class OpenSslCryptService implements OpenSslCryptServiceInterface
             'data' => $encryptedText,
             'params' => [
                 'iv' => bin2hex($iv),
-                'tag' => is_string($tag) ? bin2hex($tag) : $tag,
+                'tag' => is_string($tag) ? bin2hex($tag) : (string)$tag,
             ],
         ];
     }

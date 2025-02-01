@@ -14,7 +14,7 @@
 		"Elasticsearch"
 	],
 	"homepage": "https://github.com/systemsdk/docker-symfony-api",
-	"version": "v3.4.0",
+	"version": "v3.4.1",
 	"license": "MIT",
 	"authors": [
 		{
@@ -42,29 +42,30 @@
 		"ext-pdo": "*",
 		"ext-pdo_mysql": "*",
 		"beberlei/doctrineextensions": "^1.5",
-		"doctrine/doctrine-bundle": "^2.13",
-		"doctrine/doctrine-migrations-bundle": "^3.3",
-		"doctrine/orm": "^2.20",
-		"dukecity/command-scheduler-bundle": "^6.0",
-		"elasticsearch/elasticsearch": "^7.17",
-		"gedmo/doctrine-extensions": "^3.17",
-		"lexik/jwt-authentication-bundle": "^3.1",
+		"doctrine/doctrine-bundle": "^2.13.2",
+		"doctrine/doctrine-migrations-bundle": "^3.4.1",
+		"doctrine/orm": "^2.20.1",
+		"dukecity/command-scheduler-bundle": "^6.0.3",
+		"elasticsearch/elasticsearch": "^7.17.2",
+		"gedmo/doctrine-extensions": "^3.17.1",
+		"lexik/jwt-authentication-bundle": "^3.1.1",
 		"mark-gerarts/automapper-plus-bundle": "^1.5",
-		"matomo/device-detector": "^6.4",
+		"matomo/device-detector": "^6.4.3",
 		"matthiasnoback/symfony-console-form": "^6.0",
-		"nelmio/api-doc-bundle": "^4.33",
+		"nelmio/api-doc-bundle": "^4.36.1",
 		"nelmio/cors-bundle": "^2.5",
-		"phpdocumentor/reflection-docblock": "^5.6",
+		"phpdocumentor/reflection-docblock": "^5.6.1",
 		"ramsey/uuid-doctrine": "^2.1",
 		"symfony/amqp-messenger": "7.2.*",
 		"symfony/asset": "7.2.*",
+		"symfony/asset-mapper": "7.2.*",
 		"symfony/config": "7.2.*",
 		"symfony/console": "7.2.*",
 		"symfony/doctrine-bridge": "7.2.*",
 		"symfony/doctrine-messenger": "7.2.*",
 		"symfony/dotenv": "7.2.*",
 		"symfony/expression-language": "7.2.*",
-		"symfony/flex": "^2.4",
+		"symfony/flex": "^2.4.7",
 		"symfony/form": "7.2.*",
 		"symfony/framework-bundle": "7.2.*",
 		"symfony/http-client": "7.2.*",
@@ -82,13 +83,16 @@
 		"symfony/routing": "7.2.*",
 		"symfony/security-bundle": "7.2.*",
 		"symfony/serializer": "7.2.*",
+		"symfony/stimulus-bundle": "^2.22.1",
 		"symfony/string": "7.2.*",
 		"symfony/translation": "7.2.*",
 		"symfony/twig-bundle": "7.2.*",
+		"symfony/ux-turbo": "^2.22.1",
 		"symfony/validator": "7.2.*",
 		"symfony/web-link": "7.2.*",
 		"symfony/yaml": "7.2.*",
-		"twig/extra-bundle": "^2.12|^3.0"
+		"twig/extra-bundle": "^2.12|^3.19",
+		"twig/twig": "^2.12|^3.19"
 	},
 	"conflict": {
 		"symfony/debug": "<3.3",
@@ -96,14 +100,14 @@
 		"symfony/twig-bundle": "<3.3"
 	},
 	"require-dev": {
-		"bamarni/composer-bin-plugin": "^1.8",
+		"bamarni/composer-bin-plugin": "^1.8.2",
 		"doctrine/doctrine-fixtures-bundle": "^4.0",
 		"systemsdk/easy-log-bundle": "2.0.*",
 		"roave/security-advisories": "dev-latest",
 		"symfony/browser-kit": "7.2.*",
 		"symfony/debug-bundle": "7.2.*",
-		"symfony/maker-bundle": "^1.60",
-		"symfony/requirements-checker": "^2.0",
+		"symfony/maker-bundle": "^1.62.1",
+		"symfony/requirements-checker": "^2.0.3",
 		"symfony/stopwatch": "7.2.*",
 		"symfony/var-dumper": "7.2.*",
 		"symfony/web-profiler-bundle": "7.2.*"
@@ -111,9 +115,13 @@
 	"replace": {
 		"symfony/polyfill-ctype": "*",
 		"symfony/polyfill-mbstring": "*",
+		"symfony/polyfill-iconv": "*",
 		"symfony/polyfill-php72": "*",
+		"symfony/polyfill-php73": "*",
+		"symfony/polyfill-php74": "*",
 		"symfony/polyfill-php80": "*",
-		"symfony/polyfill-php81": "*"
+		"symfony/polyfill-php81": "*",
+		"symfony/polyfill-php82": "*"
 	},
 	"config": {
 		"allow-plugins": true,
@@ -123,6 +131,7 @@
 		"preferred-install": {
 			"*": "dist"
 		},
+		"bump-after-update": true,
 		"sort-packages": true
 	},
 	"extra": {
@@ -184,7 +193,8 @@
 			"cache:warmup": "symfony-cmd",
 			"cache:pool:clear cache.app || true": "symfony-cmd",
 			"assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
-			"assets:install %PUBLIC_DIR%": "symfony-cmd"
+			"assets:install %PUBLIC_DIR%": "symfony-cmd",
+			"importmap:install": "symfony-cmd"
 		}
 	},
 	"support": {
