@@ -550,16 +550,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.68.5",
+            "version": "v3.70.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "7bedb718b633355272428c60736dc97fb96daf27"
+                "reference": "2ecd5aae0edc937f0d5aa4a22d1d705c6b2e084e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/7bedb718b633355272428c60736dc97fb96daf27",
-                "reference": "7bedb718b633355272428c60736dc97fb96daf27",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/2ecd5aae0edc937f0d5aa4a22d1d705c6b2e084e",
+                "reference": "2ecd5aae0edc937f0d5aa4a22d1d705c6b2e084e",
                 "shasum": ""
             },
             "require": {
@@ -576,7 +576,7 @@
                 "react/promise": "^2.0 || ^3.0",
                 "react/socket": "^1.0",
                 "react/stream": "^1.0",
-                "sebastian/diff": "^4.0 || ^5.1 || ^6.0",
+                "sebastian/diff": "^4.0 || ^5.1 || ^6.0 || ^7.0",
                 "symfony/console": "^5.4 || ^6.4 || ^7.0",
                 "symfony/event-dispatcher": "^5.4 || ^6.4 || ^7.0",
                 "symfony/filesystem": "^5.4 || ^6.4 || ^7.0",
@@ -589,18 +589,18 @@
                 "symfony/stopwatch": "^5.4 || ^6.4 || ^7.0"
             },
             "require-dev": {
-                "facile-it/paraunit": "^1.3.1 || ^2.4",
-                "infection/infection": "^0.29.8",
+                "facile-it/paraunit": "^1.3.1 || ^2.5",
+                "infection/infection": "^0.29.10",
                 "justinrainbow/json-schema": "^5.3 || ^6.0",
                 "keradus/cli-executor": "^2.1",
                 "mikey179/vfsstream": "^1.6.12",
                 "php-coveralls/php-coveralls": "^2.7",
                 "php-cs-fixer/accessible-object": "^1.1",
-                "php-cs-fixer/phpunit-constraint-isidenticalstring": "^1.5",
-                "php-cs-fixer/phpunit-constraint-xmlmatchesxsd": "^1.5",
-                "phpunit/phpunit": "^9.6.22 || ^10.5.40 || ^11.5.2",
-                "symfony/var-dumper": "^5.4.48 || ^6.4.15 || ^7.2.0",
-                "symfony/yaml": "^5.4.45 || ^6.4.13 || ^7.2.0"
+                "php-cs-fixer/phpunit-constraint-isidenticalstring": "^1.6",
+                "php-cs-fixer/phpunit-constraint-xmlmatchesxsd": "^1.6",
+                "phpunit/phpunit": "^9.6.22 || ^10.5.45 || ^11.5.7",
+                "symfony/var-dumper": "^5.4.48 || ^6.4.18 || ^7.2.0",
+                "symfony/yaml": "^5.4.45 || ^6.4.18 || ^7.2.0"
             },
             "suggest": {
                 "ext-dom": "For handling output formats in XML",
@@ -641,7 +641,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.68.5"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.70.0"
             },
             "funding": [
                 {
@@ -649,7 +649,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-30T17:00:50+00:00"
+            "time": "2025-02-22T23:30:51+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -967,30 +967,30 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.33.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "82a311fd3690fb2bf7b64d5c98f912b3dd746140"
+                "reference": "9b30d6fd026b2c132b3985ce6b23bec09ab3aa68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/82a311fd3690fb2bf7b64d5c98f912b3dd746140",
-                "reference": "82a311fd3690fb2bf7b64d5c98f912b3dd746140",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/9b30d6fd026b2c132b3985ce6b23bec09ab3aa68",
+                "reference": "9b30d6fd026b2c132b3985ce6b23bec09ab3aa68",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2 || ^8.0"
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
                 "doctrine/annotations": "^2.0",
-                "nikic/php-parser": "^4.15",
+                "nikic/php-parser": "^5.3.0",
                 "php-parallel-lint/php-parallel-lint": "^1.2",
                 "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^1.5",
-                "phpstan/phpstan-phpunit": "^1.1",
-                "phpstan/phpstan-strict-rules": "^1.0",
-                "phpunit/phpunit": "^9.5",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "phpunit/phpunit": "^9.6",
                 "symfony/process": "^5.2"
             },
             "type": "library",
@@ -1008,9 +1008,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.33.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/2.1.0"
             },
-            "time": "2024-10-13T11:25:22+00:00"
+            "time": "2025-02-19T13:28:12+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1858,12 +1858,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "c10bce58e215dabda33ba5dd3f3a153e85684222"
+                "reference": "23b2141a1db97b4e3278510ed9e74a16361619b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/c10bce58e215dabda33ba5dd3f3a153e85684222",
-                "reference": "c10bce58e215dabda33ba5dd3f3a153e85684222",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/23b2141a1db97b4e3278510ed9e74a16361619b1",
+                "reference": "23b2141a1db97b4e3278510ed9e74a16361619b1",
                 "shasum": ""
             },
             "conflict": {
@@ -1880,7 +1880,7 @@
                 "airesvsg/acf-to-rest-api": "<=3.1",
                 "akaunting/akaunting": "<2.1.13",
                 "akeneo/pim-community-dev": "<5.0.119|>=6,<6.0.53",
-                "alextselegidis/easyappointments": "<1.5",
+                "alextselegidis/easyappointments": "<=1.5",
                 "alterphp/easyadmin-extension-bundle": ">=1.2,<1.2.11|>=1.3,<1.3.1",
                 "amazing/media2click": ">=1,<1.3.3",
                 "ameos/ameos_tarteaucitron": "<1.2.23",
@@ -1955,7 +1955,7 @@
                 "cesnet/simplesamlphp-module-proxystatistics": "<3.1",
                 "chriskacerguis/codeigniter-restserver": "<=2.7.1",
                 "civicrm/civicrm-core": ">=4.2,<4.2.9|>=4.3,<4.3.3",
-                "ckeditor/ckeditor": "<4.24",
+                "ckeditor/ckeditor": "<4.25",
                 "cockpit-hq/cockpit": "<2.7|==2.7",
                 "codeception/codeception": "<3.1.3|>=4,<4.1.22",
                 "codeigniter/framework": "<3.1.9",
@@ -2202,6 +2202,7 @@
                 "league/commonmark": "<2.6",
                 "league/flysystem": "<1.1.4|>=2,<2.1.1",
                 "league/oauth2-server": ">=8.3.2,<8.4.2|>=8.5,<8.5.3",
+                "leantime/leantime": "<3.3",
                 "lexik/jwt-authentication-bundle": "<2.10.7|>=2.11,<2.11.3",
                 "libreform/libreform": ">=2,<=2.0.8",
                 "librenms/librenms": "<2017.08.18",
@@ -2214,18 +2215,19 @@
                 "localizationteam/l10nmgr": "<7.4|>=8,<8.7|>=9,<9.2",
                 "luyadev/yii-helpers": "<1.2.1",
                 "maestroerror/php-heic-to-jpg": "<1.0.5",
-                "magento/community-edition": "<2.4.5|==2.4.5|>=2.4.5.0-patch1,<2.4.5.0-patch10|==2.4.6|>=2.4.6.0-patch1,<2.4.6.0-patch8|>=2.4.7.0-beta1,<2.4.7.0-patch3",
+                "magento/community-edition": "<2.4.5|==2.4.5|>=2.4.5.0-patch1,<2.4.5.0-patch11|==2.4.6|>=2.4.6.0-patch1,<2.4.6.0-patch9|>=2.4.7.0-beta1,<2.4.7.0-patch4|>=2.4.8.0-beta1,<2.4.8.0-beta2",
                 "magento/core": "<=1.9.4.5",
                 "magento/magento1ce": "<1.9.4.3-dev",
                 "magento/magento1ee": ">=1,<1.14.4.3-dev",
                 "magento/product-community-edition": "<2.4.4.0-patch9|>=2.4.5,<2.4.5.0-patch8|>=2.4.6,<2.4.6.0-patch6|>=2.4.7,<2.4.7.0-patch1",
+                "magento/project-community-edition": "<=2.0.2",
                 "magneto/core": "<1.9.4.4-dev",
                 "maikuolan/phpmussel": ">=1,<1.6",
                 "mainwp/mainwp": "<=4.4.3.3",
                 "mantisbt/mantisbt": "<=2.26.3",
                 "marcwillmann/turn": "<0.3.3",
                 "matyhtf/framework": "<3.0.6",
-                "mautic/core": "<4.4.13|>=5,<5.1.1",
+                "mautic/core": "<4.4.13|>=5.0.0.0-alpha,<5.1.1",
                 "mautic/core-lib": ">=1.0.0.0-beta,<4.4.13|>=5.0.0.0-alpha,<5.1.1",
                 "maximebf/debugbar": "<1.19",
                 "mdanter/ecc": "<2",
@@ -2264,6 +2266,7 @@
                 "munkireport/reportdata": "<3.5",
                 "munkireport/softwareupdate": "<1.6",
                 "mustache/mustache": ">=2,<2.14.1",
+                "mwdelaney/wp-enable-svg": "<=0.2",
                 "namshi/jose": "<2.2",
                 "nategood/httpful": "<1",
                 "neoan3-apps/template": "<1.1.1",
@@ -2301,7 +2304,7 @@
                 "openid/php-openid": "<2.3",
                 "openmage/magento-lts": "<20.10.1",
                 "opensolutions/vimbadmin": "<=3.0.15",
-                "opensource-workshop/connect-cms": "<1.7.2|>=2,<2.3.2",
+                "opensource-workshop/connect-cms": "<1.8.7|>=2,<2.4.7",
                 "orchid/platform": ">=8,<14.43",
                 "oro/calendar-bundle": ">=4.2,<=4.2.6|>=5,<=5.0.6|>=5.1,<5.1.1",
                 "oro/commerce": ">=4.1,<5.0.11|>=5.1,<5.1.1",
@@ -2342,7 +2345,7 @@
                 "phpmyfaq/phpmyfaq": "<3.2.5|==3.2.5|>=3.2.10,<=4.0.1",
                 "phpoffice/common": "<0.2.9",
                 "phpoffice/phpexcel": "<1.8.1",
-                "phpoffice/phpspreadsheet": "<1.29.8|>=2,<2.1.7|>=2.2,<2.3.6|>=3,<3.8",
+                "phpoffice/phpspreadsheet": "<1.29.9|>=2,<2.1.8|>=2.2,<2.3.7|>=3,<3.9",
                 "phpseclib/phpseclib": "<2.0.47|>=3,<3.0.36",
                 "phpservermon/phpservermon": "<3.6",
                 "phpsysinfo/phpsysinfo": "<3.4.3",
@@ -2351,7 +2354,7 @@
                 "phpxmlrpc/extras": "<0.6.1",
                 "phpxmlrpc/phpxmlrpc": "<4.9.2",
                 "pi/pi": "<=2.5",
-                "pimcore/admin-ui-classic-bundle": "<1.5.4",
+                "pimcore/admin-ui-classic-bundle": "<1.7.4",
                 "pimcore/customer-management-framework-bundle": "<4.2.1",
                 "pimcore/data-hub": "<1.2.4",
                 "pimcore/data-importer": "<1.8.9|>=1.9,<1.9.3",
@@ -2397,7 +2400,7 @@
                 "rap2hpoutre/laravel-log-viewer": "<0.13",
                 "react/http": ">=0.7,<1.9",
                 "really-simple-plugins/complianz-gdpr": "<6.4.2",
-                "redaxo/source": "<5.18",
+                "redaxo/source": "<=5.18.1",
                 "remdex/livehelperchat": "<4.29",
                 "reportico-web/reportico": "<=8.1",
                 "rhukster/dom-sanitizer": "<1.0.7",
@@ -2405,6 +2408,7 @@
                 "robrichards/xmlseclibs": ">=1,<3.0.4",
                 "roots/soil": "<4.1",
                 "rudloff/alltube": "<3.0.3",
+                "rudloff/rtmpdump-bin": "<=2.3.1",
                 "s-cart/core": "<6.9",
                 "s-cart/s-cart": "<6.9",
                 "sabberworm/php-css-parser": ">=1,<1.0.1|>=2,<2.0.1|>=3,<3.0.1|>=4,<4.0.1|>=5,<5.0.9|>=5.1,<5.1.3|>=5.2,<5.2.1|>=6,<6.0.2|>=7,<7.0.4|>=8,<8.0.1|>=8.1,<8.1.1|>=8.2,<8.2.1|>=8.3,<8.3.1",
@@ -2460,7 +2464,7 @@
                 "snipe/snipe-it": "<=7.0.13",
                 "socalnick/scn-social-auth": "<1.15.2",
                 "socialiteproviders/steam": "<1.1",
-                "spatie/browsershot": "<5.0.3",
+                "spatie/browsershot": "<5.0.5",
                 "spatie/image-optimizer": "<1.7.3",
                 "spencer14420/sp-php-email-handler": "<1",
                 "spipu/html2pdf": "<5.2.8",
@@ -2722,7 +2726,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-31T21:04:56+00:00"
+            "time": "2025-02-21T23:05:15+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -2850,32 +2854,32 @@
         },
         {
             "name": "slevomat/coding-standard",
-            "version": "8.15.0",
+            "version": "8.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "7d1d957421618a3803b593ec31ace470177d7817"
+                "reference": "7748a4282df19daf966fda1d8c60a8aec803c83a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/7d1d957421618a3803b593ec31ace470177d7817",
-                "reference": "7d1d957421618a3803b593ec31ace470177d7817",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/7748a4282df19daf966fda1d8c60a8aec803c83a",
+                "reference": "7748a4282df19daf966fda1d8c60a8aec803c83a",
                 "shasum": ""
             },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2 || ^0.7 || ^1.0",
-                "php": "^7.2 || ^8.0",
-                "phpstan/phpdoc-parser": "^1.23.1",
-                "squizlabs/php_codesniffer": "^3.9.0"
+                "php": "^7.4 || ^8.0",
+                "phpstan/phpdoc-parser": "^2.1.0",
+                "squizlabs/php_codesniffer": "^3.11.3"
             },
             "require-dev": {
-                "phing/phing": "2.17.4",
-                "php-parallel-lint/php-parallel-lint": "1.3.2",
-                "phpstan/phpstan": "1.10.60",
-                "phpstan/phpstan-deprecation-rules": "1.1.4",
-                "phpstan/phpstan-phpunit": "1.3.16",
-                "phpstan/phpstan-strict-rules": "1.5.2",
-                "phpunit/phpunit": "8.5.21|9.6.8|10.5.11"
+                "phing/phing": "3.0.1",
+                "php-parallel-lint/php-parallel-lint": "1.4.0",
+                "phpstan/phpstan": "2.1.6",
+                "phpstan/phpstan-deprecation-rules": "2.0.1",
+                "phpstan/phpstan-phpunit": "2.0.4",
+                "phpstan/phpstan-strict-rules": "2.0.3",
+                "phpunit/phpunit": "9.6.8|10.5.45|11.4.4|11.5.9|12.0.4"
             },
             "type": "phpcodesniffer-standard",
             "extra": {
@@ -2899,7 +2903,7 @@
             ],
             "support": {
                 "issues": "https://github.com/slevomat/coding-standard/issues",
-                "source": "https://github.com/slevomat/coding-standard/tree/8.15.0"
+                "source": "https://github.com/slevomat/coding-standard/tree/8.16.0"
             },
             "funding": [
                 {
@@ -2911,7 +2915,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-09T15:20:58+00:00"
+            "time": "2025-02-23T18:12:49+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

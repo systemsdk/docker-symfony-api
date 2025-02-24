@@ -23,6 +23,8 @@ interface LocalizationServiceInterface
      */
     public function getLocales(): array;
 
+    public function getRequestLocale(): string;
+
     /**
      * @return array<int, array{timezone: string, identifier: string,  offset: string, value: string}>
      */

@@ -14,7 +14,7 @@
 		"Elasticsearch"
 	],
 	"homepage": "https://github.com/systemsdk/docker-symfony-api",
-	"version": "v3.4.1",
+	"version": "v3.4.2",
 	"license": "MIT",
 	"authors": [
 		{
@@ -44,15 +44,15 @@
 		"beberlei/doctrineextensions": "^1.5",
 		"doctrine/doctrine-bundle": "^2.13.2",
 		"doctrine/doctrine-migrations-bundle": "^3.4.1",
-		"doctrine/orm": "^2.20.1",
+		"doctrine/orm": "^2.20.2",
 		"dukecity/command-scheduler-bundle": "^6.0.3",
 		"elasticsearch/elasticsearch": "^7.17.2",
-		"gedmo/doctrine-extensions": "^3.17.1",
+		"gedmo/doctrine-extensions": "^3.18.0",
 		"lexik/jwt-authentication-bundle": "^3.1.1",
 		"mark-gerarts/automapper-plus-bundle": "^1.5",
 		"matomo/device-detector": "^6.4.3",
 		"matthiasnoback/symfony-console-form": "^6.0",
-		"nelmio/api-doc-bundle": "^4.36.1",
+		"nelmio/api-doc-bundle": "^4.37.1",
 		"nelmio/cors-bundle": "^2.5",
 		"phpdocumentor/reflection-docblock": "^5.6.1",
 		"ramsey/uuid-doctrine": "^2.1",
@@ -83,16 +83,16 @@
 		"symfony/routing": "7.2.*",
 		"symfony/security-bundle": "7.2.*",
 		"symfony/serializer": "7.2.*",
-		"symfony/stimulus-bundle": "^2.22.1",
+		"symfony/stimulus-bundle": "^2.23.0",
 		"symfony/string": "7.2.*",
 		"symfony/translation": "7.2.*",
 		"symfony/twig-bundle": "7.2.*",
-		"symfony/ux-turbo": "^2.22.1",
+		"symfony/ux-turbo": "^2.23.0",
 		"symfony/validator": "7.2.*",
 		"symfony/web-link": "7.2.*",
 		"symfony/yaml": "7.2.*",
-		"twig/extra-bundle": "^2.12|^3.19",
-		"twig/twig": "^2.12|^3.19"
+		"twig/extra-bundle": "^2.12|^3.20",
+		"twig/twig": "^2.12|^3.20"
 	},
 	"conflict": {
 		"symfony/debug": "<3.3",
