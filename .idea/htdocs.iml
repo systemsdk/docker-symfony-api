@@ -162,8 +162,6 @@
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/phpunit/php-timer" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/phpunit/phpunit" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/sebastian/cli-parser" />
-      <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/sebastian/code-unit" />
-      <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/sebastian/code-unit-reverse-lookup" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/sebastian/comparator" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/sebastian/complexity" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/sebastian/diff" />
@@ -188,7 +186,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/clock" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php83" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/dama/doctrine-test-bundle" />
-      <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/doctrine/cache" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/doctrine/dbal" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/doctrine/deprecations" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/doctrine/doctrine-bundle" />
@@ -216,7 +213,6 @@
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/http-kernel" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/polyfill-intl-grapheme" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/polyfill-intl-normalizer" />
-      <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/polyfill-php80" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/polyfill-php83" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/routing" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/service-contracts" />
@@ -238,6 +234,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/asset-mapper" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/stimulus-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/ux-turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php84" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
