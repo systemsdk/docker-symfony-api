@@ -10,8 +10,8 @@ Docker environment (based on official php and mysql docker hub repositories) req
 [Source code](https://github.com/systemsdk/docker-symfony-api.git)
 
 ## Requirements
-* Docker Engine version 18.06 or later
-* Docker Compose version 1.22 or later
+* Docker Engine version 23.0 or later
+* Docker Compose version 2.0 or later
 * An editor or IDE
 * MySQL Workbench
 
@@ -287,6 +287,7 @@ make ecs
 make ecs-fix
 make phpmetrics
 make phpcpd
+make phpcpd-html-report
 make phpmd
 make phpstan
 make phpinsights

@@ -25,6 +25,17 @@
       <sourceFolder url="file://$MODULE_DIR$/tools/03_ecs/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tools/06_phpmd/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tools/08_rector/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tools/01_phpunit/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tools/02_phpstan/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tools/03_ecs/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tools/04_php-coveralls/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tools/04_php-coveralls/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tools/06_phpmd/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tools/07_phpmetrics/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tools/07_phpmetrics/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tools/08_rector/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tools/09_composer/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tools/09_composer/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/matthiasnoback/symfony-console-form" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/type-resolver" />
