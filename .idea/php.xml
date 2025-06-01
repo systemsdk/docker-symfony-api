@@ -287,11 +287,6 @@
       <path value="$PROJECT_DIR$/tools/08_rector/vendor/phpstan/phpstan" />
       <path value="$PROJECT_DIR$/tools/08_rector/vendor/composer" />
       <path value="$PROJECT_DIR$/tools/08_rector/vendor/rector/rector" />
-      <path value="$PROJECT_DIR$/tools/02_phpstan/vendor/composer" />
-      <path value="$PROJECT_DIR$/tools/02_phpstan/vendor/phpstan/phpstan-phpunit" />
-      <path value="$PROJECT_DIR$/tools/02_phpstan/vendor/phpstan/phpstan" />
-      <path value="$PROJECT_DIR$/tools/02_phpstan/vendor/phpstan/phpstan-deprecation-rules" />
-      <path value="$PROJECT_DIR$/tools/02_phpstan/vendor/phpstan/phpstan-symfony" />
       <path value="$PROJECT_DIR$/vendor/psr/container" />
       <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/psr/link" />
@@ -431,6 +426,11 @@
       <path value="$PROJECT_DIR$/vendor/mark-gerarts/auto-mapper-plus" />
       <path value="$PROJECT_DIR$/vendor/mark-gerarts/automapper-plus-bundle" />
       <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/tools/02_phpstan/vendor/phpstan/phpstan-symfony" />
+      <path value="$PROJECT_DIR$/tools/02_phpstan/vendor/phpstan/phpstan-deprecation-rules" />
+      <path value="$PROJECT_DIR$/tools/02_phpstan/vendor/phpstan/phpstan" />
+      <path value="$PROJECT_DIR$/tools/02_phpstan/vendor/phpstan/phpstan-phpunit" />
+      <path value="$PROJECT_DIR$/tools/02_phpstan/vendor/composer" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
