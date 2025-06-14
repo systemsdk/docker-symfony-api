@@ -16,46 +16,48 @@ This document contains basic information and recommendation for development.
 * Use strict_types, type hinting and return type hinting.
 * Use PHPStorm IDE as currently it is most powerful IDE for PHP development on today's market.
 
-Within this application the base workflow is following:
+For this application the base workflow is following:
 
 `Controller/Command/EventSubscriber/MessageHandler(Transport layer) <--> Resource/Service(Application layer) <--> Repository/Service(Infrastructure layer) <--> Entity/Message/Service(Domain layer)`
 
 #### Exceptions
-* All Exceptions that should terminate the current request (and return an error message to the user) should be handled
-using Symfony [best practice](https://symfony.com/doc/current/controller/error_pages.html#use-kernel-exception-event).
-* All Exceptions that should be handled in the controller, or just logged for debugging, should be wrapped in a
-try catch block (catchable Exceptions).
+* All Exceptions that should terminate the current request (and return an error message to the user) should be handled using Symfony [best practice](https://symfony.com/doc/current/controller/error_pages.html#use-kernel-exception-event).
+* All Exceptions that should be handled in the controller, or just logged for debugging, should be wrapped in a try catch block (catchable Exceptions).
 * Use custom Exceptions for all catchable scenarios, and try to use standard Exceptions for fatal Exceptions.
 * Use custom Exceptions to log.
 
 #### Entities
-Entities should only be data-persistence layers, i.e. defines relationships, attributes, helper methods
-but does not fetch collections of data. Entities are located on the Domain layer (according to DDD approach) and shouldn't
-know anything about other layers (Application/Infrastructure) or framework. In this application we made some "exception"
-for such components like Doctrine/Swagger/Serializer/Validator (for the first time) and you can find such
-dependencies inside Entities.
+Entities should only be data-persistence layers, i.e. defines relationships, attributes, helper methods but does not fetch collections of data.
+Entities are located on the Domain layer (according to DDD approach) and shouldn't know anything about other layers (Application/Infrastructure) or framework.
+In this application we made some "exception" for such components like Doctrine/Swagger/Serializer/Validator (for the first time) and you can find such dependencies inside Entities.
 
-Within this application we are using uuid v1 for the primary key inside Entities. Also we have id field as
-binary type ([details](https://uuid.ramsey.dev/en/stable/database.html#using-as-a-primary-key)). If you need to convert
-id into binary ordered time or from bin ordered time into a string inside query, please use MySql 8 internal functions [UUID_TO_BIN](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_uuid-to-bin) and [BIN_TO_UUID](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_bin-to-uuid).
+Inside this application we are using uuid v1 for the primary key inside Entities. Also we have id field as binary type ([details](https://uuid.ramsey.dev/en/stable/database.html#using-as-a-primary-key)).
+If you need to convert id into binary ordered time or from bin ordered time into a string inside query, please use MySql 8 internal functions [UUID_TO_BIN](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_uuid-to-bin) and [BIN_TO_UUID](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_bin-to-uuid).
 For instance `... WHERE id = UUID_TO_BIN(:id, 1)`, or when you need to convert uuid binary ordered time into string representative `... WHERE BIN_TO_UUID(id, 1) = :id`.
-The second argument determines if the byte order should be swapped, therefore when using uuid_binary you should pass 0 and when using uuid_binary_ordered_time you should pass 1.
+The second argument determines if the byte order should be swapped. Therefore, when using uuid_binary, you should pass 0. When using uuid_binary_ordered_time you should pass 1.
 
 #### Repositories
-Repositories need to be responsible for parameter handling and query builder callbacks/joins. Should be located on
-infrastructure layer. Parameter handling can help with generic REST queries.
+Repositories need to be responsible for parameter handling and query builder callbacks/joins. Should be located on infrastructure layer. Parameter handling can help with generic REST queries.
 
 #### Resources
-Resource services are services between your controller/command and repository. Should be located on application layer.
-Within this service it is possible to control how to `mutate` repository data for application needs.
+Resource services are services between controller/command and repository. Should be located on application layer.
+Inside this service it is possible to control how to `mutate` repository data for application needs.
 Resource services are basically the application foundation and it can control your request and response as you like.
-We have provided 2 examples how to build resource services: 1)resource with all-in-one actions (create/update/delete/etc, see example src/ApiKey/Application/Resource/ApiKeyResource.php) 
+
+We have provided 2 examples how to build resource services:
+
+1)resource with all-in-one actions (create/update/delete/etc, see example src/ApiKey/Application/Resource/ApiKeyResource.php)
+
 2)resource with single responsibility (f.e. count, see example src/ApiKey/Application/Resource/ApiKeyCountResource.php).
 
 #### Controllers
-Should be located on Transport layer. Keep controllers clean of application logic. They should ideally just inject
+Should be located on the Transport layer. Keep controllers clean of application logic. They should ideally just inject
 resources/services - either through the constructor (if used more than once) or in the controller method itself.
-We have provided 2 examples how to build controllers: 1)controller with all-in-one actions (create/update/delete/etc, see example src/ApiKey/Transport/Controller/Api/v1/ApiKey/ApiKeyController.php)
+
+We have provided 2 examples how to build controllers: 
+
+1)controller with all-in-one actions (create/update/delete/etc, see example src/ApiKey/Transport/Controller/Api/v1/ApiKey/ApiKeyController.php)
+
 2)controller with single responsibility (f.e. count, see example src/ApiKey/Transport/Controller/Api/v2/ApiKey/ApiKeyCountController.php)
 
 #### Events
@@ -70,7 +72,7 @@ Isolate 3rd party dependencies into Service classes for simple refactoring/exten
 
 ## PHP code quality
 You can control code quality of your PHP project using already integrated code quality tools. Before creating merge request you can run on your local PC code quality tools and get the report with issues that you can fix.
-Also code quality tools integrated inside CI environment and after creating merge request you can check if you have some issues inside your code. Please find the list of code quality tools that we recommend to use while PHP backend development.
+Also code quality tools integrated inside CI environment and, after creating merge request, you can check if you have some issues inside your code. Please find the list of code quality tools that we recommend to use for PHP backend development.
 
 ### PHP coding standard
 This tool is an essential development tool that ensures your code remains coding standard.
@@ -80,7 +82,7 @@ PHP coding standard is available for dev/test environment using next local shell
 make ecs
 ```
 
-If you want to fix all possible issues in auto mode(some issues can be fixed only manually) just use next local shell command:
+If you want to fix all possible issues in auto mode(some issues can be fixed only manually), just use next local shell command:
 ```bash
 make ecs-fix
 ```
@@ -93,8 +95,7 @@ PHP Code Sniffer is available for dev/test environment using next local shell co
 make phpcs
 ```
 
-If you are using [PhpStorm](https://www.jetbrains.com/phpstorm/) you can configure PHP Code Sniffer using recommendation
-[here](https://www.jetbrains.com/help/phpstorm/using-php-code-sniffer.html).
+If you are using [PhpStorm](https://www.jetbrains.com/phpstorm/) you can configure PHP Code Sniffer using recommendation [here](https://www.jetbrains.com/help/phpstorm/using-php-code-sniffer.html).
 
 ### PHPStan static analysis tool
 PHPStan focuses on finding errors in your code without actually running it. It catches whole classes of bugs even before you write tests for the code.
@@ -135,18 +136,18 @@ make phpcpd-html-report
 ```
 
 ### Composer tools
-To normalize or validate your composer.json you can use next local shell commands:
+To normalize or validate your composer.json, you can use next local shell commands:
 ```bash
 make composer-normalize
 make composer-validate
 ```
 
-If you need to find unused packages by scanning your code you can use next local shell commands:
+If you need to find unused packages by scanning your code, you can use next local shell commands:
 ```bash
 make composer-unused
 ```
 
-In order to check the defined dependencies against your code you can use next local shell commands:
+In order to check the defined dependencies against your code, you can use next local shell commands:
 ```bash
 make composer-require-checker
 ```
@@ -157,7 +158,7 @@ Use next local shell command in order to run it:
 ```bash
 make phpmetrics
 ```
-Note: You need run tests before this local shell command.
+Note: You need to run tests before this local shell command.
 
 After execution above local shell command please open `reports/phpmetrics/index.html` with your browser.
 
@@ -203,7 +204,7 @@ Please use next workflow for migrations:
 
 Above commands you can run in symfony container shell using next: `./bin/console doctrine:migrations:<command>`.
 
-Using above workflow allow you make database changes on your application.
+Using above workflow allows you make database changes on your application.
 Also you do not need to make any migrations files by hand (Doctrine will handle it).
 Please always check generated migration files to make sure that those doesn't contain anything that you really don't want.
 

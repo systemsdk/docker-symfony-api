@@ -1,5 +1,5 @@
 # Redis GUI
-This document describing how you can use [RedisInsight](https://redis.com/redis-enterprise/redis-insight/) within this environment.
+This document describing how you can use [RedisInsight](https://redis.com/redis-enterprise/redis-insight/).
 
 ## Using RedisInsight
 1. [Install RedisInsight](https://redis.com/redis-enterprise/redis-insight/) via your OS Application Manager or download via official web-site
