@@ -25,7 +25,7 @@ Note: OS recommendation - Linux Ubuntu based.
 5. RabbitMQ 4
 6. Elasticsearch 7
 7. Kibana 7
-8. Redis 7
+8. Redis 8
 9. Mailpit (only for debug emails on dev environment)
 
 ## Setting up Docker Engine with Docker Compose
