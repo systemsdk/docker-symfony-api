@@ -8,9 +8,9 @@ use App\General\Domain\Entity\Interfaces\EntityInterface;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\ORM\Mapping\AssociationMapping;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\OptimisticLockException;
@@ -47,14 +47,14 @@ interface BaseRepositoryInterface
     /**
      * Gets all association mappings of the class.
      *
-     * @psalm-return array<string, array<string, mixed>>
+     * @psalm-return array<string, AssociationMapping>
      */
     public function getAssociations(?string $entityManagerName = null): array;
 
     /**
      * Returns the ORM metadata descriptor for a class.
      */
-    public function getClassMetaData(?string $entityManagerName = null): ClassMetadataInfo;
+    public function getClassMetaData(?string $entityManagerName = null): ClassMetadata;
 
     /**
      * Getter method for EntityManager for current entity.
@@ -77,15 +77,13 @@ interface BaseRepositoryInterface
      *
      * @codeCoverageIgnore This is needed because variables are multiline
      *
-     * @psalm-param LockMode::*|null $lockMode
-     *
      * @throws ORMException
      * @throws OptimisticLockException
      * @throws TransactionRequiredException
      */
     public function find(
         string $id,
-        ?int $lockMode = null,
+        LockMode|int|null $lockMode = null,
         ?int $lockVersion = null,
         ?string $entityManagerName = null
     ): ?EntityInterface;
@@ -104,17 +102,15 @@ interface BaseRepositoryInterface
      */
     public function findAdvanced(
         string $id,
-        string | int | null $hydrationMode = null,
-        string | null $entityManagerName = null
-    ): null | array | EntityInterface;
+        string|int|null $hydrationMode = null,
+        string|null $entityManagerName = null
+    ): null|array|EntityInterface;
 
     /**
      * Wrapper for default Doctrine repository findOneBy method.
      *
      * @psalm-param array<string, mixed> $criteria
      * @psalm-param array<string, string>|null $orderBy
-     *
-     * @throws NotSupported
      *
      * @psalm-return EntityInterface|object|null
      */
@@ -127,6 +123,7 @@ interface BaseRepositoryInterface
      *
      * @psalm-param array<string, mixed> $criteria
      * @psalm-param array<string, string>|null $orderBy
+     * @phpstan-param array<string, 'asc'|'desc'|'ASC'|'DESC'>|null $orderBy
      *
      * @psalm-return list<object|EntityInterface>
      */
@@ -164,8 +161,6 @@ interface BaseRepositoryInterface
      * Wrapper for default Doctrine repository findAll method.
      *
      * @psalm-return list<object|EntityInterface>
-     *
-     * @throws NotSupported
      */
     public function findAll(?string $entityManagerName = null): array;
 

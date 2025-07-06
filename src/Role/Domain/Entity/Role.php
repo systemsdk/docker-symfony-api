@@ -47,8 +47,8 @@ class Role implements EntityInterface
      * @var Collection<int, UserGroup>|ArrayCollection<int, UserGroup>
      */
     #[ORM\OneToMany(
-        mappedBy: 'role',
         targetEntity: UserGroup::class,
+        mappedBy: 'role',
     )]
     #[Groups([
         'Role.userGroups',
@@ -63,6 +63,7 @@ class Role implements EntityInterface
         #[ORM\Column(
             name: 'role',
             type: Types::STRING,
+            length: 255,
             unique: true,
             nullable: false,
         )]

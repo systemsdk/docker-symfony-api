@@ -5,7 +5,7 @@
 		"php": "^8.4.0"
 	},
 	"require-dev": {
-		"phpmd/phpmd": "2.15.*",
+		"phpmd/phpmd": "dev-master",
 		"roave/security-advisories": "dev-latest"
 	},
 	"config": {

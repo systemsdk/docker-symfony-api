@@ -16,7 +16,7 @@ when@dev: &dev
             info:
                 title: Symfony Api
                 description: This is an symfony api environment example
-                version: 3.4.4
+                version: 3.6.0
             components:
                 securitySchemes:
                     Bearer:

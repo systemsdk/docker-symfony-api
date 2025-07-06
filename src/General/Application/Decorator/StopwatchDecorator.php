@@ -7,6 +7,7 @@ namespace App\General\Application\Decorator;
 use App\General\Application\DTO\Interfaces\RestDtoInterface;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 use Closure;
+use Doctrine\DBAL\Schema\Index;
 use ProxyManager\Factory\AccessInterceptorValueHolderFactory;
 use ReflectionClass;
 use ReflectionMethod;
@@ -41,6 +42,7 @@ class StopwatchDecorator
             || str_starts_with($class->getName(), 'ProxyManagerGeneratedProxy')
             || str_contains($class->getName(), 'RequestStack')
             || str_contains($class->getName(), 'Mock_')
+            || str_starts_with($class->getName(), Index::class)
         ) {
             return $service;
         }

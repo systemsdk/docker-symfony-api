@@ -11,14 +11,8 @@
     "brick/math": {
         "version": "0.9.2"
     },
-    "doctrine/cache": {
-        "version": "2.0.3"
-    },
     "doctrine/collections": {
         "version": "1.6.7"
-    },
-    "doctrine/common": {
-        "version": "3.1.2"
     },
     "doctrine/data-fixtures": {
         "version": "1.5.0"
@@ -624,12 +618,12 @@
         ]
     },
     "symfony/ux-turbo": {
-        "version": "2.22",
+        "version": "2.27",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "2.20",
-            "ref": "c85ff94da66841d7ff087c19cbcd97a2df744ef9"
+            "ref": "e4b951d7de760751e170c6d2e3b565cf9ed5182f"
         }
     },
     "symfony/validator": {
@@ -659,7 +653,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "7.3",
-            "ref": "5b2b543e13942495c0003f67780cb4448af9e606"
+            "ref": "a363460c1b0b4a4d0242f2ce1a843ca0f6ac9026"
         },
         "files": [
             "config/packages/web_profiler.yaml",

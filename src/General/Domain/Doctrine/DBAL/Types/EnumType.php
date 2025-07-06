@@ -7,7 +7,7 @@ namespace App\General\Domain\Doctrine\DBAL\Types;
 use App\General\Domain\Enum\Interfaces\DatabaseEnumInterface;
 use BackedEnum;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\ConversionException;
+use Doctrine\DBAL\Types\Exception\ValueNotConvertible;
 use Doctrine\DBAL\Types\Type;
 use InvalidArgumentException;
 use Override;
@@ -17,6 +17,7 @@ use function gettype;
 use function implode;
 use function in_array;
 use function is_string;
+use function sprintf;
 
 /**
  * @package App\General
@@ -88,21 +89,10 @@ abstract class EnumType extends Type
             return $enum;
         }
 
-        throw ConversionException::conversionFailedFormat(
+        throw ValueNotConvertible::new(
             gettype($value),
             static::$name,
-            'One of: "' . implode('", "', static::getValues()) . '"',
+            'One of: "' . implode('", "', static::getValues()) . '"'
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @codeCoverageIgnore
-     */
-    #[Override]
-    public function getName(): string
-    {
-        return '';
     }
 }

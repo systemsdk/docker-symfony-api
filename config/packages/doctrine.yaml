@@ -13,8 +13,6 @@ doctrine:
                 # https://symfony.com/doc/current/messenger.html#doctrine-transport
                 schema_filter: '~^(?!messenger_messages)~'
                 url: '%env(resolve:DATABASE_URL)%'
-                mapping_types:
-                    enum: string
                 profiling_collect_backtrace: '%kernel.debug%'
                 use_savepoints: true
         types:

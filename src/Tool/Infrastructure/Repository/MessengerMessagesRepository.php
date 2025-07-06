@@ -27,6 +27,6 @@ class MessengerMessagesRepository implements MessengerMessagesRepositoryInterfac
         $condition = 'DATE_SUB(NOW(), INTERVAL ' . $this->messengerMessagesHistoryDays . ' DAY)';
         $statement = $connection->prepare('DELETE FROM messenger_messages WHERE created_at < ' . $condition);
 
-        return $statement->executeStatement();
+        return (int)$statement->executeStatement();
     }
 }

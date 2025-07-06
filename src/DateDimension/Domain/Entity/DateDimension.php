@@ -26,8 +26,8 @@ use function floor;
 #[ORM\Entity(readOnly: true)]
 #[ORM\Table(name: 'date_dimension')]
 #[ORM\Index(
-    columns: ['date'],
     name: 'date',
+    columns: ['date'],
 )]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class DateDimension implements EntityInterface
