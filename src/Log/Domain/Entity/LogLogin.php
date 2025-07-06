@@ -29,12 +29,12 @@ use function is_array;
 #[ORM\Entity(readOnly: true)]
 #[ORM\Table(name: 'log_login')]
 #[ORM\Index(
-    columns: ['user_id'],
     name: 'user_id',
+    columns: ['user_id'],
 )]
 #[ORM\Index(
-    columns: ['date'],
     name: 'date',
+    columns: ['date'],
 )]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]

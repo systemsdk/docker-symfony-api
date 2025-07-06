@@ -46,8 +46,8 @@ final class Version20231029164236 extends AbstractMigration
 
         $sql = <<<SQL
 ALTER TABLE log_request
-CHANGE headers headers JSON NOT NULL COMMENT '(DC2Type:json)',
-CHANGE parameters parameters JSON NOT NULL COMMENT '(DC2Type:json)'
+CHANGE headers headers JSON NOT NULL,
+CHANGE parameters parameters JSON NOT NULL
 SQL;
 
         $this->addSql($sql);
@@ -68,8 +68,8 @@ SQL;
 
         $sql = <<<SQL
 ALTER TABLE log_request
-CHANGE headers headers LONGTEXT NOT NULL COMMENT '(DC2Type:json)',
-CHANGE parameters parameters LONGTEXT NOT NULL COMMENT '(DC2Type:json)'
+CHANGE headers headers LONGTEXT NOT NULL,
+CHANGE parameters parameters LONGTEXT NOT NULL
 SQL;
 
         $this->addSql($sql);

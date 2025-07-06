@@ -11,6 +11,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Throwable;
 
 /**
  * @package App\Log
@@ -33,7 +34,7 @@ trait LogEntityTrait
     protected DateTimeImmutable $time;
 
     #[ORM\Column(
-        name: '`date`',
+        name: 'date',
         type: Types::DATE_IMMUTABLE,
         nullable: false,
     )]
@@ -123,6 +124,9 @@ trait LogEntityTrait
         $this->agent = $request->headers->get('User-Agent') ?? '';
     }
 
+    /**
+     * @throws Throwable
+     */
     #[ORM\PrePersist]
     private function processTimeAndDate(): void
     {

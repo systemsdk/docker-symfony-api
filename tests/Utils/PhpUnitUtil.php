@@ -12,6 +12,8 @@ use App\Role\Domain\Entity\Role;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\Mapping\AssociationMapping;
+use Doctrine\ORM\Mapping\FieldMapping;
 use Exception;
 use LogicException;
 use Ramsey\Uuid\UuidInterface;
@@ -156,7 +158,7 @@ class PhpUnitUtil
         return $property->getValue($object);
     }
 
-    public static function getType(Type | string | null $type): string
+    public static function getType(Type|string|null $type): string
     {
         $exception = new LogicException(
             sprintf(
@@ -188,7 +190,7 @@ class PhpUnitUtil
      *
      * @throws ReflectionException
      */
-    public static function setProperty(string $property, UuidInterface | array | null $value, object $object): void
+    public static function setProperty(string $property, UuidInterface|array|null $value, object $object): void
     {
         $clazz = new ReflectionClass($object::class);
         $property = $clazz->getProperty($property);
@@ -199,11 +201,11 @@ class PhpUnitUtil
     /**
      * Helper method to get valid value for specified type.
      *
-     * @param array<string, string>|null $meta
+     * @param string|class-string $type
      *
      * @throws Throwable
      */
-    public static function getValidValueForType(string $type, ?array $meta = null): mixed
+    public static function getValidValueForType(string $type, FieldMapping|AssociationMapping|null $meta): mixed
     {
         $cacheKey = $type . serialize($meta);
 
@@ -219,7 +221,7 @@ class PhpUnitUtil
      *
      * @throws Throwable
      */
-    public static function getInvalidValueForType(string $type): DateTime | stdClass | string
+    public static function getInvalidValueForType(string $type): DateTime|stdClass|string
     {
         if ($type !== stdClass::class && substr_count($type, '\\') > 1) {
             $type = self::TYPE_CUSTOM_CLASS;
@@ -247,22 +249,20 @@ class PhpUnitUtil
     }
 
     /**
-     * @param array<string, string>|null $meta
+     * @param string|class-string $type
      *
      * @throws Throwable
      */
     private static function getValidValue(
-        ?array $meta,
+        FieldMapping|AssociationMapping|null $meta,
         string $type
     ): mixed {
-        $meta ??= [];
-
         $class = stdClass::class;
         $params = [null];
 
         if (substr_count($type, '\\') > 1 && !str_contains($type, '|')) {
             /** @var class-string $class */
-            $class = $meta !== [] && array_key_exists('targetEntity', $meta) ? $meta['targetEntity'] : $type;
+            $class = $meta->targetEntity ?? $type;
 
             $type = self::TYPE_CUSTOM_CLASS;
 

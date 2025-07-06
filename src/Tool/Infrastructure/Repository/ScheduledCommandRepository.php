@@ -6,6 +6,7 @@ namespace App\Tool\Infrastructure\Repository;
 
 use App\Tool\Domain\Repository\Interfaces\ScheduledCommandRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\LockMode;
 use Doctrine\Persistence\ManagerRegistry;
 use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand as Entity;
 
@@ -15,7 +16,7 @@ use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand as Entity;
  * @psalm-suppress LessSpecificImplementedReturnType
  * @codingStandardsIgnoreStart
  *
- * @method Entity|null find(mixed $id, ?int $lockMode = null, ?int $lockVersion = null)
+ * @method Entity|null find(mixed $id, LockMode|int|null $lockMode = null, ?int $lockVersion = null)
  * @method Entity|null findOneBy(array $criteria, ?array $orderBy = null)
  * @method Entity[] findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null)
  * @method Entity[] findAll()

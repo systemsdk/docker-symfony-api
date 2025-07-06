@@ -10,7 +10,6 @@ use App\General\Infrastructure\Rest\RepositoryHelper;
 use ArrayIterator;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\AbstractQuery;
-use Doctrine\ORM\Exception\NotSupported;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -32,8 +31,6 @@ trait RepositoryMethodsTrait
     /**
      * Wrapper for default Doctrine repository find method.
      *
-     * @psalm-param LockMode::*|null $lockMode
-     *
      * @throws TransactionRequiredException
      * @throws OptimisticLockException
      * @throws ORMInvalidArgumentException
@@ -41,7 +38,7 @@ trait RepositoryMethodsTrait
      */
     public function find(
         string $id,
-        ?int $lockMode = null,
+        LockMode|int|null $lockMode = null,
         ?int $lockVersion = null,
         ?string $entityManagerName = null
     ): ?EntityInterface {
@@ -62,9 +59,9 @@ trait RepositoryMethodsTrait
      */
     public function findAdvanced(
         string $id,
-        string | int | null $hydrationMode = null,
-        string | null $entityManagerName = null
-    ): null | array | EntityInterface {
+        string|int|null $hydrationMode = null,
+        string|null $entityManagerName = null
+    ): null|array|EntityInterface {
         // Get query builder
         $queryBuilder = $this->getQueryBuilder(entityManagerName: $entityManagerName);
         // Process custom QueryBuilder actions
@@ -93,8 +90,6 @@ trait RepositoryMethodsTrait
 
     /**
      * {@inheritdoc}
-     *
-     * @throws NotSupported
      *
      * @psalm-return list<object|EntityInterface>
      */

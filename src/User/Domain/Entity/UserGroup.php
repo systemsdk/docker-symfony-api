@@ -106,9 +106,6 @@ class UserGroup implements EntityInterface, Stringable
         targetEntity: User::class,
         mappedBy: 'userGroups',
     )]
-    #[ORM\JoinTable(
-        name: 'user_has_user_group',
-    )]
     #[Groups([
         'UserGroup.users',
     ])]
@@ -120,9 +117,6 @@ class UserGroup implements EntityInterface, Stringable
     #[ORM\ManyToMany(
         targetEntity: ApiKey::class,
         mappedBy: 'userGroups',
-    )]
-    #[ORM\JoinTable(
-        name: 'api_key_has_user_group',
     )]
     #[Groups([
         'UserGroup.apiKeys',

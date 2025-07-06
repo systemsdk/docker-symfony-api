@@ -36,8 +36,8 @@ trait UserRelations
      * @var Collection<int, LogRequest>|ArrayCollection<int, LogRequest>
      */
     #[ORM\OneToMany(
-        mappedBy: 'user',
         targetEntity: LogRequest::class,
+        mappedBy: 'user',
     )]
     #[Groups([
         'User.logsRequest',
@@ -48,8 +48,8 @@ trait UserRelations
      * @var Collection<int, LogLogin>|ArrayCollection<int, LogLogin>
      */
     #[ORM\OneToMany(
-        mappedBy: 'user',
         targetEntity: LogLogin::class,
+        mappedBy: 'user',
     )]
     #[Groups([
         'User.logsLogin',
@@ -60,8 +60,8 @@ trait UserRelations
      * @var Collection<int, LogLoginFailure>|ArrayCollection<int, LogLoginFailure>
      */
     #[ORM\OneToMany(
-        mappedBy: 'user',
         targetEntity: LogLoginFailure::class,
+        mappedBy: 'user',
     )]
     #[Groups([
         'User.logsLoginFailure',

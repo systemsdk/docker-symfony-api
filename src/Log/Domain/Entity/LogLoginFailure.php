@@ -23,8 +23,8 @@ use Throwable;
 #[ORM\Entity(readOnly: true)]
 #[ORM\Table(name: 'log_login_failure')]
 #[ORM\Index(
-    columns: ['user_id'],
     name: 'user_id',
+    columns: ['user_id'],
 )]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 class LogLoginFailure implements EntityInterface
