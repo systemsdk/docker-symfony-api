@@ -280,9 +280,6 @@
             "importmap.php"
         ]
     },
-    "symfony/browser-kit": {
-        "version": "v4.4.25"
-    },
     "symfony/cache": {
         "version": "v4.4.25"
     },
@@ -327,9 +324,6 @@
     },
     "symfony/doctrine-messenger": {
         "version": "v5.3.4"
-    },
-    "symfony/dom-crawler": {
-        "version": "v4.4.25"
     },
     "symfony/dotenv": {
         "version": "v4.4.25"
