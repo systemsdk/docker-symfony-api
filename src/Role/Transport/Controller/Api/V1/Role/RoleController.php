@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Role\Transport\Controller\Api\V1\Role;
+
+use App\General\Transport\Rest\Controller;
+use App\General\Transport\Rest\ResponseHandler;
+use App\General\Transport\Rest\Traits\Actions;
+use App\Role\Application\Resource\RoleResource;
+use OpenApi\Attributes as OA;
+use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+/**
+ * @package App\Role
+ *
+ * @method RoleResource getResource()
+ * @method ResponseHandler getResponseHandler()
+ */
+#[AsController]
+#[Route(
+    path: '/v1/role',
+)]
+#[IsGranted(AuthenticatedVoter::IS_AUTHENTICATED_FULLY)]
+#[OA\Tag(name: 'Role Management')]
+class RoleController extends Controller
+{
+    use Actions\Admin\CountAction;
+    use Actions\Admin\FindAction;
+    use Actions\Admin\IdsAction;
+
+    public function __construct(
+        RoleResource $resource,
+    ) {
+        parent::__construct($resource);
+    }
+}

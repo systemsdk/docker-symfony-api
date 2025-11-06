@@ -82,7 +82,7 @@ final class LoadUserData extends Fixture implements OrderedFixtureInterface
      *
      * @throws Throwable
      */
-    private function createUser(ObjectManager $manager, ?string $role = null): bool
+    private function createUser(ObjectManager $manager, ?string $role = null): true
     {
         $suffix = $role === null ? '' : '-' . $this->rolesService->getShort($role);
         // Create new entity

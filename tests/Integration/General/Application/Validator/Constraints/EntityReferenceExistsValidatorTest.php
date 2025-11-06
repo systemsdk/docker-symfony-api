@@ -7,7 +7,7 @@ namespace App\Tests\Integration\General\Application\Validator\Constraints;
 use App\General\Application\Validator\Constraints\EntityReferenceExists;
 use App\General\Application\Validator\Constraints\EntityReferenceExistsValidator;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
-use App\Tests\Integration\General\Application\Validator\Constraints\src\TestEntityReference;
+use App\Tests\Integration\General\Application\Validator\Constraints\Src\TestEntityReference;
 use App\Tool\Application\Validator\Constraints\Language;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;

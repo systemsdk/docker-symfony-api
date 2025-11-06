@@ -14,7 +14,6 @@ doctrine:
                 schema_filter: '~^(?!messenger_messages)~'
                 url: '%env(resolve:DATABASE_URL)%'
                 profiling_collect_backtrace: '%kernel.debug%'
-                use_savepoints: true
         types:
             datetime: App\General\Domain\Doctrine\DBAL\Types\UTCDateTimeType
             datetimetz: App\General\Domain\Doctrine\DBAL\Types\UTCDateTimeType
@@ -23,8 +22,6 @@ doctrine:
             EnumLogLogin: App\General\Domain\Doctrine\DBAL\Types\EnumLogLoginType
 
     orm:
-        auto_generate_proxy_classes: true
-        enable_lazy_ghost_objects: true
         default_entity_manager: default
         controller_resolver:
             auto_mapping: false
@@ -34,7 +31,6 @@ doctrine:
                 #identity_generation_preferences:
                 #    Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
                 auto_mapping: true
-                report_fields_where_declared: true
                 validate_xml_mapping: true
                 connection: default
                 mappings:
@@ -93,8 +89,6 @@ when@prod: &not-dev
         dbal:
             logging: false
         orm:
-            auto_generate_proxy_classes: false
-            proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
             query_cache_driver:
                 type: pool
                 pool: doctrine.system_cache_pool

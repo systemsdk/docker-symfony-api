@@ -1,15 +1,27 @@
 <?xml version="1.0"?>
 <ruleset name="PHPMD rule set for the project"
-         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns="https://phpmd.org/xml/ruleset/1.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
-         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+         xsi:schemaLocation="https://phpmd.org/xml/ruleset/1.0.0 http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd"
+         xsi:noNamespaceSchemaLocation="http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd">
     <description>Custom rules for checking the project</description>
+
+    <rule ref="rulesets/codesize.xml">
+        <exclude name="TooManyPublicMethods"/>
+    </rule>
+    <rule ref="rulesets/codesize.xml/TooManyPublicMethods">
+        <properties>
+            <property name="maxmethods" value="15" />
+        </properties>
+    </rule>
 
     <rule ref="rulesets/cleancode.xml">
         <exclude name="StaticAccess"/>
         <exclude name="ElseExpression"/>
     </rule>
+
+    <rule ref="rulesets/controversial.xml"/>
+
     <rule ref="rulesets/design.xml">
         <exclude name="CouplingBetweenObjects"/>
     </rule>
@@ -18,6 +30,7 @@
             <property name="maximum" value="30" />
         </properties>
     </rule>
+
     <rule ref="rulesets/naming.xml">
         <exclude name="LongClassName"/>
         <exclude name="ShortVariable"/>
@@ -38,5 +51,22 @@
             <property name="maximum" value="30" />
         </properties>
     </rule>
+
+    <rule ref="rulesets/unusedcode.xml">
+        <exclude name="UnusedLocalVariable"/>
+    </rule>
+    <rule ref="rulesets/unusedcode.xml/UnusedLocalVariable">
+        <properties>
+            <property name="allow-unused-foreach-variables" value="true" />
+        </properties>
+    </rule>
+
+    <exclude-pattern>src/ApiKey/Application/Security/Authenticator/ApiKeyAuthenticator.php</exclude-pattern>
+    <exclude-pattern>src/General/Application/Decorator/StopwatchDecorator.php</exclude-pattern>
+    <exclude-pattern>src/General/Domain/Doctrine/DBAL/Types/EnumType.php</exclude-pattern>
+    <exclude-pattern>src/Tool/Transport/MessageHandler/ExternalHandler.php</exclude-pattern>
+    <exclude-pattern>src/Tool/Transport/MessageHandler/TestHandler.php</exclude-pattern>
     <exclude-pattern>tests/TestCase/WebTestCase.php</exclude-pattern>
+    <exclude-pattern>tests/Application/ApiKey/Transport/Controller/Api/v2/ApiKeyPatchControllerTest.php</exclude-pattern>
+    <exclude-pattern>tests/Application/ApiKey/Transport/Controller/Api/v2/ApiKeyUpdateControllerTest.php</exclude-pattern>
 </ruleset>

@@ -56,8 +56,7 @@ abstract class Controller implements ControllerInterface
     #[Override]
     public function getResource(): RestResourceInterface|RestSmallResourceInterface
     {
-        return $this->resource
-               ?? throw new UnexpectedValueException('Resource service not set', Response::HTTP_INTERNAL_SERVER_ERROR);
+        return $this->resource;
     }
 
     /**
