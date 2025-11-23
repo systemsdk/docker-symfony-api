@@ -9,7 +9,7 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
 use PHPUnit\Framework\Attributes\TestDox;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use PHPUnit\Framework\TestCase;
 use Throwable;
 
 use function floor;
@@ -17,7 +17,7 @@ use function floor;
 /**
  * @package App\Tests
  */
-class DateDimensionTest extends KernelTestCase
+class DateDimensionTest extends TestCase
 {
     /**
      * @throws Throwable

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use PHPUnit\Framework\TestCase;
 use Throwable;
 
 /**
  * @package App\Tests\Unit
  */
-class ExampleTest extends KernelTestCase
+class ExampleTest extends TestCase
 {
     /**
      * A basic test example.

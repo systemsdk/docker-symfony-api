@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Integration\General\Application\Validator\Constraints\Src;
+namespace App\Tests\Unit\General\Application\Validator\Constraints\Src;
 
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 use DateTimeImmutable;

@@ -119,6 +119,15 @@ class ApiKeyControllerTest extends WebTestCase
         $responseData = JSON::decode($content, true);
         $this->checkBasicFieldsInResponse($responseData);
         self::assertEquals($requestData['description'], $responseData['description']);
+
+        // let's check db state
+        $resource = static::getContainer()->get(ApiKeyResource::class);
+        $apiKeyCreatedEntity = $resource->findOne((string)$responseData['id']);
+        self::assertInstanceOf(ApiKey::class, $apiKeyCreatedEntity);
+        self::assertCount(1, $apiKeyCreatedEntity->getUserGroups());
+        $apiKeyUserGroup = $apiKeyCreatedEntity->getUserGroups()->first();
+        self::assertInstanceOf(UserGroup::class, $apiKeyUserGroup);
+        self::assertSame($requestData['userGroups'][0], $apiKeyUserGroup->getId());
     }
 
     /**

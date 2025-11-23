@@ -7,13 +7,13 @@ namespace App\Tests\Unit\Tool\Domain\Service\Crypt;
 use App\Tool\Domain\Exception\Crypt\Exception;
 use App\Tool\Domain\Service\Crypt\OpenSslCryptService;
 use PHPUnit\Framework\Attributes\TestDox;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use PHPUnit\Framework\TestCase;
 use Throwable;
 
 /**
  * @package App\Tests
  */
-class OpenSslCryptServiceTest extends KernelTestCase
+class OpenSslCryptServiceTest extends TestCase
 {
     /**
      * @throws Throwable

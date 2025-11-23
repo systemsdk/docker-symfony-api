@@ -8,6 +8,8 @@ This environment uses [PHPUnit](https://phpunit.de/) and includes the following 
 * Integration tests
 * Unit tests
 
+To learn about our practical strategy for applying these tests efficiently in real-world projects, watch our video guide on YouTube: [Robust Testing](https://www.youtube.com/@systemsdk).
+
 Note on naming: In Symfony's terminology, `Application` tests are the same as `Functional` tests. We follow the official Symfony naming convention as described [here](https://symfony.com/doc/current/testing.html#application-tests).
 
 ## 🚀 How to Run Tests
@@ -38,13 +40,13 @@ Once inside the container, you can execute phpunit directly.
 
 * To run a single test class:
 ```bash
-./vendor/bin/phpunit ./tests/Application/Controller/ApiKeyControllerTest.php
+./vendor/bin/phpunit ./tests/Application/ApiKey/Transport/Controller/Api/V1/ApiKeyControllerTest.php
 ```
 
 * To run all tests in a directory:
 
 ```bash
-./vendor/bin/phpunit ./tests/Application/Controller/
+./vendor/bin/phpunit ./tests/Application/ApiKey/Transport/Controller/Api/V2/
 ```
 
 * To run a specific test suite (e.g., Unit, as defined in phpunit.xml.dist):

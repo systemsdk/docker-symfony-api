@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Integration\General\Application\Validator\Constraints;
+namespace App\Tests\Unit\General\Application\Validator\Constraints;
 
 use App\General\Application\Validator\Constraints\EntityReferenceExists;
 use App\General\Application\Validator\Constraints\EntityReferenceExistsValidator;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
-use App\Tests\Integration\General\Application\Validator\Constraints\Src\TestEntityReference;
+use App\Tests\Unit\General\Application\Validator\Constraints\Src\TestEntityReference;
 use App\Tool\Application\Validator\Constraints\Language;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use stdClass;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
@@ -26,7 +26,7 @@ use function sprintf;
 /**
  * @package App\Tests
  */
-class EntityReferenceExistsValidatorTest extends KernelTestCase
+class EntityReferenceExistsValidatorTest extends TestCase
 {
     /**
      * @throws Throwable
@@ -41,7 +41,7 @@ class EntityReferenceExistsValidatorTest extends KernelTestCase
         );
         $constraint = new Language();
 
-        (new EntityReferenceExistsValidator($loggerMock))->validate('', $constraint);
+        new EntityReferenceExistsValidator($loggerMock)->validate('', $constraint);
     }
 
     /**
@@ -60,7 +60,7 @@ class EntityReferenceExistsValidatorTest extends KernelTestCase
         $constraint = new EntityReferenceExists();
         $constraint->entityClass = $entityClass;
 
-        (new EntityReferenceExistsValidator($loggerMock))->validate($value, $constraint);
+        new EntityReferenceExistsValidator($loggerMock)->validate($value, $constraint);
     }
 
     #[TestDox('Test that `validate` method throws an exception if value is `stdClass`.')]
