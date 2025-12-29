@@ -7,6 +7,7 @@ namespace App\ApiKey\Application\Security;
 use App\ApiKey\Application\Security\Interfaces\ApiKeyUserInterface;
 use App\ApiKey\Domain\Entity\ApiKey;
 use App\Role\Domain\Enum\Role;
+use Deprecated;
 use Override;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -77,6 +78,7 @@ class ApiKeyUser implements ApiKeyUserInterface, UserInterface
      * @codeCoverageIgnore
      */
     #[Override]
+    #[Deprecated]
     public function eraseCredentials(): void
     {
     }

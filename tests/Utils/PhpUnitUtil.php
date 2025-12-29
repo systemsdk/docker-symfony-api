@@ -266,7 +266,7 @@ class PhpUnitUtil
 
             $type = self::TYPE_CUSTOM_CLASS;
 
-            if ((new ReflectionClass($class))->isEnum()) {
+            if (new ReflectionClass($class)->isEnum()) {
                 $type = self::TYPE_ENUM;
             } else {
                 /** @var class-string $class */

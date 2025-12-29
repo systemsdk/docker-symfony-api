@@ -7,6 +7,7 @@ namespace App\User\Application\Security;
 use App\General\Domain\Enum\Language;
 use App\General\Domain\Enum\Locale;
 use App\User\Domain\Entity\User;
+use Deprecated;
 use Override;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -80,6 +81,7 @@ class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
      * @codeCoverageIgnore
      */
     #[Override]
+    #[Deprecated]
     public function eraseCredentials(): void
     {
     }

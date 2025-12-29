@@ -85,7 +85,7 @@ class HealthRepository extends BaseRepository implements HealthRepositoryInterfa
     public function cleanup(): int
     {
         // Determine date
-        $date = (new DateTimeImmutable('NOW', new DateTimeZone('UTC')))
+        $date = new DateTimeImmutable('NOW', new DateTimeZone('UTC'))
             ->sub(new DateInterval('P' . $this->databaseHealthHistoryDays . 'D'));
         // Create query builder
         $queryBuilder = $this

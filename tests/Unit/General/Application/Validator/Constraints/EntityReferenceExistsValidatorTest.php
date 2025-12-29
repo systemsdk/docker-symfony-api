@@ -10,6 +10,7 @@ use App\General\Domain\Entity\Interfaces\EntityInterface;
 use App\Tests\Unit\General\Application\Validator\Constraints\Src\TestEntityReference;
 use App\Tool\Application\Validator\Constraints\Language;
 use Generator;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
@@ -32,6 +33,7 @@ class EntityReferenceExistsValidatorTest extends TestCase
      * @throws Throwable
      */
     #[TestDox('Test that `validate` method throws exception if constraint is not `EntityReferenceExists`.')]
+    #[AllowMockObjectsWithoutExpectations]
     public function testThatValidateMethodThrowsUnexpectedTypeException(): void
     {
         $loggerMock = $this->getMockBuilder(LoggerInterface::class)->getMock();
@@ -49,6 +51,7 @@ class EntityReferenceExistsValidatorTest extends TestCase
      */
     #[DataProvider('dataProviderTestThatValidateMethodThrowsUnexpectedValueException')]
     #[TestDox('Test that `validate` method throws `$expectedMessage` with `$value` using entity class `$entityClass`.')]
+    #[AllowMockObjectsWithoutExpectations]
     public function testThatValidateMethodThrowsUnexpectedValueException(
         string|stdClass|array $value,
         string $entityClass,
@@ -64,6 +67,7 @@ class EntityReferenceExistsValidatorTest extends TestCase
     }
 
     #[TestDox('Test that `validate` method throws an exception if value is `stdClass`.')]
+    #[AllowMockObjectsWithoutExpectations]
     public function testThatValidateMethodThrowsUnexpectedValueExceptionWhenValueIsNotEntityInterface(): void
     {
         $loggerMock = $this->getMockBuilder(LoggerInterface::class)->getMock();
@@ -81,6 +85,7 @@ class EntityReferenceExistsValidatorTest extends TestCase
      * @throws Throwable
      */
     #[TestDox("Test that `validate` method doesn't call `Context` nor `Logger` methods with happy path.")]
+    #[AllowMockObjectsWithoutExpectations]
     public function testThatContextAndLoggerMethodsAreNotCalledWithinHappyPath(): void
     {
         $loggerMock = $this->getMockBuilder(LoggerInterface::class)->getMock();
@@ -103,6 +108,7 @@ class EntityReferenceExistsValidatorTest extends TestCase
      * @throws Throwable
      */
     #[TestDox('Test that `validate` method calls expected `Context` and `Logger` service methods with unhappy path.')]
+    #[AllowMockObjectsWithoutExpectations]
     public function testThatContextAndLoggerMethodsAreCalledIfEntityReferenceIsNotValidEntity(): void
     {
         $loggerMock = $this->getMockBuilder(LoggerInterface::class)->getMock();

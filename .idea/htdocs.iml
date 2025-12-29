@@ -44,7 +44,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-common" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/systemsdk/easy-log-bundle" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/lcobucci/clock" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/lcobucci/jwt" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dukecity/command-scheduler-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/sql-formatter" />
@@ -55,7 +54,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/mark-gerarts/auto-mapper-plus" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mark-gerarts/automapper-plus-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofphp/proxy-manager-lts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/lorisleiva/cron-translator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/lexer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/orm" />
@@ -143,7 +141,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/react/promise" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/monolog/monolog" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/laminas/laminas-code" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ezimuel/ringphp" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ezimuel/guzzlestreams" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/egulias/email-validator" />
@@ -162,7 +159,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/log" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/clock" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/composer" />
-      <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/masterminds/html5" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/phar-io/manifest" />
@@ -225,7 +221,6 @@
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/http-kernel" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/polyfill-intl-grapheme" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/polyfill-intl-normalizer" />
-      <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/polyfill-php83" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/routing" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/service-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/string" />
@@ -248,6 +243,10 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/ux-turbo" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php84" />
       <excludeFolder url="file://$MODULE_DIR$/tools/10_phpcpd" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/symfony/polyfill-php85" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php85" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofphp/proxy-manager-lts" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/laminas/laminas-code" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

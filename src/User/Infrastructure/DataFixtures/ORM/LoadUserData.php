@@ -86,7 +86,7 @@ final class LoadUserData extends Fixture implements OrderedFixtureInterface
     {
         $suffix = $role === null ? '' : '-' . $this->rolesService->getShort($role);
         // Create new entity
-        $entity = (new User())
+        $entity = new User()
             ->setUsername('john' . $suffix)
             ->setFirstName('John')
             ->setLastName('Doe')

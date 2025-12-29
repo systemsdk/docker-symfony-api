@@ -104,6 +104,11 @@ return [
                 '&' => 'align',
             ],
         ],
+        PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\EvalSniff::class => [
+            'exclude' => [
+                'src/General/Application/Decorator/StopwatchDecorator.php',
+            ],
+        ],
         SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff::class => [
             'exclude' => [
                 'src/General/Transport/ValueResolver/LoggedInUserValueResolver.php',

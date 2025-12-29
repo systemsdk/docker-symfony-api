@@ -95,7 +95,7 @@ class JWTCreatedSubscriber implements EventSubscriberInterface
     private function setExpiration(array &$payload): void
     {
         // Set new exp value for JWT
-        $payload['exp'] = (new DateTime('+1 day', new DateTimeZone('UTC')))->getTimestamp();
+        $payload['exp'] = new DateTime('+1 day', new DateTimeZone('UTC'))->getTimestamp();
     }
 
     /**

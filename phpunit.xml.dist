@@ -37,6 +37,10 @@
             <directory>./src/User/Infrastructure/DataFixtures</directory>
             <file>./src/Kernel.php</file>
         </exclude>
+        <deprecationTrigger>
+            <method>Doctrine\Deprecations\Deprecation::trigger</method>
+            <method>Doctrine\Deprecations\Deprecation::delegateTriggerToBackend</method>
+        </deprecationTrigger>
     </source>
     <php>
         <ini name="error_reporting" value="-1" />

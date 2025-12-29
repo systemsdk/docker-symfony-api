@@ -92,7 +92,7 @@ class RestDtoValueResolver implements ValueResolverInterface
             return [];
         }
 
-        if ($this->controllerName === null) {
+        if ($this->controllerName === null || $this->actionName === null) {
             return [];
         }
 

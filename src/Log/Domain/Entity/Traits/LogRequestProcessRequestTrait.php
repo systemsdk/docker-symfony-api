@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JsonException;
 use LogicException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 use function array_key_exists;
 use function array_map;

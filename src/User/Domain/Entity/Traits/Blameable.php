@@ -7,7 +7,7 @@ namespace App\User\Domain\Entity\Traits;
 use App\User\Domain\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 /**
  * @package App\User

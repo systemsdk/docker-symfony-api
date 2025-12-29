@@ -10,7 +10,6 @@ use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 
-use function array_key_exists;
 use function array_map;
 
 /**
@@ -34,17 +33,13 @@ class HelperConfigure
      */
     private static function getParameterIterator(): Closure
     {
-        return static function (array $input): InputOption {
-            /** @var int-mask-of<InputOption::*>|null $mode */
-            $mode = $input['mode'] ?? null;
-
-            return new InputOption(
-                (string)$input['name'],
-                array_key_exists('shortcut', $input) ? (string)$input['shortcut'] : null,
-                array_key_exists('mode', $input) ? $mode : InputOption::VALUE_OPTIONAL,
-                array_key_exists('description', $input) ? (string)$input['description'] : '',
-                array_key_exists('default', $input) ? (string)$input['default'] : null,
-            );
-        };
+        return static fn (array $input): InputOption => new InputOption(
+            $input['name'],
+            $input['shortcut'] ?? null,
+            $input['mode'] ?? InputOption::VALUE_OPTIONAL,
+            $input['description'] ?? '',
+            $input['default'] ?? null,
+            $input['suggestedValues'] ?? [],
+        );
     }
 }

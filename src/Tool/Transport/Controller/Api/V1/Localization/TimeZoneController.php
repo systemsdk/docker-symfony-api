@@ -66,7 +66,7 @@ class TimeZoneController
                             ),
                             new OA\Property(
                                 property: 'value',
-                                description: 'User friendly value of identifier value eg. `_` replaced by space.',
+                                description: 'User friendly identifier value (underscores replaced with spaces).',
                                 type: 'string',
                                 example: 'Europe/Kyiv',
                             ),

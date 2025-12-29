@@ -29,7 +29,7 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 if (file_exists(dirname(__DIR__) . '/config/bootstrap.php')) {
     require dirname(__DIR__) . '/config/bootstrap.php';
 } elseif (method_exists(Dotenv::class, 'bootEnv')) {
-    (new Dotenv())->bootEnv(dirname(__DIR__) . '/.env');
+    new Dotenv()->bootEnv(dirname(__DIR__) . '/.env');
 }
 
 $databaseCacheFile = sprintf(
@@ -112,7 +112,7 @@ $createJwtAuthCache = static function (): void {
 // Create database cache file
 $createDatabaseCreateCache = static function () use ($databaseCacheFile): void {
     // Create database cache file
-    file_put_contents($databaseCacheFile, '{"init": ' . (new DateTime())->format(DATE_RFC3339) . '}');
+    file_put_contents($databaseCacheFile, '{"init": ' . new DateTime()->format(DATE_RFC3339) . '}');
 };
 
 // And finally call each of initialize functions to make test environment ready
