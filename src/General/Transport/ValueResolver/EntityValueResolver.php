@@ -84,8 +84,9 @@ class EntityValueResolver implements ValueResolverInterface
             return [];
         }
 
-        yield $this->resourceCollection /** @phpstan-ignore-line */
+        yield $this->resourceCollection
             ->getEntityResource((string)$argument->getType(), RestFindOneResourceInterface::class)
+            /** @phpstan-ignore-next-line */
             ->findOne((string)($this->getUuid($argument, $request)), !$argument->isNullable());
     }
 
