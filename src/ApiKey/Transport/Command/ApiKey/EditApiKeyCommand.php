@@ -22,7 +22,7 @@ use Throwable;
  * @package App\ApiKey
  */
 #[AsCommand(
-    name: self::NAME,
+    name: EditApiKeyCommand::NAME,
     description: 'Command to edit existing API key',
 )]
 class EditApiKeyCommand extends Command

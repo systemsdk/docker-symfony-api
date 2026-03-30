@@ -22,7 +22,7 @@ use Throwable;
  * @package App\Role
  */
 #[AsCommand(
-    name: self::NAME,
+    name: CreateRolesWithUserGroupsCommand::NAME,
     description: 'Console command to create roles with user groups to database',
 )]
 class CreateRolesWithUserGroupsCommand extends Command

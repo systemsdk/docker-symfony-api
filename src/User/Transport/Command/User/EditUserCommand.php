@@ -22,7 +22,7 @@ use Throwable;
  * @package App\User
  */
 #[AsCommand(
-    name: self::NAME,
+    name: EditUserCommand::NAME,
     description: 'Command to edit existing user',
 )]
 class EditUserCommand extends Command

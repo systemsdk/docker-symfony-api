@@ -18,7 +18,7 @@ use Throwable;
  * @package App\Tool
  */
 #[AsCommand(
-    name: self::NAME,
+    name: CleanupMessengerMessagesScheduledCommand::NAME,
     description: 'Command to create a cron job for cleanup messenger_messages table by schedule.',
 )]
 class CleanupMessengerMessagesScheduledCommand extends Command

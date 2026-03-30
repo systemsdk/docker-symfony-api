@@ -17,7 +17,7 @@ use Throwable;
  * @package App\Tool
  */
 #[AsCommand(
-    name: self::NAME,
+    name: CreateOrUpdateTemplateCommand::NAME,
     description: 'Command to create/update index template in Elastic.',
 )]
 class CreateOrUpdateTemplateCommand extends Command

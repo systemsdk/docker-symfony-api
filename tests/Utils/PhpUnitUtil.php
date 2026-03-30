@@ -32,7 +32,10 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Throwable;
 
 use function array_key_exists;
+use function current;
 use function explode;
+use function ltrim;
+use function serialize;
 use function sprintf;
 use function str_contains;
 use function substr_count;
@@ -135,11 +138,7 @@ class PhpUnitUtil
     public static function getMethod(object $object, string $name): ReflectionMethod
     {
         // Get reflection and make specified method accessible
-        $class = new ReflectionClass($object);
-        $method = $class->getMethod($name);
-        $method->setAccessible(true);
-
-        return $method;
+        return new ReflectionClass($object)->getMethod($name);
     }
 
     /**
@@ -153,7 +152,6 @@ class PhpUnitUtil
     {
         $clazz = new ReflectionClass($object::class);
         $property = $clazz->getProperty($property);
-        $property->setAccessible(true);
 
         return $property->getValue($object);
     }
@@ -194,7 +192,6 @@ class PhpUnitUtil
     {
         $clazz = new ReflectionClass($object::class);
         $property = $clazz->getProperty($property);
-        $property->setAccessible(true);
         $property->setValue($object, $value);
     }
 

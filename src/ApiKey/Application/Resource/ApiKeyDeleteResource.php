@@ -13,14 +13,13 @@ use App\General\Application\Rest\Traits\Methods\ResourceDeleteMethod;
 /**
  * @package App\ApiKey
  *
- * @psalm-suppress LessSpecificImplementedReturnType
- * @codingStandardsIgnoreStart
+ * phpcs:disable
  *
  * @method Entity getReference(string $id, ?string $entityManagerName = null)
  * @method \App\ApiKey\Infrastructure\Repository\ApiKeyRepository getRepository()
  * @method Entity delete(string $id, ?bool $flush = null, ?string $entityManagerName = null)
  *
- * @codingStandardsIgnoreEnd
+ * phpcs:enable
  */
 class ApiKeyDeleteResource extends RestSmallResource implements ApiKeyDeleteResourceInterface
 {

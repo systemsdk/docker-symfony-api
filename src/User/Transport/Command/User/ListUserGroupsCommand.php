@@ -25,7 +25,7 @@ use function sprintf;
  * @package App\User
  */
 #[AsCommand(
-    name: self::NAME,
+    name: ListUserGroupsCommand::NAME,
     description: 'Console command to list user groups',
 )]
 class ListUserGroupsCommand extends Command

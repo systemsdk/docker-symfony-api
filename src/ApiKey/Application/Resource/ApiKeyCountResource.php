@@ -13,13 +13,12 @@ use App\General\Application\Rest\Traits\Methods\ResourceCountMethod;
 /**
  * @package App\ApiKey
  *
- * @psalm-suppress LessSpecificImplementedReturnType
- * @codingStandardsIgnoreStart
+ * phpcs:disable
  *
  * @method Entity getReference(string $id, ?string $entityManagerName = null)
  * @method \App\ApiKey\Infrastructure\Repository\ApiKeyRepository getRepository()
  *
- * @codingStandardsIgnoreEnd
+ * phpcs:enable
  */
 class ApiKeyCountResource extends RestSmallResource implements ApiKeyCountResourceInterface
 {

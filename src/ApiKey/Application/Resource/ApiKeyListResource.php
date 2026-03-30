@@ -13,14 +13,13 @@ use App\General\Application\Rest\Traits\Methods\ResourceFindMethod;
 /**
  * @package App\ApiKey
  *
- * @psalm-suppress LessSpecificImplementedReturnType
- * @codingStandardsIgnoreStart
+ * phpcs:disable
  *
  * @method Entity getReference(string $id, ?string $entityManagerName = null)
  * @method \App\ApiKey\Infrastructure\Repository\ApiKeyRepository getRepository()
  * @method Entity[] find(?array $criteria = null, ?array $orderBy = null, ?int $limit = null, ?int $offset = null, ?array $search = null, ?string $entityManagerName = null)
  *
- * @codingStandardsIgnoreEnd
+ * phpcs:enable
  */
 class ApiKeyListResource extends RestSmallResource implements ApiKeyListResourceInterface
 {

@@ -18,7 +18,7 @@ use Throwable;
  * @package App\Log
  */
 #[AsCommand(
-    name: self::NAME,
+    name: CleanupLogsScheduledCommand::NAME,
     description: 'Command to run a cron job for cleanup logs by schedule.',
 )]
 class CleanupLogsScheduledCommand extends Command

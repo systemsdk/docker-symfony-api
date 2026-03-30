@@ -19,7 +19,7 @@ use function sprintf;
  * @package App\Tool
  */
 #[AsCommand(
-    name: self::NAME,
+    name: CleanupMessengerMessagesCommand::NAME,
     description: 'Command to cleanup messenger_messages table.',
 )]
 class CleanupMessengerMessagesCommand extends Command

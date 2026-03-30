@@ -20,7 +20,7 @@ use function sprintf;
  * @package App\Role
  */
 #[AsCommand(
-    name: self::NAME,
+    name: CreateRolesCommand::NAME,
     description: 'Console command to create roles to database',
 )]
 class CreateRolesCommand extends Command

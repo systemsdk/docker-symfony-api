@@ -590,12 +590,12 @@
         "version": "v4.4.25"
     },
     "symfony/twig-bundle": {
-        "version": "6.4",
+        "version": "7.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "6.4",
-            "ref": "cab5fd2a13a45c266d45a7d9337e28dee6272877"
+            "ref": "f250159ebe99153d0c640a3e7742876fc7453f2c"
         },
         "files": [
             "config/packages/twig.yaml",
@@ -652,16 +652,15 @@
         "version": "v4.4.25"
     },
     "systemsdk/easy-log-bundle": {
-        "version": "1.10",
+        "version": "2.1",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.10",
-            "ref": "7543c149e6af01d8e3d702d579631699712ac221"
+            "branch": "main",
+            "version": "2.1",
+            "ref": "ca2356442e0ef60e0b15d56e7bb77562d72a608f"
         },
         "files": [
-            "config/packages/dev/systemsdk_easy_log.yaml",
-            "config/packages/test/systemsdk_easy_log.yaml"
+            "config/packages/systemsdk_easy_log.yaml"
         ]
     },
     "twig/extra-bundle": {

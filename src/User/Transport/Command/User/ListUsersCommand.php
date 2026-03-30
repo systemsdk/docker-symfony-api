@@ -26,7 +26,7 @@ use function sprintf;
  * @package App\User
  */
 #[AsCommand(
-    name: self::NAME,
+    name: ListUsersCommand::NAME,
     description: 'Console command to list users',
 )]
 class ListUsersCommand extends Command

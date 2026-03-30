@@ -14,15 +14,14 @@ use App\General\Application\Rest\Traits\Methods\ResourceFindOneMethod;
 /**
  * @package App\ApiKey
  *
- * @psalm-suppress LessSpecificImplementedReturnType
- * @codingStandardsIgnoreStart
+ * phpcs:disable
  *
  * @method Entity getReference(string $id, ?string $entityManagerName = null)
  * @method \App\ApiKey\Infrastructure\Repository\ApiKeyRepository getRepository()
  * @method Entity|null findOne(string $id, ?bool $throwExceptionIfNotFound = null, ?string $entityManagerName = null)
  * @method Entity|null findOneBy(array $criteria, ?array $orderBy = null, ?bool $throwExceptionIfNotFound = null, ?string $entityManagerName = null)
  *
- * @codingStandardsIgnoreEnd
+ * phpcs:enable
  */
 class ApiKeyFindOneResource extends RestSmallResource implements ApiKeyFindOneResourceInterface
 {

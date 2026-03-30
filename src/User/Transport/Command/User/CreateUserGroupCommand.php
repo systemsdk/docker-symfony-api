@@ -27,7 +27,7 @@ use Throwable;
  * @package App\User
  */
 #[AsCommand(
-    name: self::NAME,
+    name: CreateUserGroupCommand::NAME,
     description: 'Console command to create user groups',
 )]
 class CreateUserGroupCommand extends Command

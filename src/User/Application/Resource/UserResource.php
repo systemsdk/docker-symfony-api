@@ -20,8 +20,7 @@ use function in_array;
 /**
  * @package App\User
  *
- * @psalm-suppress LessSpecificImplementedReturnType
- * @codingStandardsIgnoreStart
+ * phpcs:disable
  *
  * @method Entity getReference(string $id, ?string $entityManagerName = null)
  * @method \App\User\Infrastructure\Repository\UserRepository getRepository()
@@ -34,7 +33,7 @@ use function in_array;
  * @method Entity delete(string $id, ?bool $flush = null, ?string $entityManagerName = null)
  * @method Entity save(EntityInterface $entity, ?bool $flush = null, ?bool $skipValidation = null, ?string $entityManagerName = null)
  *
- * @codingStandardsIgnoreEnd
+ * phpcs:enable
  */
 class UserResource extends RestResource
 {

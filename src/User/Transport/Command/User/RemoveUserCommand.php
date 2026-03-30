@@ -19,7 +19,7 @@ use Throwable;
  * @package App\User
  */
 #[AsCommand(
-    name: self::NAME,
+    name: RemoveUserCommand::NAME,
     description: 'Console command to remove existing user',
 )]
 class RemoveUserCommand extends Command

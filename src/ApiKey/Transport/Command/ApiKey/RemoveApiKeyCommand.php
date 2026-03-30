@@ -19,7 +19,7 @@ use Throwable;
  * @package App\ApiKey
  */
 #[AsCommand(
-    name: self::NAME,
+    name: RemoveApiKeyCommand::NAME,
     description: 'Console command to remove existing API key',
 )]
 class RemoveApiKeyCommand extends Command

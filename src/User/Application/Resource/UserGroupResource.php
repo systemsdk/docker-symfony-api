@@ -13,8 +13,7 @@ use App\User\Domain\Repository\Interfaces\UserGroupRepositoryInterface as Reposi
 /**
  * @package App\User
  *
- * @psalm-suppress LessSpecificImplementedReturnType
- * @codingStandardsIgnoreStart
+ * phpcs:disable
  *
  * @method Entity getReference(string $id, ?string $entityManagerName = null)
  * @method \App\User\Infrastructure\Repository\UserGroupRepository getRepository()
@@ -27,7 +26,7 @@ use App\User\Domain\Repository\Interfaces\UserGroupRepositoryInterface as Reposi
  * @method Entity delete(string $id, ?bool $flush = null, ?string $entityManagerName = null)
  * @method Entity save(EntityInterface $entity, ?bool $flush = null, ?bool $skipValidation = null, ?string $entityManagerName = null)
  *
- * @codingStandardsIgnoreEnd
+ * phpcs:enable
  */
 class UserGroupResource extends RestResource
 {

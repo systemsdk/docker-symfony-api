@@ -13,8 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @package App\Log
  *
- * @psalm-suppress LessSpecificImplementedReturnType
- * @codingStandardsIgnoreStart
+ * phpcs:disable
  *
  * @method Entity|null find(string $id, LockMode|int|null $lockMode = null, ?int $lockVersion = null, ?string $entityManagerName = null)
  * @method Entity|null findAdvanced(string $id, string|int|null $hydrationMode = null, string|null $entityManagerName = null)
@@ -23,7 +22,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Entity[] findByAdvanced(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null, ?array $search = null, ?string $entityManagerName = null)
  * @method Entity[] findAll(?string $entityManagerName = null)
  *
- * @codingStandardsIgnoreEnd
+ * phpcs:enable
  */
 class LogLoginRepository extends BaseRepository implements LogLoginRepositoryInterface
 {

@@ -13,8 +13,7 @@ use App\Log\Domain\Repository\Interfaces\LogRequestRepositoryInterface as Reposi
 /**
  * @package App\Log
  *
- * @psalm-suppress LessSpecificImplementedReturnType
- * @codingStandardsIgnoreStart
+ * phpcs:disable
  *
  * @method Entity getReference(string $id, ?string $entityManagerName = null)
  * @method \App\Log\Infrastructure\Repository\LogRequestRepository getRepository()
@@ -27,7 +26,7 @@ use App\Log\Domain\Repository\Interfaces\LogRequestRepositoryInterface as Reposi
  * @method Entity delete(string $id, ?bool $flush = null, ?string $entityManagerName = null)
  * @method Entity save(EntityInterface $entity, ?bool $flush = null, ?bool $skipValidation = null, ?string $entityManagerName = null)
  *
- * @codingStandardsIgnoreEnd
+ * phpcs:enable
  */
 class LogRequestResource extends RestResource
 {

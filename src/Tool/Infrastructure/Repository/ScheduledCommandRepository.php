@@ -13,15 +13,14 @@ use Dukecity\CommandSchedulerBundle\Entity\ScheduledCommand as Entity;
 /**
  * @package App\Tool
  *
- * @psalm-suppress LessSpecificImplementedReturnType
- * @codingStandardsIgnoreStart
+ * phpcs:disable
  *
  * @method Entity|null find(mixed $id, LockMode|int|null $lockMode = null, ?int $lockVersion = null)
  * @method Entity|null findOneBy(array $criteria, ?array $orderBy = null)
  * @method Entity[] findBy(array $criteria, ?array $orderBy = null, ?int $limit = null, ?int $offset = null)
  * @method Entity[] findAll()
  *
- * @codingStandardsIgnoreEnd
+ * phpcs:enable
  */
 class ScheduledCommandRepository extends ServiceEntityRepository implements ScheduledCommandRepositoryInterface
 {

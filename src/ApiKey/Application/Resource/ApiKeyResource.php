@@ -13,8 +13,7 @@ use App\General\Domain\Entity\Interfaces\EntityInterface;
 /**
  * @package App\ApiKey
  *
- * @psalm-suppress LessSpecificImplementedReturnType
- * @codingStandardsIgnoreStart
+ * phpcs:disable
  *
  * @method Entity getReference(string $id, ?string $entityManagerName = null)
  * @method \App\ApiKey\Infrastructure\Repository\ApiKeyRepository getRepository()
@@ -27,7 +26,7 @@ use App\General\Domain\Entity\Interfaces\EntityInterface;
  * @method Entity delete(string $id, ?bool $flush = null, ?string $entityManagerName = null)
  * @method Entity save(EntityInterface $entity, ?bool $flush = null, ?bool $skipValidation = null, ?string $entityManagerName = null)
  *
- * @codingStandardsIgnoreEnd
+ * phpcs:enable
  */
 class ApiKeyResource extends RestResource
 {

@@ -19,7 +19,7 @@ use Throwable;
  * @package App\ApiKey
  */
 #[AsCommand(
-    name: self::NAME,
+    name: ChangeTokenCommand::NAME,
     description: 'Command to change token for existing API key',
 )]
 class ChangeTokenCommand extends Command

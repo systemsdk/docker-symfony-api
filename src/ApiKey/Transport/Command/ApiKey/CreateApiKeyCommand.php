@@ -28,7 +28,7 @@ use Throwable;
  * @package App\ApiKey
  */
 #[AsCommand(
-    name: self::NAME,
+    name: CreateApiKeyCommand::NAME,
     description: 'Command to create new API key',
 )]
 class CreateApiKeyCommand extends Command

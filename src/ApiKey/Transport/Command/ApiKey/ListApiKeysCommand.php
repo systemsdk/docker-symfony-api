@@ -26,7 +26,7 @@ use function sprintf;
  * @package App\ApiKey
  */
 #[AsCommand(
-    name: self::NAME,
+    name: ListApiKeysCommand::NAME,
     description: 'Console command to list API keys',
 )]
 class ListApiKeysCommand extends Command

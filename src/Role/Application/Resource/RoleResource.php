@@ -13,8 +13,7 @@ use App\Role\Domain\Repository\Interfaces\RoleRepositoryInterface as Repository;
 /**
  * @package App\Role
  *
- * @psalm-suppress LessSpecificImplementedReturnType
- * @codingStandardsIgnoreStart
+ * phpcs:disable
  *
  * @method Entity getReference(string $id, ?string $entityManagerName = null)
  * @method \App\Role\Infrastructure\Repository\RoleRepository getRepository()
@@ -27,7 +26,7 @@ use App\Role\Domain\Repository\Interfaces\RoleRepositoryInterface as Repository;
  * @method Entity delete(string $id, ?bool $flush = null, ?string $entityManagerName = null)
  * @method Entity save(EntityInterface $entity, ?bool $flush = null, ?bool $skipValidation = null, ?string $entityManagerName = null)
  *
- * @codingStandardsIgnoreEnd
+ * phpcs:enable
  */
 class RoleResource extends RestResource
 {

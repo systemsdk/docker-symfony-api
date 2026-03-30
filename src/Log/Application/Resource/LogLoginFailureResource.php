@@ -15,8 +15,7 @@ use Throwable;
 /**
  * @package App\Log
  *
- * @psalm-suppress LessSpecificImplementedReturnType
- * @codingStandardsIgnoreStart
+ * phpcs:disable
  *
  * @method Entity getReference(string $id, ?string $entityManagerName = null)
  * @method \App\Log\Infrastructure\Repository\LogLoginFailureRepository getRepository()
@@ -29,7 +28,7 @@ use Throwable;
  * @method Entity delete(string $id, ?bool $flush = null, ?string $entityManagerName = null)
  * @method Entity save(EntityInterface $entity, ?bool $flush = null, ?bool $skipValidation = null, ?string $entityManagerName = null)
  *
- * @codingStandardsIgnoreEnd
+ * phpcs:enable
  */
 class LogLoginFailureResource extends RestResource
 {

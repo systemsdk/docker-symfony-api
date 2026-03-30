@@ -17,7 +17,7 @@ use Throwable;
  * @package App\Log
  */
 #[AsCommand(
-    name: self::NAME,
+    name: CleanupLogsCommand::NAME,
     description: 'Command to cleanup logs(log_login, log_request) in the database.',
 )]
 class CleanupLogsCommand extends Command

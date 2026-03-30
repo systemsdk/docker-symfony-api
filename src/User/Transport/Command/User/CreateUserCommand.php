@@ -27,7 +27,7 @@ use Throwable;
  * @package App\User
  */
 #[AsCommand(
-    name: self::NAME,
+    name: CreateUserCommand::NAME,
     description: 'Console command to create user to database',
 )]
 class CreateUserCommand extends Command
