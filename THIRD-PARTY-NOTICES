@@ -1,0 +1,44 @@
+# Third-Party Software Notices and Acknowledgments
+
+This open-source project is built upon and incorporates excellent software created by the global developer community. We gratefully acknowledge the contributions of the following authors and projects.
+
+## 1. Symfony Framework and Ecosystem
+
+This application is powered by the Symfony Framework and a robust ecosystem of PHP packages managed via Composer.
+
+We extend our deep appreciation to Fabien Potencier, the Symfony Core Team, and the thousands of contributors who maintain the framework and its components.
+
+These third-party dependencies are installed dynamically into the `vendor/` directory. Each individual package retains its original open-source license (predominantly MIT), and the full text of these licenses can be found within the respective package directories.
+
+---
+
+## 2. Derived and Modified Works
+
+Portions of the underlying codebase in the `src/` directory were originally derived from the `tarlepp/symfony-flex-backend` project. We thank Tarmo Leppänen and contributors for providing a solid foundation. The license text for this work is provided in Appendix A.
+
+---
+
+### Appendix A: Full License Texts
+
+#### Original Base Component: tarlepp/symfony-flex-backend (MIT License)
+
+Copyright (c) 2020-2026 Dmitry Kravtsov (for the new base logic, modifications, DDD architecture)
+Copyright (c) 2020 Tarmo Leppänen (for the base logic)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

@@ -1,5 +1,5 @@
-# PHP symfony environment with JSON REST API example
-Docker environment (based on official php and mysql docker hub repositories) required to run Symfony with JSON REST API example.
+# PHP Symfony environment with a JSON REST API example
+Docker environment (based on official PHP and MySQL Docker Hub repositories) required to run Symfony with a JSON REST API example.
 
 [![Actions Status](https://github.com/systemsdk/docker-symfony-api/workflows/Symfony%20Rest%20API/badge.svg)](https://github.com/systemsdk/docker-symfony-api/actions)
 [![CircleCI](https://circleci.com/gh/systemsdk/docker-symfony-api.svg?style=svg)](https://circleci.com/gh/systemsdk/docker-symfony-api)
@@ -8,6 +8,9 @@ Docker environment (based on official php and mysql docker hub repositories) req
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 [Source code](https://github.com/systemsdk/docker-symfony-api.git)
+
+
+> This repository provides a basic (lite) DDD foundation and the standard core logic. If you are looking for a cleaner, pragmatic DDD architecture, a superior environment with robust core logic, and flawless documentation, we highly recommend our commercial product [Enterprise API](https://www.systemsdk.com/em_case_study/enterprise-api/).
 
 ## Requirements
 * Docker Engine version 23.0 or later
@@ -334,9 +337,6 @@ Notes: Please see more commands in Makefile
 * [elasticsearch](https://github.com/elastic/elasticsearch-php)
 * [rector](https://packagist.org/packages/rector/rector)
 
-## External links / resources
-* [Symfony Flex REST API](https://github.com/tarlepp/symfony-flex-backend.git): code in "src/" folder forked from Symfony Flex REST API.
-
 ## Guidelines
 * [Commands](docs/commands.md)
 * [Api Key](docs/api-key.md)
@@ -349,16 +349,17 @@ Notes: Please see more commands in Makefile
 * [Redis GUI](docs/rdm.md)
 * [Messenger component](docs/messenger.md)
 
-## Working on your project
-1. For new feature development, fork `develop` branch into a new branch with one of the two patterns:
+## Development Workflow
+1. **Branching:** Create a new branch from `develop` using one of the following patterns:
     * `feature/{ticketNo}`
-2. Commit often, and write descriptive commit messages, so it's easier to follow steps taken when reviewing.
-3. Push this branch to the repo and create pull request into `develop` to get feedback, with the format `feature/{ticketNo}` - "Short descriptive title of Jira task".
-4. Iterate as needed.
-5. Make sure that "All checks have passed" on CircleCI(or another one in case you are not using CircleCI) and status is green.
-6. When PR is approved, it will be squashed & merged, into `develop` and later merged into `release/{No}` for deployment.
+    * `bugfix/{ticketNo}`
+2. **Commits:** Commit frequently and write clear, descriptive commit messages to facilitate the review process.
+3. **Pull Request:** Push your branch to the repository and open a Pull Request (PR) against the `develop` branch. Use the following naming convention for your PR: `feature/{ticketNo} - Short descriptive title of the Jira task`.
+4. **Review:** Address any feedback from reviewers and iterate as needed.
+5. **CI/CD Checks:** Ensure that all continuous integration checks (e.g., CircleCI) pass successfully and the build status is green.
+6. **Merge:** Once approved, your PR will be squashed and merged into `develop`. It will later be merged into a `release/{version}` branch for deployment.
 
-Note: You can find git flow detail example [here](https://danielkummer.github.io/git-flow-cheatsheet).
+Note: For a detailed visual guide on this branching model, please refer to the [Git Flow Cheatsheet](https://danielkummer.github.io/git-flow-cheatsheet).
 
 ## License
 [The MIT License (MIT)](LICENSE)
