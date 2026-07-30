@@ -5,6 +5,7 @@ services:
         build:
             context: ./docker/
             args:
+                NGINX_VERSION: ${NGINX_VERSION}
                 BUILD_ARGUMENT_ENV: staging
             dockerfile: ./nginx/Dockerfile
         container_name: ${COMPOSE_PROJECT_NAME}-nginx
@@ -63,6 +64,9 @@ services:
         image: ${COMPOSE_PROJECT_NAME}-rabbitmq
         build:
             context: ./docker/rabbitmq/
+            args:
+                RABBITMQ_VERSION: ${RABBITMQ_VERSION}
+                RABBITMQ_DELAYED_MESSAGE_EXCHANGE_VERSION: ${RABBITMQ_DELAYED_MESSAGE_EXCHANGE_VERSION}
             dockerfile: ./Dockerfile
         container_name: ${COMPOSE_PROJECT_NAME}-rabbitmq
         hostname: rabbitmq
@@ -124,9 +128,11 @@ services:
 
     redis:
         image: ${COMPOSE_PROJECT_NAME}-redis
-        container_name: ${COMPOSE_PROJECT_NAME}-redis
         build:
             context: ./docker/redis
+            args:
+                REDIS_VERSION: ${REDIS_VERSION}
+        container_name: ${COMPOSE_PROJECT_NAME}-redis
         restart: always
         volumes:
             - ./var/redis:/data:delegated

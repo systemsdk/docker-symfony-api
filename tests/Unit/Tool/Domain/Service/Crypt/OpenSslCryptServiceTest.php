@@ -24,7 +24,7 @@ class OpenSslCryptServiceTest extends TestCase
         $openSslCryptService = new OpenSslCryptService('Mickey Mouse', 'some key');
 
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage(OpenSslCryptService::ERROR_WRONG_ALGORITHM);
+        $this->expectExceptionMessageIsOrContains(OpenSslCryptService::ERROR_WRONG_ALGORITHM);
         $openSslCryptService->encrypt('text for encrypt');
     }
 
@@ -37,7 +37,7 @@ class OpenSslCryptServiceTest extends TestCase
         $openSslCryptService = new OpenSslCryptService('aes-128-gcm', 'some key');
 
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage(OpenSslCryptService::ERROR_MISSING_DATA_FOR_DECRYPT);
+        $this->expectExceptionMessageIsOrContains(OpenSslCryptService::ERROR_MISSING_DATA_FOR_DECRYPT);
         $openSslCryptService->decrypt([
             'data' => '',
             'params' => [

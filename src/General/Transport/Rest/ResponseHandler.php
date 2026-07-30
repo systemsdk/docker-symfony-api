@@ -137,8 +137,6 @@ class ResponseHandler implements ResponseHandlerInterface
 
         /**
          * @var FormError $error
-         *
-         * @phpstan-ignore-next-line
          */
         foreach ($form->getErrors(true) as $error) {
             $name = $error->getOrigin()?->getName() ?? '';

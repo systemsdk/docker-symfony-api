@@ -1,90 +1,141 @@
-# Messenger
-This document describing how you can use [symfony/messenger](https://symfony.com/doc/current/messenger.html) bundle.
+# Symfony Messenger & Asynchronous Processing
+This document outlines the architectural guidelines and operational procedures for asynchronous task execution using the [Symfony Messenger](https://symfony.com/doc/current/messenger.html) component and RabbitMQ.
 
-## Basics
+## Architectural Role
+Symfony Messenger is the backbone of our asynchronous processing and event-driven architecture. It provides message buses to decouple application layers and route background tasks (e.g., sending emails, external API calls, processing heavy reports) to message queues.
 
-### Description
-Symfony's Messenger is much powerful bundle, that supports by the symfony core team, and provides a message bus and some routing capabilities to send messages within your application and through transports such as message queues. Before using it, read the [Messenger component](https://symfony.com/doc/current/components/messenger.html) documentation to get familiar with its concepts.
+Before implementing new asynchronous logic, ensure you are familiar with the core [Messenger component concepts](https://symfony.com/doc/current/components/messenger.html).
 
-### RabbitMQ
-This environment is using [RabbitMQ](https://hub.docker.com/_/rabbitmq) message broker software. RabbitMQ is open source message broker software (sometimes called message-oriented middleware) that implements the Advanced Message Queuing Protocol (AMQP). The RabbitMQ server is written in the Erlang programming language and is built on the Open Telecom Platform framework for clustering and failover. Client libraries to interface with the broker are available for all major programming languages.
+## Message Broker (RabbitMQ)
+This environment utilizes [RabbitMQ](https://hub.docker.com/_/rabbitmq) as the primary message broker. It implements the Advanced Message Queuing Protocol (AMQP) to guarantee reliable message delivery and failover capabilities.
 
-### Admin panel
-You can use your browser in order to manage/view messages. Just open next url in your browser: [http://localhost:15672](http://localhost:15672). Default login - `guest` and password - `guest` (you are able to change it inside `.env` configuration file).
+### Management UI (Admin Panel)
+For manual management and monitoring, use the full-featured web interface. It allows you to view all existing queues, exchanges and bindings, as well as monitor message flow in real-time.
 
-### Consuming Messages
-Once your messages have been routed, it will be consumed. In case any issue just make sure that program:messenger is working in supervisord. You can use make command `make logs-supervisord` for these needs.
+* URL: [http://localhost:15672](http://localhost:15672)
+* Default Credentials: `guest` / `guest` (These can be modified in your `.env` configuration file).
 
-### Message and Handler
-Before you can send a message, you must create it first. In order to do something when your message is dispatched, you need to create a message handler. Please follow docs in order to implement it:
+### HTTP API & Documentation
+RabbitMQ exposes a REST HTTP API for programmatic access to broker metrics and management.
 
-* [Message](https://symfony.com/doc/current/messenger.html#creating-a-message-handler)
-* [Handler](https://symfony.com/doc/current/messenger.html#creating-a-message-handler)
+* Local API Reference: When the container is running, the API documentation and help are accessible directly at [http://localhost:15672/api/](http://localhost:15672/api/).
+* External API Reference: You can also refer to the [official RabbitMQ Management HTTP API reference](https://rawcdn.githack.com/rabbitmq/rabbitmq-server/v3.11.5/deps/rabbitmq_management/priv/www/api/index.html).
 
-### RabbitMQ Management HTTP API
-When activated, the management plugin provides an HTTP API at http://server-name:15672/api/ by default. Browse to that location for more information on the API. For convenience the same API reference is available from GitHub:
-* [RabbitMQ Management HTTP API](https://rawcdn.githack.com/rabbitmq/rabbitmq-server/v3.11.5/deps/rabbitmq_management/priv/www/api/index.html)
+## Messages and Handlers
+In accordance with our Domain-Driven Design (DDD) principles, asynchronous communication must strictly follow these rules:
 
+* Messages (Domain Layer): Messages are exclusively used for asynchronous operations. They must be strictly typed, immutable and as small as possible. A smaller message payload ensures faster broker routing and maximizes processing speed. Never serialize full Doctrine Entities into a message. Always pass scalar values or Entity IDs (UUIDs). This keeps the payload lightweight and prevents data staleness or `EntityManager` detachment issues.
+    * Example: `App\Tool\Domain\Message\TestMessage`
+* Handlers (Transport Layer): They act as adapters between the message broker and our core application. Their sole responsibility is to receive the asynchronous message, unpack the payload (e.g., extract the UUID) and delegate the execution to the corresponding Application Service. A Handler must never contain business logic or manipulate Domain entities directly.
+    * Example: `App\Tool\Transport\MessageHandler\TestHandler`
 
-# Using Messenger
+For basic implementation details, refer to the official documentation:
+* [Creating a Message](https://symfony.com/doc/current/messenger.html#creating-a-message-handler)
+* [Creating a Message Handler](https://symfony.com/doc/current/messenger.html#creating-a-message-handler)
 
-### Installation
-Before using bundle, make sure that you have installed transports using next command inside your local shell:
+### Namespace Structure
+Because we follow a strictly modular Domain-Driven Design (DDD) approach, we do not use Symfony's standard global `App\Message\...` or `App\MessageHandler\...` directories.
 
+Instead, messages and handlers reside within their specific modules and layers:
+* Messages: `App\<Module>\Domain\Message\...`
+* Handlers: `App\<Module>\Transport\MessageHandler\...`
+
+You can find working examples inside the `Tool` module: `App\Tool\Domain\Message\...` and `App\Tool\Transport\MessageHandler\...`.
+
+### Internal Messages
+When you need to send an asynchronous message to process an internal task, instantiate your message class and pass it to our infrastructure service: `App\General\Infrastructure\Service\MessageService::sendMessage()`
+
+**Routing & Priorities:**
+Routing is determined by marker interfaces (mapped in `messenger.yaml`).
+* For high-priority tasks (queue `messages_high`), implement: `App\General\Domain\Message\Interfaces\MessageHighInterface`.
+    * Example: `App\Tool\Domain\Message\TestMessage.php`
+* For low-priority tasks (queue `messages_low`), implement: `App\General\Domain\Message\Interfaces\MessageLowInterface`.
+
+> **⚡** Supervisor Note: Please pay attention to the transport processing order inside the supervisord configuration file (`docker/general/supervisord.conf`, under `program:messenger-consume`). The system is configured to process `async_priority_high` first, followed by `async_priority_low`.
+
+**Internal Message Handler:**
+
+To process the internal message, create a handler within the Transport layer.
+* Example: `App\Tool\Transport\MessageHandler\TestHandler.php`
+
+When extending or creating new handlers, never forget our strict DDD layer execution flow (see `development.md`).
+
+### External Messages & Integration
+Sometimes the application needs to consume messages originating from external applications. For example, we might receive a raw JSON payload:
+```json
+{
+    "service": "some-service",
+    "action": "entity-edited",
+    "id": "3"
+}
+```
+
+Our application routes these external payloads through a dedicated RabbitMQ queue named `messages_external` (see the `messenger.yaml` configuration).
+
+**External Message Processing**
+
+Because external messages arrive as raw text/JSON, they require a two-step process in the Transport layer:
+
+* Serializer: A custom serializer decodes the raw payload into a strictly typed Application Message object.
+    * Example: `App\Tool\Transport\Serializer\ExternalMessageSerializer.php`
+* Handler: The handler receives the deserialized object and delegates the work.
+    * Example: `App\Tool\Transport\MessageHandler\TestHandler.php`
+
+When extending or creating new handlers, never forget our strict DDD layer execution flow (see `development.md`).
+
+## Transports Initialization
+Before dispatching or consuming messages, you must initialize the configured transports. This process creates the required routing infrastructure in RabbitMQ and sets up the database table for failed messages (Dead Letter Queue).
+
+To set up the transports, execute the following command:
 ```bash
 make messenger-setup-transports
 ```
 
-Note: After executing above command, necessary RabbitMQ queues and MySQL table for the failed messages should be created.
+Note: After executing this command, all necessary RabbitMQ queues, exchanges and bindings will be created, along with the MySQL table for failed messages.
 
-### Namespace structure
-As we are using [DDD](https://en.wikipedia.org/wiki/Domain-driven_design) approach, we don't have standard `App\Message\...` and `App\MessageHandler\...` namespaces. While using DDD, we have `App\...\Domain\Message\...` and `App\...\Transport\MessageHandler\...` namespaces.
+## Consuming Messages
+Messages dispatched to asynchronous transports are not executed immediately. They are queued in RabbitMQ and processed by background worker processes.
 
-Please find existing examples inside `App\Tool\Domain\Message\...` and `App\Tool\Transport\MessageHandler\...`.
-
-### External messages
-Sometimes you need to have possibility to integrate application with external applications. For these needs, as example, we can use json message example:
-
-```json
-{
-    "service": "someservice",
-    "external_id": "3"
-}
+Currently, workers are managed automatically by Supervisor across all environments (including local setups for `dev`, `test`, `staging` and `prod`). If you notice that messages are sitting in the queue and not being consumed, verify the worker status by executing the following command in your local shell:
+```bash
+make logs-supervisord
 ```
 
-This application for these needs has RabbitMQ queue `external` (see `messenger.yaml` configuration file).
+> 🏗️ DevOps Note for Production:
+> While bundling Supervisor inside the application container is a pragmatic and necessary solution for all our local environments (including local `staging` and `production` setups), any actual remote deployments to live servers should be refactored by the DevOps team. Remote infrastructure must follow the strict containerization best practice of "one process per container" (e.g., separating PHP-FPM and Messenger workers into completely distinct containers/pods).
 
-### External message handler
-For processing above external message we have custom serializer `App\Tool\Transport\Serializer\ExternalMessageSerializer.php` and handler `App\Tool\Transport\MessageHandler\ExternalHandler.php`. Please extend it for your needs and don't forget about DDD layer flow `Transport -> Application -> Infrastructure -> Domain` (see [development.md](development.md)).
+## Retries & Failures
+If an exception is thrown while a handler is processing a message, the message is automatically returned to the transport to be retried. By default, our configuration attempts 3 retries with an increasing delay before routing the message to the failure transport.
 
-### Internal messages
-Sometimes you need to have possibility to send async message for process something. For these needs, as example, you can use `App\Tool\Domain\Message\TestMessage.php` and Infrastructure service `App\General\Infrastructure\Service\MessageService.php` (just create an instance of message and use method `sendMessage`).
+This environment doesn't have a default failure retry strategy and failed messages will not be deleted after the 3rd retry by default.
 
-`App\Tool\Domain\Message\TestMessage.php` responsible for sending message to the `messages_high` queue (see routing interface configuration mapping inside `messenger.yaml`).
+We utilize a custom retry strategy to manage this behavior, located in the Infrastructure layer:
+`App\General\Infrastructure\Messenger\Strategy\FailedRetry.php`
 
-If you need to use another queue for the message (f.e. `messages_low`), just use another interface `App\General\Domain\Message\Interfaces\MessageLowInterface` for the `App\Tool\Domain\Message\TestMessage.php` class.
-
-Note: Please pay your attention to the transports order processing(first async_priority_high, then async_priority_low) inside supervisord configuration file `docker\general\supervisord.conf` and program `program:messenger-consume`.
-
-### Internal message handler
-For processing above external message we have handler `App\Tool\Transport\MessageHandler\TestHandler.php`. Please extend it for your needs and don't forget about DDD layer flow `Transport -> Application -> Infrastructure -> Domain` (see [development.md](development.md)).
-
-### Retries & Failures
-If an exception is thrown while consuming a message from a transport it will automatically be re-sent to the transport to be tried again. By default, a message will be retried 3 times before being discarded or sent to the failure transport. Each retry will also be delayed, in case the failure was due to a temporary issue. All of this is configurable for each transport (see `messenger.yaml`).
-
-This environment doesn't have default failure retry strategy and failed message will not be deleted after 3-rd retry by default. You can find existing retry strategy inside `App\General\Infrastructure\Messenger\Strategy\FailedRetry.php`.
-
-You are able to configure some options for failure transport inside .env file:
+### Configuration (.env)
+You can customize the manual retry behavior and retention policy using the following environment variables:
 
 ```dotenv
-# Send "failed" messages for unlimited retry (messenger:failed:retry). Possible values: 0|1. In case 1 - failed messages will be sent for unlimited retry. In case 0 - only 1 retry is possible.
+# Allow unlimited manual retries for "failed" messages (bin/console messenger:failed:retry).
+# 1 = Unlimited manual retries allowed. 0 = Only 1 manual retry allowed.
 MESSENGER_FAILED_IS_RETRYABLE=1
-# Time in miliseconds before retry for "failed" messages (messenger:failed:retry). Available in case MESSENGER_FAILED_IS_RETRYABLE=1.
+
+# Time in milliseconds to wait before a failed message can be manually retried again.
+# (Only applicable if MESSENGER_FAILED_IS_RETRYABLE=1)
 MESSENGER_FAILED_RETRY_WAITING_TIME=10000
-# How many days we should have failed messages inside messenger_messages table
+
+# Number of days to keep failed messages in the messenger_messages database table before deletion.
 MESSENGER_MESSAGES_HISTORY_DAYS=7
 ```
 
-All failed messages after 3-rd failed retry will be places into the `messenger_messages` MySQL table. You are able to retry it manually using console command `bin/console messenger:failed:retry` unlimited times. Please pay your attention that by default all failed messages inside `messenger_messages` older 7 days (configured as `MESSENGER_MESSAGES_HISTORY_DAYS`) will be deleted by cron job (`bin/console messenger:messages-cleanup`). So it means that you have by default 7 days for retry some failed messages manually or all such old messages will be deleted.
+### The Dead Letter Queue (DLQ) & Cleanup
+After the initial automated retries fail, messages are permanently moved to the `messenger_messages` MySQL table.
 
-More details for configuring retries and failures you can find [here](https://symfony.com/doc/current/messenger.html#retries-failures).
+* Manual Retry: You can investigate and retry these messages manually unlimited times via the console:
+```bash
+bin/console messenger:failed:retry
+```
+
+Note: A scheduled cron job (`bin/console messenger:messages-cleanup`) automatically purges messages older than the configured `MESSENGER_MESSAGES_HISTORY_DAYS`. By default, you have a 7-day window to resolve and retry failed messages before they are permanently deleted.
+
+For deeper insights into the retry mechanisms, refer to the [official Symfony documentation](https://symfony.com/doc/current/messenger.html#retries-failures).

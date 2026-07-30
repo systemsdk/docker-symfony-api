@@ -1,86 +1,129 @@
-# API key
+# API Key Management
+This document describes how to use the API key functionality for application-to-application authentication using non-expiring API tokens.
 
-This document describing how you can use api key functionality for the application to application authentication using api key token with unlimited lifetime.
+## Overview
+This environment includes a built-in API key system that allows you to manage API tokens with an unlimited lifetime and assign them the necessary roles. This is primarily used for seamless integration with external applications and third-party services.
 
-## Basics
-
-This environment comes with api-key functionality that allows you to manage api key tokens with unlimited lifetime and assign necessary roles. It is necessary in general when you need to integrate this application with other applications.
-
-Existing functionality allow you to create unlimited number of tokens, create roles, create user groups, assign api key for selected user group/groups.
+The current implementation allows you to:
+* Create an unlimited number of API tokens.
+* Define custom roles and user groups.
+* Assign API keys to specific user groups to strictly control access levels.
 
 ## Configuration
+The application allows you to store API key tokens in the database in one of two formats: **Encrypted** or **Plain text** (Unencrypted).
 
-This environment allows you to save api key tokens inside db in two ways:
- - encrypted
- - native
+You can configure this behavior in your `.env` file using the following parameters:
 
-Please use next configuration params inside .env file for defining mentioned above things:
-```bash
+```env
+###> Api-key options ###
 API_KEY_TOKEN_OPEN_SSL_ENCRYPT=1
 API_KEY_TOKEN_HASH_ALGO=sha256
+###< Api-key options ###
 
+###> Open ssl options ###
 OPEN_SSL_ALGORITHM=aes-128-gcm
 OPEN_SSL_KEY=systemsdk
+###< Open ssl options ###
 ```
 
-## Details and examples
+> ⚠️ Important Warning: Modifying any of these values after API keys have been generated will invalidate all existing tokens in the database. You will need to generate new ones.
 
-Let's imagine you need to create 2 api endpoints that will be available for external application "A" and "B". External application "A" should not have access for the endpoint that designed for the external application "B".
+Parameter Details:
 
-We have next tables for such functionality: `api_key`, `role`. `user_group`, `api_key_has_user_group`.
+* `API_KEY_TOKEN_OPEN_SSL_ENCRYPT`: Set to `1` to enable OpenSSL encryption for tokens in the database, or `0` to store them as plain text.
+* `API_KEY_TOKEN_HASH_ALGO`: Specifies the hashing algorithm (e.g., md5, sha1, sha256, sha512). This is used when encryption is enabled.
+* `OPEN_SSL_ALGORITHM`: The cipher method used for encryption (the default is `aes-128-gcm`).
+* `OPEN_SSL_KEY`: The secret passphrase used for encryption. You must set a strong, unique value for this key in your production environment and store it securely.
 
-`api_key` - table with tokens list and their description. You can create new api key token using console command `./bin/console api-key:create`. All necessary roles, user groups will be created automatically if missing for the first run.
+## Architecture & Use Case Example
+Consider a scenario where you need to expose two separate API endpoints for two different external applications: Application1 and Application2. To maintain strict security, Application1 must not be able to access the endpoint designated for Application2 and vice versa.
 
-`role` - table with roles and their description. You can extend list inside class `App\Role\Domain\Enum\Role.php`. You can sync(create/delete) them using console command `./bin/console user:create-roles`.
+To support this level of granular access control, the system relies on the following database tables:
 
-`user_group` - table with user groups and their role, group name. You can create additional groups using console command `./bin/console user:create-group`.
+* `api_key`
 
-`api_key_has_user_group` - table with api key tokens and assigned user groups. You are able to assign user group/groups while creating api key token using above console command (please use comma for assigning multiple user groups).
+   Stores the unique API tokens (`token`) and their descriptions. You can generate a new API token using the command: `./bin/console api-key:create`.
+  
+   **Tip:** All necessary default roles and user groups will be created automatically on the first run if they are missing.
 
-Note 1: All endpoints for this functionality should be implemented under URL `^/api`.
+* `role`
 
-Note 2: All roles inside `App\Role\Domain\Enum\Role.php` should start with `ROLE_...` [docs](https://symfony.com/doc/current/security.html#roles).
+   Stores the unique `role` string (which acts as the primary key) and a detailed `description` of its permissions. You can extend the list of roles within the `App\Role\Domain\Enum\Role.php` class. To synchronize (create/delete) these roles with the database, use the command: `./bin/console user:create-roles`.
 
-### Steps:
+* `user_group`
 
-1.Create 1 api endpoint for the external application "A":
+   Stores user groups, consisting of a mandatory `name` and an associated `role` (allowing for flexible logical grouping without strict permissions). You can create additional groups using the command: `./bin/console user:create-group`.
 
-```bash
-#[Route(
-    path: '/application1/endpoint1',
-    name: 'api_to_api_application1_endpoint1',
-    requirements: [
-        'role' => new EnumRequirement(Role::class),
-    ],
-    methods: [Request::METHOD_GET],
-)]
-#[IsGranted(Role::APPLICATION1->value)]
-```
+* `api_key_has_user_group`
 
-2.Create 1 api endpoint for the external application "B":
+   A pivot table that establishes a many-to-many relationship. It uses a composite primary key linking the UUIDs (`api_key_id` and `user_group_id`) of API tokens and their assigned user groups. You can assign one or multiple groups (comma-separated) directly when creating a new token via the `api-key:create` command.
 
-```bash
-#[Route(
-    path: '/application2/endpoint1',
-    name: 'api_to_api_application2_endpoint1',
-    requirements: [
-        'role' => new EnumRequirement(Role::class),
-    ],
-    methods: [Request::METHOD_GET],
-)]
-#[IsGranted(Role::APPLICATION2->value)]
-```
+> Routing Note: All endpoints utilizing this API key functionality must be configured under the `^/api` URL prefix.
 
-3.Extend roles list with their description inside `App\Role\Domain\Enum\Role.php`.
+> Security Note: Following Symfony security standards, all roles defined in `App\Role\Domain\Enum\Role.php` must begin with the `ROLE_` prefix. For more details, refer to the [Symfony Security Documentation](https://symfony.com/doc/current/security.html#roles).
 
-4.Run console command in order to sync roles with database `./bin/console user:create-roles`.
+### Implementation Steps
+Follow these steps to implement the scenario described above:
 
-5.Run console command in order to create user group for the new role `./bin/console user:create-group`.
+1. Create the API endpoint for Application1
 
-6.Run console command in order to create api keys for every application `./bin/console api-key:create`.
+   Configure the route and restrict access using the specific role for Application1.
+   ```php
+   #[Route(
+       path: '/application1/endpoint1',
+       name: 'api_to_api_application1_endpoint1',
+       requirements: [
+           'role' => new EnumRequirement(Role::class),
+       ],
+       methods: [Request::METHOD_GET],
+   )]
+   #[IsGranted(Role::APPLICATION1->value)]
+   ```
 
-7.You can check created api key token using next header param: `Authorization:ApiKey your_token_here`.
+2. Create the API endpoint for Application2
 
-That's it. You can use both tokens. Token for the external application "A" will not have access to the endpoint for external application "B".
+   Similarly, configure the route and restrict access using the specific role for Application2.
+   ```php
+   #[Route(
+       path: '/application2/endpoint1',
+       name: 'api_to_api_application2_endpoint1',
+       requirements: [
+           'role' => new EnumRequirement(Role::class),
+       ],
+       methods: [Request::METHOD_GET],
+   )]
+   #[IsGranted(Role::APPLICATION2->value)]
+   ```
 
-Note: Please note that existing functionality has internal role `ROLE_API`. All api keys has "assigned" role `ROLE_API` by default. It means that if endpoint has `#[IsGranted(Role::API->value)]`, all existing api keys will be able to access it even without assigned user group.
+3. Define the Roles
+   
+   Extend the role list and add descriptions inside the `App\Role\Domain\Enum\Role.php` class (e.g., add `ROLE_APPLICATION1` and `ROLE_APPLICATION2`).
+
+4. Synchronize Roles
+
+   Run the following console command to sync your new roles with the database:
+   ```bash
+   ./bin/console user:create-roles
+   ```
+
+5. Create User Groups
+
+   Run this command to create a distinct user group for each of the new roles:
+   ```bash
+   ./bin/console user:create-group
+   ``` 
+
+6. Generate API Keys
+
+   Run the key generation command to create an API token for each application, assigning the appropriate user group to each token:
+   ```bash
+   ./bin/console api-key:create
+   ``` 
+
+7. Test the Authentication
+
+   You can verify the created API key tokens by sending a request with the following header: `Authorization:ApiKey your_token_here`.
+
+That's it! You can now use both tokens. The token assigned to Application1 will successfully authenticate against its specific endpoint but will receive an "Access Denied" response if it attempts to access the endpoint designated for Application2.
+
+> ⚠️ Important Note: The system includes a built-in internal role called `ROLE_API`. All generated API keys are implicitly assigned this `ROLE_API` by default. This means that if an endpoint is protected strictly by `#[IsGranted(Role::API->value)]`, all existing valid API keys will be able to access it, regardless of which specific user groups are assigned to them.

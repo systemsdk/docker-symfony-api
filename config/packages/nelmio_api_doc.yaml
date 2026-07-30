@@ -15,8 +15,8 @@ when@dev: &dev
                     description: API over HTTPS
             info:
                 title: Symfony Api
-                description: This is an symfony api environment example
-                version: 4.0.0
+                description: JSON REST API
+                version: '%app.version%'
             components:
                 securitySchemes:
                     Bearer:

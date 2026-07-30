@@ -38,7 +38,7 @@ class EntityReferenceExistsValidatorTest extends TestCase
     {
         $loggerMock = $this->getMockBuilder(LoggerInterface::class)->getMock();
         $this->expectException(UnexpectedTypeException::class);
-        $this->expectExceptionMessage(
+        $this->expectExceptionMessageIsOrContains(
             'Expected argument of type "' . EntityReferenceExists::class . '", "' . Language::class . '" given'
         );
         $constraint = new Language();
@@ -59,7 +59,7 @@ class EntityReferenceExistsValidatorTest extends TestCase
     ): void {
         $loggerMock = $this->getMockBuilder(LoggerInterface::class)->getMock();
         $this->expectException(UnexpectedValueException::class);
-        $this->expectExceptionMessage($expectedMessage);
+        $this->expectExceptionMessageIsOrContains($expectedMessage);
         $constraint = new EntityReferenceExists();
         $constraint->entityClass = $entityClass;
 
@@ -72,7 +72,7 @@ class EntityReferenceExistsValidatorTest extends TestCase
     {
         $loggerMock = $this->getMockBuilder(LoggerInterface::class)->getMock();
         $this->expectException(UnexpectedValueException::class);
-        $this->expectExceptionMessage(
+        $this->expectExceptionMessageIsOrContains(
             sprintf('Expected argument of type "%s", "stdClass" given', EntityInterface::class)
         );
         $constraint = new EntityReferenceExists();

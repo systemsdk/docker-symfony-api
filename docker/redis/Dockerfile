@@ -1,4 +1,6 @@
-FROM redis:latest
+ARG REDIS_VERSION=8.6
 
-COPY redis.conf /usr/local/etc/redis/redis.conf
+FROM redis:${REDIS_VERSION}
+
+COPY --chown=redis:redis redis.conf /usr/local/etc/redis/redis.conf
 CMD [ "redis-server", "/usr/local/etc/redis/redis.conf" ]

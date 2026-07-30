@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     locale: 'en'
+    app.version: '%env(APP_VERSION)%'
 
 services:
     # default configuration for services in *this* file
@@ -14,6 +15,7 @@ services:
         bind:
             $projectDir: '%kernel.project_dir%'
             $environment: '%kernel.environment%'
+            $appVersion: '%app.version%'
             $locale: '%locale%'
             $databaseHealthHistoryDays: '%env(int:DATABASE_HEALTH_HISTORY_DAYS)%'
             $databaseLogLoginHistoryDays: '%env(int:DATABASE_LOG_LOGIN_HISTORY_DAYS)%'
