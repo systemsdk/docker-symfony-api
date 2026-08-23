@@ -136,7 +136,7 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
     #[Groups([
         'ApiKey.userGroups',
     ])]
-    private Collection | ArrayCollection $userGroups;
+    private Collection|ArrayCollection $userGroups;
 
     /**
      * @var Collection<int, LogRequest>|ArrayCollection<int, LogRequest>
@@ -148,7 +148,7 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
     #[Groups([
         'ApiKey.logsRequest',
     ])]
-    private Collection | ArrayCollection $logsRequest;
+    private Collection|ArrayCollection $logsRequest;
 
     /**
      * @throws Throwable
@@ -244,7 +244,7 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
      * @return Collection<int, UserGroup>|ArrayCollection<int, UserGroup>
      */
     #[Override]
-    public function getUserGroups(): Collection | ArrayCollection
+    public function getUserGroups(): Collection|ArrayCollection
     {
         return $this->userGroups;
     }
@@ -254,7 +254,7 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
      *
      * @return Collection<int, LogRequest>|ArrayCollection<int, LogRequest>
      */
-    public function getLogsRequest(): Collection | ArrayCollection
+    public function getLogsRequest(): Collection|ArrayCollection
     {
         return $this->logsRequest;
     }
@@ -275,9 +275,10 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
                 array_unique(
                     [
                         RoleEnum::API->value,
-                        ...$this->userGroups
-                            ->map(static fn (UserGroup $userGroup): string => $userGroup->getRole()->getId())
-                            ->toArray(),
+                        ...array_map(
+                            static fn (UserGroup $userGroup): string => $userGroup->getRole()->getId(),
+                            $this->userGroups->toArray(),
+                        ),
                     ],
                 ),
             ),
@@ -288,7 +289,7 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
      * Method to attach new userGroup to current api key.
      */
     #[Override]
-    public function addUserGroup(UserGroup $userGroup): self
+    public function addUserGroup(UserGroup $userGroup): static
     {
         if ($this->userGroups->contains($userGroup) === false) {
             $this->userGroups->add($userGroup);
@@ -302,7 +303,7 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
      * Method to remove specified userGroup from current api key.
      */
     #[Override]
-    public function removeUserGroup(UserGroup $userGroup): self
+    public function removeUserGroup(UserGroup $userGroup): static
     {
         if ($this->userGroups->removeElement($userGroup)) {
             $userGroup->removeApiKey($this);
@@ -315,7 +316,7 @@ class ApiKey implements EntityInterface, UserGroupAwareInterface
      * Method to remove all many-to-many userGroup relations from current api key.
      */
     #[Override]
-    public function clearUserGroups(): self
+    public function clearUserGroups(): static
     {
         $this->userGroups->clear();
 

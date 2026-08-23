@@ -18,7 +18,7 @@ class MessengerMessagesService implements MessengerMessagesServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function cleanUp(): int
     {

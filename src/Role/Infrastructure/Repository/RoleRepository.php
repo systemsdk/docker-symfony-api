@@ -37,7 +37,7 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function clearRoles(array $roles): int
     {

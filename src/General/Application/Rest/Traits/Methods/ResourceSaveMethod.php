@@ -17,7 +17,7 @@ trait ResourceSaveMethod
     use SaveLifeCycle;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function save(
         EntityInterface $entity,

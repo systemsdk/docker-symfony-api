@@ -26,7 +26,7 @@ class UniqueUsername extends Constraint
     final public const string MESSAGE = 'This username is already taken.';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-var array<string, string>
      */

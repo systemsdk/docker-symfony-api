@@ -9,15 +9,8 @@ use App\General\Domain\Rest\UuidHelper;
 use App\General\Infrastructure\Rest\RepositoryHelper;
 use ArrayIterator;
 use Doctrine\DBAL\LockMode;
-use Doctrine\ORM\AbstractQuery;
-use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMInvalidArgumentException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Doctrine\ORM\TransactionRequiredException;
 use InvalidArgumentException;
 
 use function array_column;
@@ -29,12 +22,7 @@ use function assert;
 trait RepositoryMethodsTrait
 {
     /**
-     * Wrapper for default Doctrine repository find method.
-     *
-     * @throws TransactionRequiredException
-     * @throws OptimisticLockException
-     * @throws ORMInvalidArgumentException
-     * @throws ORMException
+     * {@inheritDoc}
      */
     public function find(
         string $id,
@@ -53,9 +41,7 @@ trait RepositoryMethodsTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @psalm-param string|AbstractQuery::HYDRATE_*|null $hydrationMode
+     * {@inheritDoc}
      */
     public function findAdvanced(
         string $id,
@@ -69,7 +55,7 @@ trait RepositoryMethodsTrait
         $queryBuilder
             ->where('entity.id = :id')
             ->setParameter('id', $id, UuidHelper::getType($id));
-        /*
+        /**
          * This is just to help debug queries
          *
          * dd($queryBuilder->getQuery()->getDQL(), $queryBuilder->getQuery()->getSQL());
@@ -79,7 +65,7 @@ trait RepositoryMethodsTrait
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function findOneBy(array $criteria, ?array $orderBy = null, ?string $entityManagerName = null): ?object
     {
@@ -89,9 +75,7 @@ trait RepositoryMethodsTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @psalm-return list<object|EntityInterface>
+     * {@inheritDoc}
      */
     public function findBy(
         array $criteria,
@@ -107,9 +91,7 @@ trait RepositoryMethodsTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @return array<int, EntityInterface>
+     * {@inheritDoc}
      */
     public function findByAdvanced(
         array $criteria,
@@ -123,7 +105,7 @@ trait RepositoryMethodsTrait
         $queryBuilder = $this->getQueryBuilder($criteria, $search, $orderBy, $limit, $offset, $entityManagerName);
         // Process custom QueryBuilder actions
         $this->processQueryBuilder($queryBuilder);
-        /*
+        /**
          * This is just to help debug queries
          *
          * dd($queryBuilder->getQuery()->getDQL(), $queryBuilder->getQuery()->getSQL());
@@ -138,9 +120,7 @@ trait RepositoryMethodsTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @psalm-return list<object|EntityInterface>
+     * {@inheritDoc}
      */
     public function findAll(?string $entityManagerName = null): array
     {
@@ -151,9 +131,7 @@ trait RepositoryMethodsTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @return array<int, string>
+     * {@inheritDoc}
      */
     public function findIds(?array $criteria = null, ?array $search = null, ?string $entityManagerName = null): array
     {
@@ -169,7 +147,7 @@ trait RepositoryMethodsTrait
             ->distinct();
         // Process custom QueryBuilder actions
         $this->processQueryBuilder($queryBuilder);
-        /*
+        /**
          * This is just to help debug queries
          *
          * dd($queryBuilder->getQuery()->getDQL(), $queryBuilder->getQuery()->getSQL());
@@ -180,9 +158,7 @@ trait RepositoryMethodsTrait
     }
 
     /**
-     * Generic count method to determine count of entities for specified criteria and search term(s).
-     *
-     * @throws InvalidArgumentException|NonUniqueResultException|NoResultException
+     * {@inheritDoc}
      */
     public function countAdvanced(
         ?array $criteria = null,
@@ -199,7 +175,7 @@ trait RepositoryMethodsTrait
         $queryBuilder->select('COUNT(DISTINCT(entity.id))');
         // Process custom QueryBuilder actions
         $this->processQueryBuilder($queryBuilder);
-        /*
+        /**
          * This is just to help debug queries
          *
          * dd($queryBuilder->getQuery()->getDQL(), $queryBuilder->getQuery()->getSQL());
@@ -209,9 +185,6 @@ trait RepositoryMethodsTrait
         return (int)$queryBuilder->getQuery()->getSingleScalarResult();
     }
 
-    /**
-     * Helper method to 'reset' repository entity table - in other words delete all records
-     */
     public function reset(?string $entityManagerName = null): int
     {
         // Create query builder
@@ -227,7 +200,7 @@ trait RepositoryMethodsTrait
      * Helper method to get QueryBuilder for current instance within specified default parameters.
      *
      * @param array<int|string, mixed>|null $criteria
-     * @param array<string, string>|null $search
+     * @param array<string, array<int, string>|string>|null $search
      * @param array<string, string>|null $orderBy
      *
      * @throws InvalidArgumentException

@@ -18,7 +18,7 @@ class CheckDatabaseConnectionService implements CheckDatabaseConnectionServiceIn
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function checkConnection(): bool
     {

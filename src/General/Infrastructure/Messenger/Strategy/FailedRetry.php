@@ -20,7 +20,7 @@ class FailedRetry implements RetryStrategyInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * In case false - messages from "failed" transport will not be sent for the second retry (messenger:failed:retry).
      */
@@ -30,7 +30,7 @@ class FailedRetry implements RetryStrategyInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getWaitingTime(Envelope $message, ?Throwable $throwable = null): int
     {

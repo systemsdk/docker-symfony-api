@@ -34,7 +34,7 @@ readonly class LocalizationService implements LocalizationServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getLanguages(): array
     {
@@ -42,7 +42,7 @@ readonly class LocalizationService implements LocalizationServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getLocales(): array
     {
@@ -57,7 +57,7 @@ readonly class LocalizationService implements LocalizationServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getTimezones(): array
     {
@@ -74,7 +74,7 @@ readonly class LocalizationService implements LocalizationServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFormattedTimezones(): array
     {
@@ -105,6 +105,14 @@ readonly class LocalizationService implements LocalizationServiceInterface
         return $output;
     }
 
+    /**
+     * @return Closure(ItemInterface, bool): array<int, array{
+     *     timezone: string,
+     *     identifier: non-empty-string,
+     *     offset: string,
+     *     value: string,
+     * }>
+     */
     private function getClosure(): Closure
     {
         return function (ItemInterface $item): array {

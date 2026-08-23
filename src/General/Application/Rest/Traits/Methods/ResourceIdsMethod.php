@@ -14,7 +14,7 @@ trait ResourceIdsMethod
     use IdsLifeCycle;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getIds(?array $criteria = null, ?array $search = null, ?string $entityManagerName = null): array
     {
@@ -25,7 +25,7 @@ trait ResourceIdsMethod
         // Fetch data
         $ids = $this->getRepository()->findIds($criteria, $search, $entityManagerName);
         // After callback method call
-        $this->afterIds($ids, $criteria, $search);
+        $this->afterIds($criteria, $search, $ids);
 
         return $ids;
     }

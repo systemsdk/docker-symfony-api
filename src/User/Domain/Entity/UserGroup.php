@@ -109,7 +109,7 @@ class UserGroup implements EntityInterface, Stringable
     #[Groups([
         'UserGroup.users',
     ])]
-    private Collection | ArrayCollection $users;
+    private Collection|ArrayCollection $users;
 
     /**
      * @var Collection<int, ApiKey>|ArrayCollection<int, ApiKey>
@@ -121,7 +121,7 @@ class UserGroup implements EntityInterface, Stringable
     #[Groups([
         'UserGroup.apiKeys',
     ])]
-    private Collection | ArrayCollection $apiKeys;
+    private Collection|ArrayCollection $apiKeys;
 
     /**
      * @throws Throwable
@@ -172,7 +172,7 @@ class UserGroup implements EntityInterface, Stringable
     /**
      * @return Collection<int, User>|ArrayCollection<int, User>
      */
-    public function getUsers(): Collection | ArrayCollection
+    public function getUsers(): Collection|ArrayCollection
     {
         return $this->users;
     }
@@ -180,7 +180,7 @@ class UserGroup implements EntityInterface, Stringable
     /**
      * @return Collection<int, ApiKey>|ArrayCollection<int, ApiKey>
      */
-    public function getApiKeys(): Collection | ArrayCollection
+    public function getApiKeys(): Collection|ArrayCollection
     {
         return $this->apiKeys;
     }

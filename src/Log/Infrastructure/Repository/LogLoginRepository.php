@@ -38,7 +38,7 @@ class LogLoginRepository extends BaseRepository implements LogLoginRepositoryInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function cleanHistory(): int
     {

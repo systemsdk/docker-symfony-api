@@ -218,7 +218,7 @@ class User extends RestDto
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param EntityInterface|Entity $entity
      */

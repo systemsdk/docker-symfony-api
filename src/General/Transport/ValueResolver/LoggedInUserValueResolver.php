@@ -58,7 +58,7 @@ class LoggedInUserValueResolver implements ValueResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return Generator<User|null>
      *

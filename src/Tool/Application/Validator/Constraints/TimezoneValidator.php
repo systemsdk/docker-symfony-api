@@ -24,7 +24,7 @@ class TimezoneValidator extends ConstraintValidator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function validate(mixed $value, Constraint $constraint): void

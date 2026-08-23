@@ -26,7 +26,7 @@ class CheckDependenciesService implements CheckDependenciesServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getNamespaceDirectories(): array
     {

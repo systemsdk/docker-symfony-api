@@ -37,7 +37,7 @@ class ScheduledCommandRepository extends ServiceEntityRepository implements Sche
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function save(Entity $entity, ?bool $flush = null): Entity
     {

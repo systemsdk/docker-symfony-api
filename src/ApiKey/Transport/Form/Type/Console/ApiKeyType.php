@@ -50,7 +50,7 @@ class ApiKeyType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws Throwable
      */

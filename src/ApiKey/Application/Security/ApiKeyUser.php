@@ -7,7 +7,6 @@ namespace App\ApiKey\Application\Security;
 use App\ApiKey\Application\Security\Interfaces\ApiKeyUserInterface;
 use App\ApiKey\Domain\Entity\ApiKey;
 use App\Role\Domain\Enum\Role;
-use Deprecated;
 use Override;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -30,7 +29,7 @@ class ApiKeyUser implements ApiKeyUserInterface, UserInterface
     private readonly array $roles;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function __construct(ApiKey $apiKey, array $roles)
     {
@@ -54,32 +53,5 @@ class ApiKeyUser implements ApiKeyUserInterface, UserInterface
     public function getRoles(): array
     {
         return $this->roles;
-    }
-
-    /**
-     * @codeCoverageIgnore
-     */
-    public function getPassword(): ?string
-    {
-        return null;
-    }
-
-    /**
-     * @codeCoverageIgnore
-     */
-    public function getSalt(): ?string
-    {
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @codeCoverageIgnore
-     */
-    #[Override]
-    #[Deprecated]
-    public function eraseCredentials(): void
-    {
     }
 }

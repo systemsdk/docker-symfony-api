@@ -19,7 +19,7 @@ class MessengerMessagesRepository implements MessengerMessagesRepositoryInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function cleanUp(): int
     {

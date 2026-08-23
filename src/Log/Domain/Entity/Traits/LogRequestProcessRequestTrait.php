@@ -308,6 +308,7 @@ trait LogRequestProcessRequestTrait
      */
     private function processHeadersAndParameters(Request $request): void
     {
+        /** @var array<string, array<int, string|null>>|array<int, string|null> $rawHeaders */
         $rawHeaders = $request->headers->all();
         // Clean possible sensitive data from parameters
         array_walk(
@@ -317,6 +318,7 @@ trait LogRequestProcessRequestTrait
             },
         );
         $this->headers = $rawHeaders;
+        /** @var array<string, string> $rawParameters */
         $rawParameters = $this->determineParameters($request);
         // Clean possible sensitive data from parameters
         array_walk(

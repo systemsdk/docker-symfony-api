@@ -29,6 +29,7 @@ use function count;
 use function dirname;
 use function implode;
 use function is_array;
+use function json_decode;
 use function sprintf;
 use function str_replace;
 use function strlen;
@@ -147,7 +148,7 @@ class CheckDependencies extends Command
 
                 if (isset($data->warning)) {
                     $rows[] = [''];
-                    $rows[] = ['', '', '<fg=red>' . $data->warning . '</>'];
+                    $rows[] = ['', '', '<fg=red>' . (string)$data->warning . '</>'];
                 }
 
                 if (!property_exists($data, 'latest')) {
@@ -209,8 +210,13 @@ class CheckDependencies extends Command
             throw new RuntimeException($message);
         }
 
-        /** @var stdClass $decoded */
+        /** @var stdClass|array<mixed> $decoded */
         $decoded = json_decode($process->getOutput(), flags: JSON_THROW_ON_ERROR);
+
+        if (is_array($decoded)) {
+            return [];
+        }
+
         /** @var array<int, stdClass>|string|null $installed */
         $installed = $decoded->installed;
 
@@ -255,14 +261,14 @@ class CheckDependencies extends Command
     /**
      * @return array{0: string, 1: string, 2: string, 3: string, 4: string}
      */
-    private function getPackageRow(string $relativePath, mixed $data): array
+    private function getPackageRow(string $relativePath, stdClass $data): array
     {
         return [
             dirname($relativePath),
             (string)$data->name,
             (string)$data->description,
             (string)$data->version,
-            (string)(property_exists($data, 'latest') ? $data->latest : '<fg=yellow>' . $data->version . '</>'),
+            (string)(property_exists($data, 'latest') ? $data->latest : '<fg=yellow>' . (string)$data->version . '</>'),
         ];
     }
 

@@ -32,11 +32,11 @@ interface SearchTermInterface
      * @param int|null                  $mode    Used mode on LIKE search. See MODE_* constants. Defaults to
      *                                           self::MODE_FULL
      *
-     * @return array<string, array<string, array<string, string>>>|null
+     * @return array<string, array<string, array<string, array<int, string>>>>|null
      */
     public static function getCriteria(
-        array | string $column,
-        array | string $search,
+        array|string $column,
+        array|string $search,
         ?string $operand = null,
         ?int $mode = null,
     ): ?array;

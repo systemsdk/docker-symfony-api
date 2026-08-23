@@ -7,7 +7,6 @@ use PhpCsFixer\Fixer\CastNotation\CastSpacesFixer;
 use PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer;
 use PhpCsFixer\Fixer\ClassNotation\ClassDefinitionFixer;
 use PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer;
-use PhpCsFixer\Fixer\FunctionNotation\NativeFunctionInvocationFixer;
 use PhpCsFixer\Fixer\FunctionNotation\SingleLineThrowFixer;
 use PhpCsFixer\Fixer\Import\OrderedImportsFixer;
 use PhpCsFixer\Fixer\LanguageConstruct\DeclareEqualNormalizeFixer;
@@ -15,17 +14,16 @@ use PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer;
 use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
 use PhpCsFixer\Fixer\Operator\IncrementStyleFixer;
 use PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer;
+use PhpCsFixer\Fixer\Phpdoc\GeneralPhpdocAnnotationRemoveFixer;
 use PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocNoPackageFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocSeparationFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocSummaryFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocToCommentFixer;
 use PhpCsFixer\Fixer\PhpTag\BlankLineAfterOpeningTagFixer;
-use PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer;
 use PhpCsFixer\Fixer\Whitespace\BlankLineBeforeStatementFixer;
-use PhpCsFixer\Fixer\Whitespace\HeredocIndentationFixer;
+use PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer;
 use PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer;
+use PhpCsFixer\Fixer\Whitespace\TypesSpacesFixer;
+use Symplify\CodingStandard\Fixer\Annotation\RemovePropertyVariableNameDescriptionFixer;
+use Symplify\CodingStandard\Fixer\Spacing\MethodChainingNewlineFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return ECSConfig::configure()
@@ -120,18 +118,19 @@ return ECSConfig::configure()
             'multi_line_extends_each_single_line' => true,
         ],
     )
+    ->withConfiguredRule(TypesSpacesFixer::class, [
+        'space' => 'none',
+        'space_multiple_catch' => 'single',
+    ])
     ->withSkip([
-        NoMultilineWhitespaceAroundDoubleArrowFixer::class => null,
-        PhpdocNoPackageFixer::class => null,
-        PhpdocSummaryFixer::class => null,
-        PhpdocSeparationFixer::class => null,
         BlankLineAfterOpeningTagFixer::class => null,
         ClassAttributesSeparationFixer::class => null,
+        GeneralPhpdocAnnotationRemoveFixer::class => null,
+        MethodChainingIndentationFixer::class => null,
+        MethodChainingNewlineFixer::class => null,
+        NoMultilineWhitespaceAroundDoubleArrowFixer::class => null,
         NotOperatorWithSuccessorSpaceFixer::class => null,
+        PhpdocNoPackageFixer::class => null,
+        RemovePropertyVariableNameDescriptionFixer::class => null,
         SingleLineThrowFixer::class => null,
-        PhpdocAlignFixer::class => null,
-        HeredocIndentationFixer::class => null,
-        PhpdocToCommentFixer::class => null,
-        NativeFunctionInvocationFixer::class => null,
-        ExplicitStringVariableFixer::class => null,
     ]);

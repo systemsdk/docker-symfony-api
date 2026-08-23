@@ -25,7 +25,7 @@ class ScheduledCommandService implements ScheduledCommandServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function create(
         string $name,

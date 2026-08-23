@@ -26,7 +26,7 @@ class UniqueEmailValidator extends ConstraintValidator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws NonUniqueResultException
      */

@@ -7,6 +7,8 @@ namespace App\General\Application\Rest\Traits\Methods;
 use App\General\Application\Rest\Traits\RestResourceFind as FindLifeCycle;
 use App\General\Domain\Entity\Interfaces\EntityInterface;
 
+use function array_keys;
+
 /**
  * @package App\General
  */
@@ -15,7 +17,7 @@ trait ResourceFindMethod
     use FindLifeCycle;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return array<int, EntityInterface>
      */
@@ -35,7 +37,7 @@ trait ResourceFindMethod
         // Fetch data
         $entities = $this->getRepository()->findByAdvanced(
             $criteria,
-            $orderBy,
+            $this->normalizeOrderBy($orderBy),
             $limit,
             $offset,
             $search,
@@ -45,5 +47,21 @@ trait ResourceFindMethod
         $this->afterFind($criteria, $orderBy, $limit, $offset, $search, $entities);
 
         return $entities;
+    }
+
+    /**
+     * @param mixed[] $orderBy
+     *
+     * @return array<string, string>
+     */
+    private function normalizeOrderBy(array $orderBy): array
+    {
+        $normalized = [];
+
+        foreach (array_keys($orderBy) as $key) {
+            $normalized[(string)$key] = (string)$orderBy[$key];
+        }
+
+        return $normalized;
     }
 }

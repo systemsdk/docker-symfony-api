@@ -55,7 +55,7 @@ class ResponseHandler implements ResponseHandlerInterface
     }
 
     /**
-     * @return array<int|string, mixed>
+     * @return array<string, mixed>
      *
      * @throws Throwable
      */
@@ -104,7 +104,7 @@ class ResponseHandler implements ResponseHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws Throwable
      */
@@ -128,7 +128,7 @@ class ResponseHandler implements ResponseHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function handleFormError(FormInterface $form): void

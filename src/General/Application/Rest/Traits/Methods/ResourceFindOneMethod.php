@@ -15,7 +15,7 @@ trait ResourceFindOneMethod
     use FindOneLifeCycle;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function findOne(
         string $id,

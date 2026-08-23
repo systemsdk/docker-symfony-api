@@ -32,7 +32,7 @@ class LoginLoggerService implements LoginLoggerServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function setUser(?User $user = null): self
@@ -43,7 +43,7 @@ class LoginLoggerService implements LoginLoggerServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function process(LogLoginEnum $type): void

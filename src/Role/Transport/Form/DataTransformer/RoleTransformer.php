@@ -25,7 +25,7 @@ class RoleTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * Transforms an object (Role) to a string (Role id).
      *
@@ -38,7 +38,7 @@ class RoleTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * Transforms a string (Role id) to an object (Role).
      *

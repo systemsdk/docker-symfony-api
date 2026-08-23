@@ -22,7 +22,7 @@ readonly class HealthService implements HealthServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function check(): ?Health
     {

@@ -28,7 +28,7 @@ class SyncRolesService implements SyncRolesServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function syncRoles(): array
     {

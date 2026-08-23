@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 trait RestMethodProcessCriteria
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
-     * @param array<int|string, string|array<mixed>> $criteria
+     * @param array<string, string|array<mixed>> $criteria
      */
     public function processCriteria(array &$criteria, Request $request, string $method): void
     {

@@ -35,7 +35,7 @@ class SecurityUserFactory implements UserProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function supportsClass(string $class): bool
@@ -64,7 +64,7 @@ class SecurityUserFactory implements UserProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws Throwable
      */

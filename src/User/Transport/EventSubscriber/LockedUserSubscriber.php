@@ -41,7 +41,7 @@ class LockedUserSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public static function getSubscribedEvents(): array
@@ -96,7 +96,7 @@ class LockedUserSubscriber implements EventSubscriberInterface
     /**
      * @throws Throwable
      */
-    private function getUser(string | object $user): ?User
+    private function getUser(string|object $user): ?User
     {
         return match (true) {
             is_string($user) => $this->userRepository->loadUserByIdentifier($user, false),

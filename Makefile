@@ -19,6 +19,9 @@ ERROR_ONLY_FOR_HOST = @printf "\033[33mThis command for host machine\033[39m\n"
 ifneq ($(INTERACTIVE), 1)
 	OPTION_T := -T
 endif
+ifeq ($(CIRCLECI), true)
+    OPTION_T += -e COLUMNS=120
+endif
 ifeq ($(GITLAB_CI), 1)
 	# Determine additional params for phpunit in order to generate coverage badge on GitLabCI side
 	PHPUNIT_OPTIONS := --coverage-text --colors=never

@@ -79,7 +79,7 @@ class RestDtoValueResolver implements ValueResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return Generator<RestDtoInterface>
      *

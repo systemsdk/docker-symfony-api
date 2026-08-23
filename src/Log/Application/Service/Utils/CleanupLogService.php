@@ -20,7 +20,7 @@ class CleanupLogService implements CleanupLogServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function cleanup(): bool
     {

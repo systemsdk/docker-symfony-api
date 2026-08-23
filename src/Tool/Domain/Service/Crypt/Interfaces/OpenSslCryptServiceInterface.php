@@ -10,14 +10,14 @@ namespace App\Tool\Domain\Service\Crypt\Interfaces;
 interface OpenSslCryptServiceInterface extends CryptServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return array{data: non-empty-string, params: array{iv: string, tag: string}}
      */
     public function encrypt(string $textForEncrypt): array;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param array{data: string, params: array{iv: string, tag: mixed}} $dataForDecrypt
      */

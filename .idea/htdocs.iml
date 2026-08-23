@@ -192,7 +192,6 @@
       <excludeFolder url="file://$MODULE_DIR$/tools/08_rector/vendor/rector/rector" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpstan/phpdoc-parser" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/clock" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php83" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/dama/doctrine-test-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/doctrine/dbal" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/doctrine/deprecations" />
@@ -248,6 +247,7 @@
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/sebastian/file-filter" />
       <excludeFolder url="file://$MODULE_DIR$/tools/01_phpunit/vendor/sebastian/git-state" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/radebatz/type-info-extras" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-deepclone" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

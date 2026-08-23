@@ -38,7 +38,7 @@ trait ExecuteMultipleCommandTrait
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws Throwable
      */

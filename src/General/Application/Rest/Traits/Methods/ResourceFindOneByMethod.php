@@ -15,7 +15,7 @@ trait ResourceFindOneByMethod
     use FindOneByLifeCycle;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function findOneBy(
         array $criteria,
@@ -28,11 +28,31 @@ trait ResourceFindOneByMethod
         // Before callback method call
         $this->beforeFindOneBy($criteria, $orderBy);
         /** @var EntityInterface|null $entity */
-        $entity = $this->getRepository()->findOneBy($criteria, $orderBy, $entityManagerName);
+        $entity = $this->getRepository()->findOneBy($this->normalizeCriteria($criteria), $orderBy, $entityManagerName);
         $this->checkThatEntityExists($throwExceptionIfNotFound, $entity);
         // After callback method call
         $this->afterFindOneBy($criteria, $orderBy, $entity);
 
         return $entity;
+    }
+
+    /**
+     * @param mixed[] $criteria
+     *
+     * @return array<string, mixed>
+     */
+    private function normalizeCriteria(array $criteria): array
+    {
+        if ($criteria === []) {
+            return [];
+        }
+
+        $normalized = [];
+
+        foreach ($criteria as $key => $value) {
+            $normalized[(string)$key] = $value;
+        }
+
+        return $normalized;
     }
 }

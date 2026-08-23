@@ -14,7 +14,7 @@ trait ResourceCountMethod
     use CountLifeCycle;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function count(?array $criteria = null, ?array $search = null, ?string $entityManagerName = null): int
     {

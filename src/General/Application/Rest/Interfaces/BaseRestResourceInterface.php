@@ -18,7 +18,7 @@ interface BaseRestResourceInterface
     /**
      * Getter method for serializer context.
      *
-     * @return array<int|string, mixed>
+     * @return array<string, mixed>
      */
     public function getSerializerContext(): array;
 

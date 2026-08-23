@@ -71,7 +71,7 @@ class EntityValueResolver implements ValueResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return Generator<EntityInterface|null>
      *

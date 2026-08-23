@@ -48,7 +48,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function isUsernameAvailable(string $username, ?string $id = null): bool
     {
@@ -56,7 +56,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function isEmailAvailable(string $email, ?string $id = null): bool
     {
@@ -64,7 +64,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function loadUserByIdentifier(string $username, bool $uuid): ?Entity
     {

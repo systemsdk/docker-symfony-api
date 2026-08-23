@@ -23,12 +23,12 @@ class UTCDateTimeType extends DateTimeType
     private static ?DateTimeZone $utc = null;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws ConversionException
      */
     #[Override]
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): string
+    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): string
     {
         if ($value instanceof DateTime) {
             $value->setTimezone($this->getUtcDateTimeZone());
@@ -38,17 +38,11 @@ class UTCDateTimeType extends DateTimeType
     }
 
     /**
-     * @param T $value
-     *
-     * @return (T is null ? null : DateTime)
-     *
-     * @template T
-     *
      * @throws ConversionException
      * @throws Exception
      */
     #[Override]
-    public function convertToPHPValue($value, AbstractPlatform $platform): ?DateTime
+    public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?DateTime
     {
         if ($value instanceof DateTime) {
             $value->setTimezone($this->getUtcDateTimeZone());

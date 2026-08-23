@@ -6,7 +6,6 @@ namespace App\General\Infrastructure\Repository\Traits;
 
 use App\General\Domain\Rest\UuidHelper;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\AssociationMapping;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
 use Ramsey\Uuid\Exception\InvalidUuidStringException;
@@ -20,7 +19,7 @@ use function preg_replace;
 trait RepositoryWrappersTrait
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getReference(string $id, ?string $entityManagerName = null): ?object
     {
@@ -34,9 +33,7 @@ trait RepositoryWrappersTrait
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @psalm-return array<string, AssociationMapping>
+     * {@inheritDoc}
      */
     public function getAssociations(?string $entityManagerName = null): array
     {
@@ -44,7 +41,7 @@ trait RepositoryWrappersTrait
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getClassMetaData(?string $entityManagerName = null): ClassMetadata
     {
@@ -52,7 +49,7 @@ trait RepositoryWrappersTrait
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getEntityManager(?string $entityManagerName = null): EntityManager
     {
@@ -75,7 +72,7 @@ trait RepositoryWrappersTrait
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createQueryBuilder(
         ?string $alias = null,

@@ -23,7 +23,7 @@ class Language extends Constraint
     final public const string MESSAGE = 'This language "{{ language }}" is not valid.';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-var array<string, string>
      */

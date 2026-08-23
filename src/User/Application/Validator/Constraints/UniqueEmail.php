@@ -26,7 +26,7 @@ class UniqueEmail extends Constraint
     final public const string MESSAGE = 'This email is already taken.';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-var array<string, string>
      */

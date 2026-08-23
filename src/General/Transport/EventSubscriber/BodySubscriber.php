@@ -20,7 +20,7 @@ use function is_array;
 class BodySubscriber implements EventSubscriberInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public static function getSubscribedEvents(): array
@@ -68,6 +68,7 @@ class BodySubscriber implements EventSubscriberInterface
         $data = JSON::decode((string)$request->getContent(), true);
 
         if (is_array($data)) {
+            /** @var array<string, mixed> $data */
             $request->request->replace($data);
         }
     }

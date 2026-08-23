@@ -16,7 +16,7 @@ trait ResourceUpdateMethod
     use UpdateLifeCycle;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function update(
         string $id,

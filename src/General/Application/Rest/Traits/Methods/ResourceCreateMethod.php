@@ -20,7 +20,7 @@ trait ResourceCreateMethod
     use CreateLifeCycle;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function create(
         RestDtoInterface $dto,

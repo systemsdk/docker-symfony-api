@@ -62,7 +62,7 @@ class ResourceCollection implements Countable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function filter(string $className, ?string $interface = null): Closure
@@ -74,7 +74,7 @@ class ResourceCollection implements Countable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getErrorMessage(string $className): string
@@ -83,7 +83,7 @@ class ResourceCollection implements Countable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function get(string $className, ?string $interface = null): RestResourceInterface|RestSmallResourceInterface
     {
@@ -101,7 +101,7 @@ class ResourceCollection implements Countable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function has(?string $className = null, ?string $interface = null): bool
     {

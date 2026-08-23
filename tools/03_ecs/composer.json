@@ -1,23 +1,23 @@
 {
-	"name": "systemsdk/docker-symfony-api-tools",
-	"description": "",
-	"require": {
-		"php": "^8.5.0"
-	},
-	"require-dev": {
-		"friendsofphp/php-cs-fixer": "3.95.*",
-		"squizlabs/php_codesniffer": "4.0.*",
-		"symplify/easy-coding-standard": "13.2.3",
-		"roave/security-advisories": "dev-latest"
-	},
-	"config": {
-		"allow-plugins": true,
-		"platform": {
-			"php": "8.5.0"
-		},
-		"preferred-install": {
-			"*": "dist"
-		},
-		"sort-packages": true
-	}
+    "name": "systemsdk/docker-symfony-api-tools",
+    "description": "",
+    "require": {
+        "php": "^8.5.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "3.95.*",
+        "squizlabs/php_codesniffer": "4.0.*",
+        "symplify/easy-coding-standard": "13.2.*",
+        "roave/security-advisories": "dev-latest"
+    },
+    "config": {
+        "allow-plugins": true,
+        "platform": {
+            "php": "8.5.0"
+        },
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    }
 }

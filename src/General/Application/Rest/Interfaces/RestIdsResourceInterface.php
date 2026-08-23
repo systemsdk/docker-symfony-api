@@ -16,7 +16,7 @@ interface RestIdsResourceInterface extends RestSmallResourceInterface
      * repository entity id values.
      *
      * @param array<int|string, string|array<mixed>>|null $criteria
-     * @param array<string, string>|null $search
+     * @param array<string, array<int, string>|string>|null $search
      *
      * @return array<int, string>
      *

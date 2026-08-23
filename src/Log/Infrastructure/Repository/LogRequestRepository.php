@@ -38,7 +38,7 @@ class LogRequestRepository extends BaseRepository implements LogRequestRepositor
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function cleanHistory(): int
     {

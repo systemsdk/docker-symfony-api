@@ -57,7 +57,7 @@ class UserGroup extends RestDto
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param EntityInterface|Entity $entity
      */

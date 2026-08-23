@@ -23,11 +23,11 @@ Note: We recommend using a Linux Ubuntu-based OS for the best experience.
 ## Components
 **Core Stack**
 * **PHP 8.5 FPM** - Main application runtime.
-* **Symfony 7** - High-performance PHP framework for the REST API.
-* **Nginx 1.29** - Web server and reverse proxy.
+* **Symfony 8** - High-performance PHP framework for the REST API.
+* **Nginx 1.31** - Web server and reverse proxy.
 
 **Data & Caching**
-* **MySQL 8** - Primary relational database.
+* **MySQL 9** - Primary relational database.
 * **Redis 8** - In-memory data structure store and cache.
 
 **Search & Asynchronous Processing**

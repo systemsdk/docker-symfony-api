@@ -24,7 +24,7 @@ class IsUserHimselfVoter extends Voter
     private const string ATTRIBUTE = 'IS_USER_HIMSELF';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     protected function supports(string $attribute, mixed $subject): bool
@@ -33,7 +33,7 @@ class IsUserHimselfVoter extends Voter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     protected function voteOnAttribute(

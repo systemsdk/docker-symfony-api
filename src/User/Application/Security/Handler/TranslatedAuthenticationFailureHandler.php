@@ -27,7 +27,7 @@ class TranslatedAuthenticationFailureHandler extends AuthenticationFailureHandle
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @see https://github.com/lexik/LexikJWTAuthenticationBundle/issues/944
      *

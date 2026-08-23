@@ -25,7 +25,7 @@ class Locale extends Constraint
     final public const string MESSAGE = 'This locale "{{ locale }}" is not valid.';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-var array<string, string>
      */

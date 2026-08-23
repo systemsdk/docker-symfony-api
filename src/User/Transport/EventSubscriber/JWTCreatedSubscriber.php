@@ -34,7 +34,7 @@ class JWTCreatedSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return array<string, string>
      */
@@ -59,6 +59,7 @@ class JWTCreatedSubscriber implements EventSubscriberInterface
     {
         // Get current original payload
         $payload = $event->getData();
+        /** @var array<string, string> $payload */
         // Set localization data
         $this->setLocalizationData($payload, $event->getUser());
         // Update JWT expiration data

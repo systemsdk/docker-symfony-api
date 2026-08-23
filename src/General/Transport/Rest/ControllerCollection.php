@@ -38,7 +38,7 @@ class ControllerCollection implements Countable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getErrorMessage(string $className): string
@@ -47,7 +47,7 @@ class ControllerCollection implements Countable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function filter(string $className): Closure

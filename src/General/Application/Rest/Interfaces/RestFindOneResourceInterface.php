@@ -39,7 +39,7 @@ interface RestFindOneResourceInterface extends RestSmallResourceInterface
      * @codeCoverageIgnore This is needed because variables are multiline
      *
      * @param array<int|string, string|array<mixed>> $criteria
-     * @param array<int, string>|null $orderBy
+     * @param array<string, 'ASC'|'asc'|'DESC'|'desc'>|null $orderBy
      *
      * @psalm-return (
      *     $throwExceptionIfNotFound is true

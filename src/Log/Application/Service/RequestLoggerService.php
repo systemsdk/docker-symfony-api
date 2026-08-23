@@ -39,7 +39,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function setResponse(Response $response): self
@@ -50,7 +50,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function setRequest(Request $request): self
@@ -61,7 +61,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function setUserId(string $userId): self
@@ -72,7 +72,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function setApiKeyId(string $apiKeyId): self
@@ -83,7 +83,7 @@ class RequestLoggerService implements RequestLoggerServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function setMainRequest(bool $mainRequest): self

@@ -14,6 +14,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
+use function array_map;
+
 /**
  * @package App\User
  */
@@ -30,7 +32,7 @@ trait UserRelations
     #[Groups([
         'User.userGroups',
     ])]
-    protected Collection | ArrayCollection $userGroups;
+    protected Collection|ArrayCollection $userGroups;
 
     /**
      * @var Collection<int, LogRequest>|ArrayCollection<int, LogRequest>
@@ -42,7 +44,7 @@ trait UserRelations
     #[Groups([
         'User.logsRequest',
     ])]
-    protected Collection | ArrayCollection $logsRequest;
+    protected Collection|ArrayCollection $logsRequest;
 
     /**
      * @var Collection<int, LogLogin>|ArrayCollection<int, LogLogin>
@@ -54,7 +56,7 @@ trait UserRelations
     #[Groups([
         'User.logsLogin',
     ])]
-    protected Collection | ArrayCollection $logsLogin;
+    protected Collection|ArrayCollection $logsLogin;
 
     /**
      * @var Collection<int, LogLoginFailure>|ArrayCollection<int, LogLoginFailure>
@@ -66,7 +68,7 @@ trait UserRelations
     #[Groups([
         'User.logsLoginFailure',
     ])]
-    protected Collection | ArrayCollection $logsLoginFailure;
+    protected Collection|ArrayCollection $logsLoginFailure;
 
     /**
      * Getter for roles.
@@ -86,9 +88,10 @@ trait UserRelations
     ])]
     public function getRoles(): array
     {
-        return $this->userGroups
-            ->map(static fn (UserGroup $userGroup): string => $userGroup->getRole()->getId())
-            ->toArray();
+        return array_map(
+            static fn (UserGroup $userGroup): string => $userGroup->getRole()->getId(),
+            $this->userGroups->toArray(),
+        );
     }
 
     /**
@@ -96,7 +99,7 @@ trait UserRelations
      *
      * @return Collection<int, UserGroup>|ArrayCollection<int, UserGroup>
      */
-    public function getUserGroups(): Collection | ArrayCollection
+    public function getUserGroups(): Collection|ArrayCollection
     {
         return $this->userGroups;
     }
@@ -106,7 +109,7 @@ trait UserRelations
      *
      * @return Collection<int, LogRequest>|ArrayCollection<int, LogRequest>
      */
-    public function getLogsRequest(): Collection | ArrayCollection
+    public function getLogsRequest(): Collection|ArrayCollection
     {
         return $this->logsRequest;
     }
@@ -116,7 +119,7 @@ trait UserRelations
      *
      * @return Collection<int, LogLogin>|ArrayCollection<int, LogLogin>
      */
-    public function getLogsLogin(): Collection | ArrayCollection
+    public function getLogsLogin(): Collection|ArrayCollection
     {
         return $this->logsLogin;
     }
@@ -126,7 +129,7 @@ trait UserRelations
      *
      * @return Collection<int, LogLoginFailure>|ArrayCollection<int, LogLoginFailure>
      */
-    public function getLogsLoginFailure(): Collection | ArrayCollection
+    public function getLogsLoginFailure(): Collection|ArrayCollection
     {
         return $this->logsLoginFailure;
     }
@@ -134,7 +137,7 @@ trait UserRelations
     /**
      * Method to attach new user group to user.
      */
-    public function addUserGroup(UserGroup $userGroup): self
+    public function addUserGroup(UserGroup $userGroup): static
     {
         if ($this->userGroups->contains($userGroup) === false) {
             $this->userGroups->add($userGroup);
@@ -147,7 +150,7 @@ trait UserRelations
     /**
      * Method to remove specified user group from user.
      */
-    public function removeUserGroup(UserGroup $userGroup): self
+    public function removeUserGroup(UserGroup $userGroup): static
     {
         if ($this->userGroups->removeElement($userGroup)) {
             $userGroup->removeUser($this);
@@ -159,7 +162,7 @@ trait UserRelations
     /**
      * Method to remove all many-to-many user group relations from current user.
      */
-    public function clearUserGroups(): self
+    public function clearUserGroups(): static
     {
         $this->userGroups->clear();
 

@@ -22,7 +22,7 @@ class MessageService implements MessageServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws ExceptionInterface
      */

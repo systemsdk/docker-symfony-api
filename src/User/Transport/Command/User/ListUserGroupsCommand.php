@@ -46,7 +46,7 @@ class ListUserGroupsCommand extends Command
     /**
      * @noinspection PhpMissingParentCallCommonInspection
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws Throwable
      */
@@ -71,7 +71,7 @@ class ListUserGroupsCommand extends Command
      *
      * @throws Throwable
      *
-     * @return array<int, string>
+     * @return array<int, array<int, string>>
      */
     private function getRows(): array
     {
@@ -97,7 +97,7 @@ class ListUserGroupsCommand extends Command
             $userGroup->getId(),
             $userGroup->getName(),
             $userGroup->getRole()->getId(),
-            implode(",\n", $userGroup->getUsers()->map($userFormatter)->toArray()),
+            implode(",\n", array_map($userFormatter, $userGroup->getUsers()->toArray())),
         ];
     }
 }

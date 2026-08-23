@@ -41,7 +41,7 @@ class WaitElasticCommand extends Command
     /**
      * @noinspection PhpMissingParentCallCommonInspection
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

@@ -139,7 +139,7 @@ final class RequestHandler
     public static function getTenant(HttpFoundationRequest $request): ?string
     {
         $tenant = $request->query->get('tenant') ?? $request->request->get('tenant');
-        //TODO: Think about validation for tenant.
+        // TODO: Think about validation for tenant.
 
         return $tenant !== null ? (string)$tenant : null;
     }
@@ -170,7 +170,7 @@ final class RequestHandler
      *
      * @throws HttpException
      *
-     * @return array<mixed>
+     * @return array<string, array<int, string>>
      */
     public static function getSearchTerms(HttpFoundationRequest $request): array
     {
@@ -184,7 +184,7 @@ final class RequestHandler
      *
      * @throws HttpException
      *
-     * @return array<int|string, array<int, string>>
+     * @return array<string, array<int, string>>
      */
     private static function getSearchTermCriteria(string $search): array
     {
@@ -207,7 +207,7 @@ final class RequestHandler
      *
      * @throws HttpException
      *
-     * @return array<int|string, array<int, string>>|null
+     * @return array<string, array<int, string>>|null
      */
     private static function determineSearchTerms(string $search): ?array
     {
@@ -244,9 +244,9 @@ final class RequestHandler
      * Method to normalize specified search terms. Within this we will just filter out any "empty" values and return
      * unique terms after that.
      *
-     * @param array<int|string, array<int, string>> $searchTerms
+     * @param array<string, array<int, string>> $searchTerms
      *
-     * @return array<int|string, array<int, string>>
+     * @return array<string, array<int, string>>
      */
     private static function normalizeSearchTerms(array $searchTerms): array
     {
@@ -261,7 +261,7 @@ final class RequestHandler
      */
     private static function getIterator(array &$output): Closure
     {
-        return static function (string $value, string | int $key) use (&$output): void {
+        return static function (string $value, string|int $key) use (&$output): void {
             $order = in_array(mb_strtoupper($value), ['ASC', 'DESC'], true) ? mb_strtoupper($value) : 'ASC';
             $column = is_string($key) ? $key : $value;
 

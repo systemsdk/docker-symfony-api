@@ -51,7 +51,7 @@ abstract class Controller implements ControllerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getResource(): RestResourceInterface|RestSmallResourceInterface
@@ -60,7 +60,7 @@ abstract class Controller implements ControllerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getResponseHandler(): ResponseHandlerInterface
@@ -73,12 +73,13 @@ abstract class Controller implements ControllerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Required]
     #[Override]
-    public function setResponseHandler(ResponseHandler $responseHandler): static
-    {
+    public function setResponseHandler(
+        ResponseHandler $responseHandler
+    ): static {
         $this->responseHandler = $responseHandler;
 
         return $this;

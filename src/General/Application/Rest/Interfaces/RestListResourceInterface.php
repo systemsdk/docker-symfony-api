@@ -20,7 +20,7 @@ interface RestListResourceInterface extends RestSmallResourceInterface
      *
      * @param array<int|string, string|array<mixed>>|null $criteria
      * @param array<string, string>|null $orderBy
-     * @param array<string, string>|null $search
+     * @param array<string, array<int, string>|string>|null $search
      *
      * @throws Throwable
      *

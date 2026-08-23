@@ -14,10 +14,10 @@ use function str_replace;
  */
 class ValidatorError
 {
-    public string | Stringable $message;
+    public string|Stringable $message;
     public string $propertyPath;
     public string $target;
-    public string | null $code;
+    public string|null $code;
 
     public function __construct(ConstraintViolationInterface $error, string $target)
     {

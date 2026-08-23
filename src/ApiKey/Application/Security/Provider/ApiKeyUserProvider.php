@@ -35,7 +35,7 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function supportsClass(string $class): bool
@@ -59,7 +59,7 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function refreshUser(UserInterface $user): UserInterface
@@ -68,7 +68,7 @@ class ApiKeyUserProvider implements ApiKeyUserProviderInterface, UserProviderInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getApiKeyForToken(string $token): ?ApiKey

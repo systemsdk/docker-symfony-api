@@ -48,7 +48,7 @@ class ListUsersCommand extends Command
     /**
      * @noinspection PhpMissingParentCallCommonInspection
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws Throwable
      */
@@ -75,7 +75,7 @@ class ListUsersCommand extends Command
      *
      * @throws Throwable
      *
-     * @return array<int, string>
+     * @return array<int, array<int, string>>
      */
     private function getRows(): array
     {
@@ -101,7 +101,7 @@ class ListUsersCommand extends Command
             $user->getEmail(),
             $user->getFirstName() . ' ' . $user->getLastName(),
             implode(",\n", $this->roles->getInheritedRoles($user->getRoles())),
-            implode(",\n", $user->getUserGroups()->map($userGroupFormatter)->toArray()),
+            implode(",\n", array_map($userGroupFormatter, $user->getUserGroups()->toArray())),
         ];
     }
 }

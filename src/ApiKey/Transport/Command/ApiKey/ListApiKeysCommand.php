@@ -46,7 +46,7 @@ class ListApiKeysCommand extends Command
     /**
      * @noinspection PhpMissingParentCallCommonInspection
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws Throwable
      */
@@ -73,7 +73,7 @@ class ListApiKeysCommand extends Command
      *
      * @throws Throwable
      *
-     * @return array<int, string>
+     * @return array<int, array<int, string>>
      */
     private function getRows(): array
     {
@@ -97,7 +97,7 @@ class ListApiKeysCommand extends Command
             $apiToken->getId(),
             $apiToken->getToken(),
             $apiToken->getDescription(),
-            implode(",\n", $apiToken->getUserGroups()->map($userGroupFormatter)->toArray()),
+            implode(",\n", array_map($userGroupFormatter, $apiToken->getUserGroups()->toArray())),
             implode(",\n", $this->rolesService->getInheritedRoles($apiToken->getRoles())),
         ];
     }

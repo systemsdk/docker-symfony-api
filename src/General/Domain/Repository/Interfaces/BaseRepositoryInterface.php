@@ -110,7 +110,7 @@ interface BaseRepositoryInterface
      * Wrapper for default Doctrine repository findOneBy method.
      *
      * @psalm-param array<string, mixed> $criteria
-     * @psalm-param array<string, string>|null $orderBy
+     * @psalm-param array<string, 'ASC'|'asc'|'DESC'|'desc'>|null $orderBy
      *
      * @psalm-return EntityInterface|object|null
      */
@@ -122,8 +122,7 @@ interface BaseRepositoryInterface
      * @codeCoverageIgnore This is needed because variables are multiline
      *
      * @psalm-param array<string, mixed> $criteria
-     * @psalm-param array<string, string>|null $orderBy
-     * @phpstan-param array<string, 'asc'|'desc'|'ASC'|'DESC'>|null $orderBy
+     * @psalm-param array<string, 'ASC'|'asc'|'DESC'|'desc'>|null $orderBy
      *
      * @psalm-return list<object|EntityInterface>
      */
@@ -142,7 +141,7 @@ interface BaseRepositoryInterface
      *
      * @param array<int|string, mixed> $criteria
      * @param array<string, string>|null $orderBy
-     * @param array<string, string>|null $search
+     * @param array<string, array<int, string>|string>|null $search
      *
      * @throws Throwable
      *
@@ -168,7 +167,7 @@ interface BaseRepositoryInterface
      * Repository method to fetch current entity id values from database and return those as an array.
      *
      * @param array<int|string, mixed>|null $criteria
-     * @param array<string, string>|null $search
+     * @param array<string, array<int, string>|string>|null $search
      *
      * @return array<int, string>
      *
@@ -182,7 +181,7 @@ interface BaseRepositoryInterface
      * @codeCoverageIgnore This is needed because variables are multiline
      *
      * @param array<int|string, mixed>|null $criteria
-     * @param array<string, string>|null $search
+     * @param array<string, array<int, string>|string>|null $search
      *
      * @throws InvalidArgumentException
      * @throws NonUniqueResultException

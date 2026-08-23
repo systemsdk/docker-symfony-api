@@ -100,7 +100,7 @@ class UserType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws Throwable
      */
@@ -196,6 +196,7 @@ class UserType extends AbstractType
         // Initialize output
         $choices = [];
         $iterator = static function (array $timezone) use (&$choices): void {
+            /** @var array{timezone: string, identifier: non-empty-string, offset: string, value: string} $timezone */
             $choices[$timezone['value'] . ' (' . $timezone['offset'] . ')'] = $timezone['identifier'];
         };
         array_map($iterator, $this->localization->getFormattedTimezones());

@@ -44,7 +44,7 @@ class EditUserGroupCommand extends Command
     /**
      * @noinspection PhpMissingParentCallCommonInspection
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws Throwable
      */

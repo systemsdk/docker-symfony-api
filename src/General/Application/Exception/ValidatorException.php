@@ -39,7 +39,7 @@ class ValidatorException extends BaseValidatorException implements ClientErrorIn
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getStatusCode(): int

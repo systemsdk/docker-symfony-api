@@ -30,7 +30,7 @@ class VersionService implements VersionServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function get(): string
     {
@@ -45,6 +45,9 @@ class VersionService implements VersionServiceInterface
         return $output;
     }
 
+    /**
+     * @return Closure(ItemInterface, bool): string
+     */
     private function getClosure(): Closure
     {
         return function (ItemInterface $item): string {

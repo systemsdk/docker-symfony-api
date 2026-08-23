@@ -39,7 +39,7 @@ class LogLoginFailureRepository extends BaseRepository implements LogLoginFailur
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function clear(User $user): int
     {

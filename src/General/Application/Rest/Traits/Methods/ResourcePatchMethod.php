@@ -16,7 +16,7 @@ trait ResourcePatchMethod
     use PatchLifeCycle;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function patch(
         string $id,

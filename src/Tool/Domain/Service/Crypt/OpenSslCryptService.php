@@ -27,7 +27,7 @@ class OpenSslCryptService implements OpenSslCryptServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function encrypt(string $textForEncrypt): array
     {
@@ -75,7 +75,7 @@ class OpenSslCryptService implements OpenSslCryptServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function decrypt(array $dataForDecrypt): string
     {

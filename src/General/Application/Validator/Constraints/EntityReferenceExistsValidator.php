@@ -33,7 +33,7 @@ class EntityReferenceExistsValidator extends ConstraintValidator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function validate(mixed $value, BaseConstraint $constraint): void
@@ -106,6 +106,8 @@ class EntityReferenceExistsValidator extends ConstraintValidator
 
     /**
      * Method to return used filter closure.
+     *
+     * @return Closure(EntityInterface): bool
      */
     private function getFilterClosure(): Closure
     {

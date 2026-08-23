@@ -76,7 +76,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     private static array $processedCallbacks = [];
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-return class-string
      */
@@ -87,7 +87,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getSearchColumns(): array
@@ -96,7 +96,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function save(EntityInterface $entity, ?bool $flush = null, ?string $entityManagerName = null): self
@@ -113,7 +113,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function remove(EntityInterface $entity, ?bool $flush = null, ?string $entityManagerName = null): self
@@ -130,7 +130,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function processQueryBuilder(QueryBuilder $queryBuilder): void
@@ -146,7 +146,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function addLeftJoin(array $parameters): self
@@ -159,7 +159,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function addInnerJoin(array $parameters): self
@@ -172,7 +172,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function addCallback(callable $callable, ?array $args = null): self
@@ -195,7 +195,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         foreach (self::$joins as $joinType => $joins) {
             array_map(
-                static fn (array $joinParameters): QueryBuilder => $queryBuilder->{$joinType}(...$joinParameters),
+                static function (array $joinParameters) use ($queryBuilder, $joinType): QueryBuilder {
+                    return $queryBuilder->{$joinType}(...$joinParameters);
+                },
                 $joins,
             );
 

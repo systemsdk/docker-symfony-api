@@ -18,7 +18,7 @@ class WaitDatabaseService implements WaitDatabaseServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function checkConnection(): bool
     {

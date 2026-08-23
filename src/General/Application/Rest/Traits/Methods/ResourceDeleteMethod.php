@@ -15,7 +15,7 @@ trait ResourceDeleteMethod
     use DeleteLifeCycle;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function delete(string $id, ?bool $flush = null, ?string $entityManagerName = null): EntityInterface
     {

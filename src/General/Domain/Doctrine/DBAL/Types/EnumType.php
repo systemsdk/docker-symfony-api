@@ -54,10 +54,10 @@ abstract class EnumType extends Type
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): string
+    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): string
     {
         if (is_string($value) && in_array($value, static::$enum::getValues(), true)) {
             $value = static::$enum::from($value);
@@ -77,10 +77,10 @@ abstract class EnumType extends Type
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
-    public function convertToPHPValue($value, AbstractPlatform $platform): DatabaseEnumInterface
+    public function convertToPHPValue(mixed $value, AbstractPlatform $platform): DatabaseEnumInterface
     {
         $value = (string)parent::convertToPHPValue($value, $platform);
         $enum = static::$enum::tryFrom($value);

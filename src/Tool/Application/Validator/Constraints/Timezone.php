@@ -25,7 +25,7 @@ class Timezone extends Constraint
     final public const string MESSAGE = 'This timezone "{{ timezone }}" is not valid.';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @psalm-var array<string, string>
      */

@@ -18,7 +18,7 @@ class WaitElasticService implements WaitElasticServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getInfo(): mixed
     {

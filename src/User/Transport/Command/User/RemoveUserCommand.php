@@ -41,7 +41,7 @@ class RemoveUserCommand extends Command
     /**
      * @noinspection PhpMissingParentCallCommonInspection
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws Throwable
      */

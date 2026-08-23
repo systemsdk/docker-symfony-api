@@ -26,7 +26,7 @@ class UniqueUsernameValidator extends ConstraintValidator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws NonUniqueResultException
      */

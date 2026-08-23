@@ -27,7 +27,7 @@ trait RestResourceBaseMethods
     private string $dtoClass = '';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getSerializerContext(): array
@@ -36,7 +36,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getRepository(): BaseRepositoryInterface
@@ -45,7 +45,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getValidator(): ValidatorInterface
@@ -54,7 +54,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function setValidator(ValidatorInterface $validator): self
@@ -65,7 +65,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getDtoClass(): string
@@ -83,7 +83,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function setDtoClass(string $dtoClass): self
@@ -94,7 +94,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getEntityName(): string
@@ -103,7 +103,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getReference(string $id, ?string $entityManagerName = null): ?object
@@ -112,7 +112,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getAssociations(?string $entityManagerName = null): array
@@ -121,7 +121,7 @@ trait RestResourceBaseMethods
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     #[Override]
     public function getDtoForEntity(

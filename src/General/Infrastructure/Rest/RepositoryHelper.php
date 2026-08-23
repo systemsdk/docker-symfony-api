@@ -233,7 +233,7 @@ class RepositoryHelper
      */
     private static function processExpression(QueryBuilder $queryBuilder, Composite $expression, array $criteria): void
     {
-        $iterator = static function (array $comparison, string | int $key) use ($queryBuilder, $expression): void {
+        $iterator = static function (array $comparison, string|int $key) use ($queryBuilder, $expression): void {
             $expressionAnd = ($key === 'and' || array_key_exists('and', $comparison));
             $expressionOr = ($key === 'or' || array_key_exists('or', $comparison));
 
@@ -262,6 +262,7 @@ class RepositoryHelper
         } else {
             [$comparison, $parameters] = self::determineComparisonAndParameters($queryBuilder, $comparison);
             /** @var callable $callable */
+            /** @var stdClass $comparison */
             $callable = [$queryBuilder->expr(), $comparison->operator];
             // And finally add new expression to main one with specified parameters
             $expression->add(call_user_func_array($callable, $parameters));
@@ -275,7 +276,7 @@ class RepositoryHelper
      *
      * @return array{0: string, 1: string, 2: string|array<int, string>}
      */
-    private static function createCriteria(string $column, string | array $value): array
+    private static function createCriteria(string $column, string|array $value): array
     {
         if (!str_contains($column, '.')) {
             $column = 'entity.' . $column;
@@ -289,7 +290,7 @@ class RepositoryHelper
     /**
      * @param array<int|string, string|array<mixed>> $comparison
      *
-     * @return array<int, mixed>
+     * @return array{0: stdClass, 1: array<int, mixed>}
      */
     private static function determineComparisonAndParameters(QueryBuilder $queryBuilder, array $comparison): array
     {
@@ -357,7 +358,7 @@ class RepositoryHelper
      */
     private static function getIterator(array &$condition): Closure
     {
-        return static function (string | array $value, string $column) use (&$condition): void {
+        return static function (string|array $value, string $column) use (&$condition): void {
             // If criteria contains 'and' OR 'or' key(s) assume that array in only in the right format
             if (strcmp($column, 'and') === 0 || strcmp($column, 'or') === 0) {
                 $condition[$column] = $value;

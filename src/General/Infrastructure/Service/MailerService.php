@@ -19,7 +19,7 @@ class MailerService implements MailerServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function sendMail(string $title, string $from, string $to, string $body): void
     {

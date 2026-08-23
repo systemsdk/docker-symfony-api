@@ -22,7 +22,7 @@ class CreateOrUpdateTemplateService implements CreateOrUpdateTemplateServiceInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createOrUpdateIndexTemplate(): string
     {

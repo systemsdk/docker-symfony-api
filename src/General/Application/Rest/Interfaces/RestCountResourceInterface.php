@@ -15,7 +15,7 @@ interface RestCountResourceInterface extends RestSmallResourceInterface
      * Generic count method to return entity count for specified criteria and search terms.
      *
      * @param array<int|string, string|array<mixed>>|null $criteria
-     * @param array<string, string>|null $search
+     * @param array<string, array<int, string>|string>|null $search
      *
      * @throws Throwable
      */

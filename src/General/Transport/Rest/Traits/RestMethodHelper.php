@@ -93,7 +93,7 @@ trait RestMethodHelper
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws Throwable
      */

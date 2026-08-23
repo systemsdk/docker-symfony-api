@@ -22,7 +22,7 @@ class OpenSslCryptApiKeyService implements OpenSslCryptApiKeyServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function encryptToken(ApiKey $apiKey): void
     {
@@ -40,7 +40,7 @@ class OpenSslCryptApiKeyService implements OpenSslCryptApiKeyServiceInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function decryptToken(ApiKey $apiKey): void
     {
